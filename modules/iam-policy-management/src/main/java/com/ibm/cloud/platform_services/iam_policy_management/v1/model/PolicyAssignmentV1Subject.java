@@ -16,7 +16,7 @@ package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * subject details of access type assignment.
+ * Subject details of access type assignment.
  */
 public class PolicyAssignmentV1Subject extends GenericModel {
 

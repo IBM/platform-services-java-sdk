@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -19,7 +19,7 @@ import java.util.List;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Permission granted by the policy.
+ * Permission is granted by the policy.
  */
 public class Grant extends GenericModel {
 
@@ -113,7 +113,7 @@ public class Grant extends GenericModel {
   /**
    * Gets the roles.
    *
-   * A set of role cloud resource names (CRNs) granted by the policy.
+   * A set of role Cloud Resource Names (CRNs) granted by the policy.
    *
    * @return the roles
    */

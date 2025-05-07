@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -55,6 +55,17 @@ public class AssignmentTargetDetails extends GenericModel {
     }
 
     /**
+     * Instantiates a new builder with required properties.
+     *
+     * @param type the type
+     * @param id the id
+     */
+    public Builder(String type, String id) {
+      this.type = type;
+      this.id = id;
+    }
+
+    /**
      * Builds a AssignmentTargetDetails.
      *
      * @return the new AssignmentTargetDetails instance
@@ -89,6 +100,10 @@ public class AssignmentTargetDetails extends GenericModel {
   protected AssignmentTargetDetails() { }
 
   protected AssignmentTargetDetails(Builder builder) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.type,
+      "type cannot be null");
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.id,
+      "id cannot be null");
     type = builder.type;
     id = builder.id;
   }

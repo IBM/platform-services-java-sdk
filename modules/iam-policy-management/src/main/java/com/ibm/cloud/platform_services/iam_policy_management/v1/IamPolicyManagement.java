@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.100.0-2ad7a784-20250212-162551
+ * IBM OpenAPI SDK Code Generator Version: 3.103.0-e8b84313-20250402-201816
  */
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1;
@@ -20,7 +20,16 @@ package com.ibm.cloud.platform_services.iam_policy_management.v1;
 import com.google.gson.JsonObject;
 import com.ibm.cloud.platform_services.common.SdkCommon;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AccountSettingsAccessManagement;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlAssignment;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlAssignmentCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlTemplate;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlTemplateCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlTemplateVersionsCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CommitActionControlTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CommitPolicyTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateActionControlTemplateAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateActionControlTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateActionControlTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyTemplateAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyTemplateOptions;
@@ -28,12 +37,18 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePoli
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateRoleOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateV2PolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CustomRole;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteActionControlAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteActionControlTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteActionControlTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteRoleOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteV2PolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetActionControlAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetActionControlTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetActionControlTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyTemplateOptions;
@@ -41,6 +56,9 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyT
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetRoleOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetSettingsOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetV2PolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListActionControlAssignmentsOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListActionControlTemplateVersionsOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListActionControlTemplatesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPoliciesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyAssignmentsOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyTemplateVersionsOptions;
@@ -58,11 +76,13 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemp
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateLimitData;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateMetaData;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateVersionsCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceActionControlTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplacePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplacePolicyTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceRoleOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceV2PolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdateActionControlAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyStateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdateSettingsOptions;
@@ -711,7 +731,9 @@ public class IamPolicyManagement extends BaseService {
    *   'dateLessThan', 'dateLessThanOrEquals', 'dateGreaterThan', 'dateGreaterThanOrEquals',
    *   'dateTimeLessThan', 'dateTimeLessThanOrEquals', 'dateTimeGreaterThan', 'dateTimeGreaterThanOrEquals',
    *   'dayOfWeekEquals', 'dayOfWeekAnyOf'
-   * ``` The pattern field that matches the rule is required when rule is provided. For the business hour rule example
+   * ```
+   *
+   * The pattern field that matches the rule is required when rule is provided. For the business hour rule example
    * above, the **`pattern`** is **`"time-based-conditions:weekly"`**. For more information, see [Time-based conditions
    * operators](/docs/account?topic=account-iam-condition-properties&amp;interface=ui#policy-condition-properties) and
    * [Limiting access with time-based conditions](/docs/account?topic=account-iam-time-based&amp;interface=ui). If the
@@ -1544,23 +1566,23 @@ public class IamPolicyManagement extends BaseService {
    * Update the way identities within an external account are allowed to interact with the requested account by
    * providing:
    * * the `account_id` as a parameter
-   * * the external account ID(s) and state for the specific identity in the request body
+   * * one or more external account ID(s) and state for the specific identity in the request body
    *
-   * External account identity interaction includes the following `identity_types`: `user` (user identities defined as
-   * [IBMid's](https://test.cloud.ibm.com/docs/account?topic=account-identity-overview#users-bestpract)), `service_id`
-   * (defined as [IAM
-   * ServiceIds](https://test.cloud.ibm.com/docs/account?topic=account-identity-overview#serviceid-bestpract)),
-   * `service` (defined by a service’s [CRN](https://test.cloud.ibm.com/docs/account?topic=account-crn)). To update an
-   * Identity’s setting, the `state` and `external_allowed_accounts` fields are required.
+   * External account identity interaction includes the following `identity_types`: `user` (user identities that are
+   * defined as [IBMid's](https://cloud.ibm.com/docs/account?topic=account-identity-overview#users-bestpract)),
+   * `service_id` (defined as [IAM
+   * ServiceIds](https://cloud.ibm.com/docs/account?topic=account-identity-overview#serviceid-bestpract)), `service`
+   * (defined by a service’s [CRN](https://cloud.ibm.com/docs/account?topic=account-crn)). To update an Identity’s
+   * setting, the `state` and `external_allowed_accounts` fields are required.
    *
    * Different identity states are:
    * * "enabled": An identity type is allowed to access resources in the account provided it has access policies on
    * those resources.
    * * "limited": An identity type is allowed to access resources in the account provided it has access policies on
    * those resources AND it is associated with either the account the resources are in or one of the allowed accounts.
-   * This setting leverages the "external_allowed_accounts" list.
-   * * "monitor": Has no direct impact on an Identity’s access. Instead, it creates AT events for access decisions as if
-   * the account were in a limited “state”.
+   * This setting uses the "external_allowed_accounts" list.
+   * * "monitor": It has no direct impact on an Identity’s access. Instead, it creates AT events for access decisions as
+   * if the account were in a limited “state”.
    *
    * **Note**: The state "enabled" is a special case. In this case, access is given to all accounts and there is no need
    * to specify a particular list. Therefore, when updating "state" to "enabled" for an identity type
@@ -1591,6 +1613,465 @@ public class IamPolicyManagement extends BaseService {
     builder.bodyJson(contentJson);
     ResponseConverter<AccountSettingsAccessManagement> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettingsAccessManagement>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * List action control templates by attributes.
+   *
+   * List action control templates and filter by attributes by using query parameters. The following attributes are
+   * supported:
+   * `account_id`
+   * `account_id` is a required query parameter. Only action control templates that have the specified attributes and
+   * that the caller has read access to are returned. If the caller does not have read access to any action control
+   * templates an empty array is returned.
+   *
+   * @param listActionControlTemplatesOptions the {@link ListActionControlTemplatesOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ActionControlTemplateCollection}
+   */
+  public ServiceCall<ActionControlTemplateCollection> listActionControlTemplates(ListActionControlTemplatesOptions listActionControlTemplatesOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(listActionControlTemplatesOptions,
+      "listActionControlTemplatesOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/action_control_templates"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "listActionControlTemplates");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (listActionControlTemplatesOptions.acceptLanguage() != null) {
+      builder.header("Accept-Language", listActionControlTemplatesOptions.acceptLanguage());
+    }
+    builder.query("account_id", String.valueOf(listActionControlTemplatesOptions.accountId()));
+    if (listActionControlTemplatesOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listActionControlTemplatesOptions.limit()));
+    }
+    if (listActionControlTemplatesOptions.start() != null) {
+      builder.query("start", String.valueOf(listActionControlTemplatesOptions.start()));
+    }
+    ResponseConverter<ActionControlTemplateCollection> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ActionControlTemplateCollection>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Create an action control template.
+   *
+   * Create an action control template. Action control templates define a service action control.
+   *
+   * @param createActionControlTemplateOptions the {@link CreateActionControlTemplateOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ActionControlTemplate}
+   */
+  public ServiceCall<ActionControlTemplate> createActionControlTemplate(CreateActionControlTemplateOptions createActionControlTemplateOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createActionControlTemplateOptions,
+      "createActionControlTemplateOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/action_control_templates"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "createActionControlTemplate");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (createActionControlTemplateOptions.acceptLanguage() != null) {
+      builder.header("Accept-Language", createActionControlTemplateOptions.acceptLanguage());
+    }
+    final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("name", createActionControlTemplateOptions.name());
+    contentJson.addProperty("account_id", createActionControlTemplateOptions.accountId());
+    if (createActionControlTemplateOptions.description() != null) {
+      contentJson.addProperty("description", createActionControlTemplateOptions.description());
+    }
+    if (createActionControlTemplateOptions.committed() != null) {
+      contentJson.addProperty("committed", createActionControlTemplateOptions.committed());
+    }
+    if (createActionControlTemplateOptions.actionControl() != null) {
+      contentJson.add("action_control", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createActionControlTemplateOptions.actionControl()));
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<ActionControlTemplate> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ActionControlTemplate>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Retrieve the latest version of an action control template.
+   *
+   * Retrieve the latest version of an action control template by providing an action control template ID.
+   *
+   * @param getActionControlTemplateOptions the {@link GetActionControlTemplateOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ActionControlTemplate}
+   */
+  public ServiceCall<ActionControlTemplate> getActionControlTemplate(GetActionControlTemplateOptions getActionControlTemplateOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getActionControlTemplateOptions,
+      "getActionControlTemplateOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("action_control_template_id", getActionControlTemplateOptions.actionControlTemplateId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/action_control_templates/{action_control_template_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "getActionControlTemplate");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (getActionControlTemplateOptions.state() != null) {
+      builder.query("state", String.valueOf(getActionControlTemplateOptions.state()));
+    }
+    ResponseConverter<ActionControlTemplate> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ActionControlTemplate>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Delete an action control template.
+   *
+   * Delete an action control template by providing the action control template ID. This deletes all versions of this
+   * template. An action control template can't be deleted if any version of the template is assigned to one or more
+   * child accounts. You must remove the action control assignments first.
+   *
+   * @param deleteActionControlTemplateOptions the {@link DeleteActionControlTemplateOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> deleteActionControlTemplate(DeleteActionControlTemplateOptions deleteActionControlTemplateOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteActionControlTemplateOptions,
+      "deleteActionControlTemplateOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("action_control_template_id", deleteActionControlTemplateOptions.actionControlTemplateId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/action_control_templates/{action_control_template_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "deleteActionControlTemplate");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Create a new action control template version.
+   *
+   * Create a new version of an action control template. Use this if you need to make updates to an action control
+   * template that is committed.
+   *
+   * @param createActionControlTemplateVersionOptions the {@link CreateActionControlTemplateVersionOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ActionControlTemplate}
+   */
+  public ServiceCall<ActionControlTemplate> createActionControlTemplateVersion(CreateActionControlTemplateVersionOptions createActionControlTemplateVersionOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createActionControlTemplateVersionOptions,
+      "createActionControlTemplateVersionOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("action_control_template_id", createActionControlTemplateVersionOptions.actionControlTemplateId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/action_control_templates/{action_control_template_id}/versions", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "createActionControlTemplateVersion");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    final JsonObject contentJson = new JsonObject();
+    if (createActionControlTemplateVersionOptions.name() != null) {
+      contentJson.addProperty("name", createActionControlTemplateVersionOptions.name());
+    }
+    if (createActionControlTemplateVersionOptions.description() != null) {
+      contentJson.addProperty("description", createActionControlTemplateVersionOptions.description());
+    }
+    if (createActionControlTemplateVersionOptions.actionControl() != null) {
+      contentJson.add("action_control", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createActionControlTemplateVersionOptions.actionControl()));
+    }
+    if (createActionControlTemplateVersionOptions.committed() != null) {
+      contentJson.addProperty("committed", createActionControlTemplateVersionOptions.committed());
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<ActionControlTemplate> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ActionControlTemplate>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Retrieve action control template versions.
+   *
+   * Retrieve the versions of an action control template by providing an action control template ID.
+   *
+   * @param listActionControlTemplateVersionsOptions the {@link ListActionControlTemplateVersionsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ActionControlTemplateVersionsCollection}
+   */
+  public ServiceCall<ActionControlTemplateVersionsCollection> listActionControlTemplateVersions(ListActionControlTemplateVersionsOptions listActionControlTemplateVersionsOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(listActionControlTemplateVersionsOptions,
+      "listActionControlTemplateVersionsOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("action_control_template_id", listActionControlTemplateVersionsOptions.actionControlTemplateId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/action_control_templates/{action_control_template_id}/versions", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "listActionControlTemplateVersions");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (listActionControlTemplateVersionsOptions.state() != null) {
+      builder.query("state", String.valueOf(listActionControlTemplateVersionsOptions.state()));
+    }
+    if (listActionControlTemplateVersionsOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listActionControlTemplateVersionsOptions.limit()));
+    }
+    if (listActionControlTemplateVersionsOptions.start() != null) {
+      builder.query("start", String.valueOf(listActionControlTemplateVersionsOptions.start()));
+    }
+    ResponseConverter<ActionControlTemplateVersionsCollection> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ActionControlTemplateVersionsCollection>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Update an action control template version.
+   *
+   * Update a specific version of an action control template. You can use this only if the version isn't committed.
+   *
+   * @param replaceActionControlTemplateOptions the {@link ReplaceActionControlTemplateOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ActionControlTemplate}
+   */
+  public ServiceCall<ActionControlTemplate> replaceActionControlTemplate(ReplaceActionControlTemplateOptions replaceActionControlTemplateOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(replaceActionControlTemplateOptions,
+      "replaceActionControlTemplateOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("action_control_template_id", replaceActionControlTemplateOptions.actionControlTemplateId());
+    pathParamsMap.put("version", replaceActionControlTemplateOptions.version());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/action_control_templates/{action_control_template_id}/versions/{version}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "replaceActionControlTemplate");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.header("If-Match", replaceActionControlTemplateOptions.ifMatch());
+    final JsonObject contentJson = new JsonObject();
+    if (replaceActionControlTemplateOptions.name() != null) {
+      contentJson.addProperty("name", replaceActionControlTemplateOptions.name());
+    }
+    if (replaceActionControlTemplateOptions.description() != null) {
+      contentJson.addProperty("description", replaceActionControlTemplateOptions.description());
+    }
+    if (replaceActionControlTemplateOptions.actionControl() != null) {
+      contentJson.add("action_control", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceActionControlTemplateOptions.actionControl()));
+    }
+    if (replaceActionControlTemplateOptions.committed() != null) {
+      contentJson.addProperty("committed", replaceActionControlTemplateOptions.committed());
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<ActionControlTemplate> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ActionControlTemplate>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Delete an action control template version.
+   *
+   * Delete a specific version of an action control template by providing an action control template ID and version
+   * number. You can't delete an action control template version that is assigned to one or more child accounts. You
+   * must remove the action control assignments first.
+   *
+   * @param deleteActionControlTemplateVersionOptions the {@link DeleteActionControlTemplateVersionOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> deleteActionControlTemplateVersion(DeleteActionControlTemplateVersionOptions deleteActionControlTemplateVersionOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteActionControlTemplateVersionOptions,
+      "deleteActionControlTemplateVersionOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("action_control_template_id", deleteActionControlTemplateVersionOptions.actionControlTemplateId());
+    pathParamsMap.put("version", deleteActionControlTemplateVersionOptions.version());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/action_control_templates/{action_control_template_id}/versions/{version}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "deleteActionControlTemplateVersion");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Retrieve an action control template version.
+   *
+   * Retrieve an action control template by providing an action control template ID and version number.
+   *
+   * @param getActionControlTemplateVersionOptions the {@link GetActionControlTemplateVersionOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ActionControlTemplate}
+   */
+  public ServiceCall<ActionControlTemplate> getActionControlTemplateVersion(GetActionControlTemplateVersionOptions getActionControlTemplateVersionOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getActionControlTemplateVersionOptions,
+      "getActionControlTemplateVersionOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("action_control_template_id", getActionControlTemplateVersionOptions.actionControlTemplateId());
+    pathParamsMap.put("version", getActionControlTemplateVersionOptions.version());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/action_control_templates/{action_control_template_id}/versions/{version}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "getActionControlTemplateVersion");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<ActionControlTemplate> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ActionControlTemplate>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Commit an action control template version.
+   *
+   * Commit an action control template version. You cannot make any further changes to the action control template once
+   * it's committed. If you have to make updates after committing a version, create a new version.
+   *
+   * @param commitActionControlTemplateOptions the {@link CommitActionControlTemplateOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> commitActionControlTemplate(CommitActionControlTemplateOptions commitActionControlTemplateOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(commitActionControlTemplateOptions,
+      "commitActionControlTemplateOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("action_control_template_id", commitActionControlTemplateOptions.actionControlTemplateId());
+    pathParamsMap.put("version", commitActionControlTemplateOptions.version());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/action_control_templates/{action_control_template_id}/versions/{version}/commit", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "commitActionControlTemplate");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get action control template assignments.
+   *
+   * Get action control template assignments by attributes. The following attributes are supported:
+   * `account_id`, `template_id`, `template_version`, `sort`.
+   * `account_id` is a required query parameter. Only action control template assignments with the specified attributes
+   * and  accessible by the caller are returned. If the caller does not have read access to any action control template
+   * assignments, an empty array is returned.
+   *
+   * @param listActionControlAssignmentsOptions the {@link ListActionControlAssignmentsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ActionControlAssignmentCollection}
+   */
+  public ServiceCall<ActionControlAssignmentCollection> listActionControlAssignments(ListActionControlAssignmentsOptions listActionControlAssignmentsOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(listActionControlAssignmentsOptions,
+      "listActionControlAssignmentsOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/action_control_assignments"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "listActionControlAssignments");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (listActionControlAssignmentsOptions.acceptLanguage() != null) {
+      builder.header("Accept-Language", listActionControlAssignmentsOptions.acceptLanguage());
+    }
+    builder.query("account_id", String.valueOf(listActionControlAssignmentsOptions.accountId()));
+    if (listActionControlAssignmentsOptions.templateId() != null) {
+      builder.query("template_id", String.valueOf(listActionControlAssignmentsOptions.templateId()));
+    }
+    if (listActionControlAssignmentsOptions.templateVersion() != null) {
+      builder.query("template_version", String.valueOf(listActionControlAssignmentsOptions.templateVersion()));
+    }
+    if (listActionControlAssignmentsOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listActionControlAssignmentsOptions.limit()));
+    }
+    if (listActionControlAssignmentsOptions.start() != null) {
+      builder.query("start", String.valueOf(listActionControlAssignmentsOptions.start()));
+    }
+    ResponseConverter<ActionControlAssignmentCollection> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ActionControlAssignmentCollection>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Create an action control template assignment.
+   *
+   * Assign an action control template to child accounts and account groups. This creates the action control in the
+   * accounts and account groups that you specify.
+   *
+   * @param createActionControlTemplateAssignmentOptions the {@link CreateActionControlTemplateAssignmentOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ActionControlAssignmentCollection}
+   */
+  public ServiceCall<ActionControlAssignmentCollection> createActionControlTemplateAssignment(CreateActionControlTemplateAssignmentOptions createActionControlTemplateAssignmentOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createActionControlTemplateAssignmentOptions,
+      "createActionControlTemplateAssignmentOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/action_control_assignments"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "createActionControlTemplateAssignment");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (createActionControlTemplateAssignmentOptions.acceptLanguage() != null) {
+      builder.header("Accept-Language", createActionControlTemplateAssignmentOptions.acceptLanguage());
+    }
+    final JsonObject contentJson = new JsonObject();
+    contentJson.add("target", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createActionControlTemplateAssignmentOptions.target()));
+    contentJson.add("templates", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createActionControlTemplateAssignmentOptions.templates()));
+    builder.bodyJson(contentJson);
+    ResponseConverter<ActionControlAssignmentCollection> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ActionControlAssignmentCollection>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Retrieve an action control assignment.
+   *
+   * Retrieve an action control template assignment by providing an action control assignment ID.
+   *
+   * @param getActionControlAssignmentOptions the {@link GetActionControlAssignmentOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ActionControlAssignment}
+   */
+  public ServiceCall<ActionControlAssignment> getActionControlAssignment(GetActionControlAssignmentOptions getActionControlAssignmentOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getActionControlAssignmentOptions,
+      "getActionControlAssignmentOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("assignment_id", getActionControlAssignmentOptions.assignmentId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/action_control_assignments/{assignment_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "getActionControlAssignment");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<ActionControlAssignment> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ActionControlAssignment>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Update an action control assignment.
+   *
+   * Update an action control assignment by providing an action control assignment ID.
+   *
+   * @param updateActionControlAssignmentOptions the {@link UpdateActionControlAssignmentOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ActionControlAssignment}
+   */
+  public ServiceCall<ActionControlAssignment> updateActionControlAssignment(UpdateActionControlAssignmentOptions updateActionControlAssignmentOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(updateActionControlAssignmentOptions,
+      "updateActionControlAssignmentOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("assignment_id", updateActionControlAssignmentOptions.assignmentId());
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/action_control_assignments/{assignment_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "updateActionControlAssignment");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.header("If-Match", updateActionControlAssignmentOptions.ifMatch());
+    final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("template_version", updateActionControlAssignmentOptions.templateVersion());
+    builder.bodyJson(contentJson);
+    ResponseConverter<ActionControlAssignment> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ActionControlAssignment>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Remove an action control assignment.
+   *
+   * Remove an action control template assignment by providing an action control assignment ID. You can't delete an
+   * action control assignment if the status is "in_progress".
+   *
+   * @param deleteActionControlAssignmentOptions the {@link DeleteActionControlAssignmentOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> deleteActionControlAssignment(DeleteActionControlAssignmentOptions deleteActionControlAssignmentOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteActionControlAssignmentOptions,
+      "deleteActionControlAssignmentOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("assignment_id", deleteActionControlAssignmentOptions.assignmentId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/action_control_assignments/{assignment_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "deleteActionControlAssignment");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
 

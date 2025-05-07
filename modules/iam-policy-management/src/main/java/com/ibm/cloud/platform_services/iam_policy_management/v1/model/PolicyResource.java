@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -47,6 +47,15 @@ public class PolicyResource extends GenericModel {
      * Instantiates a new builder.
      */
     public Builder() {
+    }
+
+    /**
+     * Instantiates a new builder with required properties.
+     *
+     * @param attributes the attributes
+     */
+    public Builder(List<ResourceAttribute> attributes) {
+      this.attributes = attributes;
     }
 
     /**
@@ -118,6 +127,8 @@ public class PolicyResource extends GenericModel {
   protected PolicyResource() { }
 
   protected PolicyResource(Builder builder) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.attributes,
+      "attributes cannot be null");
     attributes = builder.attributes;
     tags = builder.tags;
   }

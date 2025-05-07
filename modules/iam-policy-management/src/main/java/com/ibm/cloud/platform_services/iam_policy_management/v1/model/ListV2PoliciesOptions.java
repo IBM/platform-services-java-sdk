@@ -470,7 +470,7 @@ public class ListV2PoliciesOptions extends GenericModel {
   /**
    * Gets the limit.
    *
-   * The number of documents to include in collection.
+   * The number of documents to include in the collection.
    *
    * @return the limit
    */
@@ -481,7 +481,7 @@ public class ListV2PoliciesOptions extends GenericModel {
   /**
    * Gets the start.
    *
-   * Page token that refers to the page of collection to return.
+   * Page token that refers to the page of the collection to return.
    *
    * @return the start
    */

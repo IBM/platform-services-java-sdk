@@ -48,6 +48,10 @@ public class PolicyTemplateAssignmentItems extends GenericModel {
   public interface TargetType {
     /** Account. */
     String ACCOUNT = "Account";
+    /** AccountGroup. */
+    String ACCOUNTGROUP = "AccountGroup";
+    /** Enterprise. */
+    String ENTERPRISE = "Enterprise";
   }
 
   protected AssignmentTargetDetails target;
@@ -103,7 +107,7 @@ public class PolicyTemplateAssignmentItems extends GenericModel {
   /**
    * Gets the accountId.
    *
-   * The account GUID that the policies assignments belong to..
+   * The account GUID that the policies assignments belong to.
    *
    * @return the accountId
    */
@@ -136,7 +140,7 @@ public class PolicyTemplateAssignmentItems extends GenericModel {
   /**
    * Gets the createdById.
    *
-   * The iam ID of the entity that created the policy assignment.
+   * The IAM ID of the entity that created the policy assignment.
    *
    * @return the createdById
    */
@@ -158,7 +162,7 @@ public class PolicyTemplateAssignmentItems extends GenericModel {
   /**
    * Gets the lastModifiedById.
    *
-   * The iam ID of the entity that last modified the policy assignment.
+   * The IAM ID of the entity that last modified the policy assignment.
    *
    * @return the lastModifiedById
    */
@@ -180,7 +184,7 @@ public class PolicyTemplateAssignmentItems extends GenericModel {
   /**
    * Gets the subject.
    *
-   * subject details of access type assignment.
+   * Subject details of access type assignment.
    *
    * @return the subject
    */
@@ -213,7 +217,7 @@ public class PolicyTemplateAssignmentItems extends GenericModel {
   /**
    * Gets the templateId.
    *
-   * policy template id.
+   * policy template ID.
    *
    * @return the templateId
    */

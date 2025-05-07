@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -17,7 +17,7 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * An action that can be performed by the policy subject when assigned role.
+ * An action that can be performed by the policy subject when assigned a role.
  */
 public class RoleAction extends GenericModel {
 
@@ -31,7 +31,7 @@ public class RoleAction extends GenericModel {
   /**
    * Gets the id.
    *
-   * Unique identifier for action with structure service.resource.action e.g., cbr.rule.read.
+   * Unique identifier for action with structure service.resource.action. For example, cbr.rule.read.
    *
    * @return the id
    */
@@ -42,7 +42,7 @@ public class RoleAction extends GenericModel {
   /**
    * Gets the displayName.
    *
-   * Service defined display name for action.
+   * Services defined display name for action.
    *
    * @return the displayName
    */

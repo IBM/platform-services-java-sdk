@@ -33,7 +33,7 @@ public class PolicyTemplateAssignmentCollection extends GenericModel {
   /**
    * Gets the limit.
    *
-   * The number of documents to include per each page of collection.
+   * The number of documents to include per each page of the collection.
    *
    * @return the limit
    */
@@ -44,7 +44,7 @@ public class PolicyTemplateAssignmentCollection extends GenericModel {
   /**
    * Gets the first.
    *
-   * Details with href linking to first page of requested collection.
+   * Details with linking href to first page of requested collection.
    *
    * @return the first
    */
@@ -55,7 +55,7 @@ public class PolicyTemplateAssignmentCollection extends GenericModel {
   /**
    * Gets the next.
    *
-   * Details with href linking to following page of requested collection.
+   * Details with href linking to the following page of requested collection.
    *
    * @return the next
    */
@@ -66,7 +66,7 @@ public class PolicyTemplateAssignmentCollection extends GenericModel {
   /**
    * Gets the previous.
    *
-   * Details with href linking to previous page of requested collection.
+   * Details with linking href to previous page of requested collection.
    *
    * @return the previous
    */

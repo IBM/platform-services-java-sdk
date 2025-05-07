@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -172,9 +172,9 @@ public class UpdatePolicyAssignmentOptions extends GenericModel {
   /**
    * Gets the ifMatch.
    *
-   * The revision number for updating a policy assignment and must match the ETag value of the existing policy
+   * The revision number for updating a policy assignment and must match the Etag value of the existing policy
    * assignment. The Etag can be retrieved using the GET /v1/policy_assignments/{assignment_id} API and looking at the
-   * ETag response header.
+   * Etag response header.
    *
    * @return the ifMatch
    */

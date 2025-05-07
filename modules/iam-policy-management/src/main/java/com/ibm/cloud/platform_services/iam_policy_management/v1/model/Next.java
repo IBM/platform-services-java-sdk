@@ -16,7 +16,7 @@ package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Details with href linking to following page of requested collection.
+ * Details with href linking to the following page of requested collection.
  */
 public class Next extends GenericModel {
 
@@ -39,7 +39,7 @@ public class Next extends GenericModel {
   /**
    * Gets the start.
    *
-   * Page token that refers to the page of collection.
+   * Page token that refers to the page of the collection.
    *
    * @return the start
    */

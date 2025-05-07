@@ -76,6 +76,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
 
     private static final String TEST_TEMPLATE_PREFIX = "SDKJava";
     private final String TEST_TEMPLATE_NAME = TEST_TEMPLATE_PREFIX + TEST_UNIQUE_ID;
+    private final String TEST_ACTION_CONTROL_TEMPLATE_NAME = "ActionControl" + TEST_TEMPLATE_PREFIX + TEST_UNIQUE_ID;
 
     String testTemplateId = null;
     String testTemplateVersion = null;
@@ -88,6 +89,15 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
     String testS2STemplateVersion = null;
     String testAssignmentETag = null;
     String testAccountSettingsETag = null;
+    String testActionControlBaseTemplateId = null;
+    String testActionControlBaseTemplateVersion = null;
+    String testActionControlBaseTemplateETag = null;
+    String testActionControlTemplateId = null;
+    String testActionControlTemplateVersion = null;
+    String testActionControlTemplateNewVersion = null;
+    String testActionControlTemplateETag = null;
+    String testActionControlAssignmentId = null;
+    String testActionControlAssignmentETag = null;
 
     @Override
     public String getConfigFilename() {
@@ -1380,6 +1390,336 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         assertEquals(identityTypes.getUser().state(), "monitor");
         assertNotNull(identityTypes.getServiceId());
         assertEquals(identityTypes.getServiceId().state(), "monitor");
+    }
+
+    @Test
+    public void testCreateActionControlBasicTemplate() throws Exception {
+      CreateActionControlTemplateOptions createActionControlTemplateOptions = new CreateActionControlTemplateOptions.Builder()
+        .name(TEST_ACTION_CONTROL_TEMPLATE_NAME)
+        .accountId(testAccountId)
+        .description("ActionControl SDK Test template without actionControl")
+        .build();
+
+      Response<ActionControlTemplate> response = service.createActionControlTemplate(createActionControlTemplateOptions).execute();
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 201);
+
+      ActionControlTemplate result = response.getResult();
+
+      assertNotNull(result);
+      testActionControlBaseTemplateId = result.getId();
+      assertEquals(result.getState(), "active");
+    }
+
+    @Test(dependsOnMethods = {"testCreateActionControlBasicTemplate"})
+    public void testGetActionControlBasicTemplate() {
+      assertNotNull(testActionControlBaseTemplateId);
+      GetActionControlTemplateOptions getActionControlTemplateOptions = new GetActionControlTemplateOptions.Builder()
+        .actionControlTemplateId(testActionControlBaseTemplateId)
+        .build();
+
+      Response<ActionControlTemplate> response = service.getActionControlTemplate(getActionControlTemplateOptions).execute();
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      ActionControlTemplate result = response.getResult();
+
+      assertNotNull(result);
+      assertEquals(result.getId(), testActionControlBaseTemplateId);
+      testActionControlBaseTemplateVersion = result.getVersion();
+      List<String> values = response.getHeaders().values(HEADER_ETAG);
+      assertNotNull(values);
+      testActionControlBaseTemplateETag = values.get(0);
+      assertEquals(result.getState(), "active");
+    }
+
+    @Test(dependsOnMethods = {"testGetActionControlBasicTemplate"})
+    public void testReplaceActionControlBasicTemplate() {
+      assertNotNull(testActionControlBaseTemplateId);
+      assertNotNull(testActionControlBaseTemplateETag);
+      
+      // Construct an instance of the TemplateActionControl model
+      TemplateActionControl templateActionControlModel = new TemplateActionControl.Builder()
+        .serviceName("am-test-service")
+        .description("Test Java SDK integration testcases")
+        .actions(java.util.Arrays.asList("am-test-service.test.delete"))
+        .build();
+
+      // Construct an instance of the ReplaceActionControlTemplateOptions model
+      ReplaceActionControlTemplateOptions replaceActionControlTemplateOptions = new ReplaceActionControlTemplateOptions.Builder()
+        .actionControlTemplateId(testActionControlBaseTemplateId)
+        .version(testActionControlBaseTemplateVersion)
+        .ifMatch(testActionControlBaseTemplateETag)
+        .actionControl(templateActionControlModel)
+        .description("Updated SDK test action control template")
+        .build();
+
+      Response<ActionControlTemplate> response = service.replaceActionControlTemplate(replaceActionControlTemplateOptions).execute();
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      ActionControlTemplate result = response.getResult();
+      assertEquals(result.getActionControl(), templateActionControlModel);
+      assertEquals(result.getDescription(), "Updated SDK test action control template");
+      assertEquals(result.getState(), "active");
+    }
+
+    @Test(dependsOnMethods = {"testReplaceActionControlBasicTemplate"})
+    public void testListActionControlTemplates() throws Exception, InterruptedException {
+      assertNotNull(testActionControlBaseTemplateId);
+
+      ListActionControlTemplatesOptions listActionControlTemplatesOptions = new ListActionControlTemplatesOptions.Builder()
+        .accountId(testAccountId)
+        .acceptLanguage("default")
+        .build();
+
+      
+      Response<ActionControlTemplateCollection> response = service.listActionControlTemplates(listActionControlTemplatesOptions).execute();
+      
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      ActionControlTemplateCollection result = response.getResult();
+
+      assertNotNull(result);
+      // Confirm the test action control is present
+      boolean foundTestActionControlTemplate = false;
+      for (ActionControlTemplate actionControlTemplate : result.getActionControlTemplates()) {
+          if (testActionControlBaseTemplateId.equals(actionControlTemplate.getId())) {
+              foundTestActionControlTemplate = true;
+              break;
+          }
+      }
+      assertTrue(foundTestActionControlTemplate);
+      assertEquals(result.getActionControlTemplates().get(0).getState(), "active");
+    }
+
+    @Test(dependsOnMethods = {"testListActionControlTemplates"})
+    public void testGetActionControlTemplateVersion() {
+      assertNotNull(testActionControlBaseTemplateId);
+      assertNotNull(testActionControlBaseTemplateVersion);
+
+      GetActionControlTemplateVersionOptions getActionControlTemplateVersionOptions = new GetActionControlTemplateVersionOptions.Builder()
+        .actionControlTemplateId(testActionControlBaseTemplateId)
+        .version(testActionControlBaseTemplateVersion)
+        .build();
+
+      Response<ActionControlTemplate> response = service.getActionControlTemplateVersion(getActionControlTemplateVersionOptions).execute();
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      ActionControlTemplate result = response.getResult();
+      assertNotNull(result);
+      assertEquals(result.getState(), "active");
+    }
+
+    @Test(dependsOnMethods = { "testGetActionControlTemplateVersion" })
+    public void testCommitActionControlTemplate() {
+      assertNotNull(testActionControlBaseTemplateId);
+      CommitActionControlTemplateOptions commitActionControlTemplateOptions = new CommitActionControlTemplateOptions.Builder()
+        .actionControlTemplateId(testActionControlBaseTemplateId)
+        .version(testActionControlBaseTemplateVersion)
+        .build();
+
+      Response<Void> response = service.commitActionControlTemplate(commitActionControlTemplateOptions).execute();
+
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 204);
+    }
+
+
+    @Test(dependsOnMethods = {"testCommitActionControlTemplate"})
+    public void testListActionControlTemplateVersions() {
+      ListActionControlTemplateVersionsOptions listActionControlTemplateVersionsOptions = new ListActionControlTemplateVersionsOptions.Builder()
+        .actionControlTemplateId(testActionControlBaseTemplateId)
+        .build();
+
+      Response<ActionControlTemplateVersionsCollection> response = service.listActionControlTemplateVersions(listActionControlTemplateVersionsOptions).execute();
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      ActionControlTemplateVersionsCollection result = response.getResult();
+      assertNotNull(result);
+      assertTrue(result.getVersions().size() == 1);
+    }
+
+    @Test(dependsOnMethods = {"testListActionControlTemplateVersions"})
+    public void testDeleteActionControlTemplateVersion() {
+      DeleteActionControlTemplateVersionOptions deleteActionControlTemplateVersionOptions = new DeleteActionControlTemplateVersionOptions.Builder()
+        .actionControlTemplateId(testActionControlBaseTemplateId)
+        .version(testActionControlBaseTemplateVersion)
+        .build();
+
+      Response<Void> response = service.deleteActionControlTemplateVersion(deleteActionControlTemplateVersionOptions).execute();
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 204);
+    }
+
+    @Test(dependsOnMethods = {"testDeleteActionControlTemplateVersion"})
+    public void testCreateActionControlTemplate() throws Exception {
+
+      // Construct an instance of the TemplateActionControl model
+      TemplateActionControl templateActionControlModel = new TemplateActionControl.Builder()
+        .serviceName("am-test-service")
+        .description("Test Java SDK integration testcases")
+        .actions(java.util.Arrays.asList("am-test-service.test.delete"))
+        .build();
+
+      CreateActionControlTemplateOptions createActionControlTemplateOptions = new CreateActionControlTemplateOptions.Builder()
+        .name(TEST_ACTION_CONTROL_TEMPLATE_NAME)
+        .accountId(testAccountId)
+        .description("ActionControl SDK Test template")
+        .actionControl(templateActionControlModel)
+        .committed(true)
+        .build();
+
+      Response<ActionControlTemplate> response = service.createActionControlTemplate(createActionControlTemplateOptions).execute();
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 201);
+
+      ActionControlTemplate result = response.getResult();
+
+      assertNotNull(result);
+      testActionControlTemplateId = result.getId();
+      testActionControlTemplateVersion = result.getVersion();
+      assertEquals(result.getState(), "active");
+    }
+
+    @Test(dependsOnMethods = {"testCreateActionControlTemplate"})
+    public void testCreateActionControlTemplateVersion() {
+      assertNotNull(testActionControlTemplateId);
+      assertNotNull(testActionControlTemplateVersion);
+      
+      // Construct an instance of the TemplateActionControl model
+      TemplateActionControl templateActionControlModel = new TemplateActionControl.Builder()
+        .serviceName("am-test-service")
+        .description("Test Java SDK integration testcases")
+        .actions(java.util.Arrays.asList("am-test-service.test.create"))
+        .build();
+
+      CreateActionControlTemplateVersionOptions createActionControlTemplateVersionOptions = new CreateActionControlTemplateVersionOptions.Builder()
+      .description("ActionControl SDK Test template without actionControl")
+      .actionControl(templateActionControlModel)
+      .committed(true)
+      .actionControlTemplateId(testActionControlTemplateId)
+      .build();
+
+      // Invoke operation
+      Response<ActionControlTemplate> response = service.createActionControlTemplateVersion(createActionControlTemplateVersionOptions).execute();
+      
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 201);
+
+      ActionControlTemplate result = response.getResult();
+
+      assertNotNull(result);
+      testActionControlTemplateNewVersion = result.getVersion();
+      assertEquals(result.getActionControl(), templateActionControlModel);
+      assertTrue(Integer.parseInt(testActionControlTemplateNewVersion) > Integer.parseInt(testActionControlTemplateVersion));
+      assertEquals(result.getState(), "active");
+    }
+
+    @Test(dependsOnMethods = { "testCreateActionControlTemplateVersion" })
+    public void testCreateActionControlAssignment() throws Exception {
+
+      AssignmentTargetDetails assignmentTargetDetails = new AssignmentTargetDetails.Builder()
+        .type("Account")
+        .id(testTargetAccountId)
+        .build();
+
+      ActionControlAssignmentTemplate assignmentTemplateDetails = new ActionControlAssignmentTemplate.Builder()
+        .id(testActionControlTemplateId)
+        .version(testActionControlTemplateVersion)
+        .build();
+
+      CreateActionControlTemplateAssignmentOptions createActionControlAssignmentOptions = new CreateActionControlTemplateAssignmentOptions.Builder()
+        .target(assignmentTargetDetails)
+        .templates(new ArrayList<ActionControlAssignmentTemplate>(Arrays.asList(assignmentTemplateDetails)))
+        .build();
+
+      Response<ActionControlAssignmentCollection> response = service.createActionControlTemplateAssignment(createActionControlAssignmentOptions).execute();
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 201);
+
+      ActionControlAssignmentCollection result = response.getResult();
+      assertNotNull(result);
+      assertNotNull(result.getAssignments());
+      ActionControlAssignment assignment = result.getAssignments().get(0);
+      testActionControlAssignmentId = assignment.getId();
+
+      List<String> values = response.getHeaders().values(HEADER_ETAG);
+        assertNotNull(values);
+        testActionControlAssignmentETag = values.get(0);
+    }
+
+    @Test(dependsOnMethods = { "testCreateActionControlAssignment" })
+      public void testUpdateActionControlAssignment() {
+        assertNotNull(testActionControlAssignmentId);
+
+        UpdateActionControlAssignmentOptions updateActionControlAssignmentOptions = new UpdateActionControlAssignmentOptions.Builder()
+        .assignmentId(testActionControlAssignmentId)
+        .templateVersion(testActionControlTemplateNewVersion)
+        .ifMatch(testActionControlAssignmentETag)
+        .build();
+
+      Response<ActionControlAssignment> response = service.updateActionControlAssignment(updateActionControlAssignmentOptions).execute();
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+    }
+
+    @Test(dependsOnMethods = { "testUpdateActionControlAssignment" })
+    public void testGetActionControlAssignment() throws Exception {
+      assertNotNull(testActionControlAssignmentId);
+      GetActionControlAssignmentOptions getActionControlAssignmentOptions = new GetActionControlAssignmentOptions.Builder()
+        .assignmentId(testActionControlAssignmentId)
+        .build();
+
+      Response<ActionControlAssignment> response = service.getActionControlAssignment(getActionControlAssignmentOptions).execute();
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      ActionControlAssignment result = response.getResult();
+
+      assertNotNull(result);
+      assertEquals(result.getId(), testActionControlAssignmentId);
+    }
+
+    @Test(dependsOnMethods = {"testGetActionControlAssignment"})
+    public void testListActionControlAssignments() throws Exception {
+      ListActionControlAssignmentsOptions listActionControlAssignmentsOptions = new ListActionControlAssignmentsOptions.Builder()
+      .accountId(testAccountId)
+      .build();
+
+      Response<ActionControlAssignmentCollection> response = service.listActionControlAssignments(listActionControlAssignmentsOptions).execute();
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+      ActionControlAssignmentCollection result = response.getResult();
+      assertNotNull(result);
+      assertNotNull(result.getAssignments());
+      List<ActionControlAssignment> assignments = result.getAssignments();
+      assertNotNull(assignments);
+    }
+
+    @Test(dependsOnMethods = {"testListActionControlAssignments"})
+    public void testDeleteActionControlAssignment() {
+      DeleteActionControlAssignmentOptions deleteActionControlAssignmentOptions = new DeleteActionControlAssignmentOptions.Builder()
+        .assignmentId(testActionControlAssignmentId)
+        .build();
+
+      Response<Void> response = service.deleteActionControlAssignment(deleteActionControlAssignmentOptions).execute();
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 204);
+    }
+
+    @Test(dependsOnMethods = {"testDeleteActionControlAssignment"})
+    public void testDeleteActionControlTemplate() {
+      DeleteActionControlTemplateOptions deleteActionControlTemplateOptions = new DeleteActionControlTemplateOptions.Builder()
+        .actionControlTemplateId(testActionControlTemplateId)
+        .build();
+
+      Response<Void> response = service.deleteActionControlTemplate(deleteActionControlTemplateOptions).execute();
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 204);
     }
 
     @AfterClass

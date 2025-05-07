@@ -24,6 +24,10 @@ public class PolicyTemplateAssignmentItemsPolicyAssignment extends PolicyTemplat
   public interface TargetType {
     /** Account. */
     String ACCOUNT = "Account";
+    /** AccountGroup. */
+    String ACCOUNTGROUP = "AccountGroup";
+    /** Enterprise. */
+    String ENTERPRISE = "Enterprise";
   }
 
   /**

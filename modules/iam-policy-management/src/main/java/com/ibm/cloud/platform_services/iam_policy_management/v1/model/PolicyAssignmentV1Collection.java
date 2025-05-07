@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -22,9 +22,57 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class PolicyAssignmentV1Collection extends GenericModel {
 
+  protected Long limit;
+  protected First first;
+  protected Next next;
+  protected Previous previous;
   protected List<PolicyAssignmentV1> assignments;
 
   protected PolicyAssignmentV1Collection() { }
+
+  /**
+   * Gets the limit.
+   *
+   * The number of documents to include per each page of the collection.
+   *
+   * @return the limit
+   */
+  public Long getLimit() {
+    return limit;
+  }
+
+  /**
+   * Gets the first.
+   *
+   * Details with linking href to first page of requested collection.
+   *
+   * @return the first
+   */
+  public First getFirst() {
+    return first;
+  }
+
+  /**
+   * Gets the next.
+   *
+   * Details with href linking to the following page of requested collection.
+   *
+   * @return the next
+   */
+  public Next getNext() {
+    return next;
+  }
+
+  /**
+   * Gets the previous.
+   *
+   * Details with linking href to previous page of requested collection.
+   *
+   * @return the previous
+   */
+  public Previous getPrevious() {
+    return previous;
+  }
 
   /**
    * Gets the assignments.

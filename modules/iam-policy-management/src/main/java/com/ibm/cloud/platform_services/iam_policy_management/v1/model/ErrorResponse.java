@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -33,7 +33,7 @@ public class ErrorResponse extends GenericModel {
   /**
    * Gets the trace.
    *
-   * The unique transaction id for the request.
+   * The unique transaction ID for the request.
    *
    * @return the trace
    */
@@ -55,7 +55,7 @@ public class ErrorResponse extends GenericModel {
   /**
    * Gets the statusCode.
    *
-   * The http error code of the response.
+   * The HTTP error code of the response.
    *
    * @return the statusCode
    */

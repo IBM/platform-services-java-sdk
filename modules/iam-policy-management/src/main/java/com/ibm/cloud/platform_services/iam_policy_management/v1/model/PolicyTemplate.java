@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -57,8 +57,8 @@ public class PolicyTemplate extends GenericModel {
   /**
    * Gets the name.
    *
-   * Required field when creating a new template. Otherwise this field is optional. If the field is included it will
-   * change the name value for all existing versions of the template.
+   * Required field when creating a new template. Otherwise, this field is optional. If the field is included, it
+   * changes the name value for all existing versions of the template.
    *
    * @return the name
    */
@@ -81,7 +81,7 @@ public class PolicyTemplate extends GenericModel {
   /**
    * Gets the accountId.
    *
-   * Enterprise account ID where this template will be created.
+   * Enterprise account ID where this template is created.
    *
    * @return the accountId
    */
@@ -114,7 +114,7 @@ public class PolicyTemplate extends GenericModel {
   /**
    * Gets the policy.
    *
-   * The core set of properties associated with the template's policy objet.
+   * The core set of properties associated with the template's policy object.
    *
    * @return the policy
    */
@@ -169,7 +169,7 @@ public class PolicyTemplate extends GenericModel {
   /**
    * Gets the createdById.
    *
-   * The iam ID of the entity that created the policy template.
+   * The IAM ID of the entity that created the policy template.
    *
    * @return the createdById
    */
@@ -191,7 +191,7 @@ public class PolicyTemplate extends GenericModel {
   /**
    * Gets the lastModifiedById.
    *
-   * The iam ID of the entity that last modified the policy template.
+   * The IAM ID of the entity that last modified the policy template.
    *
    * @return the lastModifiedById
    */

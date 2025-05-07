@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -170,7 +170,7 @@ public class V2PolicyResourceAttribute extends GenericModel {
    * Gets the value.
    *
    * The value of a rule, resource, or subject attribute; can be boolean or string for resource and subject attribute.
-   * Can be string or an array of strings (e.g., array of days to permit access) for rule attribute.
+   * Can be a string or an array of strings (for example, an array of days to permit access) for rule attribute.
    *
    * @return the value
    */

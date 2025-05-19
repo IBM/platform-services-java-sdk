@@ -31,6 +31,7 @@ public class Visibility extends GenericModel {
    * Builder.
    */
   public static class Builder {
+    private String restrictions;
     private Boolean extendable;
     private VisibilityDetail include;
     private VisibilityDetail exclude;
@@ -41,6 +42,7 @@ public class Visibility extends GenericModel {
      * @param visibility the instance to initialize the Builder with
      */
     private Builder(Visibility visibility) {
+      this.restrictions = visibility.restrictions;
       this.extendable = visibility.extendable;
       this.include = visibility.include;
       this.exclude = visibility.exclude;
@@ -59,6 +61,17 @@ public class Visibility extends GenericModel {
      */
     public Visibility build() {
       return new Visibility(this);
+    }
+
+    /**
+     * Set the restrictions.
+     *
+     * @param restrictions the restrictions
+     * @return the Visibility builder
+     */
+    public Builder restrictions(String restrictions) {
+      this.restrictions = restrictions;
+      return this;
     }
 
     /**
@@ -98,6 +111,7 @@ public class Visibility extends GenericModel {
   protected Visibility() { }
 
   protected Visibility(Builder builder) {
+    restrictions = builder.restrictions;
     extendable = builder.extendable;
     include = builder.include;
     exclude = builder.exclude;
@@ -115,9 +129,10 @@ public class Visibility extends GenericModel {
   /**
    * Gets the restrictions.
    *
-   * This controls the overall visibility. It is an enum of *public*, *ibm_only*, and *private*. public means it is
-   * visible to all. ibm_only means it is visible to all IBM unless their account is explicitly excluded. private means
-   * it is visible only to the included accounts.
+   * This controls the overall visibility. It is an enum of *public*, *nonibm_only*, *ibm_only*, and *private*. public
+   * means it is visible to all. nonibm_only means it is visible to all except IBM unless their account is explicitly
+   * included, ibm_only means it is visible to all IBM unless their account is explicitly excluded. private means it is
+   * visible only to the included accounts.
    *
    * @return the restrictions
    */
@@ -139,7 +154,7 @@ public class Visibility extends GenericModel {
   /**
    * Gets the extendable.
    *
-   * Allows the visibility to be extenable.
+   * Allows the visibility to be extendable.
    *
    * @return the extendable
    */
@@ -173,7 +188,7 @@ public class Visibility extends GenericModel {
    * Gets the approved.
    *
    * Determines whether the owning account has full control over the visibility of the entry such as adding non-IBM
-   * accounts to the whitelist and making entries `private`, `ibm_only` or `public`.
+   * accounts to the whitelist and making entries `private`, `nonibm_only`, `ibm_only` or `public`.
    *
    * @return the approved
    */

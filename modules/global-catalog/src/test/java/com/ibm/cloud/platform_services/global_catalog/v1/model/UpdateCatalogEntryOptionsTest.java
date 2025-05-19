@@ -106,6 +106,11 @@ public class UpdateCatalogEntryOptionsTest {
       .testCheckInterval(Long.valueOf("26"))
       .serviceKeySupported(true)
       .cfGuid(java.util.Collections.singletonMap("key1", "testString"))
+      .crnMask("testString")
+      .userDefinedService(java.util.Collections.singletonMap("anyKey", "anyValue"))
+      .extension(java.util.Collections.singletonMap("anyKey", "anyValue"))
+      .paidOnly(true)
+      .customCreatePageHybridEnabled(true)
       .build();
     assertEquals(cfMetaDataModel.type(), "testString");
     assertEquals(cfMetaDataModel.iamCompatible(), Boolean.valueOf(true));
@@ -121,6 +126,11 @@ public class UpdateCatalogEntryOptionsTest {
     assertEquals(cfMetaDataModel.testCheckInterval(), Long.valueOf("26"));
     assertEquals(cfMetaDataModel.serviceKeySupported(), Boolean.valueOf(true));
     assertEquals(cfMetaDataModel.cfGuid(), java.util.Collections.singletonMap("key1", "testString"));
+    assertEquals(cfMetaDataModel.crnMask(), "testString");
+    assertEquals(cfMetaDataModel.userDefinedService(), java.util.Collections.singletonMap("anyKey", "anyValue"));
+    assertEquals(cfMetaDataModel.extension(), java.util.Collections.singletonMap("anyKey", "anyValue"));
+    assertEquals(cfMetaDataModel.paidOnly(), Boolean.valueOf(true));
+    assertEquals(cfMetaDataModel.customCreatePageHybridEnabled(), Boolean.valueOf(true));
 
     PlanMetaData planMetaDataModel = new PlanMetaData.Builder()
       .bindable(true)
@@ -128,6 +138,7 @@ public class UpdateCatalogEntryOptionsTest {
       .allowInternalUsers(true)
       .asyncProvisioningSupported(true)
       .asyncUnprovisioningSupported(true)
+      .provisionType("testString")
       .testCheckInterval(Long.valueOf("26"))
       .singleScopeInstance("testString")
       .serviceCheckEnabled(true)
@@ -138,6 +149,7 @@ public class UpdateCatalogEntryOptionsTest {
     assertEquals(planMetaDataModel.allowInternalUsers(), Boolean.valueOf(true));
     assertEquals(planMetaDataModel.asyncProvisioningSupported(), Boolean.valueOf(true));
     assertEquals(planMetaDataModel.asyncUnprovisioningSupported(), Boolean.valueOf(true));
+    assertEquals(planMetaDataModel.provisionType(), "testString");
     assertEquals(planMetaDataModel.testCheckInterval(), Long.valueOf("26"));
     assertEquals(planMetaDataModel.singleScopeInstance(), "testString");
     assertEquals(planMetaDataModel.serviceCheckEnabled(), Boolean.valueOf(true));

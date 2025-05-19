@@ -47,5 +47,6 @@ public class MetricsTest {
     assertNull(metricsModel.getEffectiveFrom());
     assertNull(metricsModel.getEffectiveUntil());
     assertNull(metricsModel.getAmounts());
+    assertNull(metricsModel.getAdditionalProperties());
   }
 }

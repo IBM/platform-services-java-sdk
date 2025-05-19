@@ -144,7 +144,9 @@ public class DeploymentBase extends GenericModel {
      *
      * @param mccpId the mccpId
      * @return the DeploymentBase builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder mccpId(String mccpId) {
       this.mccpId = mccpId;
       return this;
@@ -166,7 +168,9 @@ public class DeploymentBase extends GenericModel {
      *
      * @param supportsRcMigration the supportsRcMigration
      * @return the DeploymentBase builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder supportsRcMigration(Boolean supportsRcMigration) {
       this.supportsRcMigration = supportsRcMigration;
       return this;
@@ -232,7 +236,7 @@ public class DeploymentBase extends GenericModel {
   /**
    * Gets the originalLocation.
    *
-   * Original service location.
+   * The original region in which this deployment existed.
    *
    * @return the originalLocation
    */
@@ -254,7 +258,7 @@ public class DeploymentBase extends GenericModel {
   /**
    * Gets the serviceCrn.
    *
-   * CRN for the service.
+   * Cloud resource name for this deployment.
    *
    * @return the serviceCrn
    */
@@ -265,10 +269,12 @@ public class DeploymentBase extends GenericModel {
   /**
    * Gets the mccpId.
    *
-   * ID for MCCP.
+   * ID of the multi cloud connectivity platform.
    *
    * @return the mccpId
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public String mccpId() {
     return mccpId;
   }
@@ -290,7 +296,9 @@ public class DeploymentBase extends GenericModel {
    * This deployment not only supports RC but is ready to migrate and support the RC broker for a location.
    *
    * @return the supportsRcMigration
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public Boolean supportsRcMigration() {
     return supportsRcMigration;
   }
@@ -298,7 +306,8 @@ public class DeploymentBase extends GenericModel {
   /**
    * Gets the targetNetwork.
    *
-   * network to use during deployment.
+   * When using the service_endpoint_supported tag for a deployment, this optional field can be set on a deployment to
+   * denote the supported service endpoint type (cse_private, public, or cse_private+public).
    *
    * @return the targetNetwork
    */

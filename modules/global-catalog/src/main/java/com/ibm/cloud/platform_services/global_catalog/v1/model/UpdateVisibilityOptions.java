@@ -21,6 +21,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class UpdateVisibilityOptions extends GenericModel {
 
   protected String id;
+  protected String restrictions;
   protected Boolean extendable;
   protected VisibilityDetail include;
   protected VisibilityDetail exclude;
@@ -31,6 +32,7 @@ public class UpdateVisibilityOptions extends GenericModel {
    */
   public static class Builder {
     private String id;
+    private String restrictions;
     private Boolean extendable;
     private VisibilityDetail include;
     private VisibilityDetail exclude;
@@ -43,6 +45,7 @@ public class UpdateVisibilityOptions extends GenericModel {
      */
     private Builder(UpdateVisibilityOptions updateVisibilityOptions) {
       this.id = updateVisibilityOptions.id;
+      this.restrictions = updateVisibilityOptions.restrictions;
       this.extendable = updateVisibilityOptions.extendable;
       this.include = updateVisibilityOptions.include;
       this.exclude = updateVisibilityOptions.exclude;
@@ -81,6 +84,17 @@ public class UpdateVisibilityOptions extends GenericModel {
      */
     public Builder id(String id) {
       this.id = id;
+      return this;
+    }
+
+    /**
+     * Set the restrictions.
+     *
+     * @param restrictions the restrictions
+     * @return the UpdateVisibilityOptions builder
+     */
+    public Builder restrictions(String restrictions) {
+      this.restrictions = restrictions;
       return this;
     }
 
@@ -135,6 +149,7 @@ public class UpdateVisibilityOptions extends GenericModel {
      * @return the UpdateVisibilityOptions builder
      */
     public Builder visibility(Visibility visibility) {
+      this.restrictions = visibility.restrictions();
       this.extendable = visibility.extendable();
       this.include = visibility.include();
       this.exclude = visibility.exclude();
@@ -148,6 +163,7 @@ public class UpdateVisibilityOptions extends GenericModel {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.id,
       "id cannot be empty");
     id = builder.id;
+    restrictions = builder.restrictions;
     extendable = builder.extendable;
     include = builder.include;
     exclude = builder.exclude;
@@ -175,9 +191,23 @@ public class UpdateVisibilityOptions extends GenericModel {
   }
 
   /**
+   * Gets the restrictions.
+   *
+   * This controls the overall visibility. It is an enum of *public*, *nonibm_only*, *ibm_only*, and *private*. public
+   * means it is visible to all. nonibm_only means it is visible to all except IBM unless their account is explicitly
+   * included, ibm_only means it is visible to all IBM unless their account is explicitly excluded. private means it is
+   * visible only to the included accounts.
+   *
+   * @return the restrictions
+   */
+  public String restrictions() {
+    return restrictions;
+  }
+
+  /**
    * Gets the extendable.
    *
-   * Allows the visibility to be extenable.
+   * Allows the visibility to be extendable.
    *
    * @return the extendable
    */

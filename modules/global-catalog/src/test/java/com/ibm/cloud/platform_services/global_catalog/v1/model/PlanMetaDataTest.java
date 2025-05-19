@@ -37,6 +37,7 @@ public class PlanMetaDataTest {
       .allowInternalUsers(true)
       .asyncProvisioningSupported(true)
       .asyncUnprovisioningSupported(true)
+      .provisionType("testString")
       .testCheckInterval(Long.valueOf("26"))
       .singleScopeInstance("testString")
       .serviceCheckEnabled(true)
@@ -47,6 +48,7 @@ public class PlanMetaDataTest {
     assertEquals(planMetaDataModel.allowInternalUsers(), Boolean.valueOf(true));
     assertEquals(planMetaDataModel.asyncProvisioningSupported(), Boolean.valueOf(true));
     assertEquals(planMetaDataModel.asyncUnprovisioningSupported(), Boolean.valueOf(true));
+    assertEquals(planMetaDataModel.provisionType(), "testString");
     assertEquals(planMetaDataModel.testCheckInterval(), Long.valueOf("26"));
     assertEquals(planMetaDataModel.singleScopeInstance(), "testString");
     assertEquals(planMetaDataModel.serviceCheckEnabled(), Boolean.valueOf(true));
@@ -61,6 +63,7 @@ public class PlanMetaDataTest {
     assertEquals(planMetaDataModelNew.allowInternalUsers(), Boolean.valueOf(true));
     assertEquals(planMetaDataModelNew.asyncProvisioningSupported(), Boolean.valueOf(true));
     assertEquals(planMetaDataModelNew.asyncUnprovisioningSupported(), Boolean.valueOf(true));
+    assertEquals(planMetaDataModelNew.provisionType(), "testString");
     assertEquals(planMetaDataModelNew.testCheckInterval(), Long.valueOf("26"));
     assertEquals(planMetaDataModelNew.singleScopeInstance(), "testString");
     assertEquals(planMetaDataModelNew.serviceCheckEnabled(), Boolean.valueOf(true));

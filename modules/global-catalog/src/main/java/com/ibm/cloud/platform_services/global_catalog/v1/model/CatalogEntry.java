@@ -26,8 +26,8 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class CatalogEntry extends GenericModel {
 
   /**
-   * The type of catalog entry, **service**, **template**, **dashboard**, which determines the type and shape of the
-   * object.
+   * The type of catalog entry which determines the type and shape of the object. Valid GC types are buildpack, cname,
+   * dataset, geography, iaas, platform_service, runtime, service, template, ui-dashboard.
    */
   public interface Kind {
     /** service. */
@@ -81,8 +81,8 @@ public class CatalogEntry extends GenericModel {
   /**
    * Gets the kind.
    *
-   * The type of catalog entry, **service**, **template**, **dashboard**, which determines the type and shape of the
-   * object.
+   * The type of catalog entry which determines the type and shape of the object. Valid GC types are buildpack, cname,
+   * dataset, geography, iaas, platform_service, runtime, service, template, ui-dashboard.
    *
    * @return the kind
    */
@@ -138,7 +138,8 @@ public class CatalogEntry extends GenericModel {
   /**
    * Gets the tags.
    *
-   * A list of tags. For example, IBM, 3rd Party, Beta, GA, and Single Tenant.
+   * A searchable list of tags. For example, IBM, 3rd Party, Beta, GA, and Single Tenant. Valid values found at
+   * https://globalcatalog.test.cloud.ibm.com/search.
    *
    * @return the tags
    */
@@ -248,7 +249,8 @@ public class CatalogEntry extends GenericModel {
   /**
    * Gets the pricingTags.
    *
-   * tags to indicate the type of pricing plans this service supports.
+   * tags to indicate the type of pricing plans this service supports. Plans tagged with paid_only will not be shown for
+   * trial accounts.
    *
    * @return the pricingTags
    */

@@ -405,7 +405,7 @@ public class UIMetaData extends GenericModel {
   /**
    * Gets the hidden.
    *
-   * Denotes visibility.
+   * Denotes visibility. Can be set on a service/plan/deployment only by an account with bluemix admin privileges.
    *
    * @return the hidden
    */

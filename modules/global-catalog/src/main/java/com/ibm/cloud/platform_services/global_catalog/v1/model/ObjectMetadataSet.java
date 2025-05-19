@@ -230,7 +230,9 @@ public class ObjectMetadataSet extends GenericModel {
      *
      * @param version the version
      * @return the ObjectMetadataSet builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder version(String version) {
       this.version = version;
       return this;
@@ -301,7 +303,8 @@ public class ObjectMetadataSet extends GenericModel {
   /**
    * Gets the rcCompatible.
    *
-   * Boolean value that describes whether the service is compatible with the Resource Controller.
+   * Boolean value that describes whether the service is compatible with the Resource Controller. Only settable for
+   * deployments, propogated upward.
    *
    * @return the rcCompatible
    */
@@ -411,10 +414,12 @@ public class ObjectMetadataSet extends GenericModel {
   /**
    * Gets the version.
    *
-   * Optional version of the object.
+   * Optional version of the object. Only valid for templates.
    *
    * @return the version
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public String version() {
     return version;
   }

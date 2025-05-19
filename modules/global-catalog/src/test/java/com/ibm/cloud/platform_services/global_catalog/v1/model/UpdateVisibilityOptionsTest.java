@@ -45,12 +45,14 @@ public class UpdateVisibilityOptionsTest {
 
     UpdateVisibilityOptions updateVisibilityOptionsModel = new UpdateVisibilityOptions.Builder()
       .id("testString")
+      .restrictions("testString")
       .extendable(true)
       .include(visibilityDetailModel)
       .exclude(visibilityDetailModel)
       .account("testString")
       .build();
     assertEquals(updateVisibilityOptionsModel.id(), "testString");
+    assertEquals(updateVisibilityOptionsModel.restrictions(), "testString");
     assertEquals(updateVisibilityOptionsModel.extendable(), Boolean.valueOf(true));
     assertEquals(updateVisibilityOptionsModel.include(), visibilityDetailModel);
     assertEquals(updateVisibilityOptionsModel.exclude(), visibilityDetailModel);

@@ -13,6 +13,7 @@
 
 package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
+import java.util.Date;
 import java.util.List;
 
 import com.google.gson.annotations.SerializedName;
@@ -31,18 +32,30 @@ public class CatalogEntryMetadataPricing extends GenericModel {
   protected String deploymentId;
   @SerializedName("deployment_location")
   protected String deploymentLocation;
+  @SerializedName("deployment_region")
+  protected String deploymentRegion;
   @SerializedName("deployment_location_no_price_available")
   protected Boolean deploymentLocationNoPriceAvailable;
   protected List<Metrics> metrics;
   @SerializedName("deployment_regions")
   protected List<String> deploymentRegions;
+  @SerializedName("effective_from")
+  protected Date effectiveFrom;
+  @SerializedName("effective_until")
+  protected Date effectiveUntil;
+  @SerializedName("require_login")
+  protected Boolean requireLogin;
+  @SerializedName("pricing_catalog_url")
+  protected String pricingCatalogUrl;
+  @SerializedName("sales_avenue")
+  protected List<String> salesAvenue;
 
   protected CatalogEntryMetadataPricing() { }
 
   /**
    * Gets the type.
    *
-   * Type of plan. Valid values are `free`, `trial`, `paygo`, `bluemix-subscription`, and `ibm-subscription`.
+   * Type of plan. Valid values are `free`, `trial`, `paygo`, `paid`, `subscription`.
    *
    * @return the type
    */
@@ -95,6 +108,18 @@ public class CatalogEntryMetadataPricing extends GenericModel {
   }
 
   /**
+   * Gets the deploymentRegion.
+   *
+   * If price is for a deployment object then the region in the pricing catalog of the deployment object will be here.
+   * To be valid, this value must be contained within deployment_regions.
+   *
+   * @return the deploymentRegion
+   */
+  public String getDeploymentRegion() {
+    return deploymentRegion;
+  }
+
+  /**
    * Gets the deploymentLocationNoPriceAvailable.
    *
    * Is the location price not available. Only set in api /pricing/deployment and only set if true. This means for the
@@ -126,6 +151,62 @@ public class CatalogEntryMetadataPricing extends GenericModel {
    */
   public List<String> getDeploymentRegions() {
     return deploymentRegions;
+  }
+
+  /**
+   * Gets the effectiveFrom.
+   *
+   * The start date-time indicating when this pricing plan takes effect.
+   *
+   * @return the effectiveFrom
+   */
+  public Date getEffectiveFrom() {
+    return effectiveFrom;
+  }
+
+  /**
+   * Gets the effectiveUntil.
+   *
+   * The end date-time indicating when this pricing plan is no longer in effect.
+   *
+   * @return the effectiveUntil
+   */
+  public Date getEffectiveUntil() {
+    return effectiveUntil;
+  }
+
+  /**
+   * Gets the requireLogin.
+   *
+   * Boolean value indicating whether or not this pricing plan requires login to get pricing data.
+   *
+   * @return the requireLogin
+   */
+  public Boolean isRequireLogin() {
+    return requireLogin;
+  }
+
+  /**
+   * Gets the pricingCatalogUrl.
+   *
+   * URL to the entry for this plan on the pricing catalog.
+   *
+   * @return the pricingCatalogUrl
+   */
+  public String getPricingCatalogUrl() {
+    return pricingCatalogUrl;
+  }
+
+  /**
+   * Gets the salesAvenue.
+   *
+   * Tags describing how this plan was purchased (catalog [default], seller, private offer). Currently only settable on
+   * MCSP subscription plans.
+   *
+   * @return the salesAvenue
+   */
+  public List<String> getSalesAvenue() {
+    return salesAvenue;
   }
 }
 

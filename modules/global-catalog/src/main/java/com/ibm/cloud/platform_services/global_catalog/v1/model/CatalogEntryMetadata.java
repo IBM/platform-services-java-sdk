@@ -46,7 +46,8 @@ public class CatalogEntryMetadata extends GenericModel {
   /**
    * Gets the rcCompatible.
    *
-   * Boolean value that describes whether the service is compatible with the Resource Controller.
+   * Boolean value that describes whether the service is compatible with the Resource Controller. Only settable for
+   * deployments, propogated upward.
    *
    * @return the rcCompatible
    */
@@ -156,10 +157,12 @@ public class CatalogEntryMetadata extends GenericModel {
   /**
    * Gets the version.
    *
-   * Optional version of the object.
+   * Optional version of the object. Only valid for templates.
    *
    * @return the version
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public String getVersion() {
     return version;
   }

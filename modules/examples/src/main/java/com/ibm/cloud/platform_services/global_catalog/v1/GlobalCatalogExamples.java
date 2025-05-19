@@ -316,6 +316,7 @@ public class GlobalCatalogExamples {
             UpdateVisibilityOptions updateVisibilityOptions = new UpdateVisibilityOptions.Builder()
                     .id(catalogEntryId)
                     .extendable(false)
+                    .restrictions("private")
                     .build();
 
             Response<Void> response = service.updateVisibility(updateVisibilityOptions).execute();

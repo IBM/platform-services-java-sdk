@@ -1,3 +1,10 @@
+# [0.66.0](https://github.com/IBM/platform-services-java-sdk/compare/0.65.0...0.66.0) (2025-05-20)
+
+
+### Features
+
+* **Global Catalog:** support non ibm only visibility ([#272](https://github.com/IBM/platform-services-java-sdk/issues/272)) ([9924f58](https://github.com/IBM/platform-services-java-sdk/commit/9924f58298d692ff321702251997c2eeb6625283))
+
 # [0.65.0](https://github.com/IBM/platform-services-java-sdk/compare/0.64.0...0.65.0) (2025-05-07)
 
 

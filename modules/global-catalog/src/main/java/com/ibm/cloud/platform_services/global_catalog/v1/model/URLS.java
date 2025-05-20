@@ -325,7 +325,7 @@ public class URLS extends GenericModel {
   /**
    * Gets the customCreatePageUrl.
    *
-   * URL to the custom create page for your serivce.
+   * URL to the custom create page for your service.
    *
    * @return the customCreatePageUrl
    */
@@ -336,7 +336,7 @@ public class URLS extends GenericModel {
   /**
    * Gets the catalogDetailsUrl.
    *
-   * URL to the catalog details page for your serivce.
+   * URL to the catalog details page for your service.
    *
    * @return the catalogDetailsUrl
    */

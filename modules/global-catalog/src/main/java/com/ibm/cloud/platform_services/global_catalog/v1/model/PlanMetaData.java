@@ -31,6 +31,8 @@ public class PlanMetaData extends GenericModel {
   protected Boolean asyncProvisioningSupported;
   @SerializedName("async_unprovisioning_supported")
   protected Boolean asyncUnprovisioningSupported;
+  @SerializedName("provision_type")
+  protected String provisionType;
   @SerializedName("test_check_interval")
   protected Long testCheckInterval;
   @SerializedName("single_scope_instance")
@@ -49,6 +51,7 @@ public class PlanMetaData extends GenericModel {
     private Boolean allowInternalUsers;
     private Boolean asyncProvisioningSupported;
     private Boolean asyncUnprovisioningSupported;
+    private String provisionType;
     private Long testCheckInterval;
     private String singleScopeInstance;
     private Boolean serviceCheckEnabled;
@@ -65,6 +68,7 @@ public class PlanMetaData extends GenericModel {
       this.allowInternalUsers = planMetaData.allowInternalUsers;
       this.asyncProvisioningSupported = planMetaData.asyncProvisioningSupported;
       this.asyncUnprovisioningSupported = planMetaData.asyncUnprovisioningSupported;
+      this.provisionType = planMetaData.provisionType;
       this.testCheckInterval = planMetaData.testCheckInterval;
       this.singleScopeInstance = planMetaData.singleScopeInstance;
       this.serviceCheckEnabled = planMetaData.serviceCheckEnabled;
@@ -124,7 +128,9 @@ public class PlanMetaData extends GenericModel {
      *
      * @param asyncProvisioningSupported the asyncProvisioningSupported
      * @return the PlanMetaData builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder asyncProvisioningSupported(Boolean asyncProvisioningSupported) {
       this.asyncProvisioningSupported = asyncProvisioningSupported;
       return this;
@@ -135,9 +141,22 @@ public class PlanMetaData extends GenericModel {
      *
      * @param asyncUnprovisioningSupported the asyncUnprovisioningSupported
      * @return the PlanMetaData builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder asyncUnprovisioningSupported(Boolean asyncUnprovisioningSupported) {
       this.asyncUnprovisioningSupported = asyncUnprovisioningSupported;
+      return this;
+    }
+
+    /**
+     * Set the provisionType.
+     *
+     * @param provisionType the provisionType
+     * @return the PlanMetaData builder
+     */
+    public Builder provisionType(String provisionType) {
+      this.provisionType = provisionType;
       return this;
     }
 
@@ -146,7 +165,9 @@ public class PlanMetaData extends GenericModel {
      *
      * @param testCheckInterval the testCheckInterval
      * @return the PlanMetaData builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder testCheckInterval(long testCheckInterval) {
       this.testCheckInterval = testCheckInterval;
       return this;
@@ -157,7 +178,9 @@ public class PlanMetaData extends GenericModel {
      *
      * @param singleScopeInstance the singleScopeInstance
      * @return the PlanMetaData builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder singleScopeInstance(String singleScopeInstance) {
       this.singleScopeInstance = singleScopeInstance;
       return this;
@@ -168,7 +191,9 @@ public class PlanMetaData extends GenericModel {
      *
      * @param serviceCheckEnabled the serviceCheckEnabled
      * @return the PlanMetaData builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder serviceCheckEnabled(Boolean serviceCheckEnabled) {
       this.serviceCheckEnabled = serviceCheckEnabled;
       return this;
@@ -179,7 +204,9 @@ public class PlanMetaData extends GenericModel {
      *
      * @param cfGuid the cfGuid
      * @return the PlanMetaData builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder cfGuid(Map<String, String> cfGuid) {
       this.cfGuid = cfGuid;
       return this;
@@ -194,6 +221,7 @@ public class PlanMetaData extends GenericModel {
     allowInternalUsers = builder.allowInternalUsers;
     asyncProvisioningSupported = builder.asyncProvisioningSupported;
     asyncUnprovisioningSupported = builder.asyncUnprovisioningSupported;
+    provisionType = builder.provisionType;
     testCheckInterval = builder.testCheckInterval;
     singleScopeInstance = builder.singleScopeInstance;
     serviceCheckEnabled = builder.serviceCheckEnabled;
@@ -212,7 +240,8 @@ public class PlanMetaData extends GenericModel {
   /**
    * Gets the bindable.
    *
-   * Boolean value that describes whether the service can be bound to an application.
+   * Boolean value that describes whether the service can be bound to an application. If true then this will create and
+   * use resource keys.
    *
    * @return the bindable
    */
@@ -223,7 +252,7 @@ public class PlanMetaData extends GenericModel {
   /**
    * Gets the reservable.
    *
-   * Boolean value that describes whether the service can be reserved.
+   * Boolean value that describes whether the service can be reserved for pricing subscriptions.
    *
    * @return the reservable
    */
@@ -234,7 +263,8 @@ public class PlanMetaData extends GenericModel {
   /**
    * Gets the allowInternalUsers.
    *
-   * Boolean value that describes whether the service can be used internally.
+   * Boolean value that describes whether the service can be used on IBM accounts. If false this cannot be onboarded by
+   * an IBM account.
    *
    * @return the allowInternalUsers
    */
@@ -245,10 +275,13 @@ public class PlanMetaData extends GenericModel {
   /**
    * Gets the asyncProvisioningSupported.
    *
-   * Boolean value that describes whether the service can be provisioned asynchronously.
+   * Boolean value that describes whether the service supports asynchronous provisioning. Now handled by a 202 response
+   * indicating support from the broker on provisioning.
    *
    * @return the asyncProvisioningSupported
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public Boolean asyncProvisioningSupported() {
     return asyncProvisioningSupported;
   }
@@ -256,21 +289,37 @@ public class PlanMetaData extends GenericModel {
   /**
    * Gets the asyncUnprovisioningSupported.
    *
-   * Boolean value that describes whether the service can be unprovisioned asynchronously.
+   * Boolean value that describes whether the service supports asynchronous unprovisioning. Now handled by a 202
+   * response indicating support from the broker on unprovisioning.
    *
    * @return the asyncUnprovisioningSupported
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public Boolean asyncUnprovisioningSupported() {
     return asyncUnprovisioningSupported;
   }
 
   /**
+   * Gets the provisionType.
+   *
+   * How the subscription is provisioned (managed cloud service provider (mcsp), IBM_cloud, legacy).
+   *
+   * @return the provisionType
+   */
+  public String provisionType() {
+    return provisionType;
+  }
+
+  /**
    * Gets the testCheckInterval.
    *
-   * Test check interval.
+   * A unit of time that determines the time in between uptime checks to be performed by the Estado testing service.
    *
    * @return the testCheckInterval
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public Long testCheckInterval() {
     return testCheckInterval;
   }
@@ -278,10 +327,12 @@ public class PlanMetaData extends GenericModel {
   /**
    * Gets the singleScopeInstance.
    *
-   * Single scope instance.
+   * String denoting if a single instance is shared among a group of users. E.g. org.
    *
    * @return the singleScopeInstance
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public String singleScopeInstance() {
     return singleScopeInstance;
   }
@@ -289,10 +340,12 @@ public class PlanMetaData extends GenericModel {
   /**
    * Gets the serviceCheckEnabled.
    *
-   * Boolean value that describes whether the service check is enabled.
+   * Boolean value that describes whether the Estado testing service will perform uptime tests for this service.
    *
    * @return the serviceCheckEnabled
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public Boolean serviceCheckEnabled() {
     return serviceCheckEnabled;
   }
@@ -304,7 +357,9 @@ public class PlanMetaData extends GenericModel {
    * example, `us-south=123`.
    *
    * @return the cfGuid
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public Map<String, String> cfGuid() {
     return cfGuid;
   }

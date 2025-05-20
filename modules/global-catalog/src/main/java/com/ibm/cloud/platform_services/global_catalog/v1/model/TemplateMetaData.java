@@ -268,7 +268,7 @@ public class TemplateMetaData extends GenericModel {
   /**
    * Gets the startCmd.
    *
-   * Start Command.
+   * Command used to start a service.
    *
    * @return the startCmd
    */

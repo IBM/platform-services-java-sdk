@@ -114,7 +114,7 @@ public class PricingSet extends GenericModel {
   /**
    * Gets the type.
    *
-   * Type of plan. Valid values are `free`, `trial`, `paygo`, `bluemix-subscription`, and `ibm-subscription`.
+   * Type of plan. Valid values are `free`, `trial`, `paygo`, `paid`, `subscription`.
    *
    * @return the type
    */
@@ -125,7 +125,7 @@ public class PricingSet extends GenericModel {
   /**
    * Gets the origin.
    *
-   * Defines where the pricing originates.
+   * Defines where the pricing originates, either the pricing catalog or the global catalog.
    *
    * @return the origin
    */

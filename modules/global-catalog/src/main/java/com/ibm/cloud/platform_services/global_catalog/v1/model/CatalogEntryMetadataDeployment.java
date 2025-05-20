@@ -65,7 +65,7 @@ public class CatalogEntryMetadataDeployment extends GenericModel {
   /**
    * Gets the originalLocation.
    *
-   * Original service location.
+   * The original region in which this deployment existed.
    *
    * @return the originalLocation
    */
@@ -87,7 +87,7 @@ public class CatalogEntryMetadataDeployment extends GenericModel {
   /**
    * Gets the serviceCrn.
    *
-   * CRN for the service.
+   * Cloud resource name for this deployment.
    *
    * @return the serviceCrn
    */
@@ -98,10 +98,12 @@ public class CatalogEntryMetadataDeployment extends GenericModel {
   /**
    * Gets the mccpId.
    *
-   * ID for MCCP.
+   * ID of the multi cloud connectivity platform.
    *
    * @return the mccpId
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public String getMccpId() {
     return mccpId;
   }
@@ -123,7 +125,9 @@ public class CatalogEntryMetadataDeployment extends GenericModel {
    * This deployment not only supports RC but is ready to migrate and support the RC broker for a location.
    *
    * @return the supportsRcMigration
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public Boolean isSupportsRcMigration() {
     return supportsRcMigration;
   }
@@ -131,7 +135,8 @@ public class CatalogEntryMetadataDeployment extends GenericModel {
   /**
    * Gets the targetNetwork.
    *
-   * network to use during deployment.
+   * When using the service_endpoint_supported tag for a deployment, this optional field can be set on a deployment to
+   * denote the supported service endpoint type (cse_private, public, or cse_private+public).
    *
    * @return the targetNetwork
    */

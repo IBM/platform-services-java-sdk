@@ -15,6 +15,7 @@ package com.ibm.cloud.platform_services.global_catalog.v1.model;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
@@ -49,13 +50,15 @@ public class Metrics extends GenericModel {
   @SerializedName("effective_until")
   protected Date effectiveUntil;
   protected List<Amount> amounts;
+  @SerializedName("additional_properties")
+  protected Map<String, Object> additionalProperties;
 
   protected Metrics() { }
 
   /**
    * Gets the partRef.
    *
-   * The part reference.
+   * The reference guid for the part.
    *
    * @return the partRef
    */
@@ -77,7 +80,7 @@ public class Metrics extends GenericModel {
   /**
    * Gets the tierModel.
    *
-   * The tier model.
+   * The pricing tier type used to calculate the marginal unit price. Follows simple, graduated or block tier styles.
    *
    * @return the tierModel
    */
@@ -88,7 +91,7 @@ public class Metrics extends GenericModel {
   /**
    * Gets the chargeUnit.
    *
-   * The unit to charge.
+   * The unit to be charged under this metric.
    *
    * @return the chargeUnit
    */
@@ -99,7 +102,7 @@ public class Metrics extends GenericModel {
   /**
    * Gets the chargeUnitName.
    *
-   * The charge unit name.
+   * The name associated with a charge unit to provide context.
    *
    * @return the chargeUnitName
    */
@@ -110,7 +113,7 @@ public class Metrics extends GenericModel {
   /**
    * Gets the chargeUnitQuantity.
    *
-   * The charge unit quantity.
+   * The quantity associated with the charge unit to determine price change intervals.
    *
    * @return the chargeUnitQuantity
    */
@@ -121,7 +124,7 @@ public class Metrics extends GenericModel {
   /**
    * Gets the resourceDisplayName.
    *
-   * Display name of the resource.
+   * The display name of the resource tied to the charge unit of this metric.
    *
    * @return the resourceDisplayName
    */
@@ -132,7 +135,7 @@ public class Metrics extends GenericModel {
   /**
    * Gets the chargeUnitDisplayName.
    *
-   * Display name of the charge unit.
+   * Display name of the charge unit to be rendered human readable by the UI.
    *
    * @return the chargeUnitDisplayName
    */
@@ -143,7 +146,7 @@ public class Metrics extends GenericModel {
   /**
    * Gets the usageCapQty.
    *
-   * Usage limit for the metric.
+   * Upper bound for the usage under the parent metric.
    *
    * @return the usageCapQty
    */
@@ -154,7 +157,7 @@ public class Metrics extends GenericModel {
   /**
    * Gets the displayCap.
    *
-   * Display capacity.
+   * The display capacity for the UI.
    *
    * @return the displayCap
    */
@@ -165,7 +168,7 @@ public class Metrics extends GenericModel {
   /**
    * Gets the effectiveFrom.
    *
-   * Effective from time.
+   * The end date-time indicating when this metric is no longer in effect.
    *
    * @return the effectiveFrom
    */
@@ -176,7 +179,7 @@ public class Metrics extends GenericModel {
   /**
    * Gets the effectiveUntil.
    *
-   * Effective until time.
+   * The start date-time indicating when this metric takes effect.
    *
    * @return the effectiveUntil
    */
@@ -193,6 +196,17 @@ public class Metrics extends GenericModel {
    */
   public List<Amount> getAmounts() {
     return amounts;
+  }
+
+  /**
+   * Gets the additionalProperties.
+   *
+   * A property-bag like extension to metric metadata.
+   *
+   * @return the additionalProperties
+   */
+  public Map<String, Object> getAdditionalProperties() {
+    return additionalProperties;
   }
 }
 

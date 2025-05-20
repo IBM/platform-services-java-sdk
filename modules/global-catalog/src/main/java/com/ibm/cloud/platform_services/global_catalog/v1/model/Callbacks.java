@@ -119,7 +119,9 @@ public class Callbacks extends GenericModel {
      *
      * @param brokerProxyUrl the brokerProxyUrl
      * @return the Callbacks builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder brokerProxyUrl(String brokerProxyUrl) {
       this.brokerProxyUrl = brokerProxyUrl;
       return this;
@@ -255,7 +257,9 @@ public class Callbacks extends GenericModel {
    * The URL of the deployment broker SC proxy.
    *
    * @return the brokerProxyUrl
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public String brokerProxyUrl() {
     return brokerProxyUrl;
   }

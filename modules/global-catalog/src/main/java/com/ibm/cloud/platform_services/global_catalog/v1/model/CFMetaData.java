@@ -48,6 +48,15 @@ public class CFMetaData extends GenericModel {
   protected Boolean serviceKeySupported;
   @SerializedName("cf_guid")
   protected Map<String, String> cfGuid;
+  @SerializedName("crn_mask")
+  protected String crnMask;
+  @SerializedName("user_defined_service")
+  protected Map<String, Object> userDefinedService;
+  protected Map<String, Object> extension;
+  @SerializedName("paid_only")
+  protected Boolean paidOnly;
+  @SerializedName("custom_create_page_hybrid_enabled")
+  protected Boolean customCreatePageHybridEnabled;
 
   /**
    * Builder.
@@ -67,6 +76,11 @@ public class CFMetaData extends GenericModel {
     private Long testCheckInterval;
     private Boolean serviceKeySupported;
     private Map<String, String> cfGuid;
+    private String crnMask;
+    private Map<String, Object> userDefinedService;
+    private Map<String, Object> extension;
+    private Boolean paidOnly;
+    private Boolean customCreatePageHybridEnabled;
 
     /**
      * Instantiates a new Builder from an existing CFMetaData instance.
@@ -88,6 +102,11 @@ public class CFMetaData extends GenericModel {
       this.testCheckInterval = cfMetaData.testCheckInterval;
       this.serviceKeySupported = cfMetaData.serviceKeySupported;
       this.cfGuid = cfMetaData.cfGuid;
+      this.crnMask = cfMetaData.crnMask;
+      this.userDefinedService = cfMetaData.userDefinedService;
+      this.extension = cfMetaData.extension;
+      this.paidOnly = cfMetaData.paidOnly;
+      this.customCreatePageHybridEnabled = cfMetaData.customCreatePageHybridEnabled;
     }
 
     /**
@@ -110,7 +129,9 @@ public class CFMetaData extends GenericModel {
      *
      * @param requires the new element to be added
      * @return the CFMetaData builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder addRequires(String requires) {
       com.ibm.cloud.sdk.core.util.Validator.notNull(requires,
         "requires cannot be null");
@@ -126,7 +147,9 @@ public class CFMetaData extends GenericModel {
      *
      * @param type the type
      * @return the CFMetaData builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder type(String type) {
       this.type = type;
       return this;
@@ -148,7 +171,9 @@ public class CFMetaData extends GenericModel {
      *
      * @param uniqueApiKey the uniqueApiKey
      * @return the CFMetaData builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder uniqueApiKey(Boolean uniqueApiKey) {
       this.uniqueApiKey = uniqueApiKey;
       return this;
@@ -181,7 +206,9 @@ public class CFMetaData extends GenericModel {
      *
      * @param asyncProvisioningSupported the asyncProvisioningSupported
      * @return the CFMetaData builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder asyncProvisioningSupported(Boolean asyncProvisioningSupported) {
       this.asyncProvisioningSupported = asyncProvisioningSupported;
       return this;
@@ -192,7 +219,9 @@ public class CFMetaData extends GenericModel {
      *
      * @param asyncUnprovisioningSupported the asyncUnprovisioningSupported
      * @return the CFMetaData builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder asyncUnprovisioningSupported(Boolean asyncUnprovisioningSupported) {
       this.asyncUnprovisioningSupported = asyncUnprovisioningSupported;
       return this;
@@ -204,7 +233,9 @@ public class CFMetaData extends GenericModel {
      *
      * @param requires the requires
      * @return the CFMetaData builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder requires(List<String> requires) {
       this.requires = requires;
       return this;
@@ -226,7 +257,9 @@ public class CFMetaData extends GenericModel {
      *
      * @param state the state
      * @return the CFMetaData builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder state(String state) {
       this.state = state;
       return this;
@@ -237,7 +270,9 @@ public class CFMetaData extends GenericModel {
      *
      * @param serviceCheckEnabled the serviceCheckEnabled
      * @return the CFMetaData builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder serviceCheckEnabled(Boolean serviceCheckEnabled) {
       this.serviceCheckEnabled = serviceCheckEnabled;
       return this;
@@ -248,7 +283,9 @@ public class CFMetaData extends GenericModel {
      *
      * @param testCheckInterval the testCheckInterval
      * @return the CFMetaData builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder testCheckInterval(long testCheckInterval) {
       this.testCheckInterval = testCheckInterval;
       return this;
@@ -270,9 +307,72 @@ public class CFMetaData extends GenericModel {
      *
      * @param cfGuid the cfGuid
      * @return the CFMetaData builder
+     * @deprecated this method is deprecated and may be removed in a future release
      */
+    @Deprecated
     public Builder cfGuid(Map<String, String> cfGuid) {
       this.cfGuid = cfGuid;
+      return this;
+    }
+
+    /**
+     * Set the crnMask.
+     *
+     * @param crnMask the crnMask
+     * @return the CFMetaData builder
+     */
+    public Builder crnMask(String crnMask) {
+      this.crnMask = crnMask;
+      return this;
+    }
+
+    /**
+     * Set the userDefinedService.
+     *
+     * @param userDefinedService the userDefinedService
+     * @return the CFMetaData builder
+     * @deprecated this method is deprecated and may be removed in a future release
+     */
+    @Deprecated
+    public Builder userDefinedService(Map<String, Object> userDefinedService) {
+      this.userDefinedService = userDefinedService;
+      return this;
+    }
+
+    /**
+     * Set the extension.
+     *
+     * @param extension the extension
+     * @return the CFMetaData builder
+     * @deprecated this method is deprecated and may be removed in a future release
+     */
+    @Deprecated
+    public Builder extension(Map<String, Object> extension) {
+      this.extension = extension;
+      return this;
+    }
+
+    /**
+     * Set the paidOnly.
+     *
+     * @param paidOnly the paidOnly
+     * @return the CFMetaData builder
+     * @deprecated this method is deprecated and may be removed in a future release
+     */
+    @Deprecated
+    public Builder paidOnly(Boolean paidOnly) {
+      this.paidOnly = paidOnly;
+      return this;
+    }
+
+    /**
+     * Set the customCreatePageHybridEnabled.
+     *
+     * @param customCreatePageHybridEnabled the customCreatePageHybridEnabled
+     * @return the CFMetaData builder
+     */
+    public Builder customCreatePageHybridEnabled(Boolean customCreatePageHybridEnabled) {
+      this.customCreatePageHybridEnabled = customCreatePageHybridEnabled;
       return this;
     }
   }
@@ -294,6 +394,11 @@ public class CFMetaData extends GenericModel {
     testCheckInterval = builder.testCheckInterval;
     serviceKeySupported = builder.serviceKeySupported;
     cfGuid = builder.cfGuid;
+    crnMask = builder.crnMask;
+    userDefinedService = builder.userDefinedService;
+    extension = builder.extension;
+    paidOnly = builder.paidOnly;
+    customCreatePageHybridEnabled = builder.customCreatePageHybridEnabled;
   }
 
   /**
@@ -308,10 +413,12 @@ public class CFMetaData extends GenericModel {
   /**
    * Gets the type.
    *
-   * Type of service.
+   * The type of service (public, cfaas, personal_catalog, kms, toolchain, etc.).
    *
    * @return the type
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public String type() {
     return type;
   }
@@ -319,7 +426,8 @@ public class CFMetaData extends GenericModel {
   /**
    * Gets the iamCompatible.
    *
-   * Boolean value that describes whether the service is compatible with Identity and Access Management.
+   * Boolean value that describes whether the service is compatible with Identity and Access Management for
+   * authentication and authorization.
    *
    * @return the iamCompatible
    */
@@ -330,10 +438,13 @@ public class CFMetaData extends GenericModel {
   /**
    * Gets the uniqueApiKey.
    *
-   * Boolean value that describes whether the service has a unique API key.
+   * Boolean value that describes whether the service has a unique API key. Only settable on services, should be set via
+   * partnercenter.
    *
    * @return the uniqueApiKey
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public Boolean uniqueApiKey() {
     return uniqueApiKey;
   }
@@ -341,8 +452,8 @@ public class CFMetaData extends GenericModel {
   /**
    * Gets the provisionable.
    *
-   * Boolean value that describes whether the service is provisionable or not. You may need sales or support to create
-   * this service.
+   * Boolean value that, if true, the service is provisionable via resource controller (RC) or, if false, via a service
+   * control point API. If false, you may need sales or support to create this service.
    *
    * @return the provisionable
    */
@@ -353,7 +464,8 @@ public class CFMetaData extends GenericModel {
   /**
    * Gets the bindable.
    *
-   * Boolean value that describes whether you can create bindings for this service.
+   * Boolean value that describes whether the service can be bound to an application. If true then this will create and
+   * use resource keys.
    *
    * @return the bindable
    */
@@ -364,10 +476,13 @@ public class CFMetaData extends GenericModel {
   /**
    * Gets the asyncProvisioningSupported.
    *
-   * Boolean value that describes whether the service supports asynchronous provisioning.
+   * Boolean value that describes whether the service supports asynchronous provisioning. Now handled by a 202 response
+   * indicating support from the broker on provisioning.
    *
    * @return the asyncProvisioningSupported
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public Boolean asyncProvisioningSupported() {
     return asyncProvisioningSupported;
   }
@@ -375,10 +490,13 @@ public class CFMetaData extends GenericModel {
   /**
    * Gets the asyncUnprovisioningSupported.
    *
-   * Boolean value that describes whether the service supports asynchronous unprovisioning.
+   * Boolean value that describes whether the service supports asynchronous unprovisioning. Now handled by a 202
+   * response indicating support from the broker on unprovisioning.
    *
    * @return the asyncUnprovisioningSupported
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public Boolean asyncUnprovisioningSupported() {
     return asyncUnprovisioningSupported;
   }
@@ -386,10 +504,12 @@ public class CFMetaData extends GenericModel {
   /**
    * Gets the requires.
    *
-   * Service dependencies.
+   * Dependencies needed to use this service.
    *
    * @return the requires
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public List<String> requires() {
     return requires;
   }
@@ -397,7 +517,8 @@ public class CFMetaData extends GenericModel {
   /**
    * Gets the planUpdateable.
    *
-   * Boolean value that describes whether the service supports upgrade or downgrade for some plans.
+   * Boolean value that describes whether the service supports changing plans within the service. Only settable on
+   * services, read only on plans and deployments.
    *
    * @return the planUpdateable
    */
@@ -411,7 +532,9 @@ public class CFMetaData extends GenericModel {
    * String that describes whether the service is active or inactive.
    *
    * @return the state
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public String state() {
     return state;
   }
@@ -419,10 +542,12 @@ public class CFMetaData extends GenericModel {
   /**
    * Gets the serviceCheckEnabled.
    *
-   * Boolean value that describes whether the service check is enabled.
+   * Boolean value that describes whether the Estado testing service will perform uptime tests for this service.
    *
    * @return the serviceCheckEnabled
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public Boolean serviceCheckEnabled() {
     return serviceCheckEnabled;
   }
@@ -430,10 +555,12 @@ public class CFMetaData extends GenericModel {
   /**
    * Gets the testCheckInterval.
    *
-   * Test check interval.
+   * A unit of time that determines the time in between uptime checks performed by Estado.
    *
    * @return the testCheckInterval
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public Long testCheckInterval() {
     return testCheckInterval;
   }
@@ -441,7 +568,8 @@ public class CFMetaData extends GenericModel {
   /**
    * Gets the serviceKeySupported.
    *
-   * Boolean value that describes whether the service supports service keys.
+   * Boolean value that describes whether the service supports the creation of service credentials. Without service key
+   * support, a service cannot be bound to a cluster.
    *
    * @return the serviceKeySupported
    */
@@ -456,9 +584,72 @@ public class CFMetaData extends GenericModel {
    * example, `us-south=123`.
    *
    * @return the cfGuid
+   * @deprecated this method is deprecated and may be removed in a future release
    */
+  @Deprecated
   public Map<String, String> cfGuid() {
     return cfGuid;
+  }
+
+  /**
+   * Gets the crnMask.
+   *
+   * Cloud resource name identifying the environment containing this service.
+   *
+   * @return the crnMask
+   */
+  public String crnMask() {
+    return crnMask;
+  }
+
+  /**
+   * Gets the userDefinedService.
+   *
+   * An extended set of metadata fields that pertain to user-defined services.
+   *
+   * @return the userDefinedService
+   * @deprecated this method is deprecated and may be removed in a future release
+   */
+  @Deprecated
+  public Map<String, Object> userDefinedService() {
+    return userDefinedService;
+  }
+
+  /**
+   * Gets the extension.
+   *
+   * A property-bag like extension to service metadata.
+   *
+   * @return the extension
+   * @deprecated this method is deprecated and may be removed in a future release
+   */
+  @Deprecated
+  public Map<String, Object> extension() {
+    return extension;
+  }
+
+  /**
+   * Gets the paidOnly.
+   *
+   * Boolean flag indicating if this service only offers paid pricing plans rather than the default paygo.
+   *
+   * @return the paidOnly
+   * @deprecated this method is deprecated and may be removed in a future release
+   */
+  @Deprecated
+  public Boolean paidOnly() {
+    return paidOnly;
+  }
+
+  /**
+   * Gets the customCreatePageHybridEnabled.
+   *
+   * Boolean flag that determines if the hybrid page is accessible from the main catalog provisioning page.
+   *
+   * @return the customCreatePageHybridEnabled
+   */
+  public Boolean customCreatePageHybridEnabled() {
+    return customCreatePageHybridEnabled;
   }
 }
 

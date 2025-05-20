@@ -25,8 +25,8 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class UpdateCatalogEntryOptions extends GenericModel {
 
   /**
-   * The type of catalog entry, **service**, **template**, **dashboard**, which determines the type and shape of the
-   * object.
+   * The type of catalog entry which determines the type and shape of the object. Valid GC types are buildpack, cname,
+   * dataset, geography, iaas, platform_service, runtime, service, template, ui-dashboard.
    */
   public interface Kind {
     /** service. */
@@ -388,8 +388,8 @@ public class UpdateCatalogEntryOptions extends GenericModel {
   /**
    * Gets the kind.
    *
-   * The type of catalog entry, **service**, **template**, **dashboard**, which determines the type and shape of the
-   * object.
+   * The type of catalog entry which determines the type and shape of the object. Valid GC types are buildpack, cname,
+   * dataset, geography, iaas, platform_service, runtime, service, template, ui-dashboard.
    *
    * @return the kind
    */
@@ -434,7 +434,8 @@ public class UpdateCatalogEntryOptions extends GenericModel {
   /**
    * Gets the tags.
    *
-   * A list of tags. For example, IBM, 3rd Party, Beta, GA, and Single Tenant.
+   * A searchable list of tags. For example, IBM, 3rd Party, Beta, GA, and Single Tenant. Valid values found at
+   * https://globalcatalog.test.cloud.ibm.com/search.
    *
    * @return the tags
    */

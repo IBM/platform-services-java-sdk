@@ -99,7 +99,7 @@ public class Price extends GenericModel {
   /**
    * Gets the quantityTier.
    *
-   * Pricing tier.
+   * The quantity of _metric_ associated with the current price point.
    *
    * @return the quantityTier
    */

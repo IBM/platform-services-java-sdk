@@ -42,8 +42,14 @@ public class CatalogEntryMetadataPricingTest {
     assertNull(catalogEntryMetadataPricingModel.getStartingPrice());
     assertNull(catalogEntryMetadataPricingModel.getDeploymentId());
     assertNull(catalogEntryMetadataPricingModel.getDeploymentLocation());
+    assertNull(catalogEntryMetadataPricingModel.getDeploymentRegion());
     assertNull(catalogEntryMetadataPricingModel.isDeploymentLocationNoPriceAvailable());
     assertNull(catalogEntryMetadataPricingModel.getMetrics());
     assertNull(catalogEntryMetadataPricingModel.getDeploymentRegions());
+    assertNull(catalogEntryMetadataPricingModel.getEffectiveFrom());
+    assertNull(catalogEntryMetadataPricingModel.getEffectiveUntil());
+    assertNull(catalogEntryMetadataPricingModel.isRequireLogin());
+    assertNull(catalogEntryMetadataPricingModel.getPricingCatalogUrl());
+    assertNull(catalogEntryMetadataPricingModel.getSalesAvenue());
   }
 }

@@ -39,11 +39,17 @@ public class PricingGetTest {
     PricingGet pricingGetModel = new PricingGet();
     assertNull(pricingGetModel.getDeploymentId());
     assertNull(pricingGetModel.getDeploymentLocation());
+    assertNull(pricingGetModel.getDeploymentRegion());
     assertNull(pricingGetModel.isDeploymentLocationNoPriceAvailable());
     assertNull(pricingGetModel.getType());
     assertNull(pricingGetModel.getOrigin());
     assertNull(pricingGetModel.getStartingPrice());
     assertNull(pricingGetModel.getMetrics());
     assertNull(pricingGetModel.getDeploymentRegions());
+    assertNull(pricingGetModel.getEffectiveFrom());
+    assertNull(pricingGetModel.getEffectiveUntil());
+    assertNull(pricingGetModel.isRequireLogin());
+    assertNull(pricingGetModel.getPricingCatalogUrl());
+    assertNull(pricingGetModel.getSalesAvenue());
   }
 }

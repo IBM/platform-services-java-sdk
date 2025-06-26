@@ -25,6 +25,7 @@ public class TemplateProfileComponentResponse extends GenericModel {
   protected String name;
   protected String description;
   protected List<TrustedProfileTemplateClaimRule> rules;
+  protected String email;
   protected List<ProfileIdentityResponse> identities;
 
   protected TemplateProfileComponentResponse() { }
@@ -60,6 +61,17 @@ public class TemplateProfileComponentResponse extends GenericModel {
    */
   public List<TrustedProfileTemplateClaimRule> getRules() {
     return rules;
+  }
+
+  /**
+   * Gets the email.
+   *
+   * Email of the trusted profile.
+   *
+   * @return the email
+   */
+  public String getEmail() {
+    return email;
   }
 
   /**

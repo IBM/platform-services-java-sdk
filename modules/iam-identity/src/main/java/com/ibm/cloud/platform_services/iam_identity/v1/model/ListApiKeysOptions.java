@@ -60,6 +60,7 @@ public class ListApiKeysOptions extends GenericModel {
   protected String order;
   protected Boolean includeHistory;
   protected String filter;
+  protected String groupId;
 
   /**
    * Builder.
@@ -75,6 +76,7 @@ public class ListApiKeysOptions extends GenericModel {
     private String order;
     private Boolean includeHistory;
     private String filter;
+    private String groupId;
 
     /**
      * Instantiates a new Builder from an existing ListApiKeysOptions instance.
@@ -92,6 +94,7 @@ public class ListApiKeysOptions extends GenericModel {
       this.order = listApiKeysOptions.order;
       this.includeHistory = listApiKeysOptions.includeHistory;
       this.filter = listApiKeysOptions.filter;
+      this.groupId = listApiKeysOptions.groupId;
     }
 
     /**
@@ -218,6 +221,17 @@ public class ListApiKeysOptions extends GenericModel {
       this.filter = filter;
       return this;
     }
+
+    /**
+     * Set the groupId.
+     *
+     * @param groupId the groupId
+     * @return the ListApiKeysOptions builder
+     */
+    public Builder groupId(String groupId) {
+      this.groupId = groupId;
+      return this;
+    }
   }
 
   protected ListApiKeysOptions() { }
@@ -233,6 +247,7 @@ public class ListApiKeysOptions extends GenericModel {
     order = builder.order;
     includeHistory = builder.includeHistory;
     filter = builder.filter;
+    groupId = builder.groupId;
   }
 
   /**
@@ -357,6 +372,19 @@ public class ListApiKeysOptions extends GenericModel {
    */
   public String filter() {
     return filter;
+  }
+
+  /**
+   * Gets the groupId.
+   *
+   * Optional group ID of the service ID(s) to which the searched API keys are bound. If this parameter is not provided
+   * the default group is applied on service ID API keys. For user API keys this parameter is ignored as they always
+   * belong to the default group.
+   *
+   * @return the groupId
+   */
+  public String groupId() {
+    return groupId;
   }
 }
 

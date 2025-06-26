@@ -46,16 +46,20 @@ public class CreateServiceIdOptionsTest {
     CreateServiceIdOptions createServiceIdOptionsModel = new CreateServiceIdOptions.Builder()
       .accountId("testString")
       .name("testString")
+      .groupId("testString")
       .description("testString")
       .uniqueInstanceCrns(java.util.Arrays.asList("testString"))
       .apikey(apiKeyInsideCreateServiceIdRequestModel)
+      .showGroupId("testString")
       .entityLock("false")
       .build();
     assertEquals(createServiceIdOptionsModel.accountId(), "testString");
     assertEquals(createServiceIdOptionsModel.name(), "testString");
+    assertEquals(createServiceIdOptionsModel.groupId(), "testString");
     assertEquals(createServiceIdOptionsModel.description(), "testString");
     assertEquals(createServiceIdOptionsModel.uniqueInstanceCrns(), java.util.Arrays.asList("testString"));
     assertEquals(createServiceIdOptionsModel.apikey(), apiKeyInsideCreateServiceIdRequestModel);
+    assertEquals(createServiceIdOptionsModel.showGroupId(), "testString");
     assertEquals(createServiceIdOptionsModel.entityLock(), "false");
   }
 

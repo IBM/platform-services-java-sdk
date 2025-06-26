@@ -25,6 +25,7 @@ public class TemplateProfileComponentRequest extends GenericModel {
 
   protected String name;
   protected String description;
+  protected String email;
   protected List<TrustedProfileTemplateClaimRule> rules;
   protected List<ProfileIdentityRequest> identities;
 
@@ -34,6 +35,7 @@ public class TemplateProfileComponentRequest extends GenericModel {
   public static class Builder {
     private String name;
     private String description;
+    private String email;
     private List<TrustedProfileTemplateClaimRule> rules;
     private List<ProfileIdentityRequest> identities;
 
@@ -45,6 +47,7 @@ public class TemplateProfileComponentRequest extends GenericModel {
     private Builder(TemplateProfileComponentRequest templateProfileComponentRequest) {
       this.name = templateProfileComponentRequest.name;
       this.description = templateProfileComponentRequest.description;
+      this.email = templateProfileComponentRequest.email;
       this.rules = templateProfileComponentRequest.rules;
       this.identities = templateProfileComponentRequest.identities;
     }
@@ -128,6 +131,17 @@ public class TemplateProfileComponentRequest extends GenericModel {
     }
 
     /**
+     * Set the email.
+     *
+     * @param email the email
+     * @return the TemplateProfileComponentRequest builder
+     */
+    public Builder email(String email) {
+      this.email = email;
+      return this;
+    }
+
+    /**
      * Set the rules.
      * Existing rules will be replaced.
      *
@@ -159,6 +173,7 @@ public class TemplateProfileComponentRequest extends GenericModel {
       "name cannot be null");
     name = builder.name;
     description = builder.description;
+    email = builder.email;
     rules = builder.rules;
     identities = builder.identities;
   }
@@ -177,6 +192,24 @@ public class TemplateProfileComponentRequest extends GenericModel {
    *
    * Name of the Profile.
    *
+   * You can use replacement variables in the profile name to adjust the name per account.
+   *
+   * The following variables are supported:
+   *
+   * - `${template_id}` will be replaced by a unique identifier representing the trusted profile template
+   *
+   * - `${template_name}` will be replaced by the current name of the trusted profile template
+   *
+   * - `${template_version}` will be replaced by the current version of the trusted profile template
+   *
+   * - `${account_id}` will be replaced by the account identifier to which this trusted profile template is assigned to
+   *
+   * - `${account_name}` will be replaced by the account name to which this trusted profile template is assigned to
+   *
+   * Changes to e.g. the name of the account will NOT cause an update of the trusted profile name. The profile name is
+   * processed during account assignment and any template version upgrade, i.e. during that operation, the updated
+   * account name would be used.
+   *
    * @return the name
    */
   public String name() {
@@ -192,6 +225,17 @@ public class TemplateProfileComponentRequest extends GenericModel {
    */
   public String description() {
     return description;
+  }
+
+  /**
+   * Gets the email.
+   *
+   * Email of the trusted profile.
+   *
+   * @return the email
+   */
+  public String email() {
+    return email;
   }
 
   /**

@@ -46,6 +46,7 @@ public class ServiceIdTest {
     assertNull(serviceIdModel.getCreatedAt());
     assertNull(serviceIdModel.getModifiedAt());
     assertNull(serviceIdModel.getAccountId());
+    assertNull(serviceIdModel.getGroupId());
     assertNull(serviceIdModel.getName());
     assertNull(serviceIdModel.getDescription());
     assertNull(serviceIdModel.getUniqueInstanceCrns());

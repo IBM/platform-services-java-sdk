@@ -37,12 +37,14 @@ public class UpdateServiceIdOptionsTest {
       .name("testString")
       .description("testString")
       .uniqueInstanceCrns(java.util.Arrays.asList("testString"))
+      .showGroupId("testString")
       .build();
     assertEquals(updateServiceIdOptionsModel.id(), "testString");
     assertEquals(updateServiceIdOptionsModel.ifMatch(), "testString");
     assertEquals(updateServiceIdOptionsModel.name(), "testString");
     assertEquals(updateServiceIdOptionsModel.description(), "testString");
     assertEquals(updateServiceIdOptionsModel.uniqueInstanceCrns(), java.util.Arrays.asList("testString"));
+    assertEquals(updateServiceIdOptionsModel.showGroupId(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

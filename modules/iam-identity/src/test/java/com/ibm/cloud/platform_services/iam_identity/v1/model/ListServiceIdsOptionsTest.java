@@ -33,6 +33,7 @@ public class ListServiceIdsOptionsTest {
   public void testListServiceIdsOptions() throws Throwable {
     ListServiceIdsOptions listServiceIdsOptionsModel = new ListServiceIdsOptions.Builder()
       .accountId("testString")
+      .groupId("testString")
       .name("testString")
       .pagesize(Long.valueOf("26"))
       .pagetoken("testString")
@@ -40,8 +41,10 @@ public class ListServiceIdsOptionsTest {
       .order("asc")
       .includeHistory(false)
       .filter("testString")
+      .showGroupId("testString")
       .build();
     assertEquals(listServiceIdsOptionsModel.accountId(), "testString");
+    assertEquals(listServiceIdsOptionsModel.groupId(), "testString");
     assertEquals(listServiceIdsOptionsModel.name(), "testString");
     assertEquals(listServiceIdsOptionsModel.pagesize(), Long.valueOf("26"));
     assertEquals(listServiceIdsOptionsModel.pagetoken(), "testString");
@@ -49,5 +52,6 @@ public class ListServiceIdsOptionsTest {
     assertEquals(listServiceIdsOptionsModel.order(), "asc");
     assertEquals(listServiceIdsOptionsModel.includeHistory(), Boolean.valueOf(false));
     assertEquals(listServiceIdsOptionsModel.filter(), "testString");
+    assertEquals(listServiceIdsOptionsModel.showGroupId(), "testString");
   }
 }

@@ -31,6 +31,7 @@ public class ListServiceIdsOptions extends GenericModel {
   }
 
   protected String accountId;
+  protected String groupId;
   protected String name;
   protected Long pagesize;
   protected String pagetoken;
@@ -38,12 +39,14 @@ public class ListServiceIdsOptions extends GenericModel {
   protected String order;
   protected Boolean includeHistory;
   protected String filter;
+  protected String showGroupId;
 
   /**
    * Builder.
    */
   public static class Builder {
     private String accountId;
+    private String groupId;
     private String name;
     private Long pagesize;
     private String pagetoken;
@@ -51,6 +54,7 @@ public class ListServiceIdsOptions extends GenericModel {
     private String order;
     private Boolean includeHistory;
     private String filter;
+    private String showGroupId;
 
     /**
      * Instantiates a new Builder from an existing ListServiceIdsOptions instance.
@@ -59,6 +63,7 @@ public class ListServiceIdsOptions extends GenericModel {
      */
     private Builder(ListServiceIdsOptions listServiceIdsOptions) {
       this.accountId = listServiceIdsOptions.accountId;
+      this.groupId = listServiceIdsOptions.groupId;
       this.name = listServiceIdsOptions.name;
       this.pagesize = listServiceIdsOptions.pagesize;
       this.pagetoken = listServiceIdsOptions.pagetoken;
@@ -66,6 +71,7 @@ public class ListServiceIdsOptions extends GenericModel {
       this.order = listServiceIdsOptions.order;
       this.includeHistory = listServiceIdsOptions.includeHistory;
       this.filter = listServiceIdsOptions.filter;
+      this.showGroupId = listServiceIdsOptions.showGroupId;
     }
 
     /**
@@ -91,6 +97,17 @@ public class ListServiceIdsOptions extends GenericModel {
      */
     public Builder accountId(String accountId) {
       this.accountId = accountId;
+      return this;
+    }
+
+    /**
+     * Set the groupId.
+     *
+     * @param groupId the groupId
+     * @return the ListServiceIdsOptions builder
+     */
+    public Builder groupId(String groupId) {
+      this.groupId = groupId;
       return this;
     }
 
@@ -170,12 +187,24 @@ public class ListServiceIdsOptions extends GenericModel {
       this.filter = filter;
       return this;
     }
+
+    /**
+     * Set the showGroupId.
+     *
+     * @param showGroupId the showGroupId
+     * @return the ListServiceIdsOptions builder
+     */
+    public Builder showGroupId(String showGroupId) {
+      this.showGroupId = showGroupId;
+      return this;
+    }
   }
 
   protected ListServiceIdsOptions() { }
 
   protected ListServiceIdsOptions(Builder builder) {
     accountId = builder.accountId;
+    groupId = builder.groupId;
     name = builder.name;
     pagesize = builder.pagesize;
     pagetoken = builder.pagetoken;
@@ -183,6 +212,7 @@ public class ListServiceIdsOptions extends GenericModel {
     order = builder.order;
     includeHistory = builder.includeHistory;
     filter = builder.filter;
+    showGroupId = builder.showGroupId;
   }
 
   /**
@@ -203,6 +233,17 @@ public class ListServiceIdsOptions extends GenericModel {
    */
   public String accountId() {
     return accountId;
+  }
+
+  /**
+   * Gets the groupId.
+   *
+   * Group ID of the service ID(s) to query. If this parameter is not provided the default group is applied.
+   *
+   * @return the groupId
+   */
+  public String groupId() {
+    return groupId;
   }
 
   /**
@@ -282,6 +323,17 @@ public class ListServiceIdsOptions extends GenericModel {
    */
   public String filter() {
     return filter;
+  }
+
+  /**
+   * Gets the showGroupId.
+   *
+   * Defines if the service ID group ID is included in the response.
+   *
+   * @return the showGroupId
+   */
+  public String showGroupId() {
+    return showGroupId;
   }
 }
 

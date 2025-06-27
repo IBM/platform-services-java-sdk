@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.98.0-8be2046a-20241205-162752
+ * IBM OpenAPI SDK Code Generator Version: 3.105.1-067d600b-20250616-154447
  */
 
 package com.ibm.cloud.platform_services.iam_identity.v1;
@@ -22,7 +22,6 @@ import com.ibm.cloud.platform_services.common.SdkCommon;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsTemplateList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsTemplateResponse;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.AllIdentityPreferencesResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKey;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CommitAccountSettingsTemplateOptions;
@@ -38,6 +37,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileOption
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileTemplateOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateReportOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdGroupOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateTrustedProfileAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteAccountSettingsAssignmentOptions;
@@ -51,6 +51,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.DeletePreferencesOn
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileIdentityOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteServiceIdGroupOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteTrustedProfileAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DisableApiKeyOptions;
@@ -76,9 +77,11 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileIdentityO
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetReportOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdGroupOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetTrustedProfileAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.IdentityPreferenceResponse;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.IdentityPreferencesResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListAccountSettingsAssignmentsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListAccountSettingsTemplatesOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListApiKeysOptions;
@@ -86,6 +89,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ListClaimRulesOptio
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListLinksOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListProfileTemplatesOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListProfilesOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListServiceIdGroupOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListServiceIdsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListTrustedProfileAssignmentsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListVersionsOfAccountSettingsTemplateOptions;
@@ -102,6 +106,8 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.Report;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportMfaEnrollmentStatus;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportReference;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceId;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdGroup;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdGroupList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.SetProfileIdentitiesOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.SetProfileIdentityOptions;
@@ -121,6 +127,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateClaimRuleOpti
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdatePreferenceOnScopeAccountOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateProfileTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateServiceIdGroupOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateTrustedProfileAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UserMfaEnrollments;
@@ -189,6 +196,411 @@ public class IamIdentity extends BaseService {
   }
 
   /**
+   * List service IDs.
+   *
+   * Returns a list of service IDs. Users can manage user API keys for themself, or service ID API keys for service IDs
+   * they have access to. Note: apikey details are only included in the response when creating a Service ID with an api
+   * key.
+   *
+   * @param listServiceIdsOptions the {@link ListServiceIdsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ServiceIdList}
+   */
+  public ServiceCall<ServiceIdList> listServiceIds(ListServiceIdsOptions listServiceIdsOptions) {
+    if (listServiceIdsOptions == null) {
+      listServiceIdsOptions = new ListServiceIdsOptions.Builder().build();
+    }
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/serviceids/"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "listServiceIds");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (listServiceIdsOptions.accountId() != null) {
+      builder.query("account_id", String.valueOf(listServiceIdsOptions.accountId()));
+    }
+    if (listServiceIdsOptions.groupId() != null) {
+      builder.query("group_id", String.valueOf(listServiceIdsOptions.groupId()));
+    }
+    if (listServiceIdsOptions.name() != null) {
+      builder.query("name", String.valueOf(listServiceIdsOptions.name()));
+    }
+    if (listServiceIdsOptions.pagesize() != null) {
+      builder.query("pagesize", String.valueOf(listServiceIdsOptions.pagesize()));
+    }
+    if (listServiceIdsOptions.pagetoken() != null) {
+      builder.query("pagetoken", String.valueOf(listServiceIdsOptions.pagetoken()));
+    }
+    if (listServiceIdsOptions.sort() != null) {
+      builder.query("sort", String.valueOf(listServiceIdsOptions.sort()));
+    }
+    if (listServiceIdsOptions.order() != null) {
+      builder.query("order", String.valueOf(listServiceIdsOptions.order()));
+    }
+    if (listServiceIdsOptions.includeHistory() != null) {
+      builder.query("include_history", String.valueOf(listServiceIdsOptions.includeHistory()));
+    }
+    if (listServiceIdsOptions.filter() != null) {
+      builder.query("filter", String.valueOf(listServiceIdsOptions.filter()));
+    }
+    if (listServiceIdsOptions.showGroupId() != null) {
+      builder.query("show_group_id", String.valueOf(listServiceIdsOptions.showGroupId()));
+    }
+    ResponseConverter<ServiceIdList> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ServiceIdList>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * List service IDs.
+   *
+   * Returns a list of service IDs. Users can manage user API keys for themself, or service ID API keys for service IDs
+   * they have access to. Note: apikey details are only included in the response when creating a Service ID with an api
+   * key.
+   *
+   * @return a {@link ServiceCall} with a result of type {@link ServiceIdList}
+   */
+  public ServiceCall<ServiceIdList> listServiceIds() {
+    return listServiceIds(null);
+  }
+
+  /**
+   * Create a service ID.
+   *
+   * Creates a service ID for an IBM Cloud account. Users can manage user API keys for themself, or service ID API keys
+   * for service IDs they have access to.
+   *
+   * @param createServiceIdOptions the {@link CreateServiceIdOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ServiceId}
+   */
+  public ServiceCall<ServiceId> createServiceId(CreateServiceIdOptions createServiceIdOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createServiceIdOptions,
+      "createServiceIdOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/serviceids/"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "createServiceId");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (createServiceIdOptions.entityLock() != null) {
+      builder.header("Entity-Lock", createServiceIdOptions.entityLock());
+    }
+    if (createServiceIdOptions.showGroupId() != null) {
+      builder.query("show_group_id", String.valueOf(createServiceIdOptions.showGroupId()));
+    }
+    final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("account_id", createServiceIdOptions.accountId());
+    contentJson.addProperty("name", createServiceIdOptions.name());
+    if (createServiceIdOptions.groupId() != null) {
+      contentJson.addProperty("group_id", createServiceIdOptions.groupId());
+    }
+    if (createServiceIdOptions.description() != null) {
+      contentJson.addProperty("description", createServiceIdOptions.description());
+    }
+    if (createServiceIdOptions.uniqueInstanceCrns() != null) {
+      contentJson.add("unique_instance_crns", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createServiceIdOptions.uniqueInstanceCrns()));
+    }
+    if (createServiceIdOptions.apikey() != null) {
+      contentJson.add("apikey", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createServiceIdOptions.apikey()));
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<ServiceId> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ServiceId>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get details of a service ID.
+   *
+   * Returns the details of a service ID. Users can manage user API keys for themself, or service ID API keys for
+   * service IDs they have access to. Note: apikey details are only included in the response when creating a Service ID
+   * with an api key.
+   *
+   * @param getServiceIdOptions the {@link GetServiceIdOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ServiceId}
+   */
+  public ServiceCall<ServiceId> getServiceId(GetServiceIdOptions getServiceIdOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getServiceIdOptions,
+      "getServiceIdOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", getServiceIdOptions.id());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/serviceids/{id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getServiceId");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (getServiceIdOptions.includeHistory() != null) {
+      builder.query("include_history", String.valueOf(getServiceIdOptions.includeHistory()));
+    }
+    if (getServiceIdOptions.includeActivity() != null) {
+      builder.query("include_activity", String.valueOf(getServiceIdOptions.includeActivity()));
+    }
+    if (getServiceIdOptions.showGroupId() != null) {
+      builder.query("show_group_id", String.valueOf(getServiceIdOptions.showGroupId()));
+    }
+    ResponseConverter<ServiceId> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ServiceId>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Update service ID.
+   *
+   * Updates properties of a service ID. This does NOT affect existing access tokens. Their token content will stay
+   * unchanged until the access token is refreshed. To update a service ID, pass the property to be modified. To delete
+   * one property's value, pass the property with an empty value "".Users can manage user API keys for themself, or
+   * service ID API keys for service IDs they have access to. Note: apikey details are only included in the response
+   * when creating a Service ID with an apikey.
+   *
+   * @param updateServiceIdOptions the {@link UpdateServiceIdOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ServiceId}
+   */
+  public ServiceCall<ServiceId> updateServiceId(UpdateServiceIdOptions updateServiceIdOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(updateServiceIdOptions,
+      "updateServiceIdOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", updateServiceIdOptions.id());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/serviceids/{id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "updateServiceId");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.header("If-Match", updateServiceIdOptions.ifMatch());
+    if (updateServiceIdOptions.showGroupId() != null) {
+      builder.query("show_group_id", String.valueOf(updateServiceIdOptions.showGroupId()));
+    }
+    final JsonObject contentJson = new JsonObject();
+    if (updateServiceIdOptions.name() != null) {
+      contentJson.addProperty("name", updateServiceIdOptions.name());
+    }
+    if (updateServiceIdOptions.description() != null) {
+      contentJson.addProperty("description", updateServiceIdOptions.description());
+    }
+    if (updateServiceIdOptions.uniqueInstanceCrns() != null) {
+      contentJson.add("unique_instance_crns", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(updateServiceIdOptions.uniqueInstanceCrns()));
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<ServiceId> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ServiceId>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Deletes a service ID and associated API keys.
+   *
+   * Deletes a service ID and all API keys associated to it. Before deleting the service ID, all associated API keys are
+   * deleted. In case a Delete Conflict (status code 409) a retry of the request may help as the service ID is only
+   * deleted if the associated API keys were successfully deleted before. Users can manage user API keys for themself,
+   * or service ID API keys for service IDs they have access to.
+   *
+   * @param deleteServiceIdOptions the {@link DeleteServiceIdOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> deleteServiceId(DeleteServiceIdOptions deleteServiceIdOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteServiceIdOptions,
+      "deleteServiceIdOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", deleteServiceIdOptions.id());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/serviceids/{id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "deleteServiceId");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Lock the service ID.
+   *
+   * Locks a service ID by ID. Users can manage user API keys for themself, or service ID API keys for service IDs they
+   * have access to.
+   *
+   * @param lockServiceIdOptions the {@link LockServiceIdOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> lockServiceId(LockServiceIdOptions lockServiceIdOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(lockServiceIdOptions,
+      "lockServiceIdOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", lockServiceIdOptions.id());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/serviceids/{id}/lock", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "lockServiceId");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Unlock the service ID.
+   *
+   * Unlocks a service ID by ID. Users can manage user API keys for themself, or service ID API keys for service IDs
+   * they have access to.
+   *
+   * @param unlockServiceIdOptions the {@link UnlockServiceIdOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> unlockServiceId(UnlockServiceIdOptions unlockServiceIdOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(unlockServiceIdOptions,
+      "unlockServiceIdOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", unlockServiceIdOptions.id());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/serviceids/{id}/lock", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "unlockServiceId");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * List service ID groups.
+   *
+   * Returns a list of all service ID groups for the given account ID.
+   *
+   * @param listServiceIdGroupOptions the {@link ListServiceIdGroupOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ServiceIdGroupList}
+   */
+  public ServiceCall<ServiceIdGroupList> listServiceIdGroup(ListServiceIdGroupOptions listServiceIdGroupOptions) {
+    if (listServiceIdGroupOptions == null) {
+      listServiceIdGroupOptions = new ListServiceIdGroupOptions.Builder().build();
+    }
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/serviceid_groups"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "listServiceIdGroup");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (listServiceIdGroupOptions.accountId() != null) {
+      builder.query("account_id", String.valueOf(listServiceIdGroupOptions.accountId()));
+    }
+    ResponseConverter<ServiceIdGroupList> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ServiceIdGroupList>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * List service ID groups.
+   *
+   * Returns a list of all service ID groups for the given account ID.
+   *
+   * @return a {@link ServiceCall} with a result of type {@link ServiceIdGroupList}
+   */
+  public ServiceCall<ServiceIdGroupList> listServiceIdGroup() {
+    return listServiceIdGroup(null);
+  }
+
+  /**
+   * Create a service ID group.
+   *
+   * Creates a service ID group for the given account ID.
+   *
+   * @param createServiceIdGroupOptions the {@link CreateServiceIdGroupOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ServiceIdGroup}
+   */
+  public ServiceCall<ServiceIdGroup> createServiceIdGroup(CreateServiceIdGroupOptions createServiceIdGroupOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createServiceIdGroupOptions,
+      "createServiceIdGroupOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/serviceid_groups"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "createServiceIdGroup");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("account_id", createServiceIdGroupOptions.accountId());
+    contentJson.addProperty("name", createServiceIdGroupOptions.name());
+    if (createServiceIdGroupOptions.description() != null) {
+      contentJson.addProperty("description", createServiceIdGroupOptions.description());
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<ServiceIdGroup> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ServiceIdGroup>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get details of a service ID group.
+   *
+   * Returns the details of a service ID group.
+   *
+   * @param getServiceIdGroupOptions the {@link GetServiceIdGroupOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ServiceIdGroup}
+   */
+  public ServiceCall<ServiceIdGroup> getServiceIdGroup(GetServiceIdGroupOptions getServiceIdGroupOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getServiceIdGroupOptions,
+      "getServiceIdGroupOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", getServiceIdGroupOptions.id());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/serviceid_groups/{id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getServiceIdGroup");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<ServiceIdGroup> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ServiceIdGroup>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Update a service ID group.
+   *
+   * Update a service ID group.
+   *
+   * @param updateServiceIdGroupOptions the {@link UpdateServiceIdGroupOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ServiceIdGroup}
+   */
+  public ServiceCall<ServiceIdGroup> updateServiceIdGroup(UpdateServiceIdGroupOptions updateServiceIdGroupOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(updateServiceIdGroupOptions,
+      "updateServiceIdGroupOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", updateServiceIdGroupOptions.id());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/serviceid_groups/{id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "updateServiceIdGroup");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.header("If-Match", updateServiceIdGroupOptions.ifMatch());
+    final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("name", updateServiceIdGroupOptions.name());
+    if (updateServiceIdGroupOptions.description() != null) {
+      contentJson.addProperty("description", updateServiceIdGroupOptions.description());
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<ServiceIdGroup> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ServiceIdGroup>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Delete a service ID group.
+   *
+   * Delete a service ID group.
+   *
+   * @param deleteServiceIdGroupOptions the {@link DeleteServiceIdGroupOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> deleteServiceIdGroup(DeleteServiceIdGroupOptions deleteServiceIdGroupOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteServiceIdGroupOptions,
+      "deleteServiceIdGroupOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("id", deleteServiceIdGroupOptions.id());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/serviceid_groups/{id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "deleteServiceIdGroup");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
    * Get API keys for a given service or user IAM ID and account ID.
    *
    * Returns the list of API key details for a given service or user IAM ID and account ID. Users can manage user API
@@ -236,6 +648,9 @@ public class IamIdentity extends BaseService {
     }
     if (listApiKeysOptions.filter() != null) {
       builder.query("filter", String.valueOf(listApiKeysOptions.filter()));
+    }
+    if (listApiKeysOptions.groupId() != null) {
+      builder.query("group_id", String.valueOf(listApiKeysOptions.groupId()));
     }
     ResponseConverter<ApiKeyList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ApiKeyList>() { }.getType());
@@ -536,250 +951,6 @@ public class IamIdentity extends BaseService {
   }
 
   /**
-   * List service IDs.
-   *
-   * Returns a list of service IDs. Users can manage user API keys for themself, or service ID API keys for service IDs
-   * they have access to. Note: apikey details are only included in the response when creating a Service ID with an api
-   * key.
-   *
-   * @param listServiceIdsOptions the {@link ListServiceIdsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link ServiceIdList}
-   */
-  public ServiceCall<ServiceIdList> listServiceIds(ListServiceIdsOptions listServiceIdsOptions) {
-    if (listServiceIdsOptions == null) {
-      listServiceIdsOptions = new ListServiceIdsOptions.Builder().build();
-    }
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/serviceids/"));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "listServiceIds");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    if (listServiceIdsOptions.accountId() != null) {
-      builder.query("account_id", String.valueOf(listServiceIdsOptions.accountId()));
-    }
-    if (listServiceIdsOptions.name() != null) {
-      builder.query("name", String.valueOf(listServiceIdsOptions.name()));
-    }
-    if (listServiceIdsOptions.pagesize() != null) {
-      builder.query("pagesize", String.valueOf(listServiceIdsOptions.pagesize()));
-    }
-    if (listServiceIdsOptions.pagetoken() != null) {
-      builder.query("pagetoken", String.valueOf(listServiceIdsOptions.pagetoken()));
-    }
-    if (listServiceIdsOptions.sort() != null) {
-      builder.query("sort", String.valueOf(listServiceIdsOptions.sort()));
-    }
-    if (listServiceIdsOptions.order() != null) {
-      builder.query("order", String.valueOf(listServiceIdsOptions.order()));
-    }
-    if (listServiceIdsOptions.includeHistory() != null) {
-      builder.query("include_history", String.valueOf(listServiceIdsOptions.includeHistory()));
-    }
-    if (listServiceIdsOptions.filter() != null) {
-      builder.query("filter", String.valueOf(listServiceIdsOptions.filter()));
-    }
-    ResponseConverter<ServiceIdList> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ServiceIdList>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * List service IDs.
-   *
-   * Returns a list of service IDs. Users can manage user API keys for themself, or service ID API keys for service IDs
-   * they have access to. Note: apikey details are only included in the response when creating a Service ID with an api
-   * key.
-   *
-   * @return a {@link ServiceCall} with a result of type {@link ServiceIdList}
-   */
-  public ServiceCall<ServiceIdList> listServiceIds() {
-    return listServiceIds(null);
-  }
-
-  /**
-   * Create a service ID.
-   *
-   * Creates a service ID for an IBM Cloud account. Users can manage user API keys for themself, or service ID API keys
-   * for service IDs they have access to.
-   *
-   * @param createServiceIdOptions the {@link CreateServiceIdOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link ServiceId}
-   */
-  public ServiceCall<ServiceId> createServiceId(CreateServiceIdOptions createServiceIdOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(createServiceIdOptions,
-      "createServiceIdOptions cannot be null");
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/serviceids/"));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "createServiceId");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    if (createServiceIdOptions.entityLock() != null) {
-      builder.header("Entity-Lock", createServiceIdOptions.entityLock());
-    }
-    final JsonObject contentJson = new JsonObject();
-    contentJson.addProperty("account_id", createServiceIdOptions.accountId());
-    contentJson.addProperty("name", createServiceIdOptions.name());
-    if (createServiceIdOptions.description() != null) {
-      contentJson.addProperty("description", createServiceIdOptions.description());
-    }
-    if (createServiceIdOptions.uniqueInstanceCrns() != null) {
-      contentJson.add("unique_instance_crns", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createServiceIdOptions.uniqueInstanceCrns()));
-    }
-    if (createServiceIdOptions.apikey() != null) {
-      contentJson.add("apikey", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createServiceIdOptions.apikey()));
-    }
-    builder.bodyJson(contentJson);
-    ResponseConverter<ServiceId> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ServiceId>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Get details of a service ID.
-   *
-   * Returns the details of a service ID. Users can manage user API keys for themself, or service ID API keys for
-   * service IDs they have access to. Note: apikey details are only included in the response when creating a Service ID
-   * with an api key.
-   *
-   * @param getServiceIdOptions the {@link GetServiceIdOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link ServiceId}
-   */
-  public ServiceCall<ServiceId> getServiceId(GetServiceIdOptions getServiceIdOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getServiceIdOptions,
-      "getServiceIdOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("id", getServiceIdOptions.id());
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/serviceids/{id}", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getServiceId");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    if (getServiceIdOptions.includeHistory() != null) {
-      builder.query("include_history", String.valueOf(getServiceIdOptions.includeHistory()));
-    }
-    if (getServiceIdOptions.includeActivity() != null) {
-      builder.query("include_activity", String.valueOf(getServiceIdOptions.includeActivity()));
-    }
-    ResponseConverter<ServiceId> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ServiceId>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Update service ID.
-   *
-   * Updates properties of a service ID. This does NOT affect existing access tokens. Their token content will stay
-   * unchanged until the access token is refreshed. To update a service ID, pass the property to be modified. To delete
-   * one property's value, pass the property with an empty value "".Users can manage user API keys for themself, or
-   * service ID API keys for service IDs they have access to. Note: apikey details are only included in the response
-   * when creating a Service ID with an apikey.
-   *
-   * @param updateServiceIdOptions the {@link UpdateServiceIdOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link ServiceId}
-   */
-  public ServiceCall<ServiceId> updateServiceId(UpdateServiceIdOptions updateServiceIdOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(updateServiceIdOptions,
-      "updateServiceIdOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("id", updateServiceIdOptions.id());
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/serviceids/{id}", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "updateServiceId");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    builder.header("If-Match", updateServiceIdOptions.ifMatch());
-    final JsonObject contentJson = new JsonObject();
-    if (updateServiceIdOptions.name() != null) {
-      contentJson.addProperty("name", updateServiceIdOptions.name());
-    }
-    if (updateServiceIdOptions.description() != null) {
-      contentJson.addProperty("description", updateServiceIdOptions.description());
-    }
-    if (updateServiceIdOptions.uniqueInstanceCrns() != null) {
-      contentJson.add("unique_instance_crns", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(updateServiceIdOptions.uniqueInstanceCrns()));
-    }
-    builder.bodyJson(contentJson);
-    ResponseConverter<ServiceId> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ServiceId>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Deletes a service ID and associated API keys.
-   *
-   * Deletes a service ID and all API keys associated to it. Before deleting the service ID, all associated API keys are
-   * deleted. In case a Delete Conflict (status code 409) a retry of the request may help as the service ID is only
-   * deleted if the associated API keys were successfully deleted before. Users can manage user API keys for themself,
-   * or service ID API keys for service IDs they have access to.
-   *
-   * @param deleteServiceIdOptions the {@link DeleteServiceIdOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a void result
-   */
-  public ServiceCall<Void> deleteServiceId(DeleteServiceIdOptions deleteServiceIdOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteServiceIdOptions,
-      "deleteServiceIdOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("id", deleteServiceIdOptions.id());
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/serviceids/{id}", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "deleteServiceId");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Lock the service ID.
-   *
-   * Locks a service ID by ID. Users can manage user API keys for themself, or service ID API keys for service IDs they
-   * have access to.
-   *
-   * @param lockServiceIdOptions the {@link LockServiceIdOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a void result
-   */
-  public ServiceCall<Void> lockServiceId(LockServiceIdOptions lockServiceIdOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(lockServiceIdOptions,
-      "lockServiceIdOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("id", lockServiceIdOptions.id());
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/serviceids/{id}/lock", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "lockServiceId");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Unlock the service ID.
-   *
-   * Unlocks a service ID by ID. Users can manage user API keys for themself, or service ID API keys for service IDs
-   * they have access to.
-   *
-   * @param unlockServiceIdOptions the {@link UnlockServiceIdOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a void result
-   */
-  public ServiceCall<Void> unlockServiceId(UnlockServiceIdOptions unlockServiceIdOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(unlockServiceIdOptions,
-      "unlockServiceIdOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("id", unlockServiceIdOptions.id());
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/serviceids/{id}/lock", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "unlockServiceId");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
    * Create a trusted profile.
    *
    * Create a trusted profile for a given account ID.
@@ -801,6 +972,9 @@ public class IamIdentity extends BaseService {
     contentJson.addProperty("account_id", createProfileOptions.accountId());
     if (createProfileOptions.description() != null) {
       contentJson.addProperty("description", createProfileOptions.description());
+    }
+    if (createProfileOptions.email() != null) {
+      contentJson.addProperty("email", createProfileOptions.email());
     }
     builder.bodyJson(contentJson);
     ResponseConverter<TrustedProfile> responseConverter =
@@ -907,6 +1081,9 @@ public class IamIdentity extends BaseService {
     }
     if (updateProfileOptions.description() != null) {
       contentJson.addProperty("description", updateProfileOptions.description());
+    }
+    if (updateProfileOptions.email() != null) {
+      contentJson.addProperty("email", updateProfileOptions.email());
     }
     builder.bodyJson(contentJson);
     ResponseConverter<TrustedProfile> responseConverter =
@@ -1260,9 +1437,11 @@ public class IamIdentity extends BaseService {
   /**
    * Add a specific identity that can assume the trusted profile.
    *
-   * Add a specific identity that can assume the trusted profile. This API will update the trusted profile itself, thus
-   * calling it repeatedly for the same profile can lead to conflicts responded with HTTP code 409. Make sure to call
-   * this API only once in a few seconds for the same trusted profile.
+   * Add a specific identity that can assume the trusted profile.
+   *
+   * **Note:** This API will update the trusted profile itself,  thus calling it repeatedly for the same profile can
+   * lead to  conflicts responded with HTTP code 409. Make sure to call this  API only once in a few seconds for the
+   * same trusted profile.
    *
    * @param setProfileIdentityOptions the {@link SetProfileIdentityOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ProfileIdentityResponse}
@@ -1321,9 +1500,13 @@ public class IamIdentity extends BaseService {
   }
 
   /**
-   * Delete the identity that can assume the trusted profile. This API will update the trusted profile itself, thus calling it repeatedly for the same profile can lead to conflicts responded with HTTP code 409. Make sure to call this API only once in a few seconds for the same trusted profile.
+   * Delete the identity that can assume the trusted profile.
    *
    * Delete the identity that can assume the trusted profile.
+   *
+   * **Note:** This API will update the trusted profile itself,  thus calling it repeatedly for the same profile can
+   * lead to  conflicts responded with HTTP code 409. Make sure to call this  API only once in a few seconds for the
+   * same trusted profile.
    *
    * @param deleteProfileIdentityOptions the {@link DeleteProfileIdentityOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -1341,6 +1524,63 @@ public class IamIdentity extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Trigger activity report for the account.
+   *
+   * Trigger activity report for the account by specifying the account ID. It can take a few minutes to generate the
+   * report for retrieval.
+   *
+   * @param createReportOptions the {@link CreateReportOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ReportReference}
+   */
+  public ServiceCall<ReportReference> createReport(CreateReportOptions createReportOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createReportOptions,
+      "createReportOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", createReportOptions.accountId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/activity/accounts/{account_id}/report", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "createReport");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (createReportOptions.type() != null) {
+      builder.query("type", String.valueOf(createReportOptions.type()));
+    }
+    if (createReportOptions.duration() != null) {
+      builder.query("duration", String.valueOf(createReportOptions.duration()));
+    }
+    ResponseConverter<ReportReference> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ReportReference>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get activity report for the account.
+   *
+   * Get activity report for the account by specifying the account ID and the reference that is generated by triggering
+   * the report. Reports older than a day are deleted when generating a new report.
+   *
+   * @param getReportOptions the {@link GetReportOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link Report}
+   */
+  public ServiceCall<Report> getReport(GetReportOptions getReportOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getReportOptions,
+      "getReportOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", getReportOptions.accountId());
+    pathParamsMap.put("reference", getReportOptions.reference());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/activity/accounts/{account_id}/report/{reference}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getReport");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<Report> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Report>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -1430,6 +1670,36 @@ public class IamIdentity extends BaseService {
   }
 
   /**
+   * Get effective account settings configuration.
+   *
+   * Returns effective account settings for given account ID.
+   *
+   * @param getEffectiveAccountSettingsOptions the {@link GetEffectiveAccountSettingsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link EffectiveAccountSettingsResponse}
+   */
+  public ServiceCall<EffectiveAccountSettingsResponse> getEffectiveAccountSettings(GetEffectiveAccountSettingsOptions getEffectiveAccountSettingsOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getEffectiveAccountSettingsOptions,
+      "getEffectiveAccountSettingsOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", getEffectiveAccountSettingsOptions.accountId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/accounts/{account_id}/effective_settings/identity", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getEffectiveAccountSettings");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (getEffectiveAccountSettingsOptions.includeHistory() != null) {
+      builder.query("include_history", String.valueOf(getEffectiveAccountSettingsOptions.includeHistory()));
+    }
+    if (getEffectiveAccountSettingsOptions.resolveUserMfa() != null) {
+      builder.query("resolve_user_mfa", String.valueOf(getEffectiveAccountSettingsOptions.resolveUserMfa()));
+    }
+    ResponseConverter<EffectiveAccountSettingsResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<EffectiveAccountSettingsResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
    * Get MFA enrollment status for a single user in the account.
    *
    * Get MFA enrollment status for a single user in the account.
@@ -1509,627 +1779,53 @@ public class IamIdentity extends BaseService {
   }
 
   /**
-   * List assignments.
-   *
-   * List account settings assignments.
-   *
-   * @param listAccountSettingsAssignmentsOptions the {@link ListAccountSettingsAssignmentsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link TemplateAssignmentListResponse}
-   */
-  public ServiceCall<TemplateAssignmentListResponse> listAccountSettingsAssignments(ListAccountSettingsAssignmentsOptions listAccountSettingsAssignmentsOptions) {
-    if (listAccountSettingsAssignmentsOptions == null) {
-      listAccountSettingsAssignmentsOptions = new ListAccountSettingsAssignmentsOptions.Builder().build();
-    }
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_assignments/"));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "listAccountSettingsAssignments");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    if (listAccountSettingsAssignmentsOptions.accountId() != null) {
-      builder.query("account_id", String.valueOf(listAccountSettingsAssignmentsOptions.accountId()));
-    }
-    if (listAccountSettingsAssignmentsOptions.templateId() != null) {
-      builder.query("template_id", String.valueOf(listAccountSettingsAssignmentsOptions.templateId()));
-    }
-    if (listAccountSettingsAssignmentsOptions.templateVersion() != null) {
-      builder.query("template_version", String.valueOf(listAccountSettingsAssignmentsOptions.templateVersion()));
-    }
-    if (listAccountSettingsAssignmentsOptions.target() != null) {
-      builder.query("target", String.valueOf(listAccountSettingsAssignmentsOptions.target()));
-    }
-    if (listAccountSettingsAssignmentsOptions.targetType() != null) {
-      builder.query("target_type", String.valueOf(listAccountSettingsAssignmentsOptions.targetType()));
-    }
-    if (listAccountSettingsAssignmentsOptions.limit() != null) {
-      builder.query("limit", String.valueOf(listAccountSettingsAssignmentsOptions.limit()));
-    }
-    if (listAccountSettingsAssignmentsOptions.pagetoken() != null) {
-      builder.query("pagetoken", String.valueOf(listAccountSettingsAssignmentsOptions.pagetoken()));
-    }
-    if (listAccountSettingsAssignmentsOptions.sort() != null) {
-      builder.query("sort", String.valueOf(listAccountSettingsAssignmentsOptions.sort()));
-    }
-    if (listAccountSettingsAssignmentsOptions.order() != null) {
-      builder.query("order", String.valueOf(listAccountSettingsAssignmentsOptions.order()));
-    }
-    if (listAccountSettingsAssignmentsOptions.includeHistory() != null) {
-      builder.query("include_history", String.valueOf(listAccountSettingsAssignmentsOptions.includeHistory()));
-    }
-    ResponseConverter<TemplateAssignmentListResponse> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TemplateAssignmentListResponse>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * List assignments.
-   *
-   * List account settings assignments.
-   *
-   * @return a {@link ServiceCall} with a result of type {@link TemplateAssignmentListResponse}
-   */
-  public ServiceCall<TemplateAssignmentListResponse> listAccountSettingsAssignments() {
-    return listAccountSettingsAssignments(null);
-  }
-
-  /**
-   * Create assignment.
-   *
-   * Create an assigment for an account settings template.
-   *
-   * @param createAccountSettingsAssignmentOptions the {@link CreateAccountSettingsAssignmentOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link TemplateAssignmentResponse}
-   */
-  public ServiceCall<TemplateAssignmentResponse> createAccountSettingsAssignment(CreateAccountSettingsAssignmentOptions createAccountSettingsAssignmentOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(createAccountSettingsAssignmentOptions,
-      "createAccountSettingsAssignmentOptions cannot be null");
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_assignments/"));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "createAccountSettingsAssignment");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    final JsonObject contentJson = new JsonObject();
-    contentJson.addProperty("template_id", createAccountSettingsAssignmentOptions.templateId());
-    contentJson.addProperty("template_version", createAccountSettingsAssignmentOptions.templateVersion());
-    contentJson.addProperty("target_type", createAccountSettingsAssignmentOptions.targetType());
-    contentJson.addProperty("target", createAccountSettingsAssignmentOptions.target());
-    builder.bodyJson(contentJson);
-    ResponseConverter<TemplateAssignmentResponse> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TemplateAssignmentResponse>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Get assignment.
-   *
-   * Get an assigment for an account settings template.
-   *
-   * @param getAccountSettingsAssignmentOptions the {@link GetAccountSettingsAssignmentOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link TemplateAssignmentResponse}
-   */
-  public ServiceCall<TemplateAssignmentResponse> getAccountSettingsAssignment(GetAccountSettingsAssignmentOptions getAccountSettingsAssignmentOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getAccountSettingsAssignmentOptions,
-      "getAccountSettingsAssignmentOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("assignment_id", getAccountSettingsAssignmentOptions.assignmentId());
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_assignments/{assignment_id}", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getAccountSettingsAssignment");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    if (getAccountSettingsAssignmentOptions.includeHistory() != null) {
-      builder.query("include_history", String.valueOf(getAccountSettingsAssignmentOptions.includeHistory()));
-    }
-    ResponseConverter<TemplateAssignmentResponse> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TemplateAssignmentResponse>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Delete assignment.
-   *
-   * Delete an account settings template assignment. This removes any IAM resources created by this assignment in child
-   * accounts.
-   *
-   * @param deleteAccountSettingsAssignmentOptions the {@link DeleteAccountSettingsAssignmentOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link ExceptionResponse}
-   */
-  public ServiceCall<ExceptionResponse> deleteAccountSettingsAssignment(DeleteAccountSettingsAssignmentOptions deleteAccountSettingsAssignmentOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteAccountSettingsAssignmentOptions,
-      "deleteAccountSettingsAssignmentOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("assignment_id", deleteAccountSettingsAssignmentOptions.assignmentId());
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_assignments/{assignment_id}", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "deleteAccountSettingsAssignment");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    ResponseConverter<ExceptionResponse> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ExceptionResponse>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Update assignment.
-   *
-   * Update an account settings assignment. Call this method to retry failed assignments or migrate the settings in
-   * child accounts to a new version.
-   *
-   * @param updateAccountSettingsAssignmentOptions the {@link UpdateAccountSettingsAssignmentOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link TemplateAssignmentResponse}
-   */
-  public ServiceCall<TemplateAssignmentResponse> updateAccountSettingsAssignment(UpdateAccountSettingsAssignmentOptions updateAccountSettingsAssignmentOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(updateAccountSettingsAssignmentOptions,
-      "updateAccountSettingsAssignmentOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("assignment_id", updateAccountSettingsAssignmentOptions.assignmentId());
-    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_assignments/{assignment_id}", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "updateAccountSettingsAssignment");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    builder.header("If-Match", updateAccountSettingsAssignmentOptions.ifMatch());
-    final JsonObject contentJson = new JsonObject();
-    contentJson.addProperty("template_version", updateAccountSettingsAssignmentOptions.templateVersion());
-    builder.bodyJson(contentJson);
-    ResponseConverter<TemplateAssignmentResponse> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TemplateAssignmentResponse>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * List account settings templates.
-   *
-   * List account settings templates in an enterprise account.
-   *
-   * @param listAccountSettingsTemplatesOptions the {@link ListAccountSettingsTemplatesOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link AccountSettingsTemplateList}
-   */
-  public ServiceCall<AccountSettingsTemplateList> listAccountSettingsTemplates(ListAccountSettingsTemplatesOptions listAccountSettingsTemplatesOptions) {
-    if (listAccountSettingsTemplatesOptions == null) {
-      listAccountSettingsTemplatesOptions = new ListAccountSettingsTemplatesOptions.Builder().build();
-    }
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_templates"));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "listAccountSettingsTemplates");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    if (listAccountSettingsTemplatesOptions.accountId() != null) {
-      builder.query("account_id", String.valueOf(listAccountSettingsTemplatesOptions.accountId()));
-    }
-    if (listAccountSettingsTemplatesOptions.limit() != null) {
-      builder.query("limit", String.valueOf(listAccountSettingsTemplatesOptions.limit()));
-    }
-    if (listAccountSettingsTemplatesOptions.pagetoken() != null) {
-      builder.query("pagetoken", String.valueOf(listAccountSettingsTemplatesOptions.pagetoken()));
-    }
-    if (listAccountSettingsTemplatesOptions.sort() != null) {
-      builder.query("sort", String.valueOf(listAccountSettingsTemplatesOptions.sort()));
-    }
-    if (listAccountSettingsTemplatesOptions.order() != null) {
-      builder.query("order", String.valueOf(listAccountSettingsTemplatesOptions.order()));
-    }
-    if (listAccountSettingsTemplatesOptions.includeHistory() != null) {
-      builder.query("include_history", String.valueOf(listAccountSettingsTemplatesOptions.includeHistory()));
-    }
-    ResponseConverter<AccountSettingsTemplateList> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettingsTemplateList>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * List account settings templates.
-   *
-   * List account settings templates in an enterprise account.
-   *
-   * @return a {@link ServiceCall} with a result of type {@link AccountSettingsTemplateList}
-   */
-  public ServiceCall<AccountSettingsTemplateList> listAccountSettingsTemplates() {
-    return listAccountSettingsTemplates(null);
-  }
-
-  /**
-   * Create an account settings template.
-   *
-   * Create a new account settings template in an enterprise account.
-   *
-   * @param createAccountSettingsTemplateOptions the {@link CreateAccountSettingsTemplateOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link AccountSettingsTemplateResponse}
-   */
-  public ServiceCall<AccountSettingsTemplateResponse> createAccountSettingsTemplate(CreateAccountSettingsTemplateOptions createAccountSettingsTemplateOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(createAccountSettingsTemplateOptions,
-      "createAccountSettingsTemplateOptions cannot be null");
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_templates"));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "createAccountSettingsTemplate");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    final JsonObject contentJson = new JsonObject();
-    if (createAccountSettingsTemplateOptions.accountId() != null) {
-      contentJson.addProperty("account_id", createAccountSettingsTemplateOptions.accountId());
-    }
-    if (createAccountSettingsTemplateOptions.name() != null) {
-      contentJson.addProperty("name", createAccountSettingsTemplateOptions.name());
-    }
-    if (createAccountSettingsTemplateOptions.description() != null) {
-      contentJson.addProperty("description", createAccountSettingsTemplateOptions.description());
-    }
-    if (createAccountSettingsTemplateOptions.accountSettings() != null) {
-      contentJson.add("account_settings", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createAccountSettingsTemplateOptions.accountSettings()));
-    }
-    builder.bodyJson(contentJson);
-    ResponseConverter<AccountSettingsTemplateResponse> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettingsTemplateResponse>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Create an account settings template.
-   *
-   * Create a new account settings template in an enterprise account.
-   *
-   * @return a {@link ServiceCall} with a result of type {@link AccountSettingsTemplateResponse}
-   */
-  public ServiceCall<AccountSettingsTemplateResponse> createAccountSettingsTemplate() {
-    return createAccountSettingsTemplate(null);
-  }
-
-  /**
-   * Get latest version of an account settings template.
-   *
-   * Get the latest version of a specific account settings template in an enterprise account.
-   *
-   * @param getLatestAccountSettingsTemplateVersionOptions the {@link GetLatestAccountSettingsTemplateVersionOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link AccountSettingsTemplateResponse}
-   */
-  public ServiceCall<AccountSettingsTemplateResponse> getLatestAccountSettingsTemplateVersion(GetLatestAccountSettingsTemplateVersionOptions getLatestAccountSettingsTemplateVersionOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getLatestAccountSettingsTemplateVersionOptions,
-      "getLatestAccountSettingsTemplateVersionOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("template_id", getLatestAccountSettingsTemplateVersionOptions.templateId());
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_templates/{template_id}", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getLatestAccountSettingsTemplateVersion");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    if (getLatestAccountSettingsTemplateVersionOptions.includeHistory() != null) {
-      builder.query("include_history", String.valueOf(getLatestAccountSettingsTemplateVersionOptions.includeHistory()));
-    }
-    ResponseConverter<AccountSettingsTemplateResponse> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettingsTemplateResponse>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Delete all versions of an account settings template.
-   *
-   * Delete all versions of an account settings template in an enterprise account. If any version is assigned to child
-   * accounts, you must first delete the assignment.
-   *
-   * @param deleteAllVersionsOfAccountSettingsTemplateOptions the {@link DeleteAllVersionsOfAccountSettingsTemplateOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a void result
-   */
-  public ServiceCall<Void> deleteAllVersionsOfAccountSettingsTemplate(DeleteAllVersionsOfAccountSettingsTemplateOptions deleteAllVersionsOfAccountSettingsTemplateOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteAllVersionsOfAccountSettingsTemplateOptions,
-      "deleteAllVersionsOfAccountSettingsTemplateOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("template_id", deleteAllVersionsOfAccountSettingsTemplateOptions.templateId());
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_templates/{template_id}", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "deleteAllVersionsOfAccountSettingsTemplate");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * List account settings template versions.
-   *
-   * List the versions of a specific account settings template in an enterprise account.
-   *
-   * @param listVersionsOfAccountSettingsTemplateOptions the {@link ListVersionsOfAccountSettingsTemplateOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link AccountSettingsTemplateList}
-   */
-  public ServiceCall<AccountSettingsTemplateList> listVersionsOfAccountSettingsTemplate(ListVersionsOfAccountSettingsTemplateOptions listVersionsOfAccountSettingsTemplateOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(listVersionsOfAccountSettingsTemplateOptions,
-      "listVersionsOfAccountSettingsTemplateOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("template_id", listVersionsOfAccountSettingsTemplateOptions.templateId());
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_templates/{template_id}/versions", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "listVersionsOfAccountSettingsTemplate");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    if (listVersionsOfAccountSettingsTemplateOptions.limit() != null) {
-      builder.query("limit", String.valueOf(listVersionsOfAccountSettingsTemplateOptions.limit()));
-    }
-    if (listVersionsOfAccountSettingsTemplateOptions.pagetoken() != null) {
-      builder.query("pagetoken", String.valueOf(listVersionsOfAccountSettingsTemplateOptions.pagetoken()));
-    }
-    if (listVersionsOfAccountSettingsTemplateOptions.sort() != null) {
-      builder.query("sort", String.valueOf(listVersionsOfAccountSettingsTemplateOptions.sort()));
-    }
-    if (listVersionsOfAccountSettingsTemplateOptions.order() != null) {
-      builder.query("order", String.valueOf(listVersionsOfAccountSettingsTemplateOptions.order()));
-    }
-    if (listVersionsOfAccountSettingsTemplateOptions.includeHistory() != null) {
-      builder.query("include_history", String.valueOf(listVersionsOfAccountSettingsTemplateOptions.includeHistory()));
-    }
-    ResponseConverter<AccountSettingsTemplateList> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettingsTemplateList>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Create a new version of an account settings template.
-   *
-   * Create a new version of an account settings template in an Enterprise Account.
-   *
-   * @param createAccountSettingsTemplateVersionOptions the {@link CreateAccountSettingsTemplateVersionOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link AccountSettingsTemplateResponse}
-   */
-  public ServiceCall<AccountSettingsTemplateResponse> createAccountSettingsTemplateVersion(CreateAccountSettingsTemplateVersionOptions createAccountSettingsTemplateVersionOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(createAccountSettingsTemplateVersionOptions,
-      "createAccountSettingsTemplateVersionOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("template_id", createAccountSettingsTemplateVersionOptions.templateId());
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_templates/{template_id}/versions", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "createAccountSettingsTemplateVersion");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    final JsonObject contentJson = new JsonObject();
-    if (createAccountSettingsTemplateVersionOptions.accountId() != null) {
-      contentJson.addProperty("account_id", createAccountSettingsTemplateVersionOptions.accountId());
-    }
-    if (createAccountSettingsTemplateVersionOptions.name() != null) {
-      contentJson.addProperty("name", createAccountSettingsTemplateVersionOptions.name());
-    }
-    if (createAccountSettingsTemplateVersionOptions.description() != null) {
-      contentJson.addProperty("description", createAccountSettingsTemplateVersionOptions.description());
-    }
-    if (createAccountSettingsTemplateVersionOptions.accountSettings() != null) {
-      contentJson.add("account_settings", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createAccountSettingsTemplateVersionOptions.accountSettings()));
-    }
-    builder.bodyJson(contentJson);
-    ResponseConverter<AccountSettingsTemplateResponse> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettingsTemplateResponse>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Get version of an account settings template.
-   *
-   * Get a specific version of an account settings template in an Enterprise Account.
-   *
-   * @param getAccountSettingsTemplateVersionOptions the {@link GetAccountSettingsTemplateVersionOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link AccountSettingsTemplateResponse}
-   */
-  public ServiceCall<AccountSettingsTemplateResponse> getAccountSettingsTemplateVersion(GetAccountSettingsTemplateVersionOptions getAccountSettingsTemplateVersionOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getAccountSettingsTemplateVersionOptions,
-      "getAccountSettingsTemplateVersionOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("template_id", getAccountSettingsTemplateVersionOptions.templateId());
-    pathParamsMap.put("version", getAccountSettingsTemplateVersionOptions.version());
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_templates/{template_id}/versions/{version}", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getAccountSettingsTemplateVersion");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    if (getAccountSettingsTemplateVersionOptions.includeHistory() != null) {
-      builder.query("include_history", String.valueOf(getAccountSettingsTemplateVersionOptions.includeHistory()));
-    }
-    ResponseConverter<AccountSettingsTemplateResponse> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettingsTemplateResponse>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Update version of an account settings template.
-   *
-   * Update a specific version of an account settings template in an Enterprise Account.
-   *
-   * @param updateAccountSettingsTemplateVersionOptions the {@link UpdateAccountSettingsTemplateVersionOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link AccountSettingsTemplateResponse}
-   */
-  public ServiceCall<AccountSettingsTemplateResponse> updateAccountSettingsTemplateVersion(UpdateAccountSettingsTemplateVersionOptions updateAccountSettingsTemplateVersionOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(updateAccountSettingsTemplateVersionOptions,
-      "updateAccountSettingsTemplateVersionOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("template_id", updateAccountSettingsTemplateVersionOptions.templateId());
-    pathParamsMap.put("version", updateAccountSettingsTemplateVersionOptions.version());
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_templates/{template_id}/versions/{version}", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "updateAccountSettingsTemplateVersion");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    builder.header("If-Match", updateAccountSettingsTemplateVersionOptions.ifMatch());
-    final JsonObject contentJson = new JsonObject();
-    if (updateAccountSettingsTemplateVersionOptions.accountId() != null) {
-      contentJson.addProperty("account_id", updateAccountSettingsTemplateVersionOptions.accountId());
-    }
-    if (updateAccountSettingsTemplateVersionOptions.name() != null) {
-      contentJson.addProperty("name", updateAccountSettingsTemplateVersionOptions.name());
-    }
-    if (updateAccountSettingsTemplateVersionOptions.description() != null) {
-      contentJson.addProperty("description", updateAccountSettingsTemplateVersionOptions.description());
-    }
-    if (updateAccountSettingsTemplateVersionOptions.accountSettings() != null) {
-      contentJson.add("account_settings", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(updateAccountSettingsTemplateVersionOptions.accountSettings()));
-    }
-    builder.bodyJson(contentJson);
-    ResponseConverter<AccountSettingsTemplateResponse> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettingsTemplateResponse>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Delete version of an account settings template.
-   *
-   * Delete a specific version of an account settings template in an Enterprise Account.
-   *
-   * @param deleteAccountSettingsTemplateVersionOptions the {@link DeleteAccountSettingsTemplateVersionOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a void result
-   */
-  public ServiceCall<Void> deleteAccountSettingsTemplateVersion(DeleteAccountSettingsTemplateVersionOptions deleteAccountSettingsTemplateVersionOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteAccountSettingsTemplateVersionOptions,
-      "deleteAccountSettingsTemplateVersionOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("template_id", deleteAccountSettingsTemplateVersionOptions.templateId());
-    pathParamsMap.put("version", deleteAccountSettingsTemplateVersionOptions.version());
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_templates/{template_id}/versions/{version}", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "deleteAccountSettingsTemplateVersion");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Commit a template version.
-   *
-   * Commit a specific version of an account settings template in an Enterprise Account. A Template must be committed
-   * before being assigned, and once committed, can no longer be modified.
-   *
-   * @param commitAccountSettingsTemplateOptions the {@link CommitAccountSettingsTemplateOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a void result
-   */
-  public ServiceCall<Void> commitAccountSettingsTemplate(CommitAccountSettingsTemplateOptions commitAccountSettingsTemplateOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(commitAccountSettingsTemplateOptions,
-      "commitAccountSettingsTemplateOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("template_id", commitAccountSettingsTemplateOptions.templateId());
-    pathParamsMap.put("version", commitAccountSettingsTemplateOptions.version());
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_templates/{template_id}/versions/{version}/commit", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "commitAccountSettingsTemplate");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Trigger activity report for the account.
-   *
-   * Trigger activity report for the account by specifying the account ID. It can take a few minutes to generate the
-   * report for retrieval.
-   *
-   * @param createReportOptions the {@link CreateReportOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link ReportReference}
-   */
-  public ServiceCall<ReportReference> createReport(CreateReportOptions createReportOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(createReportOptions,
-      "createReportOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("account_id", createReportOptions.accountId());
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/activity/accounts/{account_id}/report", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "createReport");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    if (createReportOptions.type() != null) {
-      builder.query("type", String.valueOf(createReportOptions.type()));
-    }
-    if (createReportOptions.duration() != null) {
-      builder.query("duration", String.valueOf(createReportOptions.duration()));
-    }
-    ResponseConverter<ReportReference> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ReportReference>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Get activity report for the account.
-   *
-   * Get activity report for the account by specifying the account ID and the reference that is generated by triggering
-   * the report. Reports older than a day are deleted when generating a new report.
-   *
-   * @param getReportOptions the {@link GetReportOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link Report}
-   */
-  public ServiceCall<Report> getReport(GetReportOptions getReportOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getReportOptions,
-      "getReportOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("account_id", getReportOptions.accountId());
-    pathParamsMap.put("reference", getReportOptions.reference());
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/activity/accounts/{account_id}/report/{reference}", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getReport");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    ResponseConverter<Report> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Report>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Get effective account settings configuration.
-   *
-   * Returns effective account settings for given account ID.
-   *
-   * @param getEffectiveAccountSettingsOptions the {@link GetEffectiveAccountSettingsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link EffectiveAccountSettingsResponse}
-   */
-  public ServiceCall<EffectiveAccountSettingsResponse> getEffectiveAccountSettings(GetEffectiveAccountSettingsOptions getEffectiveAccountSettingsOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getEffectiveAccountSettingsOptions,
-      "getEffectiveAccountSettingsOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("account_id", getEffectiveAccountSettingsOptions.accountId());
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/accounts/{account_id}/effective_settings/identity", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getEffectiveAccountSettings");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    if (getEffectiveAccountSettingsOptions.includeHistory() != null) {
-      builder.query("include_history", String.valueOf(getEffectiveAccountSettingsOptions.includeHistory()));
-    }
-    if (getEffectiveAccountSettingsOptions.resolveUserMfa() != null) {
-      builder.query("resolve_user_mfa", String.valueOf(getEffectiveAccountSettingsOptions.resolveUserMfa()));
-    }
-    ResponseConverter<EffectiveAccountSettingsResponse> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<EffectiveAccountSettingsResponse>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
    * Update Identity Preference on scope account.
    *
-   * Update one Identity Preference on scope 'account'. supported preferences:
-   *   The following preferences are storing values for identities inside an account,
-   *   i.e. for each account that an identity is member of, the value stored might be different.
-   *   This means, users who might be member of multiple accounts can have multiple preferences, one per account.
-   *   Identities like Service Ids or Trusted Profiles can only exist in one account,
-   *   therefore they can only have one preference inside their related account.
-   *   preference: console/landing_page
-   *     service: console
-   *     preferenceId: landing_page
-   *     supportedIdentityType: Trusted Profiles, Users
-   *     type: string
-   *     validation: valid URL (without host part), e.g. /billing or /iam
-   *   preference: console/global_left_navigation
-   *     service: console
-   *     preferenceId: global_left_navigation
-   *     supportedIdentityType: Trusted Profiles, Users
-   *     type: list of strings
-   *     validation: each entry in the list of strings must match the identifier of one navigation entry in the console.
+   * Update one Identity Preference on scope `account`.
+   *
+   * The following preferences are storing values for identities inside an account,  i.e. for each account that an
+   * identity is member of, the value stored might be different. This means, **users** who might be member of multiple
+   * accounts can have multiple preferences, one per account.  Identities like **Service Ids** or **Trusted Profiles**
+   * can only exist in one account,  therefore they can only have one preference inside their related account.
+   *
+   * ### Preferences
+   *
+   * - **console/landing_page**
+   *
+   *   service: `console`
+   *
+   *   preference_id: `landing_page`
+   *
+   *   supported identity types: `Trusted Profile`
+   *
+   *   type: `string`
+   *
+   *   validation: valid path for the IBM Cloud Console (without host part), e.g. `/billing` or `/iam`
+   *
+   * - **console/global_left_navigation**
+   *
+   *   service: `console`
+   *
+   *   preference_id: `global_left_navigation`
+   *
+   *   supported identity types: `Trusted Profile`
+   *
+   *   type: `list of strings`
+   *
+   *   validation: each entry in the list of strings must match the identifier of one navigation entry in the console;
+   *   these identifiers are defined and interpreted by the IBM Cloud Console; currently the following entries are
+   * supported:
+   *
+   * `slash,projects,rex,containers,databases,is,logmet,automation,complianceAndSecurity,apis,cp4d,partner-center,sap,satellite,vmWare,watsonx`
+   *
+   * ### Authorization
+   *
+   * To call this method for the identity type `Trusted Profile`, you must be assigned one or more IAM access roles that
+   * include the following action on the target resource `account` and resource type `preferences`:
+   *
+   * - iam-identity.preferences.update
+   *
+   * By default, the `Administrator` role on service `iam-identity` contains this action.
    *
    * @param updatePreferenceOnScopeAccountOptions the {@link UpdatePreferenceOnScopeAccountOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link IdentityPreferenceResponse}
@@ -2162,7 +1858,9 @@ public class IamIdentity extends BaseService {
   /**
    * Delete Identity Preference on scope account.
    *
-   * Delete one Identity Preference on scope 'account'.
+   * Delete one Identity Preference on scope `account`. For details about the preferences supported  and how the method
+   * request is authorized, refer to the description of operation
+   * `Update Identity Preference on scope account`.
    *
    * @param deletePreferencesOnScopeAccountOptions the {@link DeletePreferencesOnScopeAccountOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -2187,7 +1885,23 @@ public class IamIdentity extends BaseService {
   /**
    * Get Identity Preference on scope account.
    *
-   * Get one Identity Preference on scope 'account'.
+   * Get one Identity Preference on scope `account`. For details about the preferences supported,  refer to the
+   * description of operation `Update Identity Preference on scope account`.
+   *
+   * ### Authorization
+   *
+   * To call this method for the identity type `Trusted Profile`, one of the following conditions must be true:
+   *
+   * - the Authorization token represents the trusted profile which is addressed by this request
+   *
+   * - you must be assigned one or more IAM access roles that include the following action on the target resource
+   * `account` and resource type `preferences`:
+   *
+   *   - iam-identity.preferences.update
+   *
+   *   By default, the `Administrator` role on service `iam-identity` contains this action.
+   *
+   * - Services inside the IBM Cloud Console can call this method.
    *
    * @param getPreferencesOnScopeAccountOptions the {@link GetPreferencesOnScopeAccountOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link IdentityPreferenceResponse}
@@ -2212,14 +1926,19 @@ public class IamIdentity extends BaseService {
   }
 
   /**
-   * Get all Identity Preferences for one account.
+   * Get all Identity Preferences on scope account.
    *
-   * Get all Identity Preferences for one account / user combination.
+   * Get all Identity Preferences for one account / identity combination. For details about the preferences  supported
+   * and how the method request is authorized, refer to the description of operation
+   * `Get Identity Preference on scope account`.
+   *
+   * If you are not allowed to read a preference, the call will not fail. Instead, this preference is/ these preferences
+   * are not returned in the list call.
    *
    * @param getAllPreferencesOnScopeAccountOptions the {@link GetAllPreferencesOnScopeAccountOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link AllIdentityPreferencesResponse}
+   * @return a {@link ServiceCall} with a result of type {@link IdentityPreferencesResponse}
    */
-  public ServiceCall<AllIdentityPreferencesResponse> getAllPreferencesOnScopeAccount(GetAllPreferencesOnScopeAccountOptions getAllPreferencesOnScopeAccountOptions) {
+  public ServiceCall<IdentityPreferencesResponse> getAllPreferencesOnScopeAccount(GetAllPreferencesOnScopeAccountOptions getAllPreferencesOnScopeAccountOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(getAllPreferencesOnScopeAccountOptions,
       "getAllPreferencesOnScopeAccountOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -2231,180 +1950,8 @@ public class IamIdentity extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     builder.header("Accept", "application/json");
-    ResponseConverter<AllIdentityPreferencesResponse> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AllIdentityPreferencesResponse>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * List assignments.
-   *
-   * List trusted profile template assignments.
-   *
-   * @param listTrustedProfileAssignmentsOptions the {@link ListTrustedProfileAssignmentsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link TemplateAssignmentListResponse}
-   */
-  public ServiceCall<TemplateAssignmentListResponse> listTrustedProfileAssignments(ListTrustedProfileAssignmentsOptions listTrustedProfileAssignmentsOptions) {
-    if (listTrustedProfileAssignmentsOptions == null) {
-      listTrustedProfileAssignmentsOptions = new ListTrustedProfileAssignmentsOptions.Builder().build();
-    }
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profile_assignments/"));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "listTrustedProfileAssignments");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    if (listTrustedProfileAssignmentsOptions.accountId() != null) {
-      builder.query("account_id", String.valueOf(listTrustedProfileAssignmentsOptions.accountId()));
-    }
-    if (listTrustedProfileAssignmentsOptions.templateId() != null) {
-      builder.query("template_id", String.valueOf(listTrustedProfileAssignmentsOptions.templateId()));
-    }
-    if (listTrustedProfileAssignmentsOptions.templateVersion() != null) {
-      builder.query("template_version", String.valueOf(listTrustedProfileAssignmentsOptions.templateVersion()));
-    }
-    if (listTrustedProfileAssignmentsOptions.target() != null) {
-      builder.query("target", String.valueOf(listTrustedProfileAssignmentsOptions.target()));
-    }
-    if (listTrustedProfileAssignmentsOptions.targetType() != null) {
-      builder.query("target_type", String.valueOf(listTrustedProfileAssignmentsOptions.targetType()));
-    }
-    if (listTrustedProfileAssignmentsOptions.limit() != null) {
-      builder.query("limit", String.valueOf(listTrustedProfileAssignmentsOptions.limit()));
-    }
-    if (listTrustedProfileAssignmentsOptions.pagetoken() != null) {
-      builder.query("pagetoken", String.valueOf(listTrustedProfileAssignmentsOptions.pagetoken()));
-    }
-    if (listTrustedProfileAssignmentsOptions.sort() != null) {
-      builder.query("sort", String.valueOf(listTrustedProfileAssignmentsOptions.sort()));
-    }
-    if (listTrustedProfileAssignmentsOptions.order() != null) {
-      builder.query("order", String.valueOf(listTrustedProfileAssignmentsOptions.order()));
-    }
-    if (listTrustedProfileAssignmentsOptions.includeHistory() != null) {
-      builder.query("include_history", String.valueOf(listTrustedProfileAssignmentsOptions.includeHistory()));
-    }
-    ResponseConverter<TemplateAssignmentListResponse> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TemplateAssignmentListResponse>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * List assignments.
-   *
-   * List trusted profile template assignments.
-   *
-   * @return a {@link ServiceCall} with a result of type {@link TemplateAssignmentListResponse}
-   */
-  public ServiceCall<TemplateAssignmentListResponse> listTrustedProfileAssignments() {
-    return listTrustedProfileAssignments(null);
-  }
-
-  /**
-   * Create assignment.
-   *
-   * Create an assigment for a trusted profile template.
-   *
-   * @param createTrustedProfileAssignmentOptions the {@link CreateTrustedProfileAssignmentOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link TemplateAssignmentResponse}
-   */
-  public ServiceCall<TemplateAssignmentResponse> createTrustedProfileAssignment(CreateTrustedProfileAssignmentOptions createTrustedProfileAssignmentOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(createTrustedProfileAssignmentOptions,
-      "createTrustedProfileAssignmentOptions cannot be null");
-    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profile_assignments/"));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "createTrustedProfileAssignment");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    final JsonObject contentJson = new JsonObject();
-    contentJson.addProperty("template_id", createTrustedProfileAssignmentOptions.templateId());
-    contentJson.addProperty("template_version", createTrustedProfileAssignmentOptions.templateVersion());
-    contentJson.addProperty("target_type", createTrustedProfileAssignmentOptions.targetType());
-    contentJson.addProperty("target", createTrustedProfileAssignmentOptions.target());
-    builder.bodyJson(contentJson);
-    ResponseConverter<TemplateAssignmentResponse> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TemplateAssignmentResponse>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Get assignment.
-   *
-   * Get an assigment for a trusted profile template.
-   *
-   * @param getTrustedProfileAssignmentOptions the {@link GetTrustedProfileAssignmentOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link TemplateAssignmentResponse}
-   */
-  public ServiceCall<TemplateAssignmentResponse> getTrustedProfileAssignment(GetTrustedProfileAssignmentOptions getTrustedProfileAssignmentOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getTrustedProfileAssignmentOptions,
-      "getTrustedProfileAssignmentOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("assignment_id", getTrustedProfileAssignmentOptions.assignmentId());
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profile_assignments/{assignment_id}", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getTrustedProfileAssignment");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    if (getTrustedProfileAssignmentOptions.includeHistory() != null) {
-      builder.query("include_history", String.valueOf(getTrustedProfileAssignmentOptions.includeHistory()));
-    }
-    ResponseConverter<TemplateAssignmentResponse> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TemplateAssignmentResponse>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Delete assignment.
-   *
-   * Delete a trusted profile assignment. This removes any IAM resources created by this assignment in child accounts.
-   *
-   * @param deleteTrustedProfileAssignmentOptions the {@link DeleteTrustedProfileAssignmentOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link ExceptionResponse}
-   */
-  public ServiceCall<ExceptionResponse> deleteTrustedProfileAssignment(DeleteTrustedProfileAssignmentOptions deleteTrustedProfileAssignmentOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteTrustedProfileAssignmentOptions,
-      "deleteTrustedProfileAssignmentOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("assignment_id", deleteTrustedProfileAssignmentOptions.assignmentId());
-    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profile_assignments/{assignment_id}", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "deleteTrustedProfileAssignment");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    ResponseConverter<ExceptionResponse> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ExceptionResponse>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Update assignment.
-   *
-   * Update a trusted profile assignment. Call this method to retry failed assignments or migrate the trusted profile in
-   * child accounts to a new version.
-   *
-   * @param updateTrustedProfileAssignmentOptions the {@link UpdateTrustedProfileAssignmentOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link TemplateAssignmentResponse}
-   */
-  public ServiceCall<TemplateAssignmentResponse> updateTrustedProfileAssignment(UpdateTrustedProfileAssignmentOptions updateTrustedProfileAssignmentOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(updateTrustedProfileAssignmentOptions,
-      "updateTrustedProfileAssignmentOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("assignment_id", updateTrustedProfileAssignmentOptions.assignmentId());
-    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profile_assignments/{assignment_id}", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "updateTrustedProfileAssignment");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    builder.header("If-Match", updateTrustedProfileAssignmentOptions.ifMatch());
-    final JsonObject contentJson = new JsonObject();
-    contentJson.addProperty("template_version", updateTrustedProfileAssignmentOptions.templateVersion());
-    builder.bodyJson(contentJson);
-    ResponseConverter<TemplateAssignmentResponse> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TemplateAssignmentResponse>() { }.getType());
+    ResponseConverter<IdentityPreferencesResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<IdentityPreferencesResponse>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -2765,6 +2312,692 @@ public class IamIdentity extends BaseService {
       builder.header(header.getKey(), header.getValue());
     }
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * List assignments.
+   *
+   * List trusted profile template assignments.
+   *
+   * @param listTrustedProfileAssignmentsOptions the {@link ListTrustedProfileAssignmentsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link TemplateAssignmentListResponse}
+   */
+  public ServiceCall<TemplateAssignmentListResponse> listTrustedProfileAssignments(ListTrustedProfileAssignmentsOptions listTrustedProfileAssignmentsOptions) {
+    if (listTrustedProfileAssignmentsOptions == null) {
+      listTrustedProfileAssignmentsOptions = new ListTrustedProfileAssignmentsOptions.Builder().build();
+    }
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profile_assignments/"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "listTrustedProfileAssignments");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (listTrustedProfileAssignmentsOptions.accountId() != null) {
+      builder.query("account_id", String.valueOf(listTrustedProfileAssignmentsOptions.accountId()));
+    }
+    if (listTrustedProfileAssignmentsOptions.templateId() != null) {
+      builder.query("template_id", String.valueOf(listTrustedProfileAssignmentsOptions.templateId()));
+    }
+    if (listTrustedProfileAssignmentsOptions.templateVersion() != null) {
+      builder.query("template_version", String.valueOf(listTrustedProfileAssignmentsOptions.templateVersion()));
+    }
+    if (listTrustedProfileAssignmentsOptions.target() != null) {
+      builder.query("target", String.valueOf(listTrustedProfileAssignmentsOptions.target()));
+    }
+    if (listTrustedProfileAssignmentsOptions.targetType() != null) {
+      builder.query("target_type", String.valueOf(listTrustedProfileAssignmentsOptions.targetType()));
+    }
+    if (listTrustedProfileAssignmentsOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listTrustedProfileAssignmentsOptions.limit()));
+    }
+    if (listTrustedProfileAssignmentsOptions.pagetoken() != null) {
+      builder.query("pagetoken", String.valueOf(listTrustedProfileAssignmentsOptions.pagetoken()));
+    }
+    if (listTrustedProfileAssignmentsOptions.sort() != null) {
+      builder.query("sort", String.valueOf(listTrustedProfileAssignmentsOptions.sort()));
+    }
+    if (listTrustedProfileAssignmentsOptions.order() != null) {
+      builder.query("order", String.valueOf(listTrustedProfileAssignmentsOptions.order()));
+    }
+    if (listTrustedProfileAssignmentsOptions.includeHistory() != null) {
+      builder.query("include_history", String.valueOf(listTrustedProfileAssignmentsOptions.includeHistory()));
+    }
+    ResponseConverter<TemplateAssignmentListResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TemplateAssignmentListResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * List assignments.
+   *
+   * List trusted profile template assignments.
+   *
+   * @return a {@link ServiceCall} with a result of type {@link TemplateAssignmentListResponse}
+   */
+  public ServiceCall<TemplateAssignmentListResponse> listTrustedProfileAssignments() {
+    return listTrustedProfileAssignments(null);
+  }
+
+  /**
+   * Create assignment.
+   *
+   * Create an assigment for a trusted profile template.
+   *
+   * @param createTrustedProfileAssignmentOptions the {@link CreateTrustedProfileAssignmentOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link TemplateAssignmentResponse}
+   */
+  public ServiceCall<TemplateAssignmentResponse> createTrustedProfileAssignment(CreateTrustedProfileAssignmentOptions createTrustedProfileAssignmentOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createTrustedProfileAssignmentOptions,
+      "createTrustedProfileAssignmentOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profile_assignments/"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "createTrustedProfileAssignment");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("template_id", createTrustedProfileAssignmentOptions.templateId());
+    contentJson.addProperty("template_version", createTrustedProfileAssignmentOptions.templateVersion());
+    contentJson.addProperty("target_type", createTrustedProfileAssignmentOptions.targetType());
+    contentJson.addProperty("target", createTrustedProfileAssignmentOptions.target());
+    builder.bodyJson(contentJson);
+    ResponseConverter<TemplateAssignmentResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TemplateAssignmentResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get assignment.
+   *
+   * Get an assigment for a trusted profile template.
+   *
+   * @param getTrustedProfileAssignmentOptions the {@link GetTrustedProfileAssignmentOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link TemplateAssignmentResponse}
+   */
+  public ServiceCall<TemplateAssignmentResponse> getTrustedProfileAssignment(GetTrustedProfileAssignmentOptions getTrustedProfileAssignmentOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getTrustedProfileAssignmentOptions,
+      "getTrustedProfileAssignmentOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("assignment_id", getTrustedProfileAssignmentOptions.assignmentId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profile_assignments/{assignment_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getTrustedProfileAssignment");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (getTrustedProfileAssignmentOptions.includeHistory() != null) {
+      builder.query("include_history", String.valueOf(getTrustedProfileAssignmentOptions.includeHistory()));
+    }
+    ResponseConverter<TemplateAssignmentResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TemplateAssignmentResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Delete assignment.
+   *
+   * Delete a trusted profile assignment. This removes any IAM resources created by this assignment in child accounts.
+   *
+   * @param deleteTrustedProfileAssignmentOptions the {@link DeleteTrustedProfileAssignmentOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ExceptionResponse}
+   */
+  public ServiceCall<ExceptionResponse> deleteTrustedProfileAssignment(DeleteTrustedProfileAssignmentOptions deleteTrustedProfileAssignmentOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteTrustedProfileAssignmentOptions,
+      "deleteTrustedProfileAssignmentOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("assignment_id", deleteTrustedProfileAssignmentOptions.assignmentId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profile_assignments/{assignment_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "deleteTrustedProfileAssignment");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<ExceptionResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ExceptionResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Update assignment.
+   *
+   * Update a trusted profile assignment. Call this method to retry failed assignments or migrate the trusted profile in
+   * child accounts to a new version.
+   *
+   * @param updateTrustedProfileAssignmentOptions the {@link UpdateTrustedProfileAssignmentOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link TemplateAssignmentResponse}
+   */
+  public ServiceCall<TemplateAssignmentResponse> updateTrustedProfileAssignment(UpdateTrustedProfileAssignmentOptions updateTrustedProfileAssignmentOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(updateTrustedProfileAssignmentOptions,
+      "updateTrustedProfileAssignmentOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("assignment_id", updateTrustedProfileAssignmentOptions.assignmentId());
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profile_assignments/{assignment_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "updateTrustedProfileAssignment");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.header("If-Match", updateTrustedProfileAssignmentOptions.ifMatch());
+    final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("template_version", updateTrustedProfileAssignmentOptions.templateVersion());
+    builder.bodyJson(contentJson);
+    ResponseConverter<TemplateAssignmentResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TemplateAssignmentResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * List account settings templates.
+   *
+   * List account settings templates in an enterprise account.
+   *
+   * @param listAccountSettingsTemplatesOptions the {@link ListAccountSettingsTemplatesOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link AccountSettingsTemplateList}
+   */
+  public ServiceCall<AccountSettingsTemplateList> listAccountSettingsTemplates(ListAccountSettingsTemplatesOptions listAccountSettingsTemplatesOptions) {
+    if (listAccountSettingsTemplatesOptions == null) {
+      listAccountSettingsTemplatesOptions = new ListAccountSettingsTemplatesOptions.Builder().build();
+    }
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_templates"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "listAccountSettingsTemplates");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (listAccountSettingsTemplatesOptions.accountId() != null) {
+      builder.query("account_id", String.valueOf(listAccountSettingsTemplatesOptions.accountId()));
+    }
+    if (listAccountSettingsTemplatesOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listAccountSettingsTemplatesOptions.limit()));
+    }
+    if (listAccountSettingsTemplatesOptions.pagetoken() != null) {
+      builder.query("pagetoken", String.valueOf(listAccountSettingsTemplatesOptions.pagetoken()));
+    }
+    if (listAccountSettingsTemplatesOptions.sort() != null) {
+      builder.query("sort", String.valueOf(listAccountSettingsTemplatesOptions.sort()));
+    }
+    if (listAccountSettingsTemplatesOptions.order() != null) {
+      builder.query("order", String.valueOf(listAccountSettingsTemplatesOptions.order()));
+    }
+    if (listAccountSettingsTemplatesOptions.includeHistory() != null) {
+      builder.query("include_history", String.valueOf(listAccountSettingsTemplatesOptions.includeHistory()));
+    }
+    ResponseConverter<AccountSettingsTemplateList> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettingsTemplateList>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * List account settings templates.
+   *
+   * List account settings templates in an enterprise account.
+   *
+   * @return a {@link ServiceCall} with a result of type {@link AccountSettingsTemplateList}
+   */
+  public ServiceCall<AccountSettingsTemplateList> listAccountSettingsTemplates() {
+    return listAccountSettingsTemplates(null);
+  }
+
+  /**
+   * Create an account settings template.
+   *
+   * Create a new account settings template in an enterprise account.
+   *
+   * @param createAccountSettingsTemplateOptions the {@link CreateAccountSettingsTemplateOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link AccountSettingsTemplateResponse}
+   */
+  public ServiceCall<AccountSettingsTemplateResponse> createAccountSettingsTemplate(CreateAccountSettingsTemplateOptions createAccountSettingsTemplateOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createAccountSettingsTemplateOptions,
+      "createAccountSettingsTemplateOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_templates"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "createAccountSettingsTemplate");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    final JsonObject contentJson = new JsonObject();
+    if (createAccountSettingsTemplateOptions.accountId() != null) {
+      contentJson.addProperty("account_id", createAccountSettingsTemplateOptions.accountId());
+    }
+    if (createAccountSettingsTemplateOptions.name() != null) {
+      contentJson.addProperty("name", createAccountSettingsTemplateOptions.name());
+    }
+    if (createAccountSettingsTemplateOptions.description() != null) {
+      contentJson.addProperty("description", createAccountSettingsTemplateOptions.description());
+    }
+    if (createAccountSettingsTemplateOptions.accountSettings() != null) {
+      contentJson.add("account_settings", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createAccountSettingsTemplateOptions.accountSettings()));
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<AccountSettingsTemplateResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettingsTemplateResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Create an account settings template.
+   *
+   * Create a new account settings template in an enterprise account.
+   *
+   * @return a {@link ServiceCall} with a result of type {@link AccountSettingsTemplateResponse}
+   */
+  public ServiceCall<AccountSettingsTemplateResponse> createAccountSettingsTemplate() {
+    return createAccountSettingsTemplate(null);
+  }
+
+  /**
+   * Get latest version of an account settings template.
+   *
+   * Get the latest version of a specific account settings template in an enterprise account.
+   *
+   * @param getLatestAccountSettingsTemplateVersionOptions the {@link GetLatestAccountSettingsTemplateVersionOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link AccountSettingsTemplateResponse}
+   */
+  public ServiceCall<AccountSettingsTemplateResponse> getLatestAccountSettingsTemplateVersion(GetLatestAccountSettingsTemplateVersionOptions getLatestAccountSettingsTemplateVersionOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getLatestAccountSettingsTemplateVersionOptions,
+      "getLatestAccountSettingsTemplateVersionOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("template_id", getLatestAccountSettingsTemplateVersionOptions.templateId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_templates/{template_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getLatestAccountSettingsTemplateVersion");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (getLatestAccountSettingsTemplateVersionOptions.includeHistory() != null) {
+      builder.query("include_history", String.valueOf(getLatestAccountSettingsTemplateVersionOptions.includeHistory()));
+    }
+    ResponseConverter<AccountSettingsTemplateResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettingsTemplateResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Delete all versions of an account settings template.
+   *
+   * Delete all versions of an account settings template in an enterprise account. If any version is assigned to child
+   * accounts, you must first delete the assignment.
+   *
+   * @param deleteAllVersionsOfAccountSettingsTemplateOptions the {@link DeleteAllVersionsOfAccountSettingsTemplateOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> deleteAllVersionsOfAccountSettingsTemplate(DeleteAllVersionsOfAccountSettingsTemplateOptions deleteAllVersionsOfAccountSettingsTemplateOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteAllVersionsOfAccountSettingsTemplateOptions,
+      "deleteAllVersionsOfAccountSettingsTemplateOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("template_id", deleteAllVersionsOfAccountSettingsTemplateOptions.templateId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_templates/{template_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "deleteAllVersionsOfAccountSettingsTemplate");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * List account settings template versions.
+   *
+   * List the versions of a specific account settings template in an enterprise account.
+   *
+   * @param listVersionsOfAccountSettingsTemplateOptions the {@link ListVersionsOfAccountSettingsTemplateOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link AccountSettingsTemplateList}
+   */
+  public ServiceCall<AccountSettingsTemplateList> listVersionsOfAccountSettingsTemplate(ListVersionsOfAccountSettingsTemplateOptions listVersionsOfAccountSettingsTemplateOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(listVersionsOfAccountSettingsTemplateOptions,
+      "listVersionsOfAccountSettingsTemplateOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("template_id", listVersionsOfAccountSettingsTemplateOptions.templateId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_templates/{template_id}/versions", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "listVersionsOfAccountSettingsTemplate");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (listVersionsOfAccountSettingsTemplateOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listVersionsOfAccountSettingsTemplateOptions.limit()));
+    }
+    if (listVersionsOfAccountSettingsTemplateOptions.pagetoken() != null) {
+      builder.query("pagetoken", String.valueOf(listVersionsOfAccountSettingsTemplateOptions.pagetoken()));
+    }
+    if (listVersionsOfAccountSettingsTemplateOptions.sort() != null) {
+      builder.query("sort", String.valueOf(listVersionsOfAccountSettingsTemplateOptions.sort()));
+    }
+    if (listVersionsOfAccountSettingsTemplateOptions.order() != null) {
+      builder.query("order", String.valueOf(listVersionsOfAccountSettingsTemplateOptions.order()));
+    }
+    if (listVersionsOfAccountSettingsTemplateOptions.includeHistory() != null) {
+      builder.query("include_history", String.valueOf(listVersionsOfAccountSettingsTemplateOptions.includeHistory()));
+    }
+    ResponseConverter<AccountSettingsTemplateList> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettingsTemplateList>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Create a new version of an account settings template.
+   *
+   * Create a new version of an account settings template in an Enterprise Account.
+   *
+   * @param createAccountSettingsTemplateVersionOptions the {@link CreateAccountSettingsTemplateVersionOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link AccountSettingsTemplateResponse}
+   */
+  public ServiceCall<AccountSettingsTemplateResponse> createAccountSettingsTemplateVersion(CreateAccountSettingsTemplateVersionOptions createAccountSettingsTemplateVersionOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createAccountSettingsTemplateVersionOptions,
+      "createAccountSettingsTemplateVersionOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("template_id", createAccountSettingsTemplateVersionOptions.templateId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_templates/{template_id}/versions", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "createAccountSettingsTemplateVersion");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    final JsonObject contentJson = new JsonObject();
+    if (createAccountSettingsTemplateVersionOptions.accountId() != null) {
+      contentJson.addProperty("account_id", createAccountSettingsTemplateVersionOptions.accountId());
+    }
+    if (createAccountSettingsTemplateVersionOptions.name() != null) {
+      contentJson.addProperty("name", createAccountSettingsTemplateVersionOptions.name());
+    }
+    if (createAccountSettingsTemplateVersionOptions.description() != null) {
+      contentJson.addProperty("description", createAccountSettingsTemplateVersionOptions.description());
+    }
+    if (createAccountSettingsTemplateVersionOptions.accountSettings() != null) {
+      contentJson.add("account_settings", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createAccountSettingsTemplateVersionOptions.accountSettings()));
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<AccountSettingsTemplateResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettingsTemplateResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get version of an account settings template.
+   *
+   * Get a specific version of an account settings template in an Enterprise Account.
+   *
+   * @param getAccountSettingsTemplateVersionOptions the {@link GetAccountSettingsTemplateVersionOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link AccountSettingsTemplateResponse}
+   */
+  public ServiceCall<AccountSettingsTemplateResponse> getAccountSettingsTemplateVersion(GetAccountSettingsTemplateVersionOptions getAccountSettingsTemplateVersionOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getAccountSettingsTemplateVersionOptions,
+      "getAccountSettingsTemplateVersionOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("template_id", getAccountSettingsTemplateVersionOptions.templateId());
+    pathParamsMap.put("version", getAccountSettingsTemplateVersionOptions.version());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_templates/{template_id}/versions/{version}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getAccountSettingsTemplateVersion");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (getAccountSettingsTemplateVersionOptions.includeHistory() != null) {
+      builder.query("include_history", String.valueOf(getAccountSettingsTemplateVersionOptions.includeHistory()));
+    }
+    ResponseConverter<AccountSettingsTemplateResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettingsTemplateResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Update version of an account settings template.
+   *
+   * Update a specific version of an account settings template in an Enterprise Account.
+   *
+   * @param updateAccountSettingsTemplateVersionOptions the {@link UpdateAccountSettingsTemplateVersionOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link AccountSettingsTemplateResponse}
+   */
+  public ServiceCall<AccountSettingsTemplateResponse> updateAccountSettingsTemplateVersion(UpdateAccountSettingsTemplateVersionOptions updateAccountSettingsTemplateVersionOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(updateAccountSettingsTemplateVersionOptions,
+      "updateAccountSettingsTemplateVersionOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("template_id", updateAccountSettingsTemplateVersionOptions.templateId());
+    pathParamsMap.put("version", updateAccountSettingsTemplateVersionOptions.version());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_templates/{template_id}/versions/{version}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "updateAccountSettingsTemplateVersion");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.header("If-Match", updateAccountSettingsTemplateVersionOptions.ifMatch());
+    final JsonObject contentJson = new JsonObject();
+    if (updateAccountSettingsTemplateVersionOptions.accountId() != null) {
+      contentJson.addProperty("account_id", updateAccountSettingsTemplateVersionOptions.accountId());
+    }
+    if (updateAccountSettingsTemplateVersionOptions.name() != null) {
+      contentJson.addProperty("name", updateAccountSettingsTemplateVersionOptions.name());
+    }
+    if (updateAccountSettingsTemplateVersionOptions.description() != null) {
+      contentJson.addProperty("description", updateAccountSettingsTemplateVersionOptions.description());
+    }
+    if (updateAccountSettingsTemplateVersionOptions.accountSettings() != null) {
+      contentJson.add("account_settings", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(updateAccountSettingsTemplateVersionOptions.accountSettings()));
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<AccountSettingsTemplateResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettingsTemplateResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Delete version of an account settings template.
+   *
+   * Delete a specific version of an account settings template in an Enterprise Account.
+   *
+   * @param deleteAccountSettingsTemplateVersionOptions the {@link DeleteAccountSettingsTemplateVersionOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> deleteAccountSettingsTemplateVersion(DeleteAccountSettingsTemplateVersionOptions deleteAccountSettingsTemplateVersionOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteAccountSettingsTemplateVersionOptions,
+      "deleteAccountSettingsTemplateVersionOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("template_id", deleteAccountSettingsTemplateVersionOptions.templateId());
+    pathParamsMap.put("version", deleteAccountSettingsTemplateVersionOptions.version());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_templates/{template_id}/versions/{version}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "deleteAccountSettingsTemplateVersion");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Commit a template version.
+   *
+   * Commit a specific version of an account settings template in an Enterprise Account. A Template must be committed
+   * before being assigned, and once committed, can no longer be modified.
+   *
+   * @param commitAccountSettingsTemplateOptions the {@link CommitAccountSettingsTemplateOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> commitAccountSettingsTemplate(CommitAccountSettingsTemplateOptions commitAccountSettingsTemplateOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(commitAccountSettingsTemplateOptions,
+      "commitAccountSettingsTemplateOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("template_id", commitAccountSettingsTemplateOptions.templateId());
+    pathParamsMap.put("version", commitAccountSettingsTemplateOptions.version());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_templates/{template_id}/versions/{version}/commit", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "commitAccountSettingsTemplate");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * List assignments.
+   *
+   * List account settings assignments.
+   *
+   * @param listAccountSettingsAssignmentsOptions the {@link ListAccountSettingsAssignmentsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link TemplateAssignmentListResponse}
+   */
+  public ServiceCall<TemplateAssignmentListResponse> listAccountSettingsAssignments(ListAccountSettingsAssignmentsOptions listAccountSettingsAssignmentsOptions) {
+    if (listAccountSettingsAssignmentsOptions == null) {
+      listAccountSettingsAssignmentsOptions = new ListAccountSettingsAssignmentsOptions.Builder().build();
+    }
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_assignments/"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "listAccountSettingsAssignments");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (listAccountSettingsAssignmentsOptions.accountId() != null) {
+      builder.query("account_id", String.valueOf(listAccountSettingsAssignmentsOptions.accountId()));
+    }
+    if (listAccountSettingsAssignmentsOptions.templateId() != null) {
+      builder.query("template_id", String.valueOf(listAccountSettingsAssignmentsOptions.templateId()));
+    }
+    if (listAccountSettingsAssignmentsOptions.templateVersion() != null) {
+      builder.query("template_version", String.valueOf(listAccountSettingsAssignmentsOptions.templateVersion()));
+    }
+    if (listAccountSettingsAssignmentsOptions.target() != null) {
+      builder.query("target", String.valueOf(listAccountSettingsAssignmentsOptions.target()));
+    }
+    if (listAccountSettingsAssignmentsOptions.targetType() != null) {
+      builder.query("target_type", String.valueOf(listAccountSettingsAssignmentsOptions.targetType()));
+    }
+    if (listAccountSettingsAssignmentsOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listAccountSettingsAssignmentsOptions.limit()));
+    }
+    if (listAccountSettingsAssignmentsOptions.pagetoken() != null) {
+      builder.query("pagetoken", String.valueOf(listAccountSettingsAssignmentsOptions.pagetoken()));
+    }
+    if (listAccountSettingsAssignmentsOptions.sort() != null) {
+      builder.query("sort", String.valueOf(listAccountSettingsAssignmentsOptions.sort()));
+    }
+    if (listAccountSettingsAssignmentsOptions.order() != null) {
+      builder.query("order", String.valueOf(listAccountSettingsAssignmentsOptions.order()));
+    }
+    if (listAccountSettingsAssignmentsOptions.includeHistory() != null) {
+      builder.query("include_history", String.valueOf(listAccountSettingsAssignmentsOptions.includeHistory()));
+    }
+    ResponseConverter<TemplateAssignmentListResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TemplateAssignmentListResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * List assignments.
+   *
+   * List account settings assignments.
+   *
+   * @return a {@link ServiceCall} with a result of type {@link TemplateAssignmentListResponse}
+   */
+  public ServiceCall<TemplateAssignmentListResponse> listAccountSettingsAssignments() {
+    return listAccountSettingsAssignments(null);
+  }
+
+  /**
+   * Create assignment.
+   *
+   * Create an assigment for an account settings template.
+   *
+   * @param createAccountSettingsAssignmentOptions the {@link CreateAccountSettingsAssignmentOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link TemplateAssignmentResponse}
+   */
+  public ServiceCall<TemplateAssignmentResponse> createAccountSettingsAssignment(CreateAccountSettingsAssignmentOptions createAccountSettingsAssignmentOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createAccountSettingsAssignmentOptions,
+      "createAccountSettingsAssignmentOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_assignments/"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "createAccountSettingsAssignment");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("template_id", createAccountSettingsAssignmentOptions.templateId());
+    contentJson.addProperty("template_version", createAccountSettingsAssignmentOptions.templateVersion());
+    contentJson.addProperty("target_type", createAccountSettingsAssignmentOptions.targetType());
+    contentJson.addProperty("target", createAccountSettingsAssignmentOptions.target());
+    builder.bodyJson(contentJson);
+    ResponseConverter<TemplateAssignmentResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TemplateAssignmentResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get assignment.
+   *
+   * Get an assigment for an account settings template.
+   *
+   * @param getAccountSettingsAssignmentOptions the {@link GetAccountSettingsAssignmentOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link TemplateAssignmentResponse}
+   */
+  public ServiceCall<TemplateAssignmentResponse> getAccountSettingsAssignment(GetAccountSettingsAssignmentOptions getAccountSettingsAssignmentOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getAccountSettingsAssignmentOptions,
+      "getAccountSettingsAssignmentOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("assignment_id", getAccountSettingsAssignmentOptions.assignmentId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_assignments/{assignment_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getAccountSettingsAssignment");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (getAccountSettingsAssignmentOptions.includeHistory() != null) {
+      builder.query("include_history", String.valueOf(getAccountSettingsAssignmentOptions.includeHistory()));
+    }
+    ResponseConverter<TemplateAssignmentResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TemplateAssignmentResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Delete assignment.
+   *
+   * Delete an account settings template assignment. This removes any IAM resources created by this assignment in child
+   * accounts.
+   *
+   * @param deleteAccountSettingsAssignmentOptions the {@link DeleteAccountSettingsAssignmentOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ExceptionResponse}
+   */
+  public ServiceCall<ExceptionResponse> deleteAccountSettingsAssignment(DeleteAccountSettingsAssignmentOptions deleteAccountSettingsAssignmentOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteAccountSettingsAssignmentOptions,
+      "deleteAccountSettingsAssignmentOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("assignment_id", deleteAccountSettingsAssignmentOptions.assignmentId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_assignments/{assignment_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "deleteAccountSettingsAssignment");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<ExceptionResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ExceptionResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Update assignment.
+   *
+   * Update an account settings assignment. Call this method to retry failed assignments or migrate the settings in
+   * child accounts to a new version.
+   *
+   * @param updateAccountSettingsAssignmentOptions the {@link UpdateAccountSettingsAssignmentOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link TemplateAssignmentResponse}
+   */
+  public ServiceCall<TemplateAssignmentResponse> updateAccountSettingsAssignment(UpdateAccountSettingsAssignmentOptions updateAccountSettingsAssignmentOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(updateAccountSettingsAssignmentOptions,
+      "updateAccountSettingsAssignmentOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("assignment_id", updateAccountSettingsAssignmentOptions.assignmentId());
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/account_settings_assignments/{assignment_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "updateAccountSettingsAssignment");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.header("If-Match", updateAccountSettingsAssignmentOptions.ifMatch());
+    final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("template_version", updateAccountSettingsAssignmentOptions.templateVersion());
+    builder.bodyJson(contentJson);
+    ResponseConverter<TemplateAssignmentResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TemplateAssignmentResponse>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 

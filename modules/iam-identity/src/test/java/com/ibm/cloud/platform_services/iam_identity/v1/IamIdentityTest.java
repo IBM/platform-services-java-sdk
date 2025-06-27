@@ -28,7 +28,6 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ActionControlsIdent
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ActionControlsPolicies;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ActionControlsRules;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.Activity;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.AllIdentityPreferencesResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKey;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyInsideCreateServiceIdRequest;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyList;
@@ -49,6 +48,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileOption
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileTemplateOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateProfileTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateReportOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdGroupOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateTrustedProfileAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteAccountSettingsAssignmentOptions;
@@ -62,6 +62,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.DeletePreferencesOn
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileIdentityOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteServiceIdGroupOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteTrustedProfileAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DisableApiKeyOptions;
@@ -91,10 +92,12 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileIdentityO
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetProfileTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetReportOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdGroupOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetTrustedProfileAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.IdBasedMfaEnrollment;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.IdentityPreferenceResponse;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.IdentityPreferencesResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListAccountSettingsAssignmentsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListAccountSettingsTemplatesOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListApiKeysOptions;
@@ -102,6 +105,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ListClaimRulesOptio
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListLinksOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListProfileTemplatesOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListProfilesOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ListServiceIdGroupOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListServiceIdsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListTrustedProfileAssignmentsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListVersionsOfAccountSettingsTemplateOptions;
@@ -125,6 +129,8 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportMfaEnrollment
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportReference;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ResponseContext;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceId;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdGroup;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdGroupList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.SetProfileIdentitiesOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.SetProfileIdentityOptions;
@@ -151,6 +157,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateClaimRuleOpti
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdatePreferenceOnScopeAccountOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateProfileOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateProfileTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateServiceIdGroupOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateTrustedProfileAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UserActivity;
@@ -193,6 +200,657 @@ public class IamIdentityTest {
     new IamIdentity(serviceName, null);
   }
 
+  // Test the listServiceIds operation with a valid options model parameter
+  @Test
+  public void testListServiceIdsWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"offset\": 6, \"limit\": 5, \"first\": \"first\", \"previous\": \"previous\", \"next\": \"next\", \"serviceids\": [{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"iam_id\": \"iamId\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"locked\": true, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"account_id\": \"accountId\", \"group_id\": \"groupId\", \"name\": \"name\", \"description\": \"description\", \"unique_instance_crns\": [\"uniqueInstanceCrns\"], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"apikey\": {\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"locked\": true, \"disabled\": true, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"support_sessions\": false, \"action_when_leaked\": \"actionWhenLeaked\", \"description\": \"description\", \"iam_id\": \"iamId\", \"account_id\": \"accountId\", \"apikey\": \"apikey\", \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"activity\": {\"last_authn\": \"lastAuthn\", \"authn_count\": 10}}, \"activity\": {\"last_authn\": \"lastAuthn\", \"authn_count\": 10}}]}";
+    String listServiceIdsPath = "/v1/serviceids/";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the ListServiceIdsOptions model
+    ListServiceIdsOptions listServiceIdsOptionsModel = new ListServiceIdsOptions.Builder()
+      .accountId("testString")
+      .groupId("testString")
+      .name("testString")
+      .pagesize(Long.valueOf("26"))
+      .pagetoken("testString")
+      .sort("testString")
+      .order("asc")
+      .includeHistory(false)
+      .filter("testString")
+      .showGroupId("testString")
+      .build();
+
+    // Invoke listServiceIds() with a valid options model and verify the result
+    Response<ServiceIdList> response = iamIdentityService.listServiceIds(listServiceIdsOptionsModel).execute();
+    assertNotNull(response);
+    ServiceIdList responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, listServiceIdsPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(query.get("account_id"), "testString");
+    assertEquals(query.get("group_id"), "testString");
+    assertEquals(query.get("name"), "testString");
+    assertEquals(Long.valueOf(query.get("pagesize")), Long.valueOf("26"));
+    assertEquals(query.get("pagetoken"), "testString");
+    assertEquals(query.get("sort"), "testString");
+    assertEquals(query.get("order"), "asc");
+    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
+    assertEquals(query.get("filter"), "testString");
+    assertEquals(query.get("show_group_id"), "testString");
+  }
+
+  // Test the listServiceIds operation with and without retries enabled
+  @Test
+  public void testListServiceIdsWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testListServiceIdsWOptions();
+
+    iamIdentityService.disableRetries();
+    testListServiceIdsWOptions();
+  }
+
+  // Test the createServiceId operation with a valid options model parameter
+  @Test
+  public void testCreateServiceIdWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"iam_id\": \"iamId\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"locked\": true, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"account_id\": \"accountId\", \"group_id\": \"groupId\", \"name\": \"name\", \"description\": \"description\", \"unique_instance_crns\": [\"uniqueInstanceCrns\"], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"apikey\": {\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"locked\": true, \"disabled\": true, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"support_sessions\": false, \"action_when_leaked\": \"actionWhenLeaked\", \"description\": \"description\", \"iam_id\": \"iamId\", \"account_id\": \"accountId\", \"apikey\": \"apikey\", \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"activity\": {\"last_authn\": \"lastAuthn\", \"authn_count\": 10}}, \"activity\": {\"last_authn\": \"lastAuthn\", \"authn_count\": 10}}";
+    String createServiceIdPath = "/v1/serviceids/";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(201)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the ApiKeyInsideCreateServiceIdRequest model
+    ApiKeyInsideCreateServiceIdRequest apiKeyInsideCreateServiceIdRequestModel = new ApiKeyInsideCreateServiceIdRequest.Builder()
+      .name("testString")
+      .description("testString")
+      .apikey("testString")
+      .storeValue(true)
+      .build();
+
+    // Construct an instance of the CreateServiceIdOptions model
+    CreateServiceIdOptions createServiceIdOptionsModel = new CreateServiceIdOptions.Builder()
+      .accountId("testString")
+      .name("testString")
+      .groupId("testString")
+      .description("testString")
+      .uniqueInstanceCrns(java.util.Arrays.asList("testString"))
+      .apikey(apiKeyInsideCreateServiceIdRequestModel)
+      .showGroupId("testString")
+      .entityLock("false")
+      .build();
+
+    // Invoke createServiceId() with a valid options model and verify the result
+    Response<ServiceId> response = iamIdentityService.createServiceId(createServiceIdOptionsModel).execute();
+    assertNotNull(response);
+    ServiceId responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, createServiceIdPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(query.get("show_group_id"), "testString");
+  }
+
+  // Test the createServiceId operation with and without retries enabled
+  @Test
+  public void testCreateServiceIdWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testCreateServiceIdWOptions();
+
+    iamIdentityService.disableRetries();
+    testCreateServiceIdWOptions();
+  }
+
+  // Test the createServiceId operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testCreateServiceIdNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.createServiceId(null).execute();
+  }
+
+  // Test the getServiceId operation with a valid options model parameter
+  @Test
+  public void testGetServiceIdWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"iam_id\": \"iamId\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"locked\": true, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"account_id\": \"accountId\", \"group_id\": \"groupId\", \"name\": \"name\", \"description\": \"description\", \"unique_instance_crns\": [\"uniqueInstanceCrns\"], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"apikey\": {\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"locked\": true, \"disabled\": true, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"support_sessions\": false, \"action_when_leaked\": \"actionWhenLeaked\", \"description\": \"description\", \"iam_id\": \"iamId\", \"account_id\": \"accountId\", \"apikey\": \"apikey\", \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"activity\": {\"last_authn\": \"lastAuthn\", \"authn_count\": 10}}, \"activity\": {\"last_authn\": \"lastAuthn\", \"authn_count\": 10}}";
+    String getServiceIdPath = "/v1/serviceids/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the GetServiceIdOptions model
+    GetServiceIdOptions getServiceIdOptionsModel = new GetServiceIdOptions.Builder()
+      .id("testString")
+      .includeHistory(false)
+      .includeActivity(false)
+      .showGroupId("testString")
+      .build();
+
+    // Invoke getServiceId() with a valid options model and verify the result
+    Response<ServiceId> response = iamIdentityService.getServiceId(getServiceIdOptionsModel).execute();
+    assertNotNull(response);
+    ServiceId responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getServiceIdPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
+    assertEquals(Boolean.valueOf(query.get("include_activity")), Boolean.valueOf(false));
+    assertEquals(query.get("show_group_id"), "testString");
+  }
+
+  // Test the getServiceId operation with and without retries enabled
+  @Test
+  public void testGetServiceIdWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testGetServiceIdWOptions();
+
+    iamIdentityService.disableRetries();
+    testGetServiceIdWOptions();
+  }
+
+  // Test the getServiceId operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetServiceIdNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.getServiceId(null).execute();
+  }
+
+  // Test the updateServiceId operation with a valid options model parameter
+  @Test
+  public void testUpdateServiceIdWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"iam_id\": \"iamId\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"locked\": true, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"account_id\": \"accountId\", \"group_id\": \"groupId\", \"name\": \"name\", \"description\": \"description\", \"unique_instance_crns\": [\"uniqueInstanceCrns\"], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"apikey\": {\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"locked\": true, \"disabled\": true, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"support_sessions\": false, \"action_when_leaked\": \"actionWhenLeaked\", \"description\": \"description\", \"iam_id\": \"iamId\", \"account_id\": \"accountId\", \"apikey\": \"apikey\", \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"activity\": {\"last_authn\": \"lastAuthn\", \"authn_count\": 10}}, \"activity\": {\"last_authn\": \"lastAuthn\", \"authn_count\": 10}}";
+    String updateServiceIdPath = "/v1/serviceids/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the UpdateServiceIdOptions model
+    UpdateServiceIdOptions updateServiceIdOptionsModel = new UpdateServiceIdOptions.Builder()
+      .id("testString")
+      .ifMatch("testString")
+      .name("testString")
+      .description("testString")
+      .uniqueInstanceCrns(java.util.Arrays.asList("testString"))
+      .showGroupId("testString")
+      .build();
+
+    // Invoke updateServiceId() with a valid options model and verify the result
+    Response<ServiceId> response = iamIdentityService.updateServiceId(updateServiceIdOptionsModel).execute();
+    assertNotNull(response);
+    ServiceId responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "PUT");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, updateServiceIdPath);
+    // Verify header parameters
+    assertEquals(request.getHeader("If-Match"), "testString");
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(query.get("show_group_id"), "testString");
+  }
+
+  // Test the updateServiceId operation with and without retries enabled
+  @Test
+  public void testUpdateServiceIdWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testUpdateServiceIdWOptions();
+
+    iamIdentityService.disableRetries();
+    testUpdateServiceIdWOptions();
+  }
+
+  // Test the updateServiceId operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testUpdateServiceIdNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.updateServiceId(null).execute();
+  }
+
+  // Test the deleteServiceId operation with a valid options model parameter
+  @Test
+  public void testDeleteServiceIdWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "";
+    String deleteServiceIdPath = "/v1/serviceids/testString";
+    server.enqueue(new MockResponse()
+      .setResponseCode(204)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the DeleteServiceIdOptions model
+    DeleteServiceIdOptions deleteServiceIdOptionsModel = new DeleteServiceIdOptions.Builder()
+      .id("testString")
+      .build();
+
+    // Invoke deleteServiceId() with a valid options model and verify the result
+    Response<Void> response = iamIdentityService.deleteServiceId(deleteServiceIdOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    assertNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "DELETE");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, deleteServiceIdPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the deleteServiceId operation with and without retries enabled
+  @Test
+  public void testDeleteServiceIdWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testDeleteServiceIdWOptions();
+
+    iamIdentityService.disableRetries();
+    testDeleteServiceIdWOptions();
+  }
+
+  // Test the deleteServiceId operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testDeleteServiceIdNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.deleteServiceId(null).execute();
+  }
+
+  // Test the lockServiceId operation with a valid options model parameter
+  @Test
+  public void testLockServiceIdWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "";
+    String lockServiceIdPath = "/v1/serviceids/testString/lock";
+    server.enqueue(new MockResponse()
+      .setResponseCode(204)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the LockServiceIdOptions model
+    LockServiceIdOptions lockServiceIdOptionsModel = new LockServiceIdOptions.Builder()
+      .id("testString")
+      .build();
+
+    // Invoke lockServiceId() with a valid options model and verify the result
+    Response<Void> response = iamIdentityService.lockServiceId(lockServiceIdOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    assertNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, lockServiceIdPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the lockServiceId operation with and without retries enabled
+  @Test
+  public void testLockServiceIdWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testLockServiceIdWOptions();
+
+    iamIdentityService.disableRetries();
+    testLockServiceIdWOptions();
+  }
+
+  // Test the lockServiceId operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testLockServiceIdNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.lockServiceId(null).execute();
+  }
+
+  // Test the unlockServiceId operation with a valid options model parameter
+  @Test
+  public void testUnlockServiceIdWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "";
+    String unlockServiceIdPath = "/v1/serviceids/testString/lock";
+    server.enqueue(new MockResponse()
+      .setResponseCode(204)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the UnlockServiceIdOptions model
+    UnlockServiceIdOptions unlockServiceIdOptionsModel = new UnlockServiceIdOptions.Builder()
+      .id("testString")
+      .build();
+
+    // Invoke unlockServiceId() with a valid options model and verify the result
+    Response<Void> response = iamIdentityService.unlockServiceId(unlockServiceIdOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    assertNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "DELETE");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, unlockServiceIdPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the unlockServiceId operation with and without retries enabled
+  @Test
+  public void testUnlockServiceIdWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testUnlockServiceIdWOptions();
+
+    iamIdentityService.disableRetries();
+    testUnlockServiceIdWOptions();
+  }
+
+  // Test the unlockServiceId operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testUnlockServiceIdNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.unlockServiceId(null).execute();
+  }
+
+  // Test the listServiceIdGroup operation with a valid options model parameter
+  @Test
+  public void testListServiceIdGroupWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"serviceid_groups\": [{\"id\": \"id\", \"entity_tag\": \"entityTag\", \"account_id\": \"accountId\", \"crn\": \"crn\", \"name\": \"name\", \"description\": \"description\", \"created_at\": \"createdAt\", \"created_by\": \"createdBy\", \"modified_at\": \"modifiedAt\"}]}";
+    String listServiceIdGroupPath = "/v1/serviceid_groups";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the ListServiceIdGroupOptions model
+    ListServiceIdGroupOptions listServiceIdGroupOptionsModel = new ListServiceIdGroupOptions.Builder()
+      .accountId("testString")
+      .build();
+
+    // Invoke listServiceIdGroup() with a valid options model and verify the result
+    Response<ServiceIdGroupList> response = iamIdentityService.listServiceIdGroup(listServiceIdGroupOptionsModel).execute();
+    assertNotNull(response);
+    ServiceIdGroupList responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, listServiceIdGroupPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(query.get("account_id"), "testString");
+  }
+
+  // Test the listServiceIdGroup operation with and without retries enabled
+  @Test
+  public void testListServiceIdGroupWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testListServiceIdGroupWOptions();
+
+    iamIdentityService.disableRetries();
+    testListServiceIdGroupWOptions();
+  }
+
+  // Test the createServiceIdGroup operation with a valid options model parameter
+  @Test
+  public void testCreateServiceIdGroupWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"id\": \"id\", \"entity_tag\": \"entityTag\", \"account_id\": \"accountId\", \"crn\": \"crn\", \"name\": \"name\", \"description\": \"description\", \"created_at\": \"createdAt\", \"created_by\": \"createdBy\", \"modified_at\": \"modifiedAt\"}";
+    String createServiceIdGroupPath = "/v1/serviceid_groups";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(201)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the CreateServiceIdGroupOptions model
+    CreateServiceIdGroupOptions createServiceIdGroupOptionsModel = new CreateServiceIdGroupOptions.Builder()
+      .accountId("testString")
+      .name("testString")
+      .description("testString")
+      .build();
+
+    // Invoke createServiceIdGroup() with a valid options model and verify the result
+    Response<ServiceIdGroup> response = iamIdentityService.createServiceIdGroup(createServiceIdGroupOptionsModel).execute();
+    assertNotNull(response);
+    ServiceIdGroup responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, createServiceIdGroupPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the createServiceIdGroup operation with and without retries enabled
+  @Test
+  public void testCreateServiceIdGroupWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testCreateServiceIdGroupWOptions();
+
+    iamIdentityService.disableRetries();
+    testCreateServiceIdGroupWOptions();
+  }
+
+  // Test the createServiceIdGroup operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testCreateServiceIdGroupNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.createServiceIdGroup(null).execute();
+  }
+
+  // Test the getServiceIdGroup operation with a valid options model parameter
+  @Test
+  public void testGetServiceIdGroupWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"id\": \"id\", \"entity_tag\": \"entityTag\", \"account_id\": \"accountId\", \"crn\": \"crn\", \"name\": \"name\", \"description\": \"description\", \"created_at\": \"createdAt\", \"created_by\": \"createdBy\", \"modified_at\": \"modifiedAt\"}";
+    String getServiceIdGroupPath = "/v1/serviceid_groups/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the GetServiceIdGroupOptions model
+    GetServiceIdGroupOptions getServiceIdGroupOptionsModel = new GetServiceIdGroupOptions.Builder()
+      .id("testString")
+      .build();
+
+    // Invoke getServiceIdGroup() with a valid options model and verify the result
+    Response<ServiceIdGroup> response = iamIdentityService.getServiceIdGroup(getServiceIdGroupOptionsModel).execute();
+    assertNotNull(response);
+    ServiceIdGroup responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getServiceIdGroupPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the getServiceIdGroup operation with and without retries enabled
+  @Test
+  public void testGetServiceIdGroupWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testGetServiceIdGroupWOptions();
+
+    iamIdentityService.disableRetries();
+    testGetServiceIdGroupWOptions();
+  }
+
+  // Test the getServiceIdGroup operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetServiceIdGroupNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.getServiceIdGroup(null).execute();
+  }
+
+  // Test the updateServiceIdGroup operation with a valid options model parameter
+  @Test
+  public void testUpdateServiceIdGroupWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"id\": \"id\", \"entity_tag\": \"entityTag\", \"account_id\": \"accountId\", \"crn\": \"crn\", \"name\": \"name\", \"description\": \"description\", \"created_at\": \"createdAt\", \"created_by\": \"createdBy\", \"modified_at\": \"modifiedAt\"}";
+    String updateServiceIdGroupPath = "/v1/serviceid_groups/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the UpdateServiceIdGroupOptions model
+    UpdateServiceIdGroupOptions updateServiceIdGroupOptionsModel = new UpdateServiceIdGroupOptions.Builder()
+      .id("testString")
+      .ifMatch("testString")
+      .name("testString")
+      .description("testString")
+      .build();
+
+    // Invoke updateServiceIdGroup() with a valid options model and verify the result
+    Response<ServiceIdGroup> response = iamIdentityService.updateServiceIdGroup(updateServiceIdGroupOptionsModel).execute();
+    assertNotNull(response);
+    ServiceIdGroup responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "PUT");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, updateServiceIdGroupPath);
+    // Verify header parameters
+    assertEquals(request.getHeader("If-Match"), "testString");
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the updateServiceIdGroup operation with and without retries enabled
+  @Test
+  public void testUpdateServiceIdGroupWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testUpdateServiceIdGroupWOptions();
+
+    iamIdentityService.disableRetries();
+    testUpdateServiceIdGroupWOptions();
+  }
+
+  // Test the updateServiceIdGroup operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testUpdateServiceIdGroupNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.updateServiceIdGroup(null).execute();
+  }
+
+  // Test the deleteServiceIdGroup operation with a valid options model parameter
+  @Test
+  public void testDeleteServiceIdGroupWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "";
+    String deleteServiceIdGroupPath = "/v1/serviceid_groups/testString";
+    server.enqueue(new MockResponse()
+      .setResponseCode(204)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the DeleteServiceIdGroupOptions model
+    DeleteServiceIdGroupOptions deleteServiceIdGroupOptionsModel = new DeleteServiceIdGroupOptions.Builder()
+      .id("testString")
+      .build();
+
+    // Invoke deleteServiceIdGroup() with a valid options model and verify the result
+    Response<Void> response = iamIdentityService.deleteServiceIdGroup(deleteServiceIdGroupOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    assertNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "DELETE");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, deleteServiceIdGroupPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the deleteServiceIdGroup operation with and without retries enabled
+  @Test
+  public void testDeleteServiceIdGroupWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testDeleteServiceIdGroupWOptions();
+
+    iamIdentityService.disableRetries();
+    testDeleteServiceIdGroupWOptions();
+  }
+
+  // Test the deleteServiceIdGroup operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testDeleteServiceIdGroupNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.deleteServiceIdGroup(null).execute();
+  }
+
   // Test the listApiKeys operation with a valid options model parameter
   @Test
   public void testListApiKeysWOptions() throws Throwable {
@@ -216,6 +874,7 @@ public class IamIdentityTest {
       .order("asc")
       .includeHistory(false)
       .filter("testString")
+      .groupId("testString")
       .build();
 
     // Invoke listApiKeys() with a valid options model and verify the result
@@ -244,6 +903,7 @@ public class IamIdentityTest {
     assertEquals(query.get("order"), "asc");
     assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
     assertEquals(query.get("filter"), "testString");
+    assertEquals(query.get("group_id"), "testString");
   }
 
   // Test the listApiKeys operation with and without retries enabled
@@ -725,396 +1385,11 @@ public class IamIdentityTest {
     iamIdentityService.enableApiKey(null).execute();
   }
 
-  // Test the listServiceIds operation with a valid options model parameter
-  @Test
-  public void testListServiceIdsWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"offset\": 6, \"limit\": 5, \"first\": \"first\", \"previous\": \"previous\", \"next\": \"next\", \"serviceids\": [{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"iam_id\": \"iamId\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"locked\": true, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"unique_instance_crns\": [\"uniqueInstanceCrns\"], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"apikey\": {\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"locked\": true, \"disabled\": true, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"support_sessions\": false, \"action_when_leaked\": \"actionWhenLeaked\", \"description\": \"description\", \"iam_id\": \"iamId\", \"account_id\": \"accountId\", \"apikey\": \"apikey\", \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"activity\": {\"last_authn\": \"lastAuthn\", \"authn_count\": 10}}, \"activity\": {\"last_authn\": \"lastAuthn\", \"authn_count\": 10}}]}";
-    String listServiceIdsPath = "/v1/serviceids/";
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the ListServiceIdsOptions model
-    ListServiceIdsOptions listServiceIdsOptionsModel = new ListServiceIdsOptions.Builder()
-      .accountId("testString")
-      .name("testString")
-      .pagesize(Long.valueOf("26"))
-      .pagetoken("testString")
-      .sort("testString")
-      .order("asc")
-      .includeHistory(false)
-      .filter("testString")
-      .build();
-
-    // Invoke listServiceIds() with a valid options model and verify the result
-    Response<ServiceIdList> response = iamIdentityService.listServiceIds(listServiceIdsOptionsModel).execute();
-    assertNotNull(response);
-    ServiceIdList responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, listServiceIdsPath);
-    // Verify query params
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    assertEquals(query.get("account_id"), "testString");
-    assertEquals(query.get("name"), "testString");
-    assertEquals(Long.valueOf(query.get("pagesize")), Long.valueOf("26"));
-    assertEquals(query.get("pagetoken"), "testString");
-    assertEquals(query.get("sort"), "testString");
-    assertEquals(query.get("order"), "asc");
-    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
-    assertEquals(query.get("filter"), "testString");
-  }
-
-  // Test the listServiceIds operation with and without retries enabled
-  @Test
-  public void testListServiceIdsWRetries() throws Throwable {
-    iamIdentityService.enableRetries(4, 30);
-    testListServiceIdsWOptions();
-
-    iamIdentityService.disableRetries();
-    testListServiceIdsWOptions();
-  }
-
-  // Test the createServiceId operation with a valid options model parameter
-  @Test
-  public void testCreateServiceIdWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"iam_id\": \"iamId\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"locked\": true, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"unique_instance_crns\": [\"uniqueInstanceCrns\"], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"apikey\": {\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"locked\": true, \"disabled\": true, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"support_sessions\": false, \"action_when_leaked\": \"actionWhenLeaked\", \"description\": \"description\", \"iam_id\": \"iamId\", \"account_id\": \"accountId\", \"apikey\": \"apikey\", \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"activity\": {\"last_authn\": \"lastAuthn\", \"authn_count\": 10}}, \"activity\": {\"last_authn\": \"lastAuthn\", \"authn_count\": 10}}";
-    String createServiceIdPath = "/v1/serviceids/";
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(201)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the ApiKeyInsideCreateServiceIdRequest model
-    ApiKeyInsideCreateServiceIdRequest apiKeyInsideCreateServiceIdRequestModel = new ApiKeyInsideCreateServiceIdRequest.Builder()
-      .name("testString")
-      .description("testString")
-      .apikey("testString")
-      .storeValue(true)
-      .build();
-
-    // Construct an instance of the CreateServiceIdOptions model
-    CreateServiceIdOptions createServiceIdOptionsModel = new CreateServiceIdOptions.Builder()
-      .accountId("testString")
-      .name("testString")
-      .description("testString")
-      .uniqueInstanceCrns(java.util.Arrays.asList("testString"))
-      .apikey(apiKeyInsideCreateServiceIdRequestModel)
-      .entityLock("false")
-      .build();
-
-    // Invoke createServiceId() with a valid options model and verify the result
-    Response<ServiceId> response = iamIdentityService.createServiceId(createServiceIdOptionsModel).execute();
-    assertNotNull(response);
-    ServiceId responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "POST");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, createServiceIdPath);
-    // Verify that there is no query string
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-  }
-
-  // Test the createServiceId operation with and without retries enabled
-  @Test
-  public void testCreateServiceIdWRetries() throws Throwable {
-    iamIdentityService.enableRetries(4, 30);
-    testCreateServiceIdWOptions();
-
-    iamIdentityService.disableRetries();
-    testCreateServiceIdWOptions();
-  }
-
-  // Test the createServiceId operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testCreateServiceIdNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    iamIdentityService.createServiceId(null).execute();
-  }
-
-  // Test the getServiceId operation with a valid options model parameter
-  @Test
-  public void testGetServiceIdWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"iam_id\": \"iamId\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"locked\": true, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"unique_instance_crns\": [\"uniqueInstanceCrns\"], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"apikey\": {\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"locked\": true, \"disabled\": true, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"support_sessions\": false, \"action_when_leaked\": \"actionWhenLeaked\", \"description\": \"description\", \"iam_id\": \"iamId\", \"account_id\": \"accountId\", \"apikey\": \"apikey\", \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"activity\": {\"last_authn\": \"lastAuthn\", \"authn_count\": 10}}, \"activity\": {\"last_authn\": \"lastAuthn\", \"authn_count\": 10}}";
-    String getServiceIdPath = "/v1/serviceids/testString";
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the GetServiceIdOptions model
-    GetServiceIdOptions getServiceIdOptionsModel = new GetServiceIdOptions.Builder()
-      .id("testString")
-      .includeHistory(false)
-      .includeActivity(false)
-      .build();
-
-    // Invoke getServiceId() with a valid options model and verify the result
-    Response<ServiceId> response = iamIdentityService.getServiceId(getServiceIdOptionsModel).execute();
-    assertNotNull(response);
-    ServiceId responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getServiceIdPath);
-    // Verify query params
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
-    assertEquals(Boolean.valueOf(query.get("include_activity")), Boolean.valueOf(false));
-  }
-
-  // Test the getServiceId operation with and without retries enabled
-  @Test
-  public void testGetServiceIdWRetries() throws Throwable {
-    iamIdentityService.enableRetries(4, 30);
-    testGetServiceIdWOptions();
-
-    iamIdentityService.disableRetries();
-    testGetServiceIdWOptions();
-  }
-
-  // Test the getServiceId operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetServiceIdNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    iamIdentityService.getServiceId(null).execute();
-  }
-
-  // Test the updateServiceId operation with a valid options model parameter
-  @Test
-  public void testUpdateServiceIdWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"iam_id\": \"iamId\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"locked\": true, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"unique_instance_crns\": [\"uniqueInstanceCrns\"], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"apikey\": {\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"locked\": true, \"disabled\": true, \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by\": \"createdBy\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"support_sessions\": false, \"action_when_leaked\": \"actionWhenLeaked\", \"description\": \"description\", \"iam_id\": \"iamId\", \"account_id\": \"accountId\", \"apikey\": \"apikey\", \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"activity\": {\"last_authn\": \"lastAuthn\", \"authn_count\": 10}}, \"activity\": {\"last_authn\": \"lastAuthn\", \"authn_count\": 10}}";
-    String updateServiceIdPath = "/v1/serviceids/testString";
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the UpdateServiceIdOptions model
-    UpdateServiceIdOptions updateServiceIdOptionsModel = new UpdateServiceIdOptions.Builder()
-      .id("testString")
-      .ifMatch("testString")
-      .name("testString")
-      .description("testString")
-      .uniqueInstanceCrns(java.util.Arrays.asList("testString"))
-      .build();
-
-    // Invoke updateServiceId() with a valid options model and verify the result
-    Response<ServiceId> response = iamIdentityService.updateServiceId(updateServiceIdOptionsModel).execute();
-    assertNotNull(response);
-    ServiceId responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "PUT");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, updateServiceIdPath);
-    // Verify header parameters
-    assertEquals(request.getHeader("If-Match"), "testString");
-    // Verify that there is no query string
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-  }
-
-  // Test the updateServiceId operation with and without retries enabled
-  @Test
-  public void testUpdateServiceIdWRetries() throws Throwable {
-    iamIdentityService.enableRetries(4, 30);
-    testUpdateServiceIdWOptions();
-
-    iamIdentityService.disableRetries();
-    testUpdateServiceIdWOptions();
-  }
-
-  // Test the updateServiceId operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testUpdateServiceIdNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    iamIdentityService.updateServiceId(null).execute();
-  }
-
-  // Test the deleteServiceId operation with a valid options model parameter
-  @Test
-  public void testDeleteServiceIdWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "";
-    String deleteServiceIdPath = "/v1/serviceids/testString";
-    server.enqueue(new MockResponse()
-      .setResponseCode(204)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the DeleteServiceIdOptions model
-    DeleteServiceIdOptions deleteServiceIdOptionsModel = new DeleteServiceIdOptions.Builder()
-      .id("testString")
-      .build();
-
-    // Invoke deleteServiceId() with a valid options model and verify the result
-    Response<Void> response = iamIdentityService.deleteServiceId(deleteServiceIdOptionsModel).execute();
-    assertNotNull(response);
-    Void responseObj = response.getResult();
-    assertNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "DELETE");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, deleteServiceIdPath);
-    // Verify that there is no query string
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-  }
-
-  // Test the deleteServiceId operation with and without retries enabled
-  @Test
-  public void testDeleteServiceIdWRetries() throws Throwable {
-    iamIdentityService.enableRetries(4, 30);
-    testDeleteServiceIdWOptions();
-
-    iamIdentityService.disableRetries();
-    testDeleteServiceIdWOptions();
-  }
-
-  // Test the deleteServiceId operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testDeleteServiceIdNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    iamIdentityService.deleteServiceId(null).execute();
-  }
-
-  // Test the lockServiceId operation with a valid options model parameter
-  @Test
-  public void testLockServiceIdWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "";
-    String lockServiceIdPath = "/v1/serviceids/testString/lock";
-    server.enqueue(new MockResponse()
-      .setResponseCode(204)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the LockServiceIdOptions model
-    LockServiceIdOptions lockServiceIdOptionsModel = new LockServiceIdOptions.Builder()
-      .id("testString")
-      .build();
-
-    // Invoke lockServiceId() with a valid options model and verify the result
-    Response<Void> response = iamIdentityService.lockServiceId(lockServiceIdOptionsModel).execute();
-    assertNotNull(response);
-    Void responseObj = response.getResult();
-    assertNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "POST");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, lockServiceIdPath);
-    // Verify that there is no query string
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-  }
-
-  // Test the lockServiceId operation with and without retries enabled
-  @Test
-  public void testLockServiceIdWRetries() throws Throwable {
-    iamIdentityService.enableRetries(4, 30);
-    testLockServiceIdWOptions();
-
-    iamIdentityService.disableRetries();
-    testLockServiceIdWOptions();
-  }
-
-  // Test the lockServiceId operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testLockServiceIdNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    iamIdentityService.lockServiceId(null).execute();
-  }
-
-  // Test the unlockServiceId operation with a valid options model parameter
-  @Test
-  public void testUnlockServiceIdWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "";
-    String unlockServiceIdPath = "/v1/serviceids/testString/lock";
-    server.enqueue(new MockResponse()
-      .setResponseCode(204)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the UnlockServiceIdOptions model
-    UnlockServiceIdOptions unlockServiceIdOptionsModel = new UnlockServiceIdOptions.Builder()
-      .id("testString")
-      .build();
-
-    // Invoke unlockServiceId() with a valid options model and verify the result
-    Response<Void> response = iamIdentityService.unlockServiceId(unlockServiceIdOptionsModel).execute();
-    assertNotNull(response);
-    Void responseObj = response.getResult();
-    assertNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "DELETE");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, unlockServiceIdPath);
-    // Verify that there is no query string
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-  }
-
-  // Test the unlockServiceId operation with and without retries enabled
-  @Test
-  public void testUnlockServiceIdWRetries() throws Throwable {
-    iamIdentityService.enableRetries(4, 30);
-    testUnlockServiceIdWOptions();
-
-    iamIdentityService.disableRetries();
-    testUnlockServiceIdWOptions();
-  }
-
-  // Test the unlockServiceId operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testUnlockServiceIdNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    iamIdentityService.unlockServiceId(null).execute();
-  }
-
   // Test the createProfile operation with a valid options model parameter
   @Test
   public void testCreateProfileWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"name\": \"name\", \"description\": \"description\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"iam_id\": \"iamId\", \"account_id\": \"accountId\", \"template_id\": \"templateId\", \"assignment_id\": \"assignmentId\", \"ims_account_id\": 12, \"ims_user_id\": 9, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"activity\": {\"last_authn\": \"lastAuthn\", \"authn_count\": 10}}";
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"name\": \"name\", \"description\": \"description\", \"email\": \"email\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"iam_id\": \"iamId\", \"account_id\": \"accountId\", \"template_id\": \"templateId\", \"assignment_id\": \"assignmentId\", \"ims_account_id\": 12, \"ims_user_id\": 9, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"activity\": {\"last_authn\": \"lastAuthn\", \"authn_count\": 10}}";
     String createProfilePath = "/v1/profiles";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -1126,6 +1401,7 @@ public class IamIdentityTest {
       .name("testString")
       .accountId("testString")
       .description("testString")
+      .email("testString")
       .build();
 
     // Invoke createProfile() with a valid options model and verify the result
@@ -1167,7 +1443,7 @@ public class IamIdentityTest {
   @Test
   public void testListProfilesWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"offset\": 6, \"limit\": 5, \"first\": \"first\", \"previous\": \"previous\", \"next\": \"next\", \"profiles\": [{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"name\": \"name\", \"description\": \"description\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"iam_id\": \"iamId\", \"account_id\": \"accountId\", \"template_id\": \"templateId\", \"assignment_id\": \"assignmentId\", \"ims_account_id\": 12, \"ims_user_id\": 9, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"activity\": {\"last_authn\": \"lastAuthn\", \"authn_count\": 10}}]}";
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"offset\": 6, \"limit\": 5, \"first\": \"first\", \"previous\": \"previous\", \"next\": \"next\", \"profiles\": [{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"name\": \"name\", \"description\": \"description\", \"email\": \"email\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"iam_id\": \"iamId\", \"account_id\": \"accountId\", \"template_id\": \"templateId\", \"assignment_id\": \"assignmentId\", \"ims_account_id\": 12, \"ims_user_id\": 9, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"activity\": {\"last_authn\": \"lastAuthn\", \"authn_count\": 10}}]}";
     String listProfilesPath = "/v1/profiles";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -1233,7 +1509,7 @@ public class IamIdentityTest {
   @Test
   public void testGetProfileWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"name\": \"name\", \"description\": \"description\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"iam_id\": \"iamId\", \"account_id\": \"accountId\", \"template_id\": \"templateId\", \"assignment_id\": \"assignmentId\", \"ims_account_id\": 12, \"ims_user_id\": 9, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"activity\": {\"last_authn\": \"lastAuthn\", \"authn_count\": 10}}";
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"name\": \"name\", \"description\": \"description\", \"email\": \"email\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"iam_id\": \"iamId\", \"account_id\": \"accountId\", \"template_id\": \"templateId\", \"assignment_id\": \"assignmentId\", \"ims_account_id\": 12, \"ims_user_id\": 9, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"activity\": {\"last_authn\": \"lastAuthn\", \"authn_count\": 10}}";
     String getProfilePath = "/v1/profiles/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -1286,7 +1562,7 @@ public class IamIdentityTest {
   @Test
   public void testUpdateProfileWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"name\": \"name\", \"description\": \"description\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"iam_id\": \"iamId\", \"account_id\": \"accountId\", \"template_id\": \"templateId\", \"assignment_id\": \"assignmentId\", \"ims_account_id\": 12, \"ims_user_id\": 9, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"activity\": {\"last_authn\": \"lastAuthn\", \"authn_count\": 10}}";
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"name\": \"name\", \"description\": \"description\", \"email\": \"email\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"iam_id\": \"iamId\", \"account_id\": \"accountId\", \"template_id\": \"templateId\", \"assignment_id\": \"assignmentId\", \"ims_account_id\": 12, \"ims_user_id\": 9, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"activity\": {\"last_authn\": \"lastAuthn\", \"authn_count\": 10}}";
     String updateProfilePath = "/v1/profiles/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -1299,6 +1575,7 @@ public class IamIdentityTest {
       .ifMatch("testString")
       .name("testString")
       .description("testString")
+      .email("testString")
       .build();
 
     // Invoke updateProfile() with a valid options model and verify the result
@@ -2196,6 +2473,113 @@ public class IamIdentityTest {
     iamIdentityService.deleteProfileIdentity(null).execute();
   }
 
+  // Test the createReport operation with a valid options model parameter
+  @Test
+  public void testCreateReportWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"reference\": \"reference\"}";
+    String createReportPath = "/v1/activity/accounts/testString/report";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(202)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the CreateReportOptions model
+    CreateReportOptions createReportOptionsModel = new CreateReportOptions.Builder()
+      .accountId("testString")
+      .type("inactive")
+      .duration("720")
+      .build();
+
+    // Invoke createReport() with a valid options model and verify the result
+    Response<ReportReference> response = iamIdentityService.createReport(createReportOptionsModel).execute();
+    assertNotNull(response);
+    ReportReference responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, createReportPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(query.get("type"), "inactive");
+    assertEquals(query.get("duration"), "720");
+  }
+
+  // Test the createReport operation with and without retries enabled
+  @Test
+  public void testCreateReportWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testCreateReportWOptions();
+
+    iamIdentityService.disableRetries();
+    testCreateReportWOptions();
+  }
+
+  // Test the createReport operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testCreateReportNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.createReport(null).execute();
+  }
+
+  // Test the getReport operation with a valid options model parameter
+  @Test
+  public void testGetReportWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"created_by\": \"createdBy\", \"reference\": \"reference\", \"report_duration\": \"reportDuration\", \"report_start_time\": \"reportStartTime\", \"report_end_time\": \"reportEndTime\", \"users\": [{\"iam_id\": \"iamId\", \"name\": \"name\", \"username\": \"username\", \"email\": \"email\", \"last_authn\": \"lastAuthn\"}], \"apikeys\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"serviceid\": {\"id\": \"id\", \"name\": \"name\"}, \"user\": {\"iam_id\": \"iamId\", \"name\": \"name\", \"username\": \"username\", \"email\": \"email\"}, \"last_authn\": \"lastAuthn\"}], \"serviceids\": [{\"id\": \"id\", \"name\": \"name\", \"last_authn\": \"lastAuthn\"}], \"profiles\": [{\"id\": \"id\", \"name\": \"name\", \"last_authn\": \"lastAuthn\"}]}";
+    String getReportPath = "/v1/activity/accounts/testString/report/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the GetReportOptions model
+    GetReportOptions getReportOptionsModel = new GetReportOptions.Builder()
+      .accountId("testString")
+      .reference("testString")
+      .build();
+
+    // Invoke getReport() with a valid options model and verify the result
+    Response<Report> response = iamIdentityService.getReport(getReportOptionsModel).execute();
+    assertNotNull(response);
+    Report responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getReportPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the getReport operation with and without retries enabled
+  @Test
+  public void testGetReportWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testGetReportWOptions();
+
+    iamIdentityService.disableRetries();
+    testGetReportWOptions();
+  }
+
+  // Test the getReport operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetReportNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.getReport(null).execute();
+  }
+
   // Test the getAccountSettings operation with a valid options model parameter
   @Test
   public void testGetAccountSettingsWOptions() throws Throwable {
@@ -2317,6 +2701,61 @@ public class IamIdentityTest {
   public void testUpdateAccountSettingsNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
     iamIdentityService.updateAccountSettings(null).execute();
+  }
+
+  // Test the getEffectiveAccountSettings operation with a valid options model parameter
+  @Test
+  public void testGetEffectiveAccountSettingsWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"account_id\": \"accountId\", \"effective\": {\"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\", \"name\": \"name\", \"userName\": \"userName\", \"email\": \"email\", \"description\": \"description\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\"}, \"account\": {\"account_id\": \"accountId\", \"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\", \"name\": \"name\", \"userName\": \"userName\", \"email\": \"email\", \"description\": \"description\"}], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\"}, \"assigned_templates\": [{\"template_id\": \"templateId\", \"template_version\": 15, \"template_name\": \"templateName\", \"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\", \"name\": \"name\", \"userName\": \"userName\", \"email\": \"email\", \"description\": \"description\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\"}]}";
+    String getEffectiveAccountSettingsPath = "/v1/accounts/testString/effective_settings/identity";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the GetEffectiveAccountSettingsOptions model
+    GetEffectiveAccountSettingsOptions getEffectiveAccountSettingsOptionsModel = new GetEffectiveAccountSettingsOptions.Builder()
+      .accountId("testString")
+      .includeHistory(false)
+      .resolveUserMfa(false)
+      .build();
+
+    // Invoke getEffectiveAccountSettings() with a valid options model and verify the result
+    Response<EffectiveAccountSettingsResponse> response = iamIdentityService.getEffectiveAccountSettings(getEffectiveAccountSettingsOptionsModel).execute();
+    assertNotNull(response);
+    EffectiveAccountSettingsResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getEffectiveAccountSettingsPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
+    assertEquals(Boolean.valueOf(query.get("resolve_user_mfa")), Boolean.valueOf(false));
+  }
+
+  // Test the getEffectiveAccountSettings operation with and without retries enabled
+  @Test
+  public void testGetEffectiveAccountSettingsWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testGetEffectiveAccountSettingsWOptions();
+
+    iamIdentityService.disableRetries();
+    testGetEffectiveAccountSettingsWOptions();
+  }
+
+  // Test the getEffectiveAccountSettings operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetEffectiveAccountSettingsNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.getEffectiveAccountSettings(null).execute();
   }
 
   // Test the getMfaStatus operation with a valid options model parameter
@@ -2477,19 +2916,968 @@ public class IamIdentityTest {
     iamIdentityService.getMfaReport(null).execute();
   }
 
-  // Test the listAccountSettingsAssignments operation with a valid options model parameter
+  // Test the updatePreferenceOnScopeAccount operation with a valid options model parameter
   @Test
-  public void testListAccountSettingsAssignmentsWOptions() throws Throwable {
+  public void testUpdatePreferenceOnScopeAccountWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"offset\": 6, \"limit\": 5, \"first\": \"first\", \"previous\": \"previous\", \"next\": \"next\", \"assignments\": [{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"account_id\": \"accountId\", \"template_id\": \"templateId\", \"template_version\": 15, \"target_type\": \"targetType\", \"target\": \"target\", \"status\": \"status\", \"resources\": [{\"target\": \"target\", \"profile\": {\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}, \"account_settings\": {\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}, \"policy_template_refs\": [{\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}]}], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"href\": \"href\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\", \"entity_tag\": \"entityTag\"}]}";
-    String listAccountSettingsAssignmentsPath = "/v1/account_settings_assignments/";
+    String mockResponseBody = "{\"service\": \"service\", \"id\": \"id\", \"account_id\": \"accountId\", \"scope\": \"scope\", \"value_string\": \"valueString\", \"value_list_of_strings\": [\"valueListOfStrings\"]}";
+    String updatePreferenceOnScopeAccountPath = "/v1/preferences/accounts/testString/identities/testString/testString/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(200)
       .setBody(mockResponseBody));
 
-    // Construct an instance of the ListAccountSettingsAssignmentsOptions model
-    ListAccountSettingsAssignmentsOptions listAccountSettingsAssignmentsOptionsModel = new ListAccountSettingsAssignmentsOptions.Builder()
+    // Construct an instance of the UpdatePreferenceOnScopeAccountOptions model
+    UpdatePreferenceOnScopeAccountOptions updatePreferenceOnScopeAccountOptionsModel = new UpdatePreferenceOnScopeAccountOptions.Builder()
+      .accountId("testString")
+      .iamId("testString")
+      .service("testString")
+      .preferenceId("testString")
+      .valueString("testString")
+      .valueListOfStrings(java.util.Arrays.asList("testString"))
+      .build();
+
+    // Invoke updatePreferenceOnScopeAccount() with a valid options model and verify the result
+    Response<IdentityPreferenceResponse> response = iamIdentityService.updatePreferenceOnScopeAccount(updatePreferenceOnScopeAccountOptionsModel).execute();
+    assertNotNull(response);
+    IdentityPreferenceResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "PUT");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, updatePreferenceOnScopeAccountPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the updatePreferenceOnScopeAccount operation with and without retries enabled
+  @Test
+  public void testUpdatePreferenceOnScopeAccountWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testUpdatePreferenceOnScopeAccountWOptions();
+
+    iamIdentityService.disableRetries();
+    testUpdatePreferenceOnScopeAccountWOptions();
+  }
+
+  // Test the updatePreferenceOnScopeAccount operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testUpdatePreferenceOnScopeAccountNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.updatePreferenceOnScopeAccount(null).execute();
+  }
+
+  // Test the deletePreferencesOnScopeAccount operation with a valid options model parameter
+  @Test
+  public void testDeletePreferencesOnScopeAccountWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "";
+    String deletePreferencesOnScopeAccountPath = "/v1/preferences/accounts/testString/identities/testString/testString/testString";
+    server.enqueue(new MockResponse()
+      .setResponseCode(204)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the DeletePreferencesOnScopeAccountOptions model
+    DeletePreferencesOnScopeAccountOptions deletePreferencesOnScopeAccountOptionsModel = new DeletePreferencesOnScopeAccountOptions.Builder()
+      .accountId("testString")
+      .iamId("testString")
+      .service("testString")
+      .preferenceId("testString")
+      .build();
+
+    // Invoke deletePreferencesOnScopeAccount() with a valid options model and verify the result
+    Response<Void> response = iamIdentityService.deletePreferencesOnScopeAccount(deletePreferencesOnScopeAccountOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    assertNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "DELETE");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, deletePreferencesOnScopeAccountPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the deletePreferencesOnScopeAccount operation with and without retries enabled
+  @Test
+  public void testDeletePreferencesOnScopeAccountWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testDeletePreferencesOnScopeAccountWOptions();
+
+    iamIdentityService.disableRetries();
+    testDeletePreferencesOnScopeAccountWOptions();
+  }
+
+  // Test the deletePreferencesOnScopeAccount operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testDeletePreferencesOnScopeAccountNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.deletePreferencesOnScopeAccount(null).execute();
+  }
+
+  // Test the getPreferencesOnScopeAccount operation with a valid options model parameter
+  @Test
+  public void testGetPreferencesOnScopeAccountWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"service\": \"service\", \"id\": \"id\", \"account_id\": \"accountId\", \"scope\": \"scope\", \"value_string\": \"valueString\", \"value_list_of_strings\": [\"valueListOfStrings\"]}";
+    String getPreferencesOnScopeAccountPath = "/v1/preferences/accounts/testString/identities/testString/testString/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the GetPreferencesOnScopeAccountOptions model
+    GetPreferencesOnScopeAccountOptions getPreferencesOnScopeAccountOptionsModel = new GetPreferencesOnScopeAccountOptions.Builder()
+      .accountId("testString")
+      .iamId("testString")
+      .service("testString")
+      .preferenceId("testString")
+      .build();
+
+    // Invoke getPreferencesOnScopeAccount() with a valid options model and verify the result
+    Response<IdentityPreferenceResponse> response = iamIdentityService.getPreferencesOnScopeAccount(getPreferencesOnScopeAccountOptionsModel).execute();
+    assertNotNull(response);
+    IdentityPreferenceResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getPreferencesOnScopeAccountPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the getPreferencesOnScopeAccount operation with and without retries enabled
+  @Test
+  public void testGetPreferencesOnScopeAccountWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testGetPreferencesOnScopeAccountWOptions();
+
+    iamIdentityService.disableRetries();
+    testGetPreferencesOnScopeAccountWOptions();
+  }
+
+  // Test the getPreferencesOnScopeAccount operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetPreferencesOnScopeAccountNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.getPreferencesOnScopeAccount(null).execute();
+  }
+
+  // Test the getAllPreferencesOnScopeAccount operation with a valid options model parameter
+  @Test
+  public void testGetAllPreferencesOnScopeAccountWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"preferences\": [{\"service\": \"service\", \"id\": \"id\", \"account_id\": \"accountId\", \"scope\": \"scope\", \"value_string\": \"valueString\", \"value_list_of_strings\": [\"valueListOfStrings\"]}]}";
+    String getAllPreferencesOnScopeAccountPath = "/v1/preferences/accounts/testString/identities/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the GetAllPreferencesOnScopeAccountOptions model
+    GetAllPreferencesOnScopeAccountOptions getAllPreferencesOnScopeAccountOptionsModel = new GetAllPreferencesOnScopeAccountOptions.Builder()
+      .accountId("testString")
+      .iamId("testString")
+      .build();
+
+    // Invoke getAllPreferencesOnScopeAccount() with a valid options model and verify the result
+    Response<IdentityPreferencesResponse> response = iamIdentityService.getAllPreferencesOnScopeAccount(getAllPreferencesOnScopeAccountOptionsModel).execute();
+    assertNotNull(response);
+    IdentityPreferencesResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getAllPreferencesOnScopeAccountPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the getAllPreferencesOnScopeAccount operation with and without retries enabled
+  @Test
+  public void testGetAllPreferencesOnScopeAccountWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testGetAllPreferencesOnScopeAccountWOptions();
+
+    iamIdentityService.disableRetries();
+    testGetAllPreferencesOnScopeAccountWOptions();
+  }
+
+  // Test the getAllPreferencesOnScopeAccount operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetAllPreferencesOnScopeAccountNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.getAllPreferencesOnScopeAccount(null).execute();
+  }
+
+  // Test the listProfileTemplates operation with a valid options model parameter
+  @Test
+  public void testListProfileTemplatesWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"offset\": 6, \"limit\": 20, \"first\": \"first\", \"previous\": \"previous\", \"next\": \"next\", \"profile_templates\": [{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"email\": \"email\", \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"action_controls\": {\"identities\": {\"add\": false, \"remove\": true}, \"rules\": {\"add\": false, \"remove\": true}, \"policies\": {\"add\": false, \"remove\": true}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
+    String listProfileTemplatesPath = "/v1/profile_templates";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the ListProfileTemplatesOptions model
+    ListProfileTemplatesOptions listProfileTemplatesOptionsModel = new ListProfileTemplatesOptions.Builder()
+      .accountId("testString")
+      .limit("20")
+      .pagetoken("testString")
+      .sort("created_at")
+      .order("asc")
+      .includeHistory("false")
+      .build();
+
+    // Invoke listProfileTemplates() with a valid options model and verify the result
+    Response<TrustedProfileTemplateList> response = iamIdentityService.listProfileTemplates(listProfileTemplatesOptionsModel).execute();
+    assertNotNull(response);
+    TrustedProfileTemplateList responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, listProfileTemplatesPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(query.get("account_id"), "testString");
+    assertEquals(query.get("limit"), "20");
+    assertEquals(query.get("pagetoken"), "testString");
+    assertEquals(query.get("sort"), "created_at");
+    assertEquals(query.get("order"), "asc");
+    assertEquals(query.get("include_history"), "false");
+  }
+
+  // Test the listProfileTemplates operation with and without retries enabled
+  @Test
+  public void testListProfileTemplatesWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testListProfileTemplatesWOptions();
+
+    iamIdentityService.disableRetries();
+    testListProfileTemplatesWOptions();
+  }
+
+  // Test the createProfileTemplate operation with a valid options model parameter
+  @Test
+  public void testCreateProfileTemplateWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"email\": \"email\", \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"action_controls\": {\"identities\": {\"add\": false, \"remove\": true}, \"rules\": {\"add\": false, \"remove\": true}, \"policies\": {\"add\": false, \"remove\": true}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String createProfileTemplatePath = "/v1/profile_templates";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(201)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the ProfileClaimRuleConditions model
+    ProfileClaimRuleConditions profileClaimRuleConditionsModel = new ProfileClaimRuleConditions.Builder()
+      .claim("testString")
+      .operator("testString")
+      .value("testString")
+      .build();
+
+    // Construct an instance of the TrustedProfileTemplateClaimRule model
+    TrustedProfileTemplateClaimRule trustedProfileTemplateClaimRuleModel = new TrustedProfileTemplateClaimRule.Builder()
+      .name("testString")
+      .type("Profile-SAML")
+      .realmName("testString")
+      .expiration(Long.valueOf("26"))
+      .conditions(java.util.Arrays.asList(profileClaimRuleConditionsModel))
+      .build();
+
+    // Construct an instance of the ProfileIdentityRequest model
+    ProfileIdentityRequest profileIdentityRequestModel = new ProfileIdentityRequest.Builder()
+      .identifier("testString")
+      .type("user")
+      .accounts(java.util.Arrays.asList("testString"))
+      .description("testString")
+      .build();
+
+    // Construct an instance of the TemplateProfileComponentRequest model
+    TemplateProfileComponentRequest templateProfileComponentRequestModel = new TemplateProfileComponentRequest.Builder()
+      .name("testString")
+      .description("testString")
+      .email("testString")
+      .rules(java.util.Arrays.asList(trustedProfileTemplateClaimRuleModel))
+      .identities(java.util.Arrays.asList(profileIdentityRequestModel))
+      .build();
+
+    // Construct an instance of the PolicyTemplateReference model
+    PolicyTemplateReference policyTemplateReferenceModel = new PolicyTemplateReference.Builder()
+      .id("testString")
+      .version("testString")
+      .build();
+
+    // Construct an instance of the ActionControlsIdentities model
+    ActionControlsIdentities actionControlsIdentitiesModel = new ActionControlsIdentities.Builder()
+      .add(true)
+      .remove(true)
+      .build();
+
+    // Construct an instance of the ActionControlsRules model
+    ActionControlsRules actionControlsRulesModel = new ActionControlsRules.Builder()
+      .add(true)
+      .remove(true)
+      .build();
+
+    // Construct an instance of the ActionControlsPolicies model
+    ActionControlsPolicies actionControlsPoliciesModel = new ActionControlsPolicies.Builder()
+      .add(true)
+      .remove(true)
+      .build();
+
+    // Construct an instance of the ActionControls model
+    ActionControls actionControlsModel = new ActionControls.Builder()
+      .identities(actionControlsIdentitiesModel)
+      .rules(actionControlsRulesModel)
+      .policies(actionControlsPoliciesModel)
+      .build();
+
+    // Construct an instance of the CreateProfileTemplateOptions model
+    CreateProfileTemplateOptions createProfileTemplateOptionsModel = new CreateProfileTemplateOptions.Builder()
+      .accountId("testString")
+      .name("testString")
+      .description("testString")
+      .profile(templateProfileComponentRequestModel)
+      .policyTemplateReferences(java.util.Arrays.asList(policyTemplateReferenceModel))
+      .actionControls(actionControlsModel)
+      .build();
+
+    // Invoke createProfileTemplate() with a valid options model and verify the result
+    Response<TrustedProfileTemplateResponse> response = iamIdentityService.createProfileTemplate(createProfileTemplateOptionsModel).execute();
+    assertNotNull(response);
+    TrustedProfileTemplateResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, createProfileTemplatePath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the createProfileTemplate operation with and without retries enabled
+  @Test
+  public void testCreateProfileTemplateWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testCreateProfileTemplateWOptions();
+
+    iamIdentityService.disableRetries();
+    testCreateProfileTemplateWOptions();
+  }
+
+  // Test the getLatestProfileTemplateVersion operation with a valid options model parameter
+  @Test
+  public void testGetLatestProfileTemplateVersionWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"email\": \"email\", \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"action_controls\": {\"identities\": {\"add\": false, \"remove\": true}, \"rules\": {\"add\": false, \"remove\": true}, \"policies\": {\"add\": false, \"remove\": true}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String getLatestProfileTemplateVersionPath = "/v1/profile_templates/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the GetLatestProfileTemplateVersionOptions model
+    GetLatestProfileTemplateVersionOptions getLatestProfileTemplateVersionOptionsModel = new GetLatestProfileTemplateVersionOptions.Builder()
+      .templateId("testString")
+      .includeHistory(false)
+      .build();
+
+    // Invoke getLatestProfileTemplateVersion() with a valid options model and verify the result
+    Response<TrustedProfileTemplateResponse> response = iamIdentityService.getLatestProfileTemplateVersion(getLatestProfileTemplateVersionOptionsModel).execute();
+    assertNotNull(response);
+    TrustedProfileTemplateResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getLatestProfileTemplateVersionPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
+  }
+
+  // Test the getLatestProfileTemplateVersion operation with and without retries enabled
+  @Test
+  public void testGetLatestProfileTemplateVersionWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testGetLatestProfileTemplateVersionWOptions();
+
+    iamIdentityService.disableRetries();
+    testGetLatestProfileTemplateVersionWOptions();
+  }
+
+  // Test the getLatestProfileTemplateVersion operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetLatestProfileTemplateVersionNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.getLatestProfileTemplateVersion(null).execute();
+  }
+
+  // Test the deleteAllVersionsOfProfileTemplate operation with a valid options model parameter
+  @Test
+  public void testDeleteAllVersionsOfProfileTemplateWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "";
+    String deleteAllVersionsOfProfileTemplatePath = "/v1/profile_templates/testString";
+    server.enqueue(new MockResponse()
+      .setResponseCode(204)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the DeleteAllVersionsOfProfileTemplateOptions model
+    DeleteAllVersionsOfProfileTemplateOptions deleteAllVersionsOfProfileTemplateOptionsModel = new DeleteAllVersionsOfProfileTemplateOptions.Builder()
+      .templateId("testString")
+      .build();
+
+    // Invoke deleteAllVersionsOfProfileTemplate() with a valid options model and verify the result
+    Response<Void> response = iamIdentityService.deleteAllVersionsOfProfileTemplate(deleteAllVersionsOfProfileTemplateOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    assertNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "DELETE");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, deleteAllVersionsOfProfileTemplatePath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the deleteAllVersionsOfProfileTemplate operation with and without retries enabled
+  @Test
+  public void testDeleteAllVersionsOfProfileTemplateWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testDeleteAllVersionsOfProfileTemplateWOptions();
+
+    iamIdentityService.disableRetries();
+    testDeleteAllVersionsOfProfileTemplateWOptions();
+  }
+
+  // Test the deleteAllVersionsOfProfileTemplate operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testDeleteAllVersionsOfProfileTemplateNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.deleteAllVersionsOfProfileTemplate(null).execute();
+  }
+
+  // Test the listVersionsOfProfileTemplate operation with a valid options model parameter
+  @Test
+  public void testListVersionsOfProfileTemplateWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"offset\": 6, \"limit\": 20, \"first\": \"first\", \"previous\": \"previous\", \"next\": \"next\", \"profile_templates\": [{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"email\": \"email\", \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"action_controls\": {\"identities\": {\"add\": false, \"remove\": true}, \"rules\": {\"add\": false, \"remove\": true}, \"policies\": {\"add\": false, \"remove\": true}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
+    String listVersionsOfProfileTemplatePath = "/v1/profile_templates/testString/versions";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the ListVersionsOfProfileTemplateOptions model
+    ListVersionsOfProfileTemplateOptions listVersionsOfProfileTemplateOptionsModel = new ListVersionsOfProfileTemplateOptions.Builder()
+      .templateId("testString")
+      .limit("20")
+      .pagetoken("testString")
+      .sort("created_at")
+      .order("asc")
+      .includeHistory("false")
+      .build();
+
+    // Invoke listVersionsOfProfileTemplate() with a valid options model and verify the result
+    Response<TrustedProfileTemplateList> response = iamIdentityService.listVersionsOfProfileTemplate(listVersionsOfProfileTemplateOptionsModel).execute();
+    assertNotNull(response);
+    TrustedProfileTemplateList responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, listVersionsOfProfileTemplatePath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(query.get("limit"), "20");
+    assertEquals(query.get("pagetoken"), "testString");
+    assertEquals(query.get("sort"), "created_at");
+    assertEquals(query.get("order"), "asc");
+    assertEquals(query.get("include_history"), "false");
+  }
+
+  // Test the listVersionsOfProfileTemplate operation with and without retries enabled
+  @Test
+  public void testListVersionsOfProfileTemplateWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testListVersionsOfProfileTemplateWOptions();
+
+    iamIdentityService.disableRetries();
+    testListVersionsOfProfileTemplateWOptions();
+  }
+
+  // Test the listVersionsOfProfileTemplate operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testListVersionsOfProfileTemplateNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.listVersionsOfProfileTemplate(null).execute();
+  }
+
+  // Test the createProfileTemplateVersion operation with a valid options model parameter
+  @Test
+  public void testCreateProfileTemplateVersionWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"email\": \"email\", \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"action_controls\": {\"identities\": {\"add\": false, \"remove\": true}, \"rules\": {\"add\": false, \"remove\": true}, \"policies\": {\"add\": false, \"remove\": true}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String createProfileTemplateVersionPath = "/v1/profile_templates/testString/versions";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(201)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the ProfileClaimRuleConditions model
+    ProfileClaimRuleConditions profileClaimRuleConditionsModel = new ProfileClaimRuleConditions.Builder()
+      .claim("testString")
+      .operator("testString")
+      .value("testString")
+      .build();
+
+    // Construct an instance of the TrustedProfileTemplateClaimRule model
+    TrustedProfileTemplateClaimRule trustedProfileTemplateClaimRuleModel = new TrustedProfileTemplateClaimRule.Builder()
+      .name("testString")
+      .type("Profile-SAML")
+      .realmName("testString")
+      .expiration(Long.valueOf("26"))
+      .conditions(java.util.Arrays.asList(profileClaimRuleConditionsModel))
+      .build();
+
+    // Construct an instance of the ProfileIdentityRequest model
+    ProfileIdentityRequest profileIdentityRequestModel = new ProfileIdentityRequest.Builder()
+      .identifier("testString")
+      .type("user")
+      .accounts(java.util.Arrays.asList("testString"))
+      .description("testString")
+      .build();
+
+    // Construct an instance of the TemplateProfileComponentRequest model
+    TemplateProfileComponentRequest templateProfileComponentRequestModel = new TemplateProfileComponentRequest.Builder()
+      .name("testString")
+      .description("testString")
+      .email("testString")
+      .rules(java.util.Arrays.asList(trustedProfileTemplateClaimRuleModel))
+      .identities(java.util.Arrays.asList(profileIdentityRequestModel))
+      .build();
+
+    // Construct an instance of the PolicyTemplateReference model
+    PolicyTemplateReference policyTemplateReferenceModel = new PolicyTemplateReference.Builder()
+      .id("testString")
+      .version("testString")
+      .build();
+
+    // Construct an instance of the ActionControlsIdentities model
+    ActionControlsIdentities actionControlsIdentitiesModel = new ActionControlsIdentities.Builder()
+      .add(true)
+      .remove(true)
+      .build();
+
+    // Construct an instance of the ActionControlsRules model
+    ActionControlsRules actionControlsRulesModel = new ActionControlsRules.Builder()
+      .add(true)
+      .remove(true)
+      .build();
+
+    // Construct an instance of the ActionControlsPolicies model
+    ActionControlsPolicies actionControlsPoliciesModel = new ActionControlsPolicies.Builder()
+      .add(true)
+      .remove(true)
+      .build();
+
+    // Construct an instance of the ActionControls model
+    ActionControls actionControlsModel = new ActionControls.Builder()
+      .identities(actionControlsIdentitiesModel)
+      .rules(actionControlsRulesModel)
+      .policies(actionControlsPoliciesModel)
+      .build();
+
+    // Construct an instance of the CreateProfileTemplateVersionOptions model
+    CreateProfileTemplateVersionOptions createProfileTemplateVersionOptionsModel = new CreateProfileTemplateVersionOptions.Builder()
+      .templateId("testString")
+      .accountId("testString")
+      .name("testString")
+      .description("testString")
+      .profile(templateProfileComponentRequestModel)
+      .policyTemplateReferences(java.util.Arrays.asList(policyTemplateReferenceModel))
+      .actionControls(actionControlsModel)
+      .build();
+
+    // Invoke createProfileTemplateVersion() with a valid options model and verify the result
+    Response<TrustedProfileTemplateResponse> response = iamIdentityService.createProfileTemplateVersion(createProfileTemplateVersionOptionsModel).execute();
+    assertNotNull(response);
+    TrustedProfileTemplateResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, createProfileTemplateVersionPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the createProfileTemplateVersion operation with and without retries enabled
+  @Test
+  public void testCreateProfileTemplateVersionWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testCreateProfileTemplateVersionWOptions();
+
+    iamIdentityService.disableRetries();
+    testCreateProfileTemplateVersionWOptions();
+  }
+
+  // Test the createProfileTemplateVersion operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testCreateProfileTemplateVersionNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.createProfileTemplateVersion(null).execute();
+  }
+
+  // Test the getProfileTemplateVersion operation with a valid options model parameter
+  @Test
+  public void testGetProfileTemplateVersionWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"email\": \"email\", \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"action_controls\": {\"identities\": {\"add\": false, \"remove\": true}, \"rules\": {\"add\": false, \"remove\": true}, \"policies\": {\"add\": false, \"remove\": true}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String getProfileTemplateVersionPath = "/v1/profile_templates/testString/versions/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the GetProfileTemplateVersionOptions model
+    GetProfileTemplateVersionOptions getProfileTemplateVersionOptionsModel = new GetProfileTemplateVersionOptions.Builder()
+      .templateId("testString")
+      .version("testString")
+      .includeHistory(false)
+      .build();
+
+    // Invoke getProfileTemplateVersion() with a valid options model and verify the result
+    Response<TrustedProfileTemplateResponse> response = iamIdentityService.getProfileTemplateVersion(getProfileTemplateVersionOptionsModel).execute();
+    assertNotNull(response);
+    TrustedProfileTemplateResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getProfileTemplateVersionPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
+  }
+
+  // Test the getProfileTemplateVersion operation with and without retries enabled
+  @Test
+  public void testGetProfileTemplateVersionWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testGetProfileTemplateVersionWOptions();
+
+    iamIdentityService.disableRetries();
+    testGetProfileTemplateVersionWOptions();
+  }
+
+  // Test the getProfileTemplateVersion operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetProfileTemplateVersionNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.getProfileTemplateVersion(null).execute();
+  }
+
+  // Test the updateProfileTemplateVersion operation with a valid options model parameter
+  @Test
+  public void testUpdateProfileTemplateVersionWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"email\": \"email\", \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"action_controls\": {\"identities\": {\"add\": false, \"remove\": true}, \"rules\": {\"add\": false, \"remove\": true}, \"policies\": {\"add\": false, \"remove\": true}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String updateProfileTemplateVersionPath = "/v1/profile_templates/testString/versions/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the ProfileClaimRuleConditions model
+    ProfileClaimRuleConditions profileClaimRuleConditionsModel = new ProfileClaimRuleConditions.Builder()
+      .claim("testString")
+      .operator("testString")
+      .value("testString")
+      .build();
+
+    // Construct an instance of the TrustedProfileTemplateClaimRule model
+    TrustedProfileTemplateClaimRule trustedProfileTemplateClaimRuleModel = new TrustedProfileTemplateClaimRule.Builder()
+      .name("testString")
+      .type("Profile-SAML")
+      .realmName("testString")
+      .expiration(Long.valueOf("26"))
+      .conditions(java.util.Arrays.asList(profileClaimRuleConditionsModel))
+      .build();
+
+    // Construct an instance of the ProfileIdentityRequest model
+    ProfileIdentityRequest profileIdentityRequestModel = new ProfileIdentityRequest.Builder()
+      .identifier("testString")
+      .type("user")
+      .accounts(java.util.Arrays.asList("testString"))
+      .description("testString")
+      .build();
+
+    // Construct an instance of the TemplateProfileComponentRequest model
+    TemplateProfileComponentRequest templateProfileComponentRequestModel = new TemplateProfileComponentRequest.Builder()
+      .name("testString")
+      .description("testString")
+      .email("testString")
+      .rules(java.util.Arrays.asList(trustedProfileTemplateClaimRuleModel))
+      .identities(java.util.Arrays.asList(profileIdentityRequestModel))
+      .build();
+
+    // Construct an instance of the PolicyTemplateReference model
+    PolicyTemplateReference policyTemplateReferenceModel = new PolicyTemplateReference.Builder()
+      .id("testString")
+      .version("testString")
+      .build();
+
+    // Construct an instance of the ActionControlsIdentities model
+    ActionControlsIdentities actionControlsIdentitiesModel = new ActionControlsIdentities.Builder()
+      .add(true)
+      .remove(true)
+      .build();
+
+    // Construct an instance of the ActionControlsRules model
+    ActionControlsRules actionControlsRulesModel = new ActionControlsRules.Builder()
+      .add(true)
+      .remove(true)
+      .build();
+
+    // Construct an instance of the ActionControlsPolicies model
+    ActionControlsPolicies actionControlsPoliciesModel = new ActionControlsPolicies.Builder()
+      .add(true)
+      .remove(true)
+      .build();
+
+    // Construct an instance of the ActionControls model
+    ActionControls actionControlsModel = new ActionControls.Builder()
+      .identities(actionControlsIdentitiesModel)
+      .rules(actionControlsRulesModel)
+      .policies(actionControlsPoliciesModel)
+      .build();
+
+    // Construct an instance of the UpdateProfileTemplateVersionOptions model
+    UpdateProfileTemplateVersionOptions updateProfileTemplateVersionOptionsModel = new UpdateProfileTemplateVersionOptions.Builder()
+      .ifMatch("testString")
+      .templateId("testString")
+      .version("testString")
+      .accountId("testString")
+      .name("testString")
+      .description("testString")
+      .profile(templateProfileComponentRequestModel)
+      .policyTemplateReferences(java.util.Arrays.asList(policyTemplateReferenceModel))
+      .actionControls(actionControlsModel)
+      .build();
+
+    // Invoke updateProfileTemplateVersion() with a valid options model and verify the result
+    Response<TrustedProfileTemplateResponse> response = iamIdentityService.updateProfileTemplateVersion(updateProfileTemplateVersionOptionsModel).execute();
+    assertNotNull(response);
+    TrustedProfileTemplateResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "PUT");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, updateProfileTemplateVersionPath);
+    // Verify header parameters
+    assertEquals(request.getHeader("If-Match"), "testString");
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the updateProfileTemplateVersion operation with and without retries enabled
+  @Test
+  public void testUpdateProfileTemplateVersionWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testUpdateProfileTemplateVersionWOptions();
+
+    iamIdentityService.disableRetries();
+    testUpdateProfileTemplateVersionWOptions();
+  }
+
+  // Test the updateProfileTemplateVersion operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testUpdateProfileTemplateVersionNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.updateProfileTemplateVersion(null).execute();
+  }
+
+  // Test the deleteProfileTemplateVersion operation with a valid options model parameter
+  @Test
+  public void testDeleteProfileTemplateVersionWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "";
+    String deleteProfileTemplateVersionPath = "/v1/profile_templates/testString/versions/testString";
+    server.enqueue(new MockResponse()
+      .setResponseCode(204)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the DeleteProfileTemplateVersionOptions model
+    DeleteProfileTemplateVersionOptions deleteProfileTemplateVersionOptionsModel = new DeleteProfileTemplateVersionOptions.Builder()
+      .templateId("testString")
+      .version("testString")
+      .build();
+
+    // Invoke deleteProfileTemplateVersion() with a valid options model and verify the result
+    Response<Void> response = iamIdentityService.deleteProfileTemplateVersion(deleteProfileTemplateVersionOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    assertNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "DELETE");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, deleteProfileTemplateVersionPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the deleteProfileTemplateVersion operation with and without retries enabled
+  @Test
+  public void testDeleteProfileTemplateVersionWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testDeleteProfileTemplateVersionWOptions();
+
+    iamIdentityService.disableRetries();
+    testDeleteProfileTemplateVersionWOptions();
+  }
+
+  // Test the deleteProfileTemplateVersion operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testDeleteProfileTemplateVersionNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.deleteProfileTemplateVersion(null).execute();
+  }
+
+  // Test the commitProfileTemplate operation with a valid options model parameter
+  @Test
+  public void testCommitProfileTemplateWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "";
+    String commitProfileTemplatePath = "/v1/profile_templates/testString/versions/testString/commit";
+    server.enqueue(new MockResponse()
+      .setResponseCode(204)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the CommitProfileTemplateOptions model
+    CommitProfileTemplateOptions commitProfileTemplateOptionsModel = new CommitProfileTemplateOptions.Builder()
+      .templateId("testString")
+      .version("testString")
+      .build();
+
+    // Invoke commitProfileTemplate() with a valid options model and verify the result
+    Response<Void> response = iamIdentityService.commitProfileTemplate(commitProfileTemplateOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    assertNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, commitProfileTemplatePath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the commitProfileTemplate operation with and without retries enabled
+  @Test
+  public void testCommitProfileTemplateWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testCommitProfileTemplateWOptions();
+
+    iamIdentityService.disableRetries();
+    testCommitProfileTemplateWOptions();
+  }
+
+  // Test the commitProfileTemplate operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testCommitProfileTemplateNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.commitProfileTemplate(null).execute();
+  }
+
+  // Test the listTrustedProfileAssignments operation with a valid options model parameter
+  @Test
+  public void testListTrustedProfileAssignmentsWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"offset\": 6, \"limit\": 5, \"first\": \"first\", \"previous\": \"previous\", \"next\": \"next\", \"assignments\": [{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"account_id\": \"accountId\", \"template_id\": \"templateId\", \"template_version\": 15, \"target_type\": \"targetType\", \"target\": \"target\", \"status\": \"status\", \"resources\": [{\"target\": \"target\", \"profile\": {\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}, \"account_settings\": {\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}, \"policy_template_refs\": [{\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}]}], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"href\": \"href\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\", \"entity_tag\": \"entityTag\"}]}";
+    String listTrustedProfileAssignmentsPath = "/v1/profile_assignments/";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the ListTrustedProfileAssignmentsOptions model
+    ListTrustedProfileAssignmentsOptions listTrustedProfileAssignmentsOptionsModel = new ListTrustedProfileAssignmentsOptions.Builder()
       .accountId("testString")
       .templateId("testString")
       .templateVersion("testString")
@@ -2502,8 +3890,8 @@ public class IamIdentityTest {
       .includeHistory(false)
       .build();
 
-    // Invoke listAccountSettingsAssignments() with a valid options model and verify the result
-    Response<TemplateAssignmentListResponse> response = iamIdentityService.listAccountSettingsAssignments(listAccountSettingsAssignmentsOptionsModel).execute();
+    // Invoke listTrustedProfileAssignments() with a valid options model and verify the result
+    Response<TemplateAssignmentListResponse> response = iamIdentityService.listTrustedProfileAssignments(listTrustedProfileAssignmentsOptionsModel).execute();
     assertNotNull(response);
     TemplateAssignmentListResponse responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -2514,7 +3902,7 @@ public class IamIdentityTest {
     assertEquals(request.getMethod(), "GET");
     // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, listAccountSettingsAssignmentsPath);
+    assertEquals(parsedPath, listTrustedProfileAssignmentsPath);
     // Verify query params
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
@@ -2530,37 +3918,37 @@ public class IamIdentityTest {
     assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
   }
 
-  // Test the listAccountSettingsAssignments operation with and without retries enabled
+  // Test the listTrustedProfileAssignments operation with and without retries enabled
   @Test
-  public void testListAccountSettingsAssignmentsWRetries() throws Throwable {
+  public void testListTrustedProfileAssignmentsWRetries() throws Throwable {
     iamIdentityService.enableRetries(4, 30);
-    testListAccountSettingsAssignmentsWOptions();
+    testListTrustedProfileAssignmentsWOptions();
 
     iamIdentityService.disableRetries();
-    testListAccountSettingsAssignmentsWOptions();
+    testListTrustedProfileAssignmentsWOptions();
   }
 
-  // Test the createAccountSettingsAssignment operation with a valid options model parameter
+  // Test the createTrustedProfileAssignment operation with a valid options model parameter
   @Test
-  public void testCreateAccountSettingsAssignmentWOptions() throws Throwable {
+  public void testCreateTrustedProfileAssignmentWOptions() throws Throwable {
     // Register a mock response
     String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"account_id\": \"accountId\", \"template_id\": \"templateId\", \"template_version\": 15, \"target_type\": \"targetType\", \"target\": \"target\", \"status\": \"status\", \"resources\": [{\"target\": \"target\", \"profile\": {\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}, \"account_settings\": {\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}, \"policy_template_refs\": [{\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}]}], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"href\": \"href\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\", \"entity_tag\": \"entityTag\"}";
-    String createAccountSettingsAssignmentPath = "/v1/account_settings_assignments/";
+    String createTrustedProfileAssignmentPath = "/v1/profile_assignments/";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(202)
       .setBody(mockResponseBody));
 
-    // Construct an instance of the CreateAccountSettingsAssignmentOptions model
-    CreateAccountSettingsAssignmentOptions createAccountSettingsAssignmentOptionsModel = new CreateAccountSettingsAssignmentOptions.Builder()
+    // Construct an instance of the CreateTrustedProfileAssignmentOptions model
+    CreateTrustedProfileAssignmentOptions createTrustedProfileAssignmentOptionsModel = new CreateTrustedProfileAssignmentOptions.Builder()
       .templateId("testString")
       .templateVersion(Long.valueOf("1"))
       .targetType("Account")
       .target("testString")
       .build();
 
-    // Invoke createAccountSettingsAssignment() with a valid options model and verify the result
-    Response<TemplateAssignmentResponse> response = iamIdentityService.createAccountSettingsAssignment(createAccountSettingsAssignmentOptionsModel).execute();
+    // Invoke createTrustedProfileAssignment() with a valid options model and verify the result
+    Response<TemplateAssignmentResponse> response = iamIdentityService.createTrustedProfileAssignment(createTrustedProfileAssignmentOptionsModel).execute();
     assertNotNull(response);
     TemplateAssignmentResponse responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -2571,48 +3959,48 @@ public class IamIdentityTest {
     assertEquals(request.getMethod(), "POST");
     // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, createAccountSettingsAssignmentPath);
+    assertEquals(parsedPath, createTrustedProfileAssignmentPath);
     // Verify that there is no query string
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNull(query);
   }
 
-  // Test the createAccountSettingsAssignment operation with and without retries enabled
+  // Test the createTrustedProfileAssignment operation with and without retries enabled
   @Test
-  public void testCreateAccountSettingsAssignmentWRetries() throws Throwable {
+  public void testCreateTrustedProfileAssignmentWRetries() throws Throwable {
     iamIdentityService.enableRetries(4, 30);
-    testCreateAccountSettingsAssignmentWOptions();
+    testCreateTrustedProfileAssignmentWOptions();
 
     iamIdentityService.disableRetries();
-    testCreateAccountSettingsAssignmentWOptions();
+    testCreateTrustedProfileAssignmentWOptions();
   }
 
-  // Test the createAccountSettingsAssignment operation with a null options model (negative test)
+  // Test the createTrustedProfileAssignment operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testCreateAccountSettingsAssignmentNoOptions() throws Throwable {
+  public void testCreateTrustedProfileAssignmentNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
-    iamIdentityService.createAccountSettingsAssignment(null).execute();
+    iamIdentityService.createTrustedProfileAssignment(null).execute();
   }
 
-  // Test the getAccountSettingsAssignment operation with a valid options model parameter
+  // Test the getTrustedProfileAssignment operation with a valid options model parameter
   @Test
-  public void testGetAccountSettingsAssignmentWOptions() throws Throwable {
+  public void testGetTrustedProfileAssignmentWOptions() throws Throwable {
     // Register a mock response
     String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"account_id\": \"accountId\", \"template_id\": \"templateId\", \"template_version\": 15, \"target_type\": \"targetType\", \"target\": \"target\", \"status\": \"status\", \"resources\": [{\"target\": \"target\", \"profile\": {\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}, \"account_settings\": {\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}, \"policy_template_refs\": [{\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}]}], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"href\": \"href\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\", \"entity_tag\": \"entityTag\"}";
-    String getAccountSettingsAssignmentPath = "/v1/account_settings_assignments/testString";
+    String getTrustedProfileAssignmentPath = "/v1/profile_assignments/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(200)
       .setBody(mockResponseBody));
 
-    // Construct an instance of the GetAccountSettingsAssignmentOptions model
-    GetAccountSettingsAssignmentOptions getAccountSettingsAssignmentOptionsModel = new GetAccountSettingsAssignmentOptions.Builder()
+    // Construct an instance of the GetTrustedProfileAssignmentOptions model
+    GetTrustedProfileAssignmentOptions getTrustedProfileAssignmentOptionsModel = new GetTrustedProfileAssignmentOptions.Builder()
       .assignmentId("testString")
       .includeHistory(false)
       .build();
 
-    // Invoke getAccountSettingsAssignment() with a valid options model and verify the result
-    Response<TemplateAssignmentResponse> response = iamIdentityService.getAccountSettingsAssignment(getAccountSettingsAssignmentOptionsModel).execute();
+    // Invoke getTrustedProfileAssignment() with a valid options model and verify the result
+    Response<TemplateAssignmentResponse> response = iamIdentityService.getTrustedProfileAssignment(getTrustedProfileAssignmentOptionsModel).execute();
     assertNotNull(response);
     TemplateAssignmentResponse responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -2623,48 +4011,48 @@ public class IamIdentityTest {
     assertEquals(request.getMethod(), "GET");
     // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getAccountSettingsAssignmentPath);
+    assertEquals(parsedPath, getTrustedProfileAssignmentPath);
     // Verify query params
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
   }
 
-  // Test the getAccountSettingsAssignment operation with and without retries enabled
+  // Test the getTrustedProfileAssignment operation with and without retries enabled
   @Test
-  public void testGetAccountSettingsAssignmentWRetries() throws Throwable {
+  public void testGetTrustedProfileAssignmentWRetries() throws Throwable {
     iamIdentityService.enableRetries(4, 30);
-    testGetAccountSettingsAssignmentWOptions();
+    testGetTrustedProfileAssignmentWOptions();
 
     iamIdentityService.disableRetries();
-    testGetAccountSettingsAssignmentWOptions();
+    testGetTrustedProfileAssignmentWOptions();
   }
 
-  // Test the getAccountSettingsAssignment operation with a null options model (negative test)
+  // Test the getTrustedProfileAssignment operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetAccountSettingsAssignmentNoOptions() throws Throwable {
+  public void testGetTrustedProfileAssignmentNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
-    iamIdentityService.getAccountSettingsAssignment(null).execute();
+    iamIdentityService.getTrustedProfileAssignment(null).execute();
   }
 
-  // Test the deleteAccountSettingsAssignment operation with a valid options model parameter
+  // Test the deleteTrustedProfileAssignment operation with a valid options model parameter
   @Test
-  public void testDeleteAccountSettingsAssignmentWOptions() throws Throwable {
+  public void testDeleteTrustedProfileAssignmentWOptions() throws Throwable {
     // Register a mock response
     String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"status_code\": \"statusCode\", \"errors\": [{\"code\": \"code\", \"message_code\": \"messageCode\", \"message\": \"message\", \"details\": \"details\"}], \"trace\": \"trace\"}";
-    String deleteAccountSettingsAssignmentPath = "/v1/account_settings_assignments/testString";
+    String deleteTrustedProfileAssignmentPath = "/v1/profile_assignments/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(202)
       .setBody(mockResponseBody));
 
-    // Construct an instance of the DeleteAccountSettingsAssignmentOptions model
-    DeleteAccountSettingsAssignmentOptions deleteAccountSettingsAssignmentOptionsModel = new DeleteAccountSettingsAssignmentOptions.Builder()
+    // Construct an instance of the DeleteTrustedProfileAssignmentOptions model
+    DeleteTrustedProfileAssignmentOptions deleteTrustedProfileAssignmentOptionsModel = new DeleteTrustedProfileAssignmentOptions.Builder()
       .assignmentId("testString")
       .build();
 
-    // Invoke deleteAccountSettingsAssignment() with a valid options model and verify the result
-    Response<ExceptionResponse> response = iamIdentityService.deleteAccountSettingsAssignment(deleteAccountSettingsAssignmentOptionsModel).execute();
+    // Invoke deleteTrustedProfileAssignment() with a valid options model and verify the result
+    Response<ExceptionResponse> response = iamIdentityService.deleteTrustedProfileAssignment(deleteTrustedProfileAssignmentOptionsModel).execute();
     assertNotNull(response);
     ExceptionResponse responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -2675,49 +4063,49 @@ public class IamIdentityTest {
     assertEquals(request.getMethod(), "DELETE");
     // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, deleteAccountSettingsAssignmentPath);
+    assertEquals(parsedPath, deleteTrustedProfileAssignmentPath);
     // Verify that there is no query string
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNull(query);
   }
 
-  // Test the deleteAccountSettingsAssignment operation with and without retries enabled
+  // Test the deleteTrustedProfileAssignment operation with and without retries enabled
   @Test
-  public void testDeleteAccountSettingsAssignmentWRetries() throws Throwable {
+  public void testDeleteTrustedProfileAssignmentWRetries() throws Throwable {
     iamIdentityService.enableRetries(4, 30);
-    testDeleteAccountSettingsAssignmentWOptions();
+    testDeleteTrustedProfileAssignmentWOptions();
 
     iamIdentityService.disableRetries();
-    testDeleteAccountSettingsAssignmentWOptions();
+    testDeleteTrustedProfileAssignmentWOptions();
   }
 
-  // Test the deleteAccountSettingsAssignment operation with a null options model (negative test)
+  // Test the deleteTrustedProfileAssignment operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testDeleteAccountSettingsAssignmentNoOptions() throws Throwable {
+  public void testDeleteTrustedProfileAssignmentNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
-    iamIdentityService.deleteAccountSettingsAssignment(null).execute();
+    iamIdentityService.deleteTrustedProfileAssignment(null).execute();
   }
 
-  // Test the updateAccountSettingsAssignment operation with a valid options model parameter
+  // Test the updateTrustedProfileAssignment operation with a valid options model parameter
   @Test
-  public void testUpdateAccountSettingsAssignmentWOptions() throws Throwable {
+  public void testUpdateTrustedProfileAssignmentWOptions() throws Throwable {
     // Register a mock response
     String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"account_id\": \"accountId\", \"template_id\": \"templateId\", \"template_version\": 15, \"target_type\": \"targetType\", \"target\": \"target\", \"status\": \"status\", \"resources\": [{\"target\": \"target\", \"profile\": {\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}, \"account_settings\": {\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}, \"policy_template_refs\": [{\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}]}], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"href\": \"href\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\", \"entity_tag\": \"entityTag\"}";
-    String updateAccountSettingsAssignmentPath = "/v1/account_settings_assignments/testString";
+    String updateTrustedProfileAssignmentPath = "/v1/profile_assignments/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(200)
       .setBody(mockResponseBody));
 
-    // Construct an instance of the UpdateAccountSettingsAssignmentOptions model
-    UpdateAccountSettingsAssignmentOptions updateAccountSettingsAssignmentOptionsModel = new UpdateAccountSettingsAssignmentOptions.Builder()
+    // Construct an instance of the UpdateTrustedProfileAssignmentOptions model
+    UpdateTrustedProfileAssignmentOptions updateTrustedProfileAssignmentOptionsModel = new UpdateTrustedProfileAssignmentOptions.Builder()
       .assignmentId("testString")
       .ifMatch("testString")
       .templateVersion(Long.valueOf("1"))
       .build();
 
-    // Invoke updateAccountSettingsAssignment() with a valid options model and verify the result
-    Response<TemplateAssignmentResponse> response = iamIdentityService.updateAccountSettingsAssignment(updateAccountSettingsAssignmentOptionsModel).execute();
+    // Invoke updateTrustedProfileAssignment() with a valid options model and verify the result
+    Response<TemplateAssignmentResponse> response = iamIdentityService.updateTrustedProfileAssignment(updateTrustedProfileAssignmentOptionsModel).execute();
     assertNotNull(response);
     TemplateAssignmentResponse responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -2728,7 +4116,7 @@ public class IamIdentityTest {
     assertEquals(request.getMethod(), "PATCH");
     // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, updateAccountSettingsAssignmentPath);
+    assertEquals(parsedPath, updateTrustedProfileAssignmentPath);
     // Verify header parameters
     assertEquals(request.getHeader("If-Match"), "testString");
     // Verify that there is no query string
@@ -2736,21 +4124,21 @@ public class IamIdentityTest {
     assertNull(query);
   }
 
-  // Test the updateAccountSettingsAssignment operation with and without retries enabled
+  // Test the updateTrustedProfileAssignment operation with and without retries enabled
   @Test
-  public void testUpdateAccountSettingsAssignmentWRetries() throws Throwable {
+  public void testUpdateTrustedProfileAssignmentWRetries() throws Throwable {
     iamIdentityService.enableRetries(4, 30);
-    testUpdateAccountSettingsAssignmentWOptions();
+    testUpdateTrustedProfileAssignmentWOptions();
 
     iamIdentityService.disableRetries();
-    testUpdateAccountSettingsAssignmentWOptions();
+    testUpdateTrustedProfileAssignmentWOptions();
   }
 
-  // Test the updateAccountSettingsAssignment operation with a null options model (negative test)
+  // Test the updateTrustedProfileAssignment operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testUpdateAccountSettingsAssignmentNoOptions() throws Throwable {
+  public void testUpdateTrustedProfileAssignmentNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
-    iamIdentityService.updateAccountSettingsAssignment(null).execute();
+    iamIdentityService.updateTrustedProfileAssignment(null).execute();
   }
 
   // Test the listAccountSettingsTemplates operation with a valid options model parameter
@@ -3349,396 +4737,19 @@ public class IamIdentityTest {
     iamIdentityService.commitAccountSettingsTemplate(null).execute();
   }
 
-  // Test the createReport operation with a valid options model parameter
+  // Test the listAccountSettingsAssignments operation with a valid options model parameter
   @Test
-  public void testCreateReportWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "{\"reference\": \"reference\"}";
-    String createReportPath = "/v1/activity/accounts/testString/report";
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(202)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the CreateReportOptions model
-    CreateReportOptions createReportOptionsModel = new CreateReportOptions.Builder()
-      .accountId("testString")
-      .type("inactive")
-      .duration("720")
-      .build();
-
-    // Invoke createReport() with a valid options model and verify the result
-    Response<ReportReference> response = iamIdentityService.createReport(createReportOptionsModel).execute();
-    assertNotNull(response);
-    ReportReference responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "POST");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, createReportPath);
-    // Verify query params
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    assertEquals(query.get("type"), "inactive");
-    assertEquals(query.get("duration"), "720");
-  }
-
-  // Test the createReport operation with and without retries enabled
-  @Test
-  public void testCreateReportWRetries() throws Throwable {
-    iamIdentityService.enableRetries(4, 30);
-    testCreateReportWOptions();
-
-    iamIdentityService.disableRetries();
-    testCreateReportWOptions();
-  }
-
-  // Test the createReport operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testCreateReportNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    iamIdentityService.createReport(null).execute();
-  }
-
-  // Test the getReport operation with a valid options model parameter
-  @Test
-  public void testGetReportWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "{\"created_by\": \"createdBy\", \"reference\": \"reference\", \"report_duration\": \"reportDuration\", \"report_start_time\": \"reportStartTime\", \"report_end_time\": \"reportEndTime\", \"users\": [{\"iam_id\": \"iamId\", \"name\": \"name\", \"username\": \"username\", \"email\": \"email\", \"last_authn\": \"lastAuthn\"}], \"apikeys\": [{\"id\": \"id\", \"name\": \"name\", \"type\": \"type\", \"serviceid\": {\"id\": \"id\", \"name\": \"name\"}, \"user\": {\"iam_id\": \"iamId\", \"name\": \"name\", \"username\": \"username\", \"email\": \"email\"}, \"last_authn\": \"lastAuthn\"}], \"serviceids\": [{\"id\": \"id\", \"name\": \"name\", \"last_authn\": \"lastAuthn\"}], \"profiles\": [{\"id\": \"id\", \"name\": \"name\", \"last_authn\": \"lastAuthn\"}]}";
-    String getReportPath = "/v1/activity/accounts/testString/report/testString";
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the GetReportOptions model
-    GetReportOptions getReportOptionsModel = new GetReportOptions.Builder()
-      .accountId("testString")
-      .reference("testString")
-      .build();
-
-    // Invoke getReport() with a valid options model and verify the result
-    Response<Report> response = iamIdentityService.getReport(getReportOptionsModel).execute();
-    assertNotNull(response);
-    Report responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getReportPath);
-    // Verify that there is no query string
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-  }
-
-  // Test the getReport operation with and without retries enabled
-  @Test
-  public void testGetReportWRetries() throws Throwable {
-    iamIdentityService.enableRetries(4, 30);
-    testGetReportWOptions();
-
-    iamIdentityService.disableRetries();
-    testGetReportWOptions();
-  }
-
-  // Test the getReport operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetReportNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    iamIdentityService.getReport(null).execute();
-  }
-
-  // Test the getEffectiveAccountSettings operation with a valid options model parameter
-  @Test
-  public void testGetEffectiveAccountSettingsWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"account_id\": \"accountId\", \"effective\": {\"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\", \"name\": \"name\", \"userName\": \"userName\", \"email\": \"email\", \"description\": \"description\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\"}, \"account\": {\"account_id\": \"accountId\", \"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\", \"name\": \"name\", \"userName\": \"userName\", \"email\": \"email\", \"description\": \"description\"}], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\"}, \"assigned_templates\": [{\"template_id\": \"templateId\", \"template_version\": 15, \"template_name\": \"templateName\", \"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\", \"name\": \"name\", \"userName\": \"userName\", \"email\": \"email\", \"description\": \"description\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\"}]}";
-    String getEffectiveAccountSettingsPath = "/v1/accounts/testString/effective_settings/identity";
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the GetEffectiveAccountSettingsOptions model
-    GetEffectiveAccountSettingsOptions getEffectiveAccountSettingsOptionsModel = new GetEffectiveAccountSettingsOptions.Builder()
-      .accountId("testString")
-      .includeHistory(false)
-      .resolveUserMfa(false)
-      .build();
-
-    // Invoke getEffectiveAccountSettings() with a valid options model and verify the result
-    Response<EffectiveAccountSettingsResponse> response = iamIdentityService.getEffectiveAccountSettings(getEffectiveAccountSettingsOptionsModel).execute();
-    assertNotNull(response);
-    EffectiveAccountSettingsResponse responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getEffectiveAccountSettingsPath);
-    // Verify query params
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
-    assertEquals(Boolean.valueOf(query.get("resolve_user_mfa")), Boolean.valueOf(false));
-  }
-
-  // Test the getEffectiveAccountSettings operation with and without retries enabled
-  @Test
-  public void testGetEffectiveAccountSettingsWRetries() throws Throwable {
-    iamIdentityService.enableRetries(4, 30);
-    testGetEffectiveAccountSettingsWOptions();
-
-    iamIdentityService.disableRetries();
-    testGetEffectiveAccountSettingsWOptions();
-  }
-
-  // Test the getEffectiveAccountSettings operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetEffectiveAccountSettingsNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    iamIdentityService.getEffectiveAccountSettings(null).execute();
-  }
-
-  // Test the updatePreferenceOnScopeAccount operation with a valid options model parameter
-  @Test
-  public void testUpdatePreferenceOnScopeAccountWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "{\"service\": \"service\", \"id\": \"id\", \"account_id\": \"accountId\", \"scope\": \"scope\", \"value_string\": \"valueString\", \"value_list_of_strings\": [\"valueListOfStrings\"]}";
-    String updatePreferenceOnScopeAccountPath = "/v1/preferences/accounts/testString/identities/testString/testString/testString";
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the UpdatePreferenceOnScopeAccountOptions model
-    UpdatePreferenceOnScopeAccountOptions updatePreferenceOnScopeAccountOptionsModel = new UpdatePreferenceOnScopeAccountOptions.Builder()
-      .accountId("testString")
-      .iamId("testString")
-      .service("testString")
-      .preferenceId("testString")
-      .valueString("testString")
-      .valueListOfStrings(java.util.Arrays.asList("testString"))
-      .build();
-
-    // Invoke updatePreferenceOnScopeAccount() with a valid options model and verify the result
-    Response<IdentityPreferenceResponse> response = iamIdentityService.updatePreferenceOnScopeAccount(updatePreferenceOnScopeAccountOptionsModel).execute();
-    assertNotNull(response);
-    IdentityPreferenceResponse responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "PUT");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, updatePreferenceOnScopeAccountPath);
-    // Verify that there is no query string
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-  }
-
-  // Test the updatePreferenceOnScopeAccount operation with and without retries enabled
-  @Test
-  public void testUpdatePreferenceOnScopeAccountWRetries() throws Throwable {
-    iamIdentityService.enableRetries(4, 30);
-    testUpdatePreferenceOnScopeAccountWOptions();
-
-    iamIdentityService.disableRetries();
-    testUpdatePreferenceOnScopeAccountWOptions();
-  }
-
-  // Test the updatePreferenceOnScopeAccount operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testUpdatePreferenceOnScopeAccountNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    iamIdentityService.updatePreferenceOnScopeAccount(null).execute();
-  }
-
-  // Test the deletePreferencesOnScopeAccount operation with a valid options model parameter
-  @Test
-  public void testDeletePreferencesOnScopeAccountWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "";
-    String deletePreferencesOnScopeAccountPath = "/v1/preferences/accounts/testString/identities/testString/testString/testString";
-    server.enqueue(new MockResponse()
-      .setResponseCode(204)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the DeletePreferencesOnScopeAccountOptions model
-    DeletePreferencesOnScopeAccountOptions deletePreferencesOnScopeAccountOptionsModel = new DeletePreferencesOnScopeAccountOptions.Builder()
-      .accountId("testString")
-      .iamId("testString")
-      .service("testString")
-      .preferenceId("testString")
-      .build();
-
-    // Invoke deletePreferencesOnScopeAccount() with a valid options model and verify the result
-    Response<Void> response = iamIdentityService.deletePreferencesOnScopeAccount(deletePreferencesOnScopeAccountOptionsModel).execute();
-    assertNotNull(response);
-    Void responseObj = response.getResult();
-    assertNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "DELETE");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, deletePreferencesOnScopeAccountPath);
-    // Verify that there is no query string
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-  }
-
-  // Test the deletePreferencesOnScopeAccount operation with and without retries enabled
-  @Test
-  public void testDeletePreferencesOnScopeAccountWRetries() throws Throwable {
-    iamIdentityService.enableRetries(4, 30);
-    testDeletePreferencesOnScopeAccountWOptions();
-
-    iamIdentityService.disableRetries();
-    testDeletePreferencesOnScopeAccountWOptions();
-  }
-
-  // Test the deletePreferencesOnScopeAccount operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testDeletePreferencesOnScopeAccountNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    iamIdentityService.deletePreferencesOnScopeAccount(null).execute();
-  }
-
-  // Test the getPreferencesOnScopeAccount operation with a valid options model parameter
-  @Test
-  public void testGetPreferencesOnScopeAccountWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "{\"service\": \"service\", \"id\": \"id\", \"account_id\": \"accountId\", \"scope\": \"scope\", \"value_string\": \"valueString\", \"value_list_of_strings\": [\"valueListOfStrings\"]}";
-    String getPreferencesOnScopeAccountPath = "/v1/preferences/accounts/testString/identities/testString/testString/testString";
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the GetPreferencesOnScopeAccountOptions model
-    GetPreferencesOnScopeAccountOptions getPreferencesOnScopeAccountOptionsModel = new GetPreferencesOnScopeAccountOptions.Builder()
-      .accountId("testString")
-      .iamId("testString")
-      .service("testString")
-      .preferenceId("testString")
-      .build();
-
-    // Invoke getPreferencesOnScopeAccount() with a valid options model and verify the result
-    Response<IdentityPreferenceResponse> response = iamIdentityService.getPreferencesOnScopeAccount(getPreferencesOnScopeAccountOptionsModel).execute();
-    assertNotNull(response);
-    IdentityPreferenceResponse responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getPreferencesOnScopeAccountPath);
-    // Verify that there is no query string
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-  }
-
-  // Test the getPreferencesOnScopeAccount operation with and without retries enabled
-  @Test
-  public void testGetPreferencesOnScopeAccountWRetries() throws Throwable {
-    iamIdentityService.enableRetries(4, 30);
-    testGetPreferencesOnScopeAccountWOptions();
-
-    iamIdentityService.disableRetries();
-    testGetPreferencesOnScopeAccountWOptions();
-  }
-
-  // Test the getPreferencesOnScopeAccount operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetPreferencesOnScopeAccountNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    iamIdentityService.getPreferencesOnScopeAccount(null).execute();
-  }
-
-  // Test the getAllPreferencesOnScopeAccount operation with a valid options model parameter
-  @Test
-  public void testGetAllPreferencesOnScopeAccountWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "{\"preferences\": [{\"service\": \"service\", \"id\": \"id\", \"account_id\": \"accountId\", \"scope\": \"scope\", \"value_string\": \"valueString\", \"value_list_of_strings\": [\"valueListOfStrings\"]}]}";
-    String getAllPreferencesOnScopeAccountPath = "/v1/preferences/accounts/testString/identities/testString";
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the GetAllPreferencesOnScopeAccountOptions model
-    GetAllPreferencesOnScopeAccountOptions getAllPreferencesOnScopeAccountOptionsModel = new GetAllPreferencesOnScopeAccountOptions.Builder()
-      .accountId("testString")
-      .iamId("testString")
-      .build();
-
-    // Invoke getAllPreferencesOnScopeAccount() with a valid options model and verify the result
-    Response<AllIdentityPreferencesResponse> response = iamIdentityService.getAllPreferencesOnScopeAccount(getAllPreferencesOnScopeAccountOptionsModel).execute();
-    assertNotNull(response);
-    AllIdentityPreferencesResponse responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getAllPreferencesOnScopeAccountPath);
-    // Verify that there is no query string
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-  }
-
-  // Test the getAllPreferencesOnScopeAccount operation with and without retries enabled
-  @Test
-  public void testGetAllPreferencesOnScopeAccountWRetries() throws Throwable {
-    iamIdentityService.enableRetries(4, 30);
-    testGetAllPreferencesOnScopeAccountWOptions();
-
-    iamIdentityService.disableRetries();
-    testGetAllPreferencesOnScopeAccountWOptions();
-  }
-
-  // Test the getAllPreferencesOnScopeAccount operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetAllPreferencesOnScopeAccountNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    iamIdentityService.getAllPreferencesOnScopeAccount(null).execute();
-  }
-
-  // Test the listTrustedProfileAssignments operation with a valid options model parameter
-  @Test
-  public void testListTrustedProfileAssignmentsWOptions() throws Throwable {
+  public void testListAccountSettingsAssignmentsWOptions() throws Throwable {
     // Register a mock response
     String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"offset\": 6, \"limit\": 5, \"first\": \"first\", \"previous\": \"previous\", \"next\": \"next\", \"assignments\": [{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"account_id\": \"accountId\", \"template_id\": \"templateId\", \"template_version\": 15, \"target_type\": \"targetType\", \"target\": \"target\", \"status\": \"status\", \"resources\": [{\"target\": \"target\", \"profile\": {\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}, \"account_settings\": {\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}, \"policy_template_refs\": [{\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}]}], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"href\": \"href\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\", \"entity_tag\": \"entityTag\"}]}";
-    String listTrustedProfileAssignmentsPath = "/v1/profile_assignments/";
+    String listAccountSettingsAssignmentsPath = "/v1/account_settings_assignments/";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(200)
       .setBody(mockResponseBody));
 
-    // Construct an instance of the ListTrustedProfileAssignmentsOptions model
-    ListTrustedProfileAssignmentsOptions listTrustedProfileAssignmentsOptionsModel = new ListTrustedProfileAssignmentsOptions.Builder()
+    // Construct an instance of the ListAccountSettingsAssignmentsOptions model
+    ListAccountSettingsAssignmentsOptions listAccountSettingsAssignmentsOptionsModel = new ListAccountSettingsAssignmentsOptions.Builder()
       .accountId("testString")
       .templateId("testString")
       .templateVersion("testString")
@@ -3751,8 +4762,8 @@ public class IamIdentityTest {
       .includeHistory(false)
       .build();
 
-    // Invoke listTrustedProfileAssignments() with a valid options model and verify the result
-    Response<TemplateAssignmentListResponse> response = iamIdentityService.listTrustedProfileAssignments(listTrustedProfileAssignmentsOptionsModel).execute();
+    // Invoke listAccountSettingsAssignments() with a valid options model and verify the result
+    Response<TemplateAssignmentListResponse> response = iamIdentityService.listAccountSettingsAssignments(listAccountSettingsAssignmentsOptionsModel).execute();
     assertNotNull(response);
     TemplateAssignmentListResponse responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -3763,7 +4774,7 @@ public class IamIdentityTest {
     assertEquals(request.getMethod(), "GET");
     // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, listTrustedProfileAssignmentsPath);
+    assertEquals(parsedPath, listAccountSettingsAssignmentsPath);
     // Verify query params
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
@@ -3779,37 +4790,37 @@ public class IamIdentityTest {
     assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
   }
 
-  // Test the listTrustedProfileAssignments operation with and without retries enabled
+  // Test the listAccountSettingsAssignments operation with and without retries enabled
   @Test
-  public void testListTrustedProfileAssignmentsWRetries() throws Throwable {
+  public void testListAccountSettingsAssignmentsWRetries() throws Throwable {
     iamIdentityService.enableRetries(4, 30);
-    testListTrustedProfileAssignmentsWOptions();
+    testListAccountSettingsAssignmentsWOptions();
 
     iamIdentityService.disableRetries();
-    testListTrustedProfileAssignmentsWOptions();
+    testListAccountSettingsAssignmentsWOptions();
   }
 
-  // Test the createTrustedProfileAssignment operation with a valid options model parameter
+  // Test the createAccountSettingsAssignment operation with a valid options model parameter
   @Test
-  public void testCreateTrustedProfileAssignmentWOptions() throws Throwable {
+  public void testCreateAccountSettingsAssignmentWOptions() throws Throwable {
     // Register a mock response
     String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"account_id\": \"accountId\", \"template_id\": \"templateId\", \"template_version\": 15, \"target_type\": \"targetType\", \"target\": \"target\", \"status\": \"status\", \"resources\": [{\"target\": \"target\", \"profile\": {\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}, \"account_settings\": {\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}, \"policy_template_refs\": [{\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}]}], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"href\": \"href\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\", \"entity_tag\": \"entityTag\"}";
-    String createTrustedProfileAssignmentPath = "/v1/profile_assignments/";
+    String createAccountSettingsAssignmentPath = "/v1/account_settings_assignments/";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(202)
       .setBody(mockResponseBody));
 
-    // Construct an instance of the CreateTrustedProfileAssignmentOptions model
-    CreateTrustedProfileAssignmentOptions createTrustedProfileAssignmentOptionsModel = new CreateTrustedProfileAssignmentOptions.Builder()
+    // Construct an instance of the CreateAccountSettingsAssignmentOptions model
+    CreateAccountSettingsAssignmentOptions createAccountSettingsAssignmentOptionsModel = new CreateAccountSettingsAssignmentOptions.Builder()
       .templateId("testString")
       .templateVersion(Long.valueOf("1"))
       .targetType("Account")
       .target("testString")
       .build();
 
-    // Invoke createTrustedProfileAssignment() with a valid options model and verify the result
-    Response<TemplateAssignmentResponse> response = iamIdentityService.createTrustedProfileAssignment(createTrustedProfileAssignmentOptionsModel).execute();
+    // Invoke createAccountSettingsAssignment() with a valid options model and verify the result
+    Response<TemplateAssignmentResponse> response = iamIdentityService.createAccountSettingsAssignment(createAccountSettingsAssignmentOptionsModel).execute();
     assertNotNull(response);
     TemplateAssignmentResponse responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -3820,48 +4831,48 @@ public class IamIdentityTest {
     assertEquals(request.getMethod(), "POST");
     // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, createTrustedProfileAssignmentPath);
+    assertEquals(parsedPath, createAccountSettingsAssignmentPath);
     // Verify that there is no query string
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNull(query);
   }
 
-  // Test the createTrustedProfileAssignment operation with and without retries enabled
+  // Test the createAccountSettingsAssignment operation with and without retries enabled
   @Test
-  public void testCreateTrustedProfileAssignmentWRetries() throws Throwable {
+  public void testCreateAccountSettingsAssignmentWRetries() throws Throwable {
     iamIdentityService.enableRetries(4, 30);
-    testCreateTrustedProfileAssignmentWOptions();
+    testCreateAccountSettingsAssignmentWOptions();
 
     iamIdentityService.disableRetries();
-    testCreateTrustedProfileAssignmentWOptions();
+    testCreateAccountSettingsAssignmentWOptions();
   }
 
-  // Test the createTrustedProfileAssignment operation with a null options model (negative test)
+  // Test the createAccountSettingsAssignment operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testCreateTrustedProfileAssignmentNoOptions() throws Throwable {
+  public void testCreateAccountSettingsAssignmentNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
-    iamIdentityService.createTrustedProfileAssignment(null).execute();
+    iamIdentityService.createAccountSettingsAssignment(null).execute();
   }
 
-  // Test the getTrustedProfileAssignment operation with a valid options model parameter
+  // Test the getAccountSettingsAssignment operation with a valid options model parameter
   @Test
-  public void testGetTrustedProfileAssignmentWOptions() throws Throwable {
+  public void testGetAccountSettingsAssignmentWOptions() throws Throwable {
     // Register a mock response
     String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"account_id\": \"accountId\", \"template_id\": \"templateId\", \"template_version\": 15, \"target_type\": \"targetType\", \"target\": \"target\", \"status\": \"status\", \"resources\": [{\"target\": \"target\", \"profile\": {\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}, \"account_settings\": {\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}, \"policy_template_refs\": [{\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}]}], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"href\": \"href\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\", \"entity_tag\": \"entityTag\"}";
-    String getTrustedProfileAssignmentPath = "/v1/profile_assignments/testString";
+    String getAccountSettingsAssignmentPath = "/v1/account_settings_assignments/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(200)
       .setBody(mockResponseBody));
 
-    // Construct an instance of the GetTrustedProfileAssignmentOptions model
-    GetTrustedProfileAssignmentOptions getTrustedProfileAssignmentOptionsModel = new GetTrustedProfileAssignmentOptions.Builder()
+    // Construct an instance of the GetAccountSettingsAssignmentOptions model
+    GetAccountSettingsAssignmentOptions getAccountSettingsAssignmentOptionsModel = new GetAccountSettingsAssignmentOptions.Builder()
       .assignmentId("testString")
       .includeHistory(false)
       .build();
 
-    // Invoke getTrustedProfileAssignment() with a valid options model and verify the result
-    Response<TemplateAssignmentResponse> response = iamIdentityService.getTrustedProfileAssignment(getTrustedProfileAssignmentOptionsModel).execute();
+    // Invoke getAccountSettingsAssignment() with a valid options model and verify the result
+    Response<TemplateAssignmentResponse> response = iamIdentityService.getAccountSettingsAssignment(getAccountSettingsAssignmentOptionsModel).execute();
     assertNotNull(response);
     TemplateAssignmentResponse responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -3872,48 +4883,48 @@ public class IamIdentityTest {
     assertEquals(request.getMethod(), "GET");
     // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getTrustedProfileAssignmentPath);
+    assertEquals(parsedPath, getAccountSettingsAssignmentPath);
     // Verify query params
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNotNull(query);
     assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
   }
 
-  // Test the getTrustedProfileAssignment operation with and without retries enabled
+  // Test the getAccountSettingsAssignment operation with and without retries enabled
   @Test
-  public void testGetTrustedProfileAssignmentWRetries() throws Throwable {
+  public void testGetAccountSettingsAssignmentWRetries() throws Throwable {
     iamIdentityService.enableRetries(4, 30);
-    testGetTrustedProfileAssignmentWOptions();
+    testGetAccountSettingsAssignmentWOptions();
 
     iamIdentityService.disableRetries();
-    testGetTrustedProfileAssignmentWOptions();
+    testGetAccountSettingsAssignmentWOptions();
   }
 
-  // Test the getTrustedProfileAssignment operation with a null options model (negative test)
+  // Test the getAccountSettingsAssignment operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetTrustedProfileAssignmentNoOptions() throws Throwable {
+  public void testGetAccountSettingsAssignmentNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
-    iamIdentityService.getTrustedProfileAssignment(null).execute();
+    iamIdentityService.getAccountSettingsAssignment(null).execute();
   }
 
-  // Test the deleteTrustedProfileAssignment operation with a valid options model parameter
+  // Test the deleteAccountSettingsAssignment operation with a valid options model parameter
   @Test
-  public void testDeleteTrustedProfileAssignmentWOptions() throws Throwable {
+  public void testDeleteAccountSettingsAssignmentWOptions() throws Throwable {
     // Register a mock response
     String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"status_code\": \"statusCode\", \"errors\": [{\"code\": \"code\", \"message_code\": \"messageCode\", \"message\": \"message\", \"details\": \"details\"}], \"trace\": \"trace\"}";
-    String deleteTrustedProfileAssignmentPath = "/v1/profile_assignments/testString";
+    String deleteAccountSettingsAssignmentPath = "/v1/account_settings_assignments/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(202)
       .setBody(mockResponseBody));
 
-    // Construct an instance of the DeleteTrustedProfileAssignmentOptions model
-    DeleteTrustedProfileAssignmentOptions deleteTrustedProfileAssignmentOptionsModel = new DeleteTrustedProfileAssignmentOptions.Builder()
+    // Construct an instance of the DeleteAccountSettingsAssignmentOptions model
+    DeleteAccountSettingsAssignmentOptions deleteAccountSettingsAssignmentOptionsModel = new DeleteAccountSettingsAssignmentOptions.Builder()
       .assignmentId("testString")
       .build();
 
-    // Invoke deleteTrustedProfileAssignment() with a valid options model and verify the result
-    Response<ExceptionResponse> response = iamIdentityService.deleteTrustedProfileAssignment(deleteTrustedProfileAssignmentOptionsModel).execute();
+    // Invoke deleteAccountSettingsAssignment() with a valid options model and verify the result
+    Response<ExceptionResponse> response = iamIdentityService.deleteAccountSettingsAssignment(deleteAccountSettingsAssignmentOptionsModel).execute();
     assertNotNull(response);
     ExceptionResponse responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -3924,49 +4935,49 @@ public class IamIdentityTest {
     assertEquals(request.getMethod(), "DELETE");
     // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, deleteTrustedProfileAssignmentPath);
+    assertEquals(parsedPath, deleteAccountSettingsAssignmentPath);
     // Verify that there is no query string
     Map<String, String> query = TestUtilities.parseQueryString(request);
     assertNull(query);
   }
 
-  // Test the deleteTrustedProfileAssignment operation with and without retries enabled
+  // Test the deleteAccountSettingsAssignment operation with and without retries enabled
   @Test
-  public void testDeleteTrustedProfileAssignmentWRetries() throws Throwable {
+  public void testDeleteAccountSettingsAssignmentWRetries() throws Throwable {
     iamIdentityService.enableRetries(4, 30);
-    testDeleteTrustedProfileAssignmentWOptions();
+    testDeleteAccountSettingsAssignmentWOptions();
 
     iamIdentityService.disableRetries();
-    testDeleteTrustedProfileAssignmentWOptions();
+    testDeleteAccountSettingsAssignmentWOptions();
   }
 
-  // Test the deleteTrustedProfileAssignment operation with a null options model (negative test)
+  // Test the deleteAccountSettingsAssignment operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testDeleteTrustedProfileAssignmentNoOptions() throws Throwable {
+  public void testDeleteAccountSettingsAssignmentNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
-    iamIdentityService.deleteTrustedProfileAssignment(null).execute();
+    iamIdentityService.deleteAccountSettingsAssignment(null).execute();
   }
 
-  // Test the updateTrustedProfileAssignment operation with a valid options model parameter
+  // Test the updateAccountSettingsAssignment operation with a valid options model parameter
   @Test
-  public void testUpdateTrustedProfileAssignmentWOptions() throws Throwable {
+  public void testUpdateAccountSettingsAssignmentWOptions() throws Throwable {
     // Register a mock response
     String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"id\": \"id\", \"account_id\": \"accountId\", \"template_id\": \"templateId\", \"template_version\": 15, \"target_type\": \"targetType\", \"target\": \"target\", \"status\": \"status\", \"resources\": [{\"target\": \"target\", \"profile\": {\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}, \"account_settings\": {\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}, \"policy_template_refs\": [{\"id\": \"id\", \"version\": \"version\", \"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"name\": \"name\", \"errorCode\": \"errorCode\", \"message\": \"message\", \"statusCode\": \"statusCode\"}, \"status\": \"status\"}]}], \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"href\": \"href\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\", \"entity_tag\": \"entityTag\"}";
-    String updateTrustedProfileAssignmentPath = "/v1/profile_assignments/testString";
+    String updateAccountSettingsAssignmentPath = "/v1/account_settings_assignments/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(200)
       .setBody(mockResponseBody));
 
-    // Construct an instance of the UpdateTrustedProfileAssignmentOptions model
-    UpdateTrustedProfileAssignmentOptions updateTrustedProfileAssignmentOptionsModel = new UpdateTrustedProfileAssignmentOptions.Builder()
+    // Construct an instance of the UpdateAccountSettingsAssignmentOptions model
+    UpdateAccountSettingsAssignmentOptions updateAccountSettingsAssignmentOptionsModel = new UpdateAccountSettingsAssignmentOptions.Builder()
       .assignmentId("testString")
       .ifMatch("testString")
       .templateVersion(Long.valueOf("1"))
       .build();
 
-    // Invoke updateTrustedProfileAssignment() with a valid options model and verify the result
-    Response<TemplateAssignmentResponse> response = iamIdentityService.updateTrustedProfileAssignment(updateTrustedProfileAssignmentOptionsModel).execute();
+    // Invoke updateAccountSettingsAssignment() with a valid options model and verify the result
+    Response<TemplateAssignmentResponse> response = iamIdentityService.updateAccountSettingsAssignment(updateAccountSettingsAssignmentOptionsModel).execute();
     assertNotNull(response);
     TemplateAssignmentResponse responseObj = response.getResult();
     assertNotNull(responseObj);
@@ -3977,7 +4988,7 @@ public class IamIdentityTest {
     assertEquals(request.getMethod(), "PATCH");
     // Verify request path
     String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, updateTrustedProfileAssignmentPath);
+    assertEquals(parsedPath, updateAccountSettingsAssignmentPath);
     // Verify header parameters
     assertEquals(request.getHeader("If-Match"), "testString");
     // Verify that there is no query string
@@ -3985,752 +4996,21 @@ public class IamIdentityTest {
     assertNull(query);
   }
 
-  // Test the updateTrustedProfileAssignment operation with and without retries enabled
+  // Test the updateAccountSettingsAssignment operation with and without retries enabled
   @Test
-  public void testUpdateTrustedProfileAssignmentWRetries() throws Throwable {
+  public void testUpdateAccountSettingsAssignmentWRetries() throws Throwable {
     iamIdentityService.enableRetries(4, 30);
-    testUpdateTrustedProfileAssignmentWOptions();
+    testUpdateAccountSettingsAssignmentWOptions();
 
     iamIdentityService.disableRetries();
-    testUpdateTrustedProfileAssignmentWOptions();
+    testUpdateAccountSettingsAssignmentWOptions();
   }
 
-  // Test the updateTrustedProfileAssignment operation with a null options model (negative test)
+  // Test the updateAccountSettingsAssignment operation with a null options model (negative test)
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testUpdateTrustedProfileAssignmentNoOptions() throws Throwable {
+  public void testUpdateAccountSettingsAssignmentNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
-    iamIdentityService.updateTrustedProfileAssignment(null).execute();
-  }
-
-  // Test the listProfileTemplates operation with a valid options model parameter
-  @Test
-  public void testListProfileTemplatesWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"offset\": 6, \"limit\": 20, \"first\": \"first\", \"previous\": \"previous\", \"next\": \"next\", \"profile_templates\": [{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"action_controls\": {\"identities\": {\"add\": false, \"remove\": true}, \"rules\": {\"add\": false, \"remove\": true}, \"policies\": {\"add\": false, \"remove\": true}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
-    String listProfileTemplatesPath = "/v1/profile_templates";
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the ListProfileTemplatesOptions model
-    ListProfileTemplatesOptions listProfileTemplatesOptionsModel = new ListProfileTemplatesOptions.Builder()
-      .accountId("testString")
-      .limit("20")
-      .pagetoken("testString")
-      .sort("created_at")
-      .order("asc")
-      .includeHistory("false")
-      .build();
-
-    // Invoke listProfileTemplates() with a valid options model and verify the result
-    Response<TrustedProfileTemplateList> response = iamIdentityService.listProfileTemplates(listProfileTemplatesOptionsModel).execute();
-    assertNotNull(response);
-    TrustedProfileTemplateList responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, listProfileTemplatesPath);
-    // Verify query params
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    assertEquals(query.get("account_id"), "testString");
-    assertEquals(query.get("limit"), "20");
-    assertEquals(query.get("pagetoken"), "testString");
-    assertEquals(query.get("sort"), "created_at");
-    assertEquals(query.get("order"), "asc");
-    assertEquals(query.get("include_history"), "false");
-  }
-
-  // Test the listProfileTemplates operation with and without retries enabled
-  @Test
-  public void testListProfileTemplatesWRetries() throws Throwable {
-    iamIdentityService.enableRetries(4, 30);
-    testListProfileTemplatesWOptions();
-
-    iamIdentityService.disableRetries();
-    testListProfileTemplatesWOptions();
-  }
-
-  // Test the createProfileTemplate operation with a valid options model parameter
-  @Test
-  public void testCreateProfileTemplateWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"action_controls\": {\"identities\": {\"add\": false, \"remove\": true}, \"rules\": {\"add\": false, \"remove\": true}, \"policies\": {\"add\": false, \"remove\": true}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
-    String createProfileTemplatePath = "/v1/profile_templates";
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(201)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the ProfileClaimRuleConditions model
-    ProfileClaimRuleConditions profileClaimRuleConditionsModel = new ProfileClaimRuleConditions.Builder()
-      .claim("testString")
-      .operator("testString")
-      .value("testString")
-      .build();
-
-    // Construct an instance of the TrustedProfileTemplateClaimRule model
-    TrustedProfileTemplateClaimRule trustedProfileTemplateClaimRuleModel = new TrustedProfileTemplateClaimRule.Builder()
-      .name("testString")
-      .type("Profile-SAML")
-      .realmName("testString")
-      .expiration(Long.valueOf("26"))
-      .conditions(java.util.Arrays.asList(profileClaimRuleConditionsModel))
-      .build();
-
-    // Construct an instance of the ProfileIdentityRequest model
-    ProfileIdentityRequest profileIdentityRequestModel = new ProfileIdentityRequest.Builder()
-      .identifier("testString")
-      .type("user")
-      .accounts(java.util.Arrays.asList("testString"))
-      .description("testString")
-      .build();
-
-    // Construct an instance of the TemplateProfileComponentRequest model
-    TemplateProfileComponentRequest templateProfileComponentRequestModel = new TemplateProfileComponentRequest.Builder()
-      .name("testString")
-      .description("testString")
-      .rules(java.util.Arrays.asList(trustedProfileTemplateClaimRuleModel))
-      .identities(java.util.Arrays.asList(profileIdentityRequestModel))
-      .build();
-
-    // Construct an instance of the PolicyTemplateReference model
-    PolicyTemplateReference policyTemplateReferenceModel = new PolicyTemplateReference.Builder()
-      .id("testString")
-      .version("testString")
-      .build();
-
-    // Construct an instance of the ActionControlsIdentities model
-    ActionControlsIdentities actionControlsIdentitiesModel = new ActionControlsIdentities.Builder()
-      .add(true)
-      .remove(true)
-      .build();
-
-    // Construct an instance of the ActionControlsRules model
-    ActionControlsRules actionControlsRulesModel = new ActionControlsRules.Builder()
-      .add(true)
-      .remove(true)
-      .build();
-
-    // Construct an instance of the ActionControlsPolicies model
-    ActionControlsPolicies actionControlsPoliciesModel = new ActionControlsPolicies.Builder()
-      .add(true)
-      .remove(true)
-      .build();
-
-    // Construct an instance of the ActionControls model
-    ActionControls actionControlsModel = new ActionControls.Builder()
-      .identities(actionControlsIdentitiesModel)
-      .rules(actionControlsRulesModel)
-      .policies(actionControlsPoliciesModel)
-      .build();
-
-    // Construct an instance of the CreateProfileTemplateOptions model
-    CreateProfileTemplateOptions createProfileTemplateOptionsModel = new CreateProfileTemplateOptions.Builder()
-      .accountId("testString")
-      .name("testString")
-      .description("testString")
-      .profile(templateProfileComponentRequestModel)
-      .policyTemplateReferences(java.util.Arrays.asList(policyTemplateReferenceModel))
-      .actionControls(actionControlsModel)
-      .build();
-
-    // Invoke createProfileTemplate() with a valid options model and verify the result
-    Response<TrustedProfileTemplateResponse> response = iamIdentityService.createProfileTemplate(createProfileTemplateOptionsModel).execute();
-    assertNotNull(response);
-    TrustedProfileTemplateResponse responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "POST");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, createProfileTemplatePath);
-    // Verify that there is no query string
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-  }
-
-  // Test the createProfileTemplate operation with and without retries enabled
-  @Test
-  public void testCreateProfileTemplateWRetries() throws Throwable {
-    iamIdentityService.enableRetries(4, 30);
-    testCreateProfileTemplateWOptions();
-
-    iamIdentityService.disableRetries();
-    testCreateProfileTemplateWOptions();
-  }
-
-  // Test the getLatestProfileTemplateVersion operation with a valid options model parameter
-  @Test
-  public void testGetLatestProfileTemplateVersionWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"action_controls\": {\"identities\": {\"add\": false, \"remove\": true}, \"rules\": {\"add\": false, \"remove\": true}, \"policies\": {\"add\": false, \"remove\": true}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
-    String getLatestProfileTemplateVersionPath = "/v1/profile_templates/testString";
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the GetLatestProfileTemplateVersionOptions model
-    GetLatestProfileTemplateVersionOptions getLatestProfileTemplateVersionOptionsModel = new GetLatestProfileTemplateVersionOptions.Builder()
-      .templateId("testString")
-      .includeHistory(false)
-      .build();
-
-    // Invoke getLatestProfileTemplateVersion() with a valid options model and verify the result
-    Response<TrustedProfileTemplateResponse> response = iamIdentityService.getLatestProfileTemplateVersion(getLatestProfileTemplateVersionOptionsModel).execute();
-    assertNotNull(response);
-    TrustedProfileTemplateResponse responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getLatestProfileTemplateVersionPath);
-    // Verify query params
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
-  }
-
-  // Test the getLatestProfileTemplateVersion operation with and without retries enabled
-  @Test
-  public void testGetLatestProfileTemplateVersionWRetries() throws Throwable {
-    iamIdentityService.enableRetries(4, 30);
-    testGetLatestProfileTemplateVersionWOptions();
-
-    iamIdentityService.disableRetries();
-    testGetLatestProfileTemplateVersionWOptions();
-  }
-
-  // Test the getLatestProfileTemplateVersion operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetLatestProfileTemplateVersionNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    iamIdentityService.getLatestProfileTemplateVersion(null).execute();
-  }
-
-  // Test the deleteAllVersionsOfProfileTemplate operation with a valid options model parameter
-  @Test
-  public void testDeleteAllVersionsOfProfileTemplateWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "";
-    String deleteAllVersionsOfProfileTemplatePath = "/v1/profile_templates/testString";
-    server.enqueue(new MockResponse()
-      .setResponseCode(204)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the DeleteAllVersionsOfProfileTemplateOptions model
-    DeleteAllVersionsOfProfileTemplateOptions deleteAllVersionsOfProfileTemplateOptionsModel = new DeleteAllVersionsOfProfileTemplateOptions.Builder()
-      .templateId("testString")
-      .build();
-
-    // Invoke deleteAllVersionsOfProfileTemplate() with a valid options model and verify the result
-    Response<Void> response = iamIdentityService.deleteAllVersionsOfProfileTemplate(deleteAllVersionsOfProfileTemplateOptionsModel).execute();
-    assertNotNull(response);
-    Void responseObj = response.getResult();
-    assertNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "DELETE");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, deleteAllVersionsOfProfileTemplatePath);
-    // Verify that there is no query string
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-  }
-
-  // Test the deleteAllVersionsOfProfileTemplate operation with and without retries enabled
-  @Test
-  public void testDeleteAllVersionsOfProfileTemplateWRetries() throws Throwable {
-    iamIdentityService.enableRetries(4, 30);
-    testDeleteAllVersionsOfProfileTemplateWOptions();
-
-    iamIdentityService.disableRetries();
-    testDeleteAllVersionsOfProfileTemplateWOptions();
-  }
-
-  // Test the deleteAllVersionsOfProfileTemplate operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testDeleteAllVersionsOfProfileTemplateNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    iamIdentityService.deleteAllVersionsOfProfileTemplate(null).execute();
-  }
-
-  // Test the listVersionsOfProfileTemplate operation with a valid options model parameter
-  @Test
-  public void testListVersionsOfProfileTemplateWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"offset\": 6, \"limit\": 20, \"first\": \"first\", \"previous\": \"previous\", \"next\": \"next\", \"profile_templates\": [{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"action_controls\": {\"identities\": {\"add\": false, \"remove\": true}, \"rules\": {\"add\": false, \"remove\": true}, \"policies\": {\"add\": false, \"remove\": true}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
-    String listVersionsOfProfileTemplatePath = "/v1/profile_templates/testString/versions";
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the ListVersionsOfProfileTemplateOptions model
-    ListVersionsOfProfileTemplateOptions listVersionsOfProfileTemplateOptionsModel = new ListVersionsOfProfileTemplateOptions.Builder()
-      .templateId("testString")
-      .limit("20")
-      .pagetoken("testString")
-      .sort("created_at")
-      .order("asc")
-      .includeHistory("false")
-      .build();
-
-    // Invoke listVersionsOfProfileTemplate() with a valid options model and verify the result
-    Response<TrustedProfileTemplateList> response = iamIdentityService.listVersionsOfProfileTemplate(listVersionsOfProfileTemplateOptionsModel).execute();
-    assertNotNull(response);
-    TrustedProfileTemplateList responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, listVersionsOfProfileTemplatePath);
-    // Verify query params
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    assertEquals(query.get("limit"), "20");
-    assertEquals(query.get("pagetoken"), "testString");
-    assertEquals(query.get("sort"), "created_at");
-    assertEquals(query.get("order"), "asc");
-    assertEquals(query.get("include_history"), "false");
-  }
-
-  // Test the listVersionsOfProfileTemplate operation with and without retries enabled
-  @Test
-  public void testListVersionsOfProfileTemplateWRetries() throws Throwable {
-    iamIdentityService.enableRetries(4, 30);
-    testListVersionsOfProfileTemplateWOptions();
-
-    iamIdentityService.disableRetries();
-    testListVersionsOfProfileTemplateWOptions();
-  }
-
-  // Test the listVersionsOfProfileTemplate operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testListVersionsOfProfileTemplateNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    iamIdentityService.listVersionsOfProfileTemplate(null).execute();
-  }
-
-  // Test the createProfileTemplateVersion operation with a valid options model parameter
-  @Test
-  public void testCreateProfileTemplateVersionWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"action_controls\": {\"identities\": {\"add\": false, \"remove\": true}, \"rules\": {\"add\": false, \"remove\": true}, \"policies\": {\"add\": false, \"remove\": true}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
-    String createProfileTemplateVersionPath = "/v1/profile_templates/testString/versions";
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(201)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the ProfileClaimRuleConditions model
-    ProfileClaimRuleConditions profileClaimRuleConditionsModel = new ProfileClaimRuleConditions.Builder()
-      .claim("testString")
-      .operator("testString")
-      .value("testString")
-      .build();
-
-    // Construct an instance of the TrustedProfileTemplateClaimRule model
-    TrustedProfileTemplateClaimRule trustedProfileTemplateClaimRuleModel = new TrustedProfileTemplateClaimRule.Builder()
-      .name("testString")
-      .type("Profile-SAML")
-      .realmName("testString")
-      .expiration(Long.valueOf("26"))
-      .conditions(java.util.Arrays.asList(profileClaimRuleConditionsModel))
-      .build();
-
-    // Construct an instance of the ProfileIdentityRequest model
-    ProfileIdentityRequest profileIdentityRequestModel = new ProfileIdentityRequest.Builder()
-      .identifier("testString")
-      .type("user")
-      .accounts(java.util.Arrays.asList("testString"))
-      .description("testString")
-      .build();
-
-    // Construct an instance of the TemplateProfileComponentRequest model
-    TemplateProfileComponentRequest templateProfileComponentRequestModel = new TemplateProfileComponentRequest.Builder()
-      .name("testString")
-      .description("testString")
-      .rules(java.util.Arrays.asList(trustedProfileTemplateClaimRuleModel))
-      .identities(java.util.Arrays.asList(profileIdentityRequestModel))
-      .build();
-
-    // Construct an instance of the PolicyTemplateReference model
-    PolicyTemplateReference policyTemplateReferenceModel = new PolicyTemplateReference.Builder()
-      .id("testString")
-      .version("testString")
-      .build();
-
-    // Construct an instance of the ActionControlsIdentities model
-    ActionControlsIdentities actionControlsIdentitiesModel = new ActionControlsIdentities.Builder()
-      .add(true)
-      .remove(true)
-      .build();
-
-    // Construct an instance of the ActionControlsRules model
-    ActionControlsRules actionControlsRulesModel = new ActionControlsRules.Builder()
-      .add(true)
-      .remove(true)
-      .build();
-
-    // Construct an instance of the ActionControlsPolicies model
-    ActionControlsPolicies actionControlsPoliciesModel = new ActionControlsPolicies.Builder()
-      .add(true)
-      .remove(true)
-      .build();
-
-    // Construct an instance of the ActionControls model
-    ActionControls actionControlsModel = new ActionControls.Builder()
-      .identities(actionControlsIdentitiesModel)
-      .rules(actionControlsRulesModel)
-      .policies(actionControlsPoliciesModel)
-      .build();
-
-    // Construct an instance of the CreateProfileTemplateVersionOptions model
-    CreateProfileTemplateVersionOptions createProfileTemplateVersionOptionsModel = new CreateProfileTemplateVersionOptions.Builder()
-      .templateId("testString")
-      .accountId("testString")
-      .name("testString")
-      .description("testString")
-      .profile(templateProfileComponentRequestModel)
-      .policyTemplateReferences(java.util.Arrays.asList(policyTemplateReferenceModel))
-      .actionControls(actionControlsModel)
-      .build();
-
-    // Invoke createProfileTemplateVersion() with a valid options model and verify the result
-    Response<TrustedProfileTemplateResponse> response = iamIdentityService.createProfileTemplateVersion(createProfileTemplateVersionOptionsModel).execute();
-    assertNotNull(response);
-    TrustedProfileTemplateResponse responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "POST");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, createProfileTemplateVersionPath);
-    // Verify that there is no query string
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-  }
-
-  // Test the createProfileTemplateVersion operation with and without retries enabled
-  @Test
-  public void testCreateProfileTemplateVersionWRetries() throws Throwable {
-    iamIdentityService.enableRetries(4, 30);
-    testCreateProfileTemplateVersionWOptions();
-
-    iamIdentityService.disableRetries();
-    testCreateProfileTemplateVersionWOptions();
-  }
-
-  // Test the createProfileTemplateVersion operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testCreateProfileTemplateVersionNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    iamIdentityService.createProfileTemplateVersion(null).execute();
-  }
-
-  // Test the getProfileTemplateVersion operation with a valid options model parameter
-  @Test
-  public void testGetProfileTemplateVersionWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"action_controls\": {\"identities\": {\"add\": false, \"remove\": true}, \"rules\": {\"add\": false, \"remove\": true}, \"policies\": {\"add\": false, \"remove\": true}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
-    String getProfileTemplateVersionPath = "/v1/profile_templates/testString/versions/testString";
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the GetProfileTemplateVersionOptions model
-    GetProfileTemplateVersionOptions getProfileTemplateVersionOptionsModel = new GetProfileTemplateVersionOptions.Builder()
-      .templateId("testString")
-      .version("testString")
-      .includeHistory(false)
-      .build();
-
-    // Invoke getProfileTemplateVersion() with a valid options model and verify the result
-    Response<TrustedProfileTemplateResponse> response = iamIdentityService.getProfileTemplateVersion(getProfileTemplateVersionOptionsModel).execute();
-    assertNotNull(response);
-    TrustedProfileTemplateResponse responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getProfileTemplateVersionPath);
-    // Verify query params
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    assertEquals(Boolean.valueOf(query.get("include_history")), Boolean.valueOf(false));
-  }
-
-  // Test the getProfileTemplateVersion operation with and without retries enabled
-  @Test
-  public void testGetProfileTemplateVersionWRetries() throws Throwable {
-    iamIdentityService.enableRetries(4, 30);
-    testGetProfileTemplateVersionWOptions();
-
-    iamIdentityService.disableRetries();
-    testGetProfileTemplateVersionWOptions();
-  }
-
-  // Test the getProfileTemplateVersion operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetProfileTemplateVersionNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    iamIdentityService.getProfileTemplateVersion(null).execute();
-  }
-
-  // Test the updateProfileTemplateVersion operation with a valid options model parameter
-  @Test
-  public void testUpdateProfileTemplateVersionWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"profile\": {\"name\": \"name\", \"description\": \"description\", \"rules\": [{\"name\": \"name\", \"type\": \"Profile-SAML\", \"realm_name\": \"realmName\", \"expiration\": 10, \"conditions\": [{\"claim\": \"claim\", \"operator\": \"operator\", \"value\": \"value\"}]}], \"identities\": [{\"iam_id\": \"iamId\", \"identifier\": \"identifier\", \"type\": \"user\", \"accounts\": [\"accounts\"], \"description\": \"description\"}]}, \"policy_template_references\": [{\"id\": \"id\", \"version\": \"version\"}], \"action_controls\": {\"identities\": {\"add\": false, \"remove\": true}, \"rules\": {\"add\": false, \"remove\": true}, \"policies\": {\"add\": false, \"remove\": true}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
-    String updateProfileTemplateVersionPath = "/v1/profile_templates/testString/versions/testString";
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the ProfileClaimRuleConditions model
-    ProfileClaimRuleConditions profileClaimRuleConditionsModel = new ProfileClaimRuleConditions.Builder()
-      .claim("testString")
-      .operator("testString")
-      .value("testString")
-      .build();
-
-    // Construct an instance of the TrustedProfileTemplateClaimRule model
-    TrustedProfileTemplateClaimRule trustedProfileTemplateClaimRuleModel = new TrustedProfileTemplateClaimRule.Builder()
-      .name("testString")
-      .type("Profile-SAML")
-      .realmName("testString")
-      .expiration(Long.valueOf("26"))
-      .conditions(java.util.Arrays.asList(profileClaimRuleConditionsModel))
-      .build();
-
-    // Construct an instance of the ProfileIdentityRequest model
-    ProfileIdentityRequest profileIdentityRequestModel = new ProfileIdentityRequest.Builder()
-      .identifier("testString")
-      .type("user")
-      .accounts(java.util.Arrays.asList("testString"))
-      .description("testString")
-      .build();
-
-    // Construct an instance of the TemplateProfileComponentRequest model
-    TemplateProfileComponentRequest templateProfileComponentRequestModel = new TemplateProfileComponentRequest.Builder()
-      .name("testString")
-      .description("testString")
-      .rules(java.util.Arrays.asList(trustedProfileTemplateClaimRuleModel))
-      .identities(java.util.Arrays.asList(profileIdentityRequestModel))
-      .build();
-
-    // Construct an instance of the PolicyTemplateReference model
-    PolicyTemplateReference policyTemplateReferenceModel = new PolicyTemplateReference.Builder()
-      .id("testString")
-      .version("testString")
-      .build();
-
-    // Construct an instance of the ActionControlsIdentities model
-    ActionControlsIdentities actionControlsIdentitiesModel = new ActionControlsIdentities.Builder()
-      .add(true)
-      .remove(true)
-      .build();
-
-    // Construct an instance of the ActionControlsRules model
-    ActionControlsRules actionControlsRulesModel = new ActionControlsRules.Builder()
-      .add(true)
-      .remove(true)
-      .build();
-
-    // Construct an instance of the ActionControlsPolicies model
-    ActionControlsPolicies actionControlsPoliciesModel = new ActionControlsPolicies.Builder()
-      .add(true)
-      .remove(true)
-      .build();
-
-    // Construct an instance of the ActionControls model
-    ActionControls actionControlsModel = new ActionControls.Builder()
-      .identities(actionControlsIdentitiesModel)
-      .rules(actionControlsRulesModel)
-      .policies(actionControlsPoliciesModel)
-      .build();
-
-    // Construct an instance of the UpdateProfileTemplateVersionOptions model
-    UpdateProfileTemplateVersionOptions updateProfileTemplateVersionOptionsModel = new UpdateProfileTemplateVersionOptions.Builder()
-      .ifMatch("testString")
-      .templateId("testString")
-      .version("testString")
-      .accountId("testString")
-      .name("testString")
-      .description("testString")
-      .profile(templateProfileComponentRequestModel)
-      .policyTemplateReferences(java.util.Arrays.asList(policyTemplateReferenceModel))
-      .actionControls(actionControlsModel)
-      .build();
-
-    // Invoke updateProfileTemplateVersion() with a valid options model and verify the result
-    Response<TrustedProfileTemplateResponse> response = iamIdentityService.updateProfileTemplateVersion(updateProfileTemplateVersionOptionsModel).execute();
-    assertNotNull(response);
-    TrustedProfileTemplateResponse responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "PUT");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, updateProfileTemplateVersionPath);
-    // Verify header parameters
-    assertEquals(request.getHeader("If-Match"), "testString");
-    // Verify that there is no query string
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-  }
-
-  // Test the updateProfileTemplateVersion operation with and without retries enabled
-  @Test
-  public void testUpdateProfileTemplateVersionWRetries() throws Throwable {
-    iamIdentityService.enableRetries(4, 30);
-    testUpdateProfileTemplateVersionWOptions();
-
-    iamIdentityService.disableRetries();
-    testUpdateProfileTemplateVersionWOptions();
-  }
-
-  // Test the updateProfileTemplateVersion operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testUpdateProfileTemplateVersionNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    iamIdentityService.updateProfileTemplateVersion(null).execute();
-  }
-
-  // Test the deleteProfileTemplateVersion operation with a valid options model parameter
-  @Test
-  public void testDeleteProfileTemplateVersionWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "";
-    String deleteProfileTemplateVersionPath = "/v1/profile_templates/testString/versions/testString";
-    server.enqueue(new MockResponse()
-      .setResponseCode(204)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the DeleteProfileTemplateVersionOptions model
-    DeleteProfileTemplateVersionOptions deleteProfileTemplateVersionOptionsModel = new DeleteProfileTemplateVersionOptions.Builder()
-      .templateId("testString")
-      .version("testString")
-      .build();
-
-    // Invoke deleteProfileTemplateVersion() with a valid options model and verify the result
-    Response<Void> response = iamIdentityService.deleteProfileTemplateVersion(deleteProfileTemplateVersionOptionsModel).execute();
-    assertNotNull(response);
-    Void responseObj = response.getResult();
-    assertNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "DELETE");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, deleteProfileTemplateVersionPath);
-    // Verify that there is no query string
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-  }
-
-  // Test the deleteProfileTemplateVersion operation with and without retries enabled
-  @Test
-  public void testDeleteProfileTemplateVersionWRetries() throws Throwable {
-    iamIdentityService.enableRetries(4, 30);
-    testDeleteProfileTemplateVersionWOptions();
-
-    iamIdentityService.disableRetries();
-    testDeleteProfileTemplateVersionWOptions();
-  }
-
-  // Test the deleteProfileTemplateVersion operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testDeleteProfileTemplateVersionNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    iamIdentityService.deleteProfileTemplateVersion(null).execute();
-  }
-
-  // Test the commitProfileTemplate operation with a valid options model parameter
-  @Test
-  public void testCommitProfileTemplateWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "";
-    String commitProfileTemplatePath = "/v1/profile_templates/testString/versions/testString/commit";
-    server.enqueue(new MockResponse()
-      .setResponseCode(204)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the CommitProfileTemplateOptions model
-    CommitProfileTemplateOptions commitProfileTemplateOptionsModel = new CommitProfileTemplateOptions.Builder()
-      .templateId("testString")
-      .version("testString")
-      .build();
-
-    // Invoke commitProfileTemplate() with a valid options model and verify the result
-    Response<Void> response = iamIdentityService.commitProfileTemplate(commitProfileTemplateOptionsModel).execute();
-    assertNotNull(response);
-    Void responseObj = response.getResult();
-    assertNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "POST");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, commitProfileTemplatePath);
-    // Verify that there is no query string
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNull(query);
-  }
-
-  // Test the commitProfileTemplate operation with and without retries enabled
-  @Test
-  public void testCommitProfileTemplateWRetries() throws Throwable {
-    iamIdentityService.enableRetries(4, 30);
-    testCommitProfileTemplateWOptions();
-
-    iamIdentityService.disableRetries();
-    testCommitProfileTemplateWOptions();
-  }
-
-  // Test the commitProfileTemplate operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testCommitProfileTemplateNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    iamIdentityService.commitProfileTemplate(null).execute();
+    iamIdentityService.updateAccountSettingsAssignment(null).execute();
   }
 
   // Perform setup needed before each test method

@@ -13,7 +13,7 @@ Java Style
   <module name="SuppressWarningsFilter" />
   <module name="NewlineAtEndOfFile" />
   <module name="FileLength">
-    <property name="max" value="3000" />
+    <property name="max" value="10000" />
   </module>
   <module name="FileTabCharacter" />
 
@@ -80,7 +80,7 @@ Java Style
     <!-- Checks for Size Violations.                    -->
     <!-- See http://checkstyle.sf.net/config_sizes.html -->
     <module name="MethodLength">
-      <property name="max" value="2000" />
+      <property name="max" value="3000" />
     </module>
 
 

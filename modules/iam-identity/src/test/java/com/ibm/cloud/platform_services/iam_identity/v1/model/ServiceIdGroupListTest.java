@@ -13,7 +13,8 @@
 
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdGroup;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdGroupList;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,29 +24,15 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the GetServiceIdOptions model.
+ * Unit test class for the ServiceIdGroupList model.
  */
-public class GetServiceIdOptionsTest {
+public class ServiceIdGroupListTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testGetServiceIdOptions() throws Throwable {
-    GetServiceIdOptions getServiceIdOptionsModel = new GetServiceIdOptions.Builder()
-      .id("testString")
-      .includeHistory(false)
-      .includeActivity(false)
-      .showGroupId("testString")
-      .build();
-    assertEquals(getServiceIdOptionsModel.id(), "testString");
-    assertEquals(getServiceIdOptionsModel.includeHistory(), Boolean.valueOf(false));
-    assertEquals(getServiceIdOptionsModel.includeActivity(), Boolean.valueOf(false));
-    assertEquals(getServiceIdOptionsModel.showGroupId(), "testString");
+  public void testServiceIdGroupList() throws Throwable {
+    ServiceIdGroupList serviceIdGroupListModel = new ServiceIdGroupList();
+    assertNull(serviceIdGroupListModel.getServiceidGroups());
   }
-
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetServiceIdOptionsError() throws Throwable {
-    new GetServiceIdOptions.Builder().build();
-  }
-
 }

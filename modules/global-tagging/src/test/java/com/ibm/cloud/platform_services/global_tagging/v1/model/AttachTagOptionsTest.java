@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -14,6 +14,7 @@
 package com.ibm.cloud.platform_services.global_tagging.v1.model;
 
 import com.ibm.cloud.platform_services.global_tagging.v1.model.AttachTagOptions;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.QueryString;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.Resource;
 import com.ibm.cloud.platform_services.global_tagging.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -39,10 +40,16 @@ public class AttachTagOptionsTest {
     assertEquals(resourceModel.resourceId(), "testString");
     assertEquals(resourceModel.resourceType(), "testString");
 
+    QueryString queryStringModel = new QueryString.Builder()
+      .queryString("testString")
+      .build();
+    assertEquals(queryStringModel.queryString(), "testString");
+
     AttachTagOptions attachTagOptionsModel = new AttachTagOptions.Builder()
-      .resources(java.util.Arrays.asList(resourceModel))
       .tagName("testString")
       .tagNames(java.util.Arrays.asList("testString"))
+      .resources(java.util.Arrays.asList(resourceModel))
+      .query(queryStringModel)
       .xRequestId("testString")
       .xCorrelationId("testString")
       .accountId("testString")
@@ -50,9 +57,10 @@ public class AttachTagOptionsTest {
       .replace(false)
       .update(false)
       .build();
-    assertEquals(attachTagOptionsModel.resources(), java.util.Arrays.asList(resourceModel));
     assertEquals(attachTagOptionsModel.tagName(), "testString");
     assertEquals(attachTagOptionsModel.tagNames(), java.util.Arrays.asList("testString"));
+    assertEquals(attachTagOptionsModel.resources(), java.util.Arrays.asList(resourceModel));
+    assertEquals(attachTagOptionsModel.query(), queryStringModel);
     assertEquals(attachTagOptionsModel.xRequestId(), "testString");
     assertEquals(attachTagOptionsModel.xCorrelationId(), "testString");
     assertEquals(attachTagOptionsModel.accountId(), "testString");
@@ -60,10 +68,4 @@ public class AttachTagOptionsTest {
     assertEquals(attachTagOptionsModel.replace(), Boolean.valueOf(false));
     assertEquals(attachTagOptionsModel.update(), Boolean.valueOf(false));
   }
-
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testAttachTagOptionsError() throws Throwable {
-    new AttachTagOptions.Builder().build();
-  }
-
 }

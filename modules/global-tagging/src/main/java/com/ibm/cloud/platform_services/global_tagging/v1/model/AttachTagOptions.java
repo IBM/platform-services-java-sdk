@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.global_tagging.v1.model;
 
 import java.util.ArrayList;
@@ -35,9 +36,10 @@ public class AttachTagOptions extends GenericModel {
     String ACCESS = "access";
   }
 
-  protected List<Resource> resources;
   protected String tagName;
   protected List<String> tagNames;
+  protected List<Resource> resources;
+  protected QueryString query;
   protected String xRequestId;
   protected String xCorrelationId;
   protected String accountId;
@@ -49,9 +51,10 @@ public class AttachTagOptions extends GenericModel {
    * Builder.
    */
   public static class Builder {
-    private List<Resource> resources;
     private String tagName;
     private List<String> tagNames;
+    private List<Resource> resources;
+    private QueryString query;
     private String xRequestId;
     private String xCorrelationId;
     private String accountId;
@@ -65,9 +68,10 @@ public class AttachTagOptions extends GenericModel {
      * @param attachTagOptions the instance to initialize the Builder with
      */
     private Builder(AttachTagOptions attachTagOptions) {
-      this.resources = attachTagOptions.resources;
       this.tagName = attachTagOptions.tagName;
       this.tagNames = attachTagOptions.tagNames;
+      this.resources = attachTagOptions.resources;
+      this.query = attachTagOptions.query;
       this.xRequestId = attachTagOptions.xRequestId;
       this.xCorrelationId = attachTagOptions.xCorrelationId;
       this.accountId = attachTagOptions.accountId;
@@ -83,37 +87,12 @@ public class AttachTagOptions extends GenericModel {
     }
 
     /**
-     * Instantiates a new builder with required properties.
-     *
-     * @param resources the resources
-     */
-    public Builder(List<Resource> resources) {
-      this.resources = resources;
-    }
-
-    /**
      * Builds a AttachTagOptions.
      *
      * @return the new AttachTagOptions instance
      */
     public AttachTagOptions build() {
       return new AttachTagOptions(this);
-    }
-
-    /**
-     * Adds a new element to resources.
-     *
-     * @param resources the new element to be added
-     * @return the AttachTagOptions builder
-     */
-    public Builder addResources(Resource resources) {
-      com.ibm.cloud.sdk.core.util.Validator.notNull(resources,
-        "resources cannot be null");
-      if (this.resources == null) {
-        this.resources = new ArrayList<Resource>();
-      }
-      this.resources.add(resources);
-      return this;
     }
 
     /**
@@ -133,14 +112,18 @@ public class AttachTagOptions extends GenericModel {
     }
 
     /**
-     * Set the resources.
-     * Existing resources will be replaced.
+     * Adds a new element to resources.
      *
-     * @param resources the resources
+     * @param resources the new element to be added
      * @return the AttachTagOptions builder
      */
-    public Builder resources(List<Resource> resources) {
-      this.resources = resources;
+    public Builder addResources(Resource resources) {
+      com.ibm.cloud.sdk.core.util.Validator.notNull(resources,
+        "resources cannot be null");
+      if (this.resources == null) {
+        this.resources = new ArrayList<Resource>();
+      }
+      this.resources.add(resources);
       return this;
     }
 
@@ -164,6 +147,29 @@ public class AttachTagOptions extends GenericModel {
      */
     public Builder tagNames(List<String> tagNames) {
       this.tagNames = tagNames;
+      return this;
+    }
+
+    /**
+     * Set the resources.
+     * Existing resources will be replaced.
+     *
+     * @param resources the resources
+     * @return the AttachTagOptions builder
+     */
+    public Builder resources(List<Resource> resources) {
+      this.resources = resources;
+      return this;
+    }
+
+    /**
+     * Set the query.
+     *
+     * @param query the query
+     * @return the AttachTagOptions builder
+     */
+    public Builder query(QueryString query) {
+      this.query = query;
       return this;
     }
 
@@ -237,11 +243,10 @@ public class AttachTagOptions extends GenericModel {
   protected AttachTagOptions() { }
 
   protected AttachTagOptions(Builder builder) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.resources,
-      "resources cannot be null");
-    resources = builder.resources;
     tagName = builder.tagName;
     tagNames = builder.tagNames;
+    resources = builder.resources;
+    query = builder.query;
     xRequestId = builder.xRequestId;
     xCorrelationId = builder.xCorrelationId;
     accountId = builder.accountId;
@@ -257,17 +262,6 @@ public class AttachTagOptions extends GenericModel {
    */
   public Builder newBuilder() {
     return new Builder(this);
-  }
-
-  /**
-   * Gets the resources.
-   *
-   * List of resources on which the tag or tags are attached.
-   *
-   * @return the resources
-   */
-  public List<Resource> resources() {
-    return resources;
   }
 
   /**
@@ -290,6 +284,28 @@ public class AttachTagOptions extends GenericModel {
    */
   public List<String> tagNames() {
     return tagNames;
+  }
+
+  /**
+   * Gets the resources.
+   *
+   * List of resources on which the tagging operation operates on.
+   *
+   * @return the resources
+   */
+  public List<Resource> resources() {
+    return resources;
+  }
+
+  /**
+   * Gets the query.
+   *
+   * A valid Global Search string.
+   *
+   * @return the query
+   */
+  public QueryString query() {
+    return query;
   }
 
   /**

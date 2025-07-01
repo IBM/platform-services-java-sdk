@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.87.0-91c7c775-20240320-213027
+ * IBM OpenAPI SDK Code Generator Version: 3.105.0-3c13b041-20250605-193116
  */
 
 package com.ibm.cloud.platform_services.global_tagging.v1;
@@ -48,9 +48,9 @@ import java.util.Map.Entry;
  * two formats: `key:value` or `label`. The tagging API supports three types of tag: `user` `service`, and `access`
  * tags. `service` tags cannot be attached to IMS resources. `service` tags must be in the form
  * `service_prefix:tag_label` where `service_prefix` identifies the Service owning the tag. `access` tags cannot be
- * attached to IMS and Cloud Foundry resources. They must be in the form `key:value`. You can replace all resource's
- * tags using the `replace` query parameter in the attach operation. You can update the `value` of a resource's tag in
- * the format `key:value`, using the `update` query parameter in the attach operation.
+ * attached to IMS resources. They must be in the form `key:value`. You can replace all resource's tags using the
+ * `replace` query parameter in the attach operation. You can update the `value` of a resource's tag in the format
+ * `key:value`, using the `update` query parameter in the attach operation.
  *
  * API Version: 1.2.0
  */
@@ -338,17 +338,34 @@ public class GlobalTagging extends BaseService {
       builder.query("update", String.valueOf(attachTagOptions.update()));
     }
     final JsonObject contentJson = new JsonObject();
-    contentJson.add("resources", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(attachTagOptions.resources()));
     if (attachTagOptions.tagName() != null) {
       contentJson.addProperty("tag_name", attachTagOptions.tagName());
     }
     if (attachTagOptions.tagNames() != null) {
       contentJson.add("tag_names", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(attachTagOptions.tagNames()));
     }
+    if (attachTagOptions.resources() != null) {
+      contentJson.add("resources", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(attachTagOptions.resources()));
+    }
+    if (attachTagOptions.query() != null) {
+      contentJson.add("query", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(attachTagOptions.query()));
+    }
     builder.bodyJson(contentJson);
     ResponseConverter<TagResults> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TagResults>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Attach tags.
+   *
+   * Attaches one or more tags to one or more resources. Each resource can have no more than 1000 tags per each 'user'
+   * and 'service' type, and no more than 250 'access' tags (which is the account limit).
+   *
+   * @return a {@link ServiceCall} with a result of type {@link TagResults}
+   */
+  public ServiceCall<TagResults> attachTag() {
+    return attachTag(null);
   }
 
   /**
@@ -381,17 +398,33 @@ public class GlobalTagging extends BaseService {
       builder.query("tag_type", String.valueOf(detachTagOptions.tagType()));
     }
     final JsonObject contentJson = new JsonObject();
-    contentJson.add("resources", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(detachTagOptions.resources()));
     if (detachTagOptions.tagName() != null) {
       contentJson.addProperty("tag_name", detachTagOptions.tagName());
     }
     if (detachTagOptions.tagNames() != null) {
       contentJson.add("tag_names", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(detachTagOptions.tagNames()));
     }
+    if (detachTagOptions.resources() != null) {
+      contentJson.add("resources", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(detachTagOptions.resources()));
+    }
+    if (detachTagOptions.query() != null) {
+      contentJson.add("query", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(detachTagOptions.query()));
+    }
     builder.bodyJson(contentJson);
     ResponseConverter<TagResults> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TagResults>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Detach tags.
+   *
+   * Detaches one or more tags from one or more resources.
+   *
+   * @return a {@link ServiceCall} with a result of type {@link TagResults}
+   */
+  public ServiceCall<TagResults> detachTag() {
+    return detachTag(null);
   }
 
 }

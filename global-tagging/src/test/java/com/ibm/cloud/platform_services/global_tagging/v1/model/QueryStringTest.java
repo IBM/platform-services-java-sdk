@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.global_tagging.v1.model;
 
-import com.ibm.cloud.platform_services.global_tagging.v1.model.Tag;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.QueryString;
 import com.ibm.cloud.platform_services.global_tagging.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,15 +23,29 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the Tag model.
+ * Unit test class for the QueryString model.
  */
-public class TagTest {
+public class QueryStringTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testTag() throws Throwable {
-    Tag tagModel = new Tag();
-    assertNull(tagModel.getName());
+  public void testQueryString() throws Throwable {
+    QueryString queryStringModel = new QueryString.Builder()
+      .queryString("testString")
+      .build();
+    assertEquals(queryStringModel.queryString(), "testString");
+
+    String json = TestUtilities.serialize(queryStringModel);
+
+    QueryString queryStringModelNew = TestUtilities.deserialize(json, QueryString.class);
+    assertTrue(queryStringModelNew instanceof QueryString);
+    assertEquals(queryStringModelNew.queryString(), "testString");
   }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testQueryStringError() throws Throwable {
+    new QueryString.Builder().build();
+  }
+
 }

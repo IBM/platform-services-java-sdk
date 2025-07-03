@@ -38,6 +38,7 @@ public class TemplateProfileComponentResponseTest {
     assertNull(templateProfileComponentResponseModel.getName());
     assertNull(templateProfileComponentResponseModel.getDescription());
     assertNull(templateProfileComponentResponseModel.getRules());
+    assertNull(templateProfileComponentResponseModel.getEmail());
     assertNull(templateProfileComponentResponseModel.getIdentities());
   }
 }

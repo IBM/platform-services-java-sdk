@@ -38,6 +38,8 @@ public class ServiceId extends GenericModel {
   protected Date modifiedAt;
   @SerializedName("account_id")
   protected String accountId;
+  @SerializedName("group_id")
+  protected String groupId;
   protected String name;
   protected String description;
   @SerializedName("unique_instance_crns")
@@ -147,6 +149,17 @@ public class ServiceId extends GenericModel {
    */
   public String getAccountId() {
     return accountId;
+  }
+
+  /**
+   * Gets the groupId.
+   *
+   * ID of the group to which the service ID belongs to. Only set if requested via parameter `show_group_id`.
+   *
+   * @return the groupId
+   */
+  public String getGroupId() {
+    return groupId;
   }
 
   /**

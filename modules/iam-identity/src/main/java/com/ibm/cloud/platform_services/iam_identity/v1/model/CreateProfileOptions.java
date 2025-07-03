@@ -23,6 +23,7 @@ public class CreateProfileOptions extends GenericModel {
   protected String name;
   protected String accountId;
   protected String description;
+  protected String email;
 
   /**
    * Builder.
@@ -31,6 +32,7 @@ public class CreateProfileOptions extends GenericModel {
     private String name;
     private String accountId;
     private String description;
+    private String email;
 
     /**
      * Instantiates a new Builder from an existing CreateProfileOptions instance.
@@ -41,6 +43,7 @@ public class CreateProfileOptions extends GenericModel {
       this.name = createProfileOptions.name;
       this.accountId = createProfileOptions.accountId;
       this.description = createProfileOptions.description;
+      this.email = createProfileOptions.email;
     }
 
     /**
@@ -101,6 +104,17 @@ public class CreateProfileOptions extends GenericModel {
       this.description = description;
       return this;
     }
+
+    /**
+     * Set the email.
+     *
+     * @param email the email
+     * @return the CreateProfileOptions builder
+     */
+    public Builder email(String email) {
+      this.email = email;
+      return this;
+    }
   }
 
   protected CreateProfileOptions() { }
@@ -113,6 +127,7 @@ public class CreateProfileOptions extends GenericModel {
     name = builder.name;
     accountId = builder.accountId;
     description = builder.description;
+    email = builder.email;
   }
 
   /**
@@ -157,6 +172,17 @@ public class CreateProfileOptions extends GenericModel {
    */
   public String description() {
     return description;
+  }
+
+  /**
+   * Gets the email.
+   *
+   * The email of the trusted profile.
+   *
+   * @return the email
+   */
+  public String email() {
+    return email;
   }
 }
 

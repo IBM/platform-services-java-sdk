@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateServiceIdGroupOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,29 +23,27 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the GetServiceIdOptions model.
+ * Unit test class for the CreateServiceIdGroupOptions model.
  */
-public class GetServiceIdOptionsTest {
+public class CreateServiceIdGroupOptionsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testGetServiceIdOptions() throws Throwable {
-    GetServiceIdOptions getServiceIdOptionsModel = new GetServiceIdOptions.Builder()
-      .id("testString")
-      .includeHistory(false)
-      .includeActivity(false)
-      .showGroupId("testString")
+  public void testCreateServiceIdGroupOptions() throws Throwable {
+    CreateServiceIdGroupOptions createServiceIdGroupOptionsModel = new CreateServiceIdGroupOptions.Builder()
+      .accountId("testString")
+      .name("testString")
+      .description("testString")
       .build();
-    assertEquals(getServiceIdOptionsModel.id(), "testString");
-    assertEquals(getServiceIdOptionsModel.includeHistory(), Boolean.valueOf(false));
-    assertEquals(getServiceIdOptionsModel.includeActivity(), Boolean.valueOf(false));
-    assertEquals(getServiceIdOptionsModel.showGroupId(), "testString");
+    assertEquals(createServiceIdGroupOptionsModel.accountId(), "testString");
+    assertEquals(createServiceIdGroupOptionsModel.name(), "testString");
+    assertEquals(createServiceIdGroupOptionsModel.description(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetServiceIdOptionsError() throws Throwable {
-    new GetServiceIdOptions.Builder().build();
+  public void testCreateServiceIdGroupOptionsError() throws Throwable {
+    new CreateServiceIdGroupOptions.Builder().build();
   }
 
 }

@@ -3,7 +3,7 @@
 # - building and publishing javadocs to the git repository.
 # It is triggered when a new release is created.
 
-name: Publish
+name: publish
 
 on:
   release:
@@ -12,8 +12,8 @@ on:
     # Allow this workflow to be triggered manually
 
 jobs:
-  publish:
-    name: Publish Release
+  publish-release:
+    name: publish-release
     runs-on: ubuntu-latest
  
     steps:

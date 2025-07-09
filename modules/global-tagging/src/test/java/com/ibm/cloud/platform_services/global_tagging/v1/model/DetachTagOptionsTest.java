@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -14,6 +14,7 @@
 package com.ibm.cloud.platform_services.global_tagging.v1.model;
 
 import com.ibm.cloud.platform_services.global_tagging.v1.model.DetachTagOptions;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.QueryString;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.Resource;
 import com.ibm.cloud.platform_services.global_tagging.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -39,27 +40,28 @@ public class DetachTagOptionsTest {
     assertEquals(resourceModel.resourceId(), "testString");
     assertEquals(resourceModel.resourceType(), "testString");
 
+    QueryString queryStringModel = new QueryString.Builder()
+      .queryString("testString")
+      .build();
+    assertEquals(queryStringModel.queryString(), "testString");
+
     DetachTagOptions detachTagOptionsModel = new DetachTagOptions.Builder()
-      .resources(java.util.Arrays.asList(resourceModel))
       .tagName("testString")
       .tagNames(java.util.Arrays.asList("testString"))
+      .resources(java.util.Arrays.asList(resourceModel))
+      .query(queryStringModel)
       .xRequestId("testString")
       .xCorrelationId("testString")
       .accountId("testString")
       .tagType("user")
       .build();
-    assertEquals(detachTagOptionsModel.resources(), java.util.Arrays.asList(resourceModel));
     assertEquals(detachTagOptionsModel.tagName(), "testString");
     assertEquals(detachTagOptionsModel.tagNames(), java.util.Arrays.asList("testString"));
+    assertEquals(detachTagOptionsModel.resources(), java.util.Arrays.asList(resourceModel));
+    assertEquals(detachTagOptionsModel.query(), queryStringModel);
     assertEquals(detachTagOptionsModel.xRequestId(), "testString");
     assertEquals(detachTagOptionsModel.xCorrelationId(), "testString");
     assertEquals(detachTagOptionsModel.accountId(), "testString");
     assertEquals(detachTagOptionsModel.tagType(), "user");
   }
-
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testDetachTagOptionsError() throws Throwable {
-    new DetachTagOptions.Builder().build();
-  }
-
 }

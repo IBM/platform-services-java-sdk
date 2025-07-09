@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.global_tagging.v1;
 
 import com.ibm.cloud.platform_services.global_tagging.v1.GlobalTagging;
@@ -25,6 +26,7 @@ import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagsResult;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagsResultItem;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.DetachTagOptions;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.ListTagsOptions;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.QueryString;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.Resource;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.Tag;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.TagList;
@@ -316,11 +318,17 @@ public class GlobalTaggingTest {
       .resourceType("testString")
       .build();
 
+    // Construct an instance of the QueryString model
+    QueryString queryStringModel = new QueryString.Builder()
+      .queryString("testString")
+      .build();
+
     // Construct an instance of the AttachTagOptions model
     AttachTagOptions attachTagOptionsModel = new AttachTagOptions.Builder()
-      .resources(java.util.Arrays.asList(resourceModel))
       .tagName("testString")
       .tagNames(java.util.Arrays.asList("testString"))
+      .resources(java.util.Arrays.asList(resourceModel))
+      .query(queryStringModel)
       .xRequestId("testString")
       .xCorrelationId("testString")
       .accountId("testString")
@@ -361,13 +369,6 @@ public class GlobalTaggingTest {
     testAttachTagWOptions();
   }
 
-  // Test the attachTag operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testAttachTagNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    globalTaggingService.attachTag(null).execute();
-  }
-
   // Test the detachTag operation with a valid options model parameter
   @Test
   public void testDetachTagWOptions() throws Throwable {
@@ -385,11 +386,17 @@ public class GlobalTaggingTest {
       .resourceType("testString")
       .build();
 
+    // Construct an instance of the QueryString model
+    QueryString queryStringModel = new QueryString.Builder()
+      .queryString("testString")
+      .build();
+
     // Construct an instance of the DetachTagOptions model
     DetachTagOptions detachTagOptionsModel = new DetachTagOptions.Builder()
-      .resources(java.util.Arrays.asList(resourceModel))
       .tagName("testString")
       .tagNames(java.util.Arrays.asList("testString"))
+      .resources(java.util.Arrays.asList(resourceModel))
+      .query(queryStringModel)
       .xRequestId("testString")
       .xCorrelationId("testString")
       .accountId("testString")
@@ -424,13 +431,6 @@ public class GlobalTaggingTest {
 
     globalTaggingService.disableRetries();
     testDetachTagWOptions();
-  }
-
-  // Test the detachTag operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testDetachTagNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    globalTaggingService.detachTag(null).execute();
   }
 
   // Perform setup needed before each test method

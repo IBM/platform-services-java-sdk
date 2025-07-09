@@ -1,3 +1,10 @@
+# [0.67.0](https://github.com/IBM/platform-services-java-sdk/compare/0.66.1...0.67.0) (2025-07-09)
+
+
+### Features
+
+* **Global Tagging:** regenerate service with latest API definition ([#275](https://github.com/IBM/platform-services-java-sdk/issues/275)) ([13e9f52](https://github.com/IBM/platform-services-java-sdk/commit/13e9f523490a77377d13840924d08a083e513ccc))
+
 ## [0.66.1](https://github.com/IBM/platform-services-java-sdk/compare/0.66.0...0.66.1) (2025-05-30)
 
 

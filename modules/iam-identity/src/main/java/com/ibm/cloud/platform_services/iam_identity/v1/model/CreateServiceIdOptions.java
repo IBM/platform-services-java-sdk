@@ -25,9 +25,11 @@ public class CreateServiceIdOptions extends GenericModel {
 
   protected String accountId;
   protected String name;
+  protected String groupId;
   protected String description;
   protected List<String> uniqueInstanceCrns;
   protected ApiKeyInsideCreateServiceIdRequest apikey;
+  protected String showGroupId;
   protected String entityLock;
 
   /**
@@ -36,9 +38,11 @@ public class CreateServiceIdOptions extends GenericModel {
   public static class Builder {
     private String accountId;
     private String name;
+    private String groupId;
     private String description;
     private List<String> uniqueInstanceCrns;
     private ApiKeyInsideCreateServiceIdRequest apikey;
+    private String showGroupId;
     private String entityLock;
 
     /**
@@ -49,9 +53,11 @@ public class CreateServiceIdOptions extends GenericModel {
     private Builder(CreateServiceIdOptions createServiceIdOptions) {
       this.accountId = createServiceIdOptions.accountId;
       this.name = createServiceIdOptions.name;
+      this.groupId = createServiceIdOptions.groupId;
       this.description = createServiceIdOptions.description;
       this.uniqueInstanceCrns = createServiceIdOptions.uniqueInstanceCrns;
       this.apikey = createServiceIdOptions.apikey;
+      this.showGroupId = createServiceIdOptions.showGroupId;
       this.entityLock = createServiceIdOptions.entityLock;
     }
 
@@ -120,6 +126,17 @@ public class CreateServiceIdOptions extends GenericModel {
     }
 
     /**
+     * Set the groupId.
+     *
+     * @param groupId the groupId
+     * @return the CreateServiceIdOptions builder
+     */
+    public Builder groupId(String groupId) {
+      this.groupId = groupId;
+      return this;
+    }
+
+    /**
      * Set the description.
      *
      * @param description the description
@@ -154,6 +171,17 @@ public class CreateServiceIdOptions extends GenericModel {
     }
 
     /**
+     * Set the showGroupId.
+     *
+     * @param showGroupId the showGroupId
+     * @return the CreateServiceIdOptions builder
+     */
+    public Builder showGroupId(String showGroupId) {
+      this.showGroupId = showGroupId;
+      return this;
+    }
+
+    /**
      * Set the entityLock.
      *
      * @param entityLock the entityLock
@@ -174,9 +202,11 @@ public class CreateServiceIdOptions extends GenericModel {
       "name cannot be null");
     accountId = builder.accountId;
     name = builder.name;
+    groupId = builder.groupId;
     description = builder.description;
     uniqueInstanceCrns = builder.uniqueInstanceCrns;
     apikey = builder.apikey;
+    showGroupId = builder.showGroupId;
     entityLock = builder.entityLock;
   }
 
@@ -213,6 +243,18 @@ public class CreateServiceIdOptions extends GenericModel {
   }
 
   /**
+   * Gets the groupId.
+   *
+   * ID of the group to which the service ID belongs to. If the value is not set, the service ID is bound to the default
+   * group.
+   *
+   * @return the groupId
+   */
+  public String groupId() {
+    return groupId;
+  }
+
+  /**
    * Gets the description.
    *
    * The optional description of the Service Id. The 'description' property is only available if a description was
@@ -244,6 +286,17 @@ public class CreateServiceIdOptions extends GenericModel {
    */
   public ApiKeyInsideCreateServiceIdRequest apikey() {
     return apikey;
+  }
+
+  /**
+   * Gets the showGroupId.
+   *
+   * Defines if the service ID group ID is included in the response.
+   *
+   * @return the showGroupId
+   */
+  public String showGroupId() {
+    return showGroupId;
   }
 
   /**

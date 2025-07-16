@@ -50,9 +50,6 @@ public class CFMetaData extends GenericModel {
   protected Map<String, String> cfGuid;
   @SerializedName("crn_mask")
   protected String crnMask;
-  @SerializedName("user_defined_service")
-  protected Map<String, Object> userDefinedService;
-  protected Map<String, Object> extension;
   @SerializedName("paid_only")
   protected Boolean paidOnly;
   @SerializedName("custom_create_page_hybrid_enabled")
@@ -77,8 +74,6 @@ public class CFMetaData extends GenericModel {
     private Boolean serviceKeySupported;
     private Map<String, String> cfGuid;
     private String crnMask;
-    private Map<String, Object> userDefinedService;
-    private Map<String, Object> extension;
     private Boolean paidOnly;
     private Boolean customCreatePageHybridEnabled;
 
@@ -103,8 +98,6 @@ public class CFMetaData extends GenericModel {
       this.serviceKeySupported = cfMetaData.serviceKeySupported;
       this.cfGuid = cfMetaData.cfGuid;
       this.crnMask = cfMetaData.crnMask;
-      this.userDefinedService = cfMetaData.userDefinedService;
-      this.extension = cfMetaData.extension;
       this.paidOnly = cfMetaData.paidOnly;
       this.customCreatePageHybridEnabled = cfMetaData.customCreatePageHybridEnabled;
     }
@@ -327,32 +320,6 @@ public class CFMetaData extends GenericModel {
     }
 
     /**
-     * Set the userDefinedService.
-     *
-     * @param userDefinedService the userDefinedService
-     * @return the CFMetaData builder
-     * @deprecated this method is deprecated and may be removed in a future release
-     */
-    @Deprecated
-    public Builder userDefinedService(Map<String, Object> userDefinedService) {
-      this.userDefinedService = userDefinedService;
-      return this;
-    }
-
-    /**
-     * Set the extension.
-     *
-     * @param extension the extension
-     * @return the CFMetaData builder
-     * @deprecated this method is deprecated and may be removed in a future release
-     */
-    @Deprecated
-    public Builder extension(Map<String, Object> extension) {
-      this.extension = extension;
-      return this;
-    }
-
-    /**
      * Set the paidOnly.
      *
      * @param paidOnly the paidOnly
@@ -395,8 +362,6 @@ public class CFMetaData extends GenericModel {
     serviceKeySupported = builder.serviceKeySupported;
     cfGuid = builder.cfGuid;
     crnMask = builder.crnMask;
-    userDefinedService = builder.userDefinedService;
-    extension = builder.extension;
     paidOnly = builder.paidOnly;
     customCreatePageHybridEnabled = builder.customCreatePageHybridEnabled;
   }
@@ -600,32 +565,6 @@ public class CFMetaData extends GenericModel {
    */
   public String crnMask() {
     return crnMask;
-  }
-
-  /**
-   * Gets the userDefinedService.
-   *
-   * An extended set of metadata fields that pertain to user-defined services.
-   *
-   * @return the userDefinedService
-   * @deprecated this method is deprecated and may be removed in a future release
-   */
-  @Deprecated
-  public Map<String, Object> userDefinedService() {
-    return userDefinedService;
-  }
-
-  /**
-   * Gets the extension.
-   *
-   * A property-bag like extension to service metadata.
-   *
-   * @return the extension
-   * @deprecated this method is deprecated and may be removed in a future release
-   */
-  @Deprecated
-  public Map<String, Object> extension() {
-    return extension;
   }
 
   /**

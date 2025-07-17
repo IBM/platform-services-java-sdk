@@ -107,8 +107,6 @@ public class CreateCatalogEntryOptionsTest {
       .serviceKeySupported(true)
       .cfGuid(java.util.Collections.singletonMap("key1", "testString"))
       .crnMask("testString")
-      .userDefinedService(java.util.Collections.singletonMap("anyKey", "anyValue"))
-      .extension(java.util.Collections.singletonMap("anyKey", "anyValue"))
       .paidOnly(true)
       .customCreatePageHybridEnabled(true)
       .build();
@@ -127,8 +125,6 @@ public class CreateCatalogEntryOptionsTest {
     assertEquals(cfMetaDataModel.serviceKeySupported(), Boolean.valueOf(true));
     assertEquals(cfMetaDataModel.cfGuid(), java.util.Collections.singletonMap("key1", "testString"));
     assertEquals(cfMetaDataModel.crnMask(), "testString");
-    assertEquals(cfMetaDataModel.userDefinedService(), java.util.Collections.singletonMap("anyKey", "anyValue"));
-    assertEquals(cfMetaDataModel.extension(), java.util.Collections.singletonMap("anyKey", "anyValue"));
     assertEquals(cfMetaDataModel.paidOnly(), Boolean.valueOf(true));
     assertEquals(cfMetaDataModel.customCreatePageHybridEnabled(), Boolean.valueOf(true));
 

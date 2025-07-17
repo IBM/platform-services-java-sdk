@@ -1,3 +1,10 @@
+## [0.67.1](https://github.com/IBM/platform-services-java-sdk/compare/0.67.0...0.67.1) (2025-07-17)
+
+
+### Bug Fixes
+
+* **Global Catalog:** remove bad metadata fields ([#277](https://github.com/IBM/platform-services-java-sdk/issues/277)) ([f5eb229](https://github.com/IBM/platform-services-java-sdk/commit/f5eb2294695294df5b405653aacab0ee645da40a))
+
 # [0.67.0](https://github.com/IBM/platform-services-java-sdk/compare/0.66.1...0.67.0) (2025-07-09)
 
 

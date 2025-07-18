@@ -31,6 +31,7 @@ public class TrustedProfile extends GenericModel {
   protected String crn;
   protected String name;
   protected String description;
+  protected String email;
   @SerializedName("created_at")
   protected Date createdAt;
   @SerializedName("modified_at")
@@ -120,6 +121,18 @@ public class TrustedProfile extends GenericModel {
    */
   public String getDescription() {
     return description;
+  }
+
+  /**
+   * Gets the email.
+   *
+   * The optional email of the trusted profile. The 'email' property is only available if an email was provided during a
+   * create of a trusted profile.
+   *
+   * @return the email
+   */
+  public String getEmail() {
+    return email;
   }
 
   /**

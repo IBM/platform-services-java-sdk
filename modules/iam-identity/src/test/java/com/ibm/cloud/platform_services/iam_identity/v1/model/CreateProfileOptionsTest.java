@@ -35,10 +35,12 @@ public class CreateProfileOptionsTest {
       .name("testString")
       .accountId("testString")
       .description("testString")
+      .email("testString")
       .build();
     assertEquals(createProfileOptionsModel.name(), "testString");
     assertEquals(createProfileOptionsModel.accountId(), "testString");
     assertEquals(createProfileOptionsModel.description(), "testString");
+    assertEquals(createProfileOptionsModel.email(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

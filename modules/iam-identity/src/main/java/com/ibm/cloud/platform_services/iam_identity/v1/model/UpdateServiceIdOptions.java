@@ -28,6 +28,7 @@ public class UpdateServiceIdOptions extends GenericModel {
   protected String name;
   protected String description;
   protected List<String> uniqueInstanceCrns;
+  protected String showGroupId;
 
   /**
    * Builder.
@@ -38,6 +39,7 @@ public class UpdateServiceIdOptions extends GenericModel {
     private String name;
     private String description;
     private List<String> uniqueInstanceCrns;
+    private String showGroupId;
 
     /**
      * Instantiates a new Builder from an existing UpdateServiceIdOptions instance.
@@ -50,6 +52,7 @@ public class UpdateServiceIdOptions extends GenericModel {
       this.name = updateServiceIdOptions.name;
       this.description = updateServiceIdOptions.description;
       this.uniqueInstanceCrns = updateServiceIdOptions.uniqueInstanceCrns;
+      this.showGroupId = updateServiceIdOptions.showGroupId;
     }
 
     /**
@@ -149,6 +152,17 @@ public class UpdateServiceIdOptions extends GenericModel {
       this.uniqueInstanceCrns = uniqueInstanceCrns;
       return this;
     }
+
+    /**
+     * Set the showGroupId.
+     *
+     * @param showGroupId the showGroupId
+     * @return the UpdateServiceIdOptions builder
+     */
+    public Builder showGroupId(String showGroupId) {
+      this.showGroupId = showGroupId;
+      return this;
+    }
   }
 
   protected UpdateServiceIdOptions() { }
@@ -163,6 +177,7 @@ public class UpdateServiceIdOptions extends GenericModel {
     name = builder.name;
     description = builder.description;
     uniqueInstanceCrns = builder.uniqueInstanceCrns;
+    showGroupId = builder.showGroupId;
   }
 
   /**
@@ -232,6 +247,17 @@ public class UpdateServiceIdOptions extends GenericModel {
    */
   public List<String> uniqueInstanceCrns() {
     return uniqueInstanceCrns;
+  }
+
+  /**
+   * Gets the showGroupId.
+   *
+   * Defines if the service ID group ID is included in the response.
+   *
+   * @return the showGroupId
+   */
+  public String showGroupId() {
+    return showGroupId;
   }
 }
 

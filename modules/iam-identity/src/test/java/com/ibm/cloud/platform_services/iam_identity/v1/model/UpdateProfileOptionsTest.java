@@ -36,11 +36,13 @@ public class UpdateProfileOptionsTest {
       .ifMatch("testString")
       .name("testString")
       .description("testString")
+      .email("testString")
       .build();
     assertEquals(updateProfileOptionsModel.profileId(), "testString");
     assertEquals(updateProfileOptionsModel.ifMatch(), "testString");
     assertEquals(updateProfileOptionsModel.name(), "testString");
     assertEquals(updateProfileOptionsModel.description(), "testString");
+    assertEquals(updateProfileOptionsModel.email(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

@@ -76,11 +76,13 @@ public class CreateProfileTemplateVersionOptionsTest {
     TemplateProfileComponentRequest templateProfileComponentRequestModel = new TemplateProfileComponentRequest.Builder()
       .name("testString")
       .description("testString")
+      .email("testString")
       .rules(java.util.Arrays.asList(trustedProfileTemplateClaimRuleModel))
       .identities(java.util.Arrays.asList(profileIdentityRequestModel))
       .build();
     assertEquals(templateProfileComponentRequestModel.name(), "testString");
     assertEquals(templateProfileComponentRequestModel.description(), "testString");
+    assertEquals(templateProfileComponentRequestModel.email(), "testString");
     assertEquals(templateProfileComponentRequestModel.rules(), java.util.Arrays.asList(trustedProfileTemplateClaimRuleModel));
     assertEquals(templateProfileComponentRequestModel.identities(), java.util.Arrays.asList(profileIdentityRequestModel));
 

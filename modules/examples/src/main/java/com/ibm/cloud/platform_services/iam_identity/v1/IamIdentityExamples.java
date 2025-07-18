@@ -2070,9 +2070,9 @@ public class IamIdentityExamples {
         }
 
         try {
-            System.out.println("getPreferenceOnScopeAccount() result:");
+            System.out.println("getPreferencesOnScopeAccount() result:");
 
-            // begin-get_preference_on_scope_account
+            // begin-get_preferences_on_scope_account
 
             GetPreferencesOnScopeAccountOptions getPreferenceOption = new GetPreferencesOnScopeAccountOptions.Builder()
                     .service(service)
@@ -2086,7 +2086,29 @@ public class IamIdentityExamples {
 
             System.out.println(preference);
 
-            // end-get_preference_on_scope_account
+            // end-get_preferences_on_scope_account
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+         try {
+            System.out.println("getAllPreferencesOnScopeAccount() result:");
+
+            // begin-get_all_preferences_on_scope_account
+
+            GetAllPreferencesOnScopeAccountOptions getPreferenceOption = new GetAllPreferencesOnScopeAccountOptions.Builder()
+                    .accountId(accountId)
+                    .iamId(iamId)
+                    .build();
+
+            Response<IdentityPreferencesResponse> response = identityservice.getAllPreferencesOnScopeAccount(getPreferenceOption).execute();
+            IdentityPreferencesResponse preference = response.getResult();
+
+            System.out.println(preference);
+
+            // end-get_all_preferences_on_scope_account
 
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -2096,7 +2118,7 @@ public class IamIdentityExamples {
         try {
             System.out.println("deletePreferencesOnScopeAccount() result:");
 
-            // begin-delete_preference_on_scope_account
+            // begin-delete_preferences_on_scope_account
 
             DeletePreferencesOnScopeAccountOptions deletePreferenceOption = new DeletePreferencesOnScopeAccountOptions.Builder()
                     .service(service)
@@ -2107,7 +2129,7 @@ public class IamIdentityExamples {
 
             identityservice.deletePreferencesOnScopeAccount(deletePreferenceOption).execute();
 
-            // end-delete_preference_on_scope_account
+            // end-delete_preferences_on_scope_account
 
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",

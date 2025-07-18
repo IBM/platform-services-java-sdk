@@ -1,3 +1,10 @@
+## [0.68.1](https://github.com/IBM/platform-services-java-sdk/compare/0.68.0...0.68.1) (2025-07-18)
+
+
+### Bug Fixes
+
+* **IAM Identity:** add missing examples for preferences ([#278](https://github.com/IBM/platform-services-java-sdk/issues/278)) ([7166cc6](https://github.com/IBM/platform-services-java-sdk/commit/7166cc6ddd34161f2f06d8e7544c96590b302b35))
+
 # [0.68.0](https://github.com/IBM/platform-services-java-sdk/compare/0.67.1...0.68.0) (2025-07-18)
 
 

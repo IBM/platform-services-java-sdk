@@ -27,8 +27,8 @@ public class TemplateAssignmentResponseResource extends GenericModel {
   protected TemplateAssignmentResponseResourceDetail profile;
   @SerializedName("account_settings")
   protected TemplateAssignmentResponseResourceDetail accountSettings;
-  @SerializedName("policy_template_refs")
-  protected List<TemplateAssignmentResponseResourceDetail> policyTemplateRefs;
+  @SerializedName("policy_template_references")
+  protected List<TemplateAssignmentResponseResourceDetail> policyTemplateReferences;
 
   protected TemplateAssignmentResponseResource() { }
 
@@ -62,14 +62,14 @@ public class TemplateAssignmentResponseResource extends GenericModel {
   }
 
   /**
-   * Gets the policyTemplateRefs.
+   * Gets the policyTemplateReferences.
    *
    * Policy resource(s) included only for trusted profile assignments with policy references.
    *
-   * @return the policyTemplateRefs
+   * @return the policyTemplateReferences
    */
-  public List<TemplateAssignmentResponseResourceDetail> getPolicyTemplateRefs() {
-    return policyTemplateRefs;
+  public List<TemplateAssignmentResponseResourceDetail> getPolicyTemplateReferences() {
+    return policyTemplateReferences;
   }
 }
 

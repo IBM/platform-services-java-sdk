@@ -1,3 +1,10 @@
+## [0.68.2](https://github.com/IBM/platform-services-java-sdk/compare/0.68.1...0.68.2) (2025-07-18)
+
+
+### Bug Fixes
+
+* **build:** migrate to central publishing plugin ([#279](https://github.com/IBM/platform-services-java-sdk/issues/279)) ([1663f77](https://github.com/IBM/platform-services-java-sdk/commit/1663f7751b526e23a38519c95a4a8a3a57972158))
+
 ## [0.68.1](https://github.com/IBM/platform-services-java-sdk/compare/0.68.0...0.68.1) (2025-07-18)
 
 

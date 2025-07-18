@@ -1,3 +1,31 @@
+## [0.68.2](https://github.com/IBM/platform-services-java-sdk/compare/0.68.1...0.68.2) (2025-07-18)
+
+
+### Bug Fixes
+
+* **build:** migrate to central publishing plugin ([#279](https://github.com/IBM/platform-services-java-sdk/issues/279)) ([1663f77](https://github.com/IBM/platform-services-java-sdk/commit/1663f7751b526e23a38519c95a4a8a3a57972158))
+
+## [0.68.1](https://github.com/IBM/platform-services-java-sdk/compare/0.68.0...0.68.1) (2025-07-18)
+
+
+### Bug Fixes
+
+* **IAM Identity:** add missing examples for preferences ([#278](https://github.com/IBM/platform-services-java-sdk/issues/278)) ([7166cc6](https://github.com/IBM/platform-services-java-sdk/commit/7166cc6ddd34161f2f06d8e7544c96590b302b35))
+
+# [0.68.0](https://github.com/IBM/platform-services-java-sdk/compare/0.67.1...0.68.0) (2025-07-18)
+
+
+### Features
+
+* **IAM Identity:** adding serviceId Groups API ([#274](https://github.com/IBM/platform-services-java-sdk/issues/274)) ([f05f3c5](https://github.com/IBM/platform-services-java-sdk/commit/f05f3c5597f05c76d78cfaeb9c9846f1410a7748))
+
+## [0.67.1](https://github.com/IBM/platform-services-java-sdk/compare/0.67.0...0.67.1) (2025-07-17)
+
+
+### Bug Fixes
+
+* **Global Catalog:** remove bad metadata fields ([#277](https://github.com/IBM/platform-services-java-sdk/issues/277)) ([f5eb229](https://github.com/IBM/platform-services-java-sdk/commit/f5eb2294695294df5b405653aacab0ee645da40a))
+
 # [0.67.0](https://github.com/IBM/platform-services-java-sdk/compare/0.66.1...0.67.0) (2025-07-09)
 
 

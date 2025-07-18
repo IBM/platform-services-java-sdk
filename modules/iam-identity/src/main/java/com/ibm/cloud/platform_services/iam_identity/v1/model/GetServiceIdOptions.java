@@ -23,6 +23,7 @@ public class GetServiceIdOptions extends GenericModel {
   protected String id;
   protected Boolean includeHistory;
   protected Boolean includeActivity;
+  protected String showGroupId;
 
   /**
    * Builder.
@@ -31,6 +32,7 @@ public class GetServiceIdOptions extends GenericModel {
     private String id;
     private Boolean includeHistory;
     private Boolean includeActivity;
+    private String showGroupId;
 
     /**
      * Instantiates a new Builder from an existing GetServiceIdOptions instance.
@@ -41,6 +43,7 @@ public class GetServiceIdOptions extends GenericModel {
       this.id = getServiceIdOptions.id;
       this.includeHistory = getServiceIdOptions.includeHistory;
       this.includeActivity = getServiceIdOptions.includeActivity;
+      this.showGroupId = getServiceIdOptions.showGroupId;
     }
 
     /**
@@ -99,6 +102,17 @@ public class GetServiceIdOptions extends GenericModel {
       this.includeActivity = includeActivity;
       return this;
     }
+
+    /**
+     * Set the showGroupId.
+     *
+     * @param showGroupId the showGroupId
+     * @return the GetServiceIdOptions builder
+     */
+    public Builder showGroupId(String showGroupId) {
+      this.showGroupId = showGroupId;
+      return this;
+    }
   }
 
   protected GetServiceIdOptions() { }
@@ -109,6 +123,7 @@ public class GetServiceIdOptions extends GenericModel {
     id = builder.id;
     includeHistory = builder.includeHistory;
     includeActivity = builder.includeActivity;
+    showGroupId = builder.showGroupId;
   }
 
   /**
@@ -152,6 +167,17 @@ public class GetServiceIdOptions extends GenericModel {
    */
   public Boolean includeActivity() {
     return includeActivity;
+  }
+
+  /**
+   * Gets the showGroupId.
+   *
+   * Defines if the service ID group ID is included in the response.
+   *
+   * @return the showGroupId
+   */
+  public String showGroupId() {
+    return showGroupId;
   }
 }
 

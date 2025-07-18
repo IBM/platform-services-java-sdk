@@ -24,6 +24,7 @@ public class UpdateProfileOptions extends GenericModel {
   protected String ifMatch;
   protected String name;
   protected String description;
+  protected String email;
 
   /**
    * Builder.
@@ -33,6 +34,7 @@ public class UpdateProfileOptions extends GenericModel {
     private String ifMatch;
     private String name;
     private String description;
+    private String email;
 
     /**
      * Instantiates a new Builder from an existing UpdateProfileOptions instance.
@@ -44,6 +46,7 @@ public class UpdateProfileOptions extends GenericModel {
       this.ifMatch = updateProfileOptions.ifMatch;
       this.name = updateProfileOptions.name;
       this.description = updateProfileOptions.description;
+      this.email = updateProfileOptions.email;
     }
 
     /**
@@ -115,6 +118,17 @@ public class UpdateProfileOptions extends GenericModel {
       this.description = description;
       return this;
     }
+
+    /**
+     * Set the email.
+     *
+     * @param email the email
+     * @return the UpdateProfileOptions builder
+     */
+    public Builder email(String email) {
+      this.email = email;
+      return this;
+    }
   }
 
   protected UpdateProfileOptions() { }
@@ -128,6 +142,7 @@ public class UpdateProfileOptions extends GenericModel {
     ifMatch = builder.ifMatch;
     name = builder.name;
     description = builder.description;
+    email = builder.email;
   }
 
   /**
@@ -185,6 +200,18 @@ public class UpdateProfileOptions extends GenericModel {
    */
   public String description() {
     return description;
+  }
+
+  /**
+   * Gets the email.
+   *
+   * The email of the profile to update. If specified an empty email will clear the email of the profile. If an non
+   * empty value is provided the trusted profile will be updated.
+   *
+   * @return the email
+   */
+  public String email() {
+    return email;
   }
 }
 

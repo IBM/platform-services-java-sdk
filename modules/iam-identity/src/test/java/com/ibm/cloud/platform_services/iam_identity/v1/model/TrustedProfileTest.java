@@ -41,6 +41,7 @@ public class TrustedProfileTest {
     assertNull(trustedProfileModel.getCrn());
     assertNull(trustedProfileModel.getName());
     assertNull(trustedProfileModel.getDescription());
+    assertNull(trustedProfileModel.getEmail());
     assertNull(trustedProfileModel.getCreatedAt());
     assertNull(trustedProfileModel.getModifiedAt());
     assertNull(trustedProfileModel.getIamId());

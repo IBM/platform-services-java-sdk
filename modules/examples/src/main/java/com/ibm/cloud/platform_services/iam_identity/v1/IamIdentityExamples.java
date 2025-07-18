@@ -77,6 +77,8 @@ public class IamIdentityExamples {
     private static String apikeyEtag;
     private static String svcId;
     private static String svcIdEtag;
+    private static String srvIdGroupId;
+    private static String srvIdGroupEtag;
     private static String profileId;
     private static String profileEtag;
     private static String claimRuleId;
@@ -460,6 +462,114 @@ public class IamIdentityExamples {
             // end-delete_service_id
 
             System.out.printf("deleteServiceId() response status code: %d%n", response.getStatusCode());
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("createServiceIdGroup() result:");
+
+            // begin-create_service_id_group
+
+            CreateServiceIdGroupOptions createServiceIdGroupOptions = new CreateServiceIdGroupOptions.Builder()
+                    .accountId(accountId)
+                    .name(serviceIdName)
+                    .description("Example ServiceIdGroup")
+                    .build();
+
+            Response<ServiceIdGroup> response = identityservice.createServiceIdGroup(createServiceIdGroupOptions).execute();
+            ServiceIdGroup serviceIdGroup = response.getResult();
+            srvIdGroupId = serviceIdGroup.getId();
+
+            System.out.println(serviceIdGroup);
+
+            // end-create_service_id_group
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("getServiceIdGroup() result:");
+
+            // begin-get_service_id_group
+
+            GetServiceIdGroupOptions getServiceIdGroupOptions = new GetServiceIdGroupOptions.Builder()
+                    .id(srvIdGroupId)
+                    .build();
+
+            Response<ServiceIdGroup> response = identityservice.getServiceIdGroup(getServiceIdGroupOptions).execute();
+            ServiceIdGroup serviceIdGroup = response.getResult();
+            srvIdGroupEtag = response.getHeaders().values("Etag").get(0);
+
+            System.out.println(serviceIdGroup);
+
+            // end-get_service_id_group
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("listServiceIdGroup() result:");
+
+            // begin-list_service_id_group
+
+            ListServiceIdGroupOptions listServiceIdGroupOptions = new ListServiceIdGroupOptions.Builder()
+                    .accountId(accountId)
+                    .build();
+
+            Response<ServiceIdGroupList> response = identityservice.listServiceIdGroup(listServiceIdGroupOptions).execute();
+            ServiceIdGroupList serviceIdGroupList = response.getResult();
+
+            System.out.println(serviceIdGroupList);
+
+            // end-list_service_id_group
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("updateServiceIdGroup() result:");
+
+            // begin-update_service_id_group
+
+            UpdateServiceIdGroupOptions updateServiceIdGroupOptions = new UpdateServiceIdGroupOptions.Builder()
+                    .id(srvIdGroupId)
+                    .ifMatch(srvIdGroupEtag)
+                    .description("Example ServiceIdGroup updated")
+                    .build();
+
+            Response<ServiceIdGroup> response = identityservice.updateServiceIdGroup(updateServiceIdGroupOptions).execute();
+            ServiceIdGroup serviceIdGroup = response.getResult();
+
+            System.out.println(serviceIdGroup);
+
+            // end-update_service_id_group
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("deleteServiceIdGroup() result:");
+
+            // begin-delete_service_id_group
+
+            DeleteServiceIdGroupOptions deleteServiceIdGroupOptions = new DeleteServiceIdGroupOptions.Builder()
+                    .id(srvIdGroupId)
+                    .build();
+
+            identityservice.deleteServiceIdGroup(deleteServiceIdGroupOptions).execute();
+
+            // end-delete_service_id_group
+
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
@@ -1960,9 +2070,9 @@ public class IamIdentityExamples {
         }
 
         try {
-            System.out.println("getPreferenceOnScopeAccount() result:");
+            System.out.println("getPreferencesOnScopeAccount() result:");
 
-            // begin-get_preference_on_scope_account
+            // begin-get_preferences_on_scope_account
 
             GetPreferencesOnScopeAccountOptions getPreferenceOption = new GetPreferencesOnScopeAccountOptions.Builder()
                     .service(service)
@@ -1976,7 +2086,29 @@ public class IamIdentityExamples {
 
             System.out.println(preference);
 
-            // end-get_preference_on_scope_account
+            // end-get_preferences_on_scope_account
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+         try {
+            System.out.println("getAllPreferencesOnScopeAccount() result:");
+
+            // begin-get_all_preferences_on_scope_account
+
+            GetAllPreferencesOnScopeAccountOptions getPreferenceOption = new GetAllPreferencesOnScopeAccountOptions.Builder()
+                    .accountId(accountId)
+                    .iamId(iamId)
+                    .build();
+
+            Response<IdentityPreferencesResponse> response = identityservice.getAllPreferencesOnScopeAccount(getPreferenceOption).execute();
+            IdentityPreferencesResponse preference = response.getResult();
+
+            System.out.println(preference);
+
+            // end-get_all_preferences_on_scope_account
 
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -1986,7 +2118,7 @@ public class IamIdentityExamples {
         try {
             System.out.println("deletePreferencesOnScopeAccount() result:");
 
-            // begin-delete_preference_on_scope_account
+            // begin-delete_preferences_on_scope_account
 
             DeletePreferencesOnScopeAccountOptions deletePreferenceOption = new DeletePreferencesOnScopeAccountOptions.Builder()
                     .service(service)
@@ -1997,7 +2129,7 @@ public class IamIdentityExamples {
 
             identityservice.deletePreferencesOnScopeAccount(deletePreferenceOption).execute();
 
-            // end-delete_preference_on_scope_account
+            // end-delete_preferences_on_scope_account
 
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",

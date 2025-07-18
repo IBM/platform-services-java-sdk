@@ -47,6 +47,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
     private static String APIKEY_NAME = "Java-SDK-IT-ApiKey";
     private static String SERVICEID_NAME = "Java-SDK-IT-ServiceId";
+    private static String SERVICEID_GROUP_NAME = "Java-SDK-IT-ServiceId-Group";
     private static String PROFILE_NAME_1 = "Java-SDK-IT-TrustedProfile1";
     private static String PROFILE_NAME_2 = "Java-SDK-IT-TrustedProfile2";
     private static String CLAIMRULE_TYPE = "Profile-SAML";
@@ -78,6 +79,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
     private String serviceId1;
     private String serviceIdEtag1;
+    private String serviceIdGroupId;
 
     private String profileId1;
     private String profile1IamId;
@@ -794,6 +796,117 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             fail("Invalid service id should not have succeeded!");
         } catch (ServiceResponseException e) {
             assertEquals(e.getStatusCode(), 404);
+        }
+    }
+
+    @Test
+    public void testCreateServiceIDGroup() throws Exception {
+        try {
+            CreateServiceIdGroupOptions createServiceIdGroupOptions = new CreateServiceIdGroupOptions.Builder()
+                    .accountId(ACCOUNT_ID)
+                    .name(SERVICEID_GROUP_NAME)
+                    .description("JavaSDK test ServiceID Group")
+                    .build();
+
+            Response<ServiceIdGroup> response = service.createServiceIdGroup(createServiceIdGroupOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 201);
+
+            ServiceIdGroup serviceIdGroupResult = response.getResult();
+            assertNotNull(serviceIdGroupResult);
+
+            // Save the id for use by other test methods.
+            serviceIdGroupId = serviceIdGroupResult.getId();
+            assertNotNull(serviceIdGroupId);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testCreateServiceIDGroup" })
+    public void testGetServiceIDGroup() throws Exception {
+        try {
+            GetServiceIdGroupOptions getServiceIdGroupOptions = new GetServiceIdGroupOptions.Builder()
+                    .id(serviceIdGroupId)
+                    .build();
+
+            Response<ServiceIdGroup> response = service.getServiceIdGroup(getServiceIdGroupOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            ServiceIdGroup serviceIdGroupResult = response.getResult();
+            assertNotNull(serviceIdGroupResult);
+
+            assertEquals(serviceIdGroupResult.getAccountId(), ACCOUNT_ID);
+            assertEquals(serviceIdGroupResult.getName(), SERVICEID_GROUP_NAME);
+            assertEquals(serviceIdGroupResult.getDescription(), "JavaSDK test ServiceID Group");
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test
+    public void testListServiceIDGroup() throws Exception {
+        try {
+            ListServiceIdGroupOptions listServiceIdGroupOptions = new ListServiceIdGroupOptions.Builder()
+                    .accountId(ACCOUNT_ID)
+                    .build();
+
+            Response<ServiceIdGroupList> response = service.listServiceIdGroup(listServiceIdGroupOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            ServiceIdGroupList serviceIdGroupListResult = response.getResult();
+            assertNotNull(serviceIdGroupListResult);
+
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testCreateServiceIDGroup" })
+    public void testUpdateServiceIDGroup() throws Exception {
+        try {
+            String newDescription = "This is an updated description.";
+            UpdateServiceIdGroupOptions updateServiceIdGroupOptions = new UpdateServiceIdGroupOptions.Builder()
+                    .id(serviceIdGroupId)
+                    .description(newDescription)
+                    .build();
+
+            Response<ServiceIdGroup> response = service.updateServiceIdGroup(updateServiceIdGroupOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            ServiceIdGroup serviceIdGroupResult = response.getResult();
+            assertNotNull(serviceIdGroupResult);
+
+            assertEquals(serviceIdGroupResult.getAccountId(), ACCOUNT_ID);
+            assertEquals(serviceIdGroupResult.getName(), SERVICEID_GROUP_NAME);
+            assertEquals(serviceIdGroupResult.getDescription(), newDescription);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    @Test(dependsOnMethods = { "testUpdateServiceIDGroup" })
+    public void testDeleteServiceIDGroup() throws Exception {
+        try {
+            String newDescription = "This is an updated description.";
+            DeleteServiceIdGroupOptions deleteServiceIdGroupOptions = new DeleteServiceIdGroupOptions.Builder()
+                    .id(serviceIdGroupId)
+                    .build();
+
+            Response<Void> response = service.deleteServiceIdGroup(deleteServiceIdGroupOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 204);
+
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
         }
     }
 
@@ -2790,7 +2903,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .iamId(IAM_ID)
                     .build();
 
-            Response<AllIdentityPreferencesResponse> response = service.getAllPreferencesOnScopeAccount(getAllPreferencesOption).execute();
+            Response<IdentityPreferencesResponse> response = service.getAllPreferencesOnScopeAccount(getAllPreferencesOption).execute();
             assertNotNull(response);
             assertEquals(response.getStatusCode(), 200);
 
@@ -2815,7 +2928,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
             Response<Void> response = service.deletePreferencesOnScopeAccount(deletePreferenceOption).execute();
             assertNotNull(response);
-            assertEquals(response.getStatusCode(), 204);
+            assertEquals(response.getStatusCode(), 202);
 
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",

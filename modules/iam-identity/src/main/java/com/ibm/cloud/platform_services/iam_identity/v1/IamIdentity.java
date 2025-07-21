@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.105.1-067d600b-20250616-154447
+ * IBM OpenAPI SDK Code Generator Version: 3.106.0-09823488-20250707-071701
  */
 
 package com.ibm.cloud.platform_services.iam_identity.v1;

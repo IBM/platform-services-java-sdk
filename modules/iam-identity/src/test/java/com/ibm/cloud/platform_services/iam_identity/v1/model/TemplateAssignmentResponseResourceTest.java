@@ -38,6 +38,6 @@ public class TemplateAssignmentResponseResourceTest {
     assertNull(templateAssignmentResponseResourceModel.getTarget());
     assertNull(templateAssignmentResponseResourceModel.getProfile());
     assertNull(templateAssignmentResponseResourceModel.getAccountSettings());
-    assertNull(templateAssignmentResponseResourceModel.getPolicyTemplateRefs());
+    assertNull(templateAssignmentResponseResourceModel.getPolicyTemplateReferences());
   }
 }

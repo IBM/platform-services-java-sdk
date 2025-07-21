@@ -1,3 +1,10 @@
+## [0.68.4](https://github.com/IBM/platform-services-java-sdk/compare/0.68.3...0.68.4) (2025-07-21)
+
+
+### Bug Fixes
+
+* **IAM Identity:** fix incorrect mapping of policy references in IAM Identity templates ([#280](https://github.com/IBM/platform-services-java-sdk/issues/280)) ([06b0048](https://github.com/IBM/platform-services-java-sdk/commit/06b0048675c34183c67fd1c197b4ee0acb3e60ab))
+
 ## [0.68.3](https://github.com/IBM/platform-services-java-sdk/compare/0.68.2...0.68.3) (2025-07-21)
 
 

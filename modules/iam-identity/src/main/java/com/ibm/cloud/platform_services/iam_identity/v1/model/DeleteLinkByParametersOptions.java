@@ -13,26 +13,27 @@
 
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
-import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Link details.
+ * The deleteLinkByParameters options.
  */
-public class CreateProfileLinkRequestLink extends GenericModel {
+public class DeleteLinkByParametersOptions extends GenericModel {
 
+  protected String profileId;
+  protected String type;
   protected String crn;
   protected String namespace;
   protected String name;
-  @SerializedName("component_type")
   protected String componentType;
-  @SerializedName("component_name")
   protected String componentName;
 
   /**
    * Builder.
    */
   public static class Builder {
+    private String profileId;
+    private String type;
     private String crn;
     private String namespace;
     private String name;
@@ -40,16 +41,18 @@ public class CreateProfileLinkRequestLink extends GenericModel {
     private String componentName;
 
     /**
-     * Instantiates a new Builder from an existing CreateProfileLinkRequestLink instance.
+     * Instantiates a new Builder from an existing DeleteLinkByParametersOptions instance.
      *
-     * @param createProfileLinkRequestLink the instance to initialize the Builder with
+     * @param deleteLinkByParametersOptions the instance to initialize the Builder with
      */
-    private Builder(CreateProfileLinkRequestLink createProfileLinkRequestLink) {
-      this.crn = createProfileLinkRequestLink.crn;
-      this.namespace = createProfileLinkRequestLink.namespace;
-      this.name = createProfileLinkRequestLink.name;
-      this.componentType = createProfileLinkRequestLink.componentType;
-      this.componentName = createProfileLinkRequestLink.componentName;
+    private Builder(DeleteLinkByParametersOptions deleteLinkByParametersOptions) {
+      this.profileId = deleteLinkByParametersOptions.profileId;
+      this.type = deleteLinkByParametersOptions.type;
+      this.crn = deleteLinkByParametersOptions.crn;
+      this.namespace = deleteLinkByParametersOptions.namespace;
+      this.name = deleteLinkByParametersOptions.name;
+      this.componentType = deleteLinkByParametersOptions.componentType;
+      this.componentName = deleteLinkByParametersOptions.componentName;
     }
 
     /**
@@ -61,26 +64,50 @@ public class CreateProfileLinkRequestLink extends GenericModel {
     /**
      * Instantiates a new builder with required properties.
      *
-     * @param crn the crn
+     * @param profileId the profileId
+     * @param type the type
      */
-    public Builder(String crn) {
-      this.crn = crn;
+    public Builder(String profileId, String type) {
+      this.profileId = profileId;
+      this.type = type;
     }
 
     /**
-     * Builds a CreateProfileLinkRequestLink.
+     * Builds a DeleteLinkByParametersOptions.
      *
-     * @return the new CreateProfileLinkRequestLink instance
+     * @return the new DeleteLinkByParametersOptions instance
      */
-    public CreateProfileLinkRequestLink build() {
-      return new CreateProfileLinkRequestLink(this);
+    public DeleteLinkByParametersOptions build() {
+      return new DeleteLinkByParametersOptions(this);
+    }
+
+    /**
+     * Set the profileId.
+     *
+     * @param profileId the profileId
+     * @return the DeleteLinkByParametersOptions builder
+     */
+    public Builder profileId(String profileId) {
+      this.profileId = profileId;
+      return this;
+    }
+
+    /**
+     * Set the type.
+     *
+     * @param type the type
+     * @return the DeleteLinkByParametersOptions builder
+     */
+    public Builder type(String type) {
+      this.type = type;
+      return this;
     }
 
     /**
      * Set the crn.
      *
      * @param crn the crn
-     * @return the CreateProfileLinkRequestLink builder
+     * @return the DeleteLinkByParametersOptions builder
      */
     public Builder crn(String crn) {
       this.crn = crn;
@@ -91,7 +118,7 @@ public class CreateProfileLinkRequestLink extends GenericModel {
      * Set the namespace.
      *
      * @param namespace the namespace
-     * @return the CreateProfileLinkRequestLink builder
+     * @return the DeleteLinkByParametersOptions builder
      */
     public Builder namespace(String namespace) {
       this.namespace = namespace;
@@ -102,7 +129,7 @@ public class CreateProfileLinkRequestLink extends GenericModel {
      * Set the name.
      *
      * @param name the name
-     * @return the CreateProfileLinkRequestLink builder
+     * @return the DeleteLinkByParametersOptions builder
      */
     public Builder name(String name) {
       this.name = name;
@@ -113,7 +140,7 @@ public class CreateProfileLinkRequestLink extends GenericModel {
      * Set the componentType.
      *
      * @param componentType the componentType
-     * @return the CreateProfileLinkRequestLink builder
+     * @return the DeleteLinkByParametersOptions builder
      */
     public Builder componentType(String componentType) {
       this.componentType = componentType;
@@ -124,7 +151,7 @@ public class CreateProfileLinkRequestLink extends GenericModel {
      * Set the componentName.
      *
      * @param componentName the componentName
-     * @return the CreateProfileLinkRequestLink builder
+     * @return the DeleteLinkByParametersOptions builder
      */
     public Builder componentName(String componentName) {
       this.componentName = componentName;
@@ -132,11 +159,15 @@ public class CreateProfileLinkRequestLink extends GenericModel {
     }
   }
 
-  protected CreateProfileLinkRequestLink() { }
+  protected DeleteLinkByParametersOptions() { }
 
-  protected CreateProfileLinkRequestLink(Builder builder) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.crn,
-      "crn cannot be null");
+  protected DeleteLinkByParametersOptions(Builder builder) {
+    com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.profileId,
+      "profileId cannot be empty");
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.type,
+      "type cannot be null");
+    profileId = builder.profileId;
+    type = builder.type;
     crn = builder.crn;
     namespace = builder.namespace;
     name = builder.name;
@@ -147,16 +178,38 @@ public class CreateProfileLinkRequestLink extends GenericModel {
   /**
    * New builder.
    *
-   * @return a CreateProfileLinkRequestLink builder
+   * @return a DeleteLinkByParametersOptions builder
    */
   public Builder newBuilder() {
     return new Builder(this);
   }
 
   /**
+   * Gets the profileId.
+   *
+   * The unique ID of the Trusted Profile.
+   *
+   * @return the profileId
+   */
+  public String profileId() {
+    return profileId;
+  }
+
+  /**
+   * Gets the type.
+   *
+   * The compute resource type. Valid values are VSI, BMS, IKS_SA, ROKS_SA, CE.
+   *
+   * @return the type
+   */
+  public String type() {
+    return type;
+  }
+
+  /**
    * Gets the crn.
    *
-   * The CRN of the compute resource.
+   * CRN of the compute resource (IKS/ROKS/VSI/BMS).
    *
    * @return the crn
    */
@@ -167,7 +220,7 @@ public class CreateProfileLinkRequestLink extends GenericModel {
   /**
    * Gets the namespace.
    *
-   * The compute resource namespace, only required if cr_type is IKS_SA or ROKS_SA.
+   * Namespace of the compute resource (IKS/ROKS).
    *
    * @return the namespace
    */
@@ -178,7 +231,7 @@ public class CreateProfileLinkRequestLink extends GenericModel {
   /**
    * Gets the name.
    *
-   * Name of the compute resource, only required if cr_type is IKS_SA or ROKS_SA.
+   * Name of the compute resource (IKS/ROKS).
    *
    * @return the name
    */
@@ -189,7 +242,7 @@ public class CreateProfileLinkRequestLink extends GenericModel {
   /**
    * Gets the componentType.
    *
-   * Component type of the compute resource, only required if cr_type is CE.
+   * Component type of the compute resource, only required if type is CE.
    *
    * @return the componentType
    */
@@ -200,7 +253,7 @@ public class CreateProfileLinkRequestLink extends GenericModel {
   /**
    * Gets the componentName.
    *
-   * Component name of the compute resource, only required if cr_type is CE.
+   * Component name of the compute resource, only required if type is CE.
    *
    * @return the componentName
    */

@@ -46,6 +46,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteAllVersionsOf
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteAllVersionsOfProfileTemplateOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteClaimRuleOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteLinkByParametersOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteLinkOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeletePreferencesOnScopeAccountOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileIdentityOptions;
@@ -584,9 +585,9 @@ public class IamIdentity extends BaseService {
    * Delete a service ID group.
    *
    * @param deleteServiceIdGroupOptions the {@link DeleteServiceIdGroupOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a void result
+   * @return a {@link ServiceCall} with a result of type {@link ExceptionResponse}
    */
-  public ServiceCall<Void> deleteServiceIdGroup(DeleteServiceIdGroupOptions deleteServiceIdGroupOptions) {
+  public ServiceCall<ExceptionResponse> deleteServiceIdGroup(DeleteServiceIdGroupOptions deleteServiceIdGroupOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(deleteServiceIdGroupOptions,
       "deleteServiceIdGroupOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -596,7 +597,9 @@ public class IamIdentity extends BaseService {
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    builder.header("Accept", "application/json");
+    ResponseConverter<ExceptionResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ExceptionResponse>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -1333,6 +1336,44 @@ public class IamIdentity extends BaseService {
   }
 
   /**
+   * Delete compute resource link to profile by given parameters.
+   *
+   * Deletes compute resource link of a Trusted Profile matching the given parameters.
+   *
+   * @param deleteLinkByParametersOptions the {@link DeleteLinkByParametersOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> deleteLinkByParameters(DeleteLinkByParametersOptions deleteLinkByParametersOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteLinkByParametersOptions,
+      "deleteLinkByParametersOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("profile-id", deleteLinkByParametersOptions.profileId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/profiles/{profile-id}/links", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "deleteLinkByParameters");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.query("type", String.valueOf(deleteLinkByParametersOptions.type()));
+    if (deleteLinkByParametersOptions.crn() != null) {
+      builder.query("crn", String.valueOf(deleteLinkByParametersOptions.crn()));
+    }
+    if (deleteLinkByParametersOptions.namespace() != null) {
+      builder.query("namespace", String.valueOf(deleteLinkByParametersOptions.namespace()));
+    }
+    if (deleteLinkByParametersOptions.name() != null) {
+      builder.query("name", String.valueOf(deleteLinkByParametersOptions.name()));
+    }
+    if (deleteLinkByParametersOptions.componentType() != null) {
+      builder.query("component_type", String.valueOf(deleteLinkByParametersOptions.componentType()));
+    }
+    if (deleteLinkByParametersOptions.componentName() != null) {
+      builder.query("component_name", String.valueOf(deleteLinkByParametersOptions.componentName()));
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
    * Get link to a trusted profile.
    *
    * Get a specific link to a trusted profile by `link_id`.
@@ -1863,9 +1904,9 @@ public class IamIdentity extends BaseService {
    * `Update Identity Preference on scope account`.
    *
    * @param deletePreferencesOnScopeAccountOptions the {@link DeletePreferencesOnScopeAccountOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a void result
+   * @return a {@link ServiceCall} with a result of type {@link ExceptionResponse}
    */
-  public ServiceCall<Void> deletePreferencesOnScopeAccount(DeletePreferencesOnScopeAccountOptions deletePreferencesOnScopeAccountOptions) {
+  public ServiceCall<ExceptionResponse> deletePreferencesOnScopeAccount(DeletePreferencesOnScopeAccountOptions deletePreferencesOnScopeAccountOptions) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(deletePreferencesOnScopeAccountOptions,
       "deletePreferencesOnScopeAccountOptions cannot be null");
     Map<String, String> pathParamsMap = new HashMap<String, String>();
@@ -1878,7 +1919,9 @@ public class IamIdentity extends BaseService {
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }
-    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    builder.header("Accept", "application/json");
+    ResponseConverter<ExceptionResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ExceptionResponse>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 

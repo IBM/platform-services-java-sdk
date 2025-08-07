@@ -13,6 +13,7 @@
 
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
+import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
@@ -23,6 +24,10 @@ public class ProfileLinkLink extends GenericModel {
   protected String crn;
   protected String namespace;
   protected String name;
+  @SerializedName("component_type")
+  protected String componentType;
+  @SerializedName("component_name")
+  protected String componentName;
 
   protected ProfileLinkLink() { }
 
@@ -57,6 +62,28 @@ public class ProfileLinkLink extends GenericModel {
    */
   public String getName() {
     return name;
+  }
+
+  /**
+   * Gets the componentType.
+   *
+   * Component type of the compute resource, only required if cr_type is CE.
+   *
+   * @return the componentType
+   */
+  public String getComponentType() {
+    return componentType;
+  }
+
+  /**
+   * Gets the componentName.
+   *
+   * Component name of the compute resource, only required if cr_type is CE.
+   *
+   * @return the componentName
+   */
+  public String getComponentName() {
+    return componentName;
   }
 }
 

@@ -80,6 +80,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     private String serviceId1;
     private String serviceIdEtag1;
     private String serviceIdGroupId;
+    private String serviceIdGroupName;
 
     private String profileId1;
     private String profile1IamId;
@@ -817,6 +818,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
             // Save the id for use by other test methods.
             serviceIdGroupId = serviceIdGroupResult.getId();
+            serviceIdGroupName = serviceIdGroupResult.getName();
             assertNotNull(serviceIdGroupId);
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
@@ -873,7 +875,9 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             String newDescription = "This is an updated description.";
             UpdateServiceIdGroupOptions updateServiceIdGroupOptions = new UpdateServiceIdGroupOptions.Builder()
                     .id(serviceIdGroupId)
+                    .name(serviceIdGroupName)
                     .description(newDescription)
+                    .ifMatch("*")
                     .build();
 
             Response<ServiceIdGroup> response = service.updateServiceIdGroup(updateServiceIdGroupOptions).execute();
@@ -1459,6 +1463,55 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             // Now make sure the get operation does not return it.
             ProfileLink link = getLink(profileId2, linkId);
             assertNull(link);
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+    
+    @Test(dependsOnMethods = { "testDeleteLink" })
+    public void testDeleteLinkByParam() throws Exception {
+        try {
+
+            CreateProfileLinkRequestLink link = new CreateProfileLinkRequestLink.Builder()
+            		.crn("crn:v1:staging:public:iam-identity::a/" + ACCOUNT_ID + "::computeresource:Fake-Compute-Resource")
+                    .componentName("test_componenet_name")
+                    .componentType("test_componenet_type")
+                    .build();
+
+            CreateLinkOptions createLinkOptions = new CreateLinkOptions.Builder()
+                    .profileId(profileId2)
+                    .name("Great link")
+                    .crType("CE")
+                    .link(link)
+                    .build();
+
+            Response<ProfileLink> response = service.createLink(createLinkOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 201);
+            
+            ProfileLink profileLinkResult = response.getResult();
+            assertNotNull(profileLinkResult);
+
+            // Save the id for use by other test methods.
+            linkId = profileLinkResult.getId();
+            assertNotNull(linkId);
+            
+            DeleteLinkByParametersOptions deleteLinkOptions = new DeleteLinkByParametersOptions.Builder()
+                    .profileId(profileId2)
+                    .type("CE")
+                    .crn("crn:v1:staging:public:iam-identity::a/" + ACCOUNT_ID + "::computeresource:Fake-Compute-Resource")
+                    .componentName("test_componenet_name")
+                    .componentType("test_componenet_type")
+                    .build();
+
+            Response<Void> responseDelete = service.deleteLinkByParameters(deleteLinkOptions).execute();
+            assertNotNull(responseDelete);
+            assertEquals(responseDelete.getStatusCode(), 204);
+
+            // Now make sure the get operation does not return it.
+            ProfileLink resultLink = getLink(profileId2, linkId);
+            assertNull(resultLink);
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -2928,7 +2981,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
             Response<Void> response = service.deletePreferencesOnScopeAccount(deletePreferenceOption).execute();
             assertNotNull(response);
-            assertEquals(response.getStatusCode(), 202);
+            assertEquals(response.getStatusCode(), 204);
 
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
@@ -3007,7 +3060,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
     private void sleep(int numSecs) {
         try {
-            Thread.sleep(numSecs * 1000);
+            Thread.sleep(numSecs * 2000);
         } catch (Throwable t) {
         }
     }

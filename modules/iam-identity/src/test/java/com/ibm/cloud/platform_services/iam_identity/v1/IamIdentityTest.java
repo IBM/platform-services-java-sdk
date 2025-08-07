@@ -57,6 +57,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteAllVersionsOf
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteAllVersionsOfProfileTemplateOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteClaimRuleOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteLinkByParametersOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteLinkOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeletePreferencesOnScopeAccountOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.DeleteProfileIdentityOptions;
@@ -1987,7 +1988,7 @@ public class IamIdentityTest {
   @Test
   public void testCreateLinkWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"entity_tag\": \"entityTag\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"cr_type\": \"crType\", \"link\": {\"crn\": \"crn\", \"namespace\": \"namespace\", \"name\": \"name\"}}";
+    String mockResponseBody = "{\"id\": \"id\", \"entity_tag\": \"entityTag\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"cr_type\": \"crType\", \"link\": {\"crn\": \"crn\", \"namespace\": \"namespace\", \"name\": \"name\", \"component_type\": \"componentType\", \"component_name\": \"componentName\"}}";
     String createLinkPath = "/v1/profiles/testString/links";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -1999,6 +2000,8 @@ public class IamIdentityTest {
       .crn("testString")
       .namespace("testString")
       .name("testString")
+      .componentType("testString")
+      .componentName("testString")
       .build();
 
     // Construct an instance of the CreateLinkOptions model
@@ -2048,7 +2051,7 @@ public class IamIdentityTest {
   @Test
   public void testListLinksWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"links\": [{\"id\": \"id\", \"entity_tag\": \"entityTag\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"cr_type\": \"crType\", \"link\": {\"crn\": \"crn\", \"namespace\": \"namespace\", \"name\": \"name\"}}]}";
+    String mockResponseBody = "{\"links\": [{\"id\": \"id\", \"entity_tag\": \"entityTag\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"cr_type\": \"crType\", \"link\": {\"crn\": \"crn\", \"namespace\": \"namespace\", \"name\": \"name\", \"component_type\": \"componentType\", \"component_name\": \"componentName\"}}]}";
     String listLinksPath = "/v1/profiles/testString/links";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -2095,11 +2098,73 @@ public class IamIdentityTest {
     iamIdentityService.listLinks(null).execute();
   }
 
+  // Test the deleteLinkByParameters operation with a valid options model parameter
+  @Test
+  public void testDeleteLinkByParametersWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "";
+    String deleteLinkByParametersPath = "/v1/profiles/testString/links";
+    server.enqueue(new MockResponse()
+      .setResponseCode(204)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the DeleteLinkByParametersOptions model
+    DeleteLinkByParametersOptions deleteLinkByParametersOptionsModel = new DeleteLinkByParametersOptions.Builder()
+      .profileId("testString")
+      .type("testString")
+      .crn("testString")
+      .namespace("testString")
+      .name("testString")
+      .componentType("testString")
+      .componentName("testString")
+      .build();
+
+    // Invoke deleteLinkByParameters() with a valid options model and verify the result
+    Response<Void> response = iamIdentityService.deleteLinkByParameters(deleteLinkByParametersOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    assertNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "DELETE");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, deleteLinkByParametersPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(query.get("type"), "testString");
+    assertEquals(query.get("crn"), "testString");
+    assertEquals(query.get("namespace"), "testString");
+    assertEquals(query.get("name"), "testString");
+    assertEquals(query.get("component_type"), "testString");
+    assertEquals(query.get("component_name"), "testString");
+  }
+
+  // Test the deleteLinkByParameters operation with and without retries enabled
+  @Test
+  public void testDeleteLinkByParametersWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testDeleteLinkByParametersWOptions();
+
+    iamIdentityService.disableRetries();
+    testDeleteLinkByParametersWOptions();
+  }
+
+  // Test the deleteLinkByParameters operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testDeleteLinkByParametersNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.deleteLinkByParameters(null).execute();
+  }
+
   // Test the getLink operation with a valid options model parameter
   @Test
   public void testGetLinkWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"entity_tag\": \"entityTag\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"cr_type\": \"crType\", \"link\": {\"crn\": \"crn\", \"namespace\": \"namespace\", \"name\": \"name\"}}";
+    String mockResponseBody = "{\"id\": \"id\", \"entity_tag\": \"entityTag\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"cr_type\": \"crType\", \"link\": {\"crn\": \"crn\", \"namespace\": \"namespace\", \"name\": \"name\", \"component_type\": \"componentType\", \"component_name\": \"componentName\"}}";
     String getLinkPath = "/v1/profiles/testString/links/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")

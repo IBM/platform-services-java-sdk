@@ -78,6 +78,7 @@ public class IamIdentityExamples {
     private static String svcId;
     private static String svcIdEtag;
     private static String srvIdGroupId;
+    private static String srvIdGroupName;
     private static String srvIdGroupEtag;
     private static String profileId;
     private static String profileEtag;
@@ -481,6 +482,7 @@ public class IamIdentityExamples {
             Response<ServiceIdGroup> response = identityservice.createServiceIdGroup(createServiceIdGroupOptions).execute();
             ServiceIdGroup serviceIdGroup = response.getResult();
             srvIdGroupId = serviceIdGroup.getId();
+            srvIdGroupName = serviceIdGroup.getName();
 
             System.out.println(serviceIdGroup);
 
@@ -541,6 +543,7 @@ public class IamIdentityExamples {
 
             UpdateServiceIdGroupOptions updateServiceIdGroupOptions = new UpdateServiceIdGroupOptions.Builder()
                     .id(srvIdGroupId)
+                    .name(srvIdGroupName)
                     .ifMatch(srvIdGroupEtag)
                     .description("Example ServiceIdGroup updated")
                     .build();
@@ -891,6 +894,48 @@ public class IamIdentityExamples {
             // end-delete_link
 
             System.out.printf("deleteLink() response status code: %d%n", response.getStatusCode());
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("deleteLinkByParameters() result:");
+
+            CreateProfileLinkRequestLink link = new CreateProfileLinkRequestLink.Builder()
+                    .crn("crn:v1:staging:public:iam-identity::a/" + accountId + "::computeresource:Fake-Compute-Resource")
+                    .componentName("test_componenet_name")
+                    .componentType("test_componenet_type")
+                    .build();
+
+            CreateLinkOptions createLinkOptions = new CreateLinkOptions.Builder()
+                    .profileId(profileId)
+                    .name("Great link")
+                    .crType("CE")
+                    .link(link)
+                    .build();
+
+            Response<ProfileLink> responseCreateLink = identityservice.createLink(createLinkOptions).execute();
+            ProfileLink linkResponse = responseCreateLink.getResult();
+
+            System.out.println(linkResponse);
+
+            // begin-delete_link_by_parameters
+
+            DeleteLinkByParametersOptions deleteLinkOptions = new DeleteLinkByParametersOptions.Builder()
+                    .profileId(profileId)
+                    .type("CE")
+                    .crn("crn:v1:staging:public:iam-identity::a/" + accountId + "::computeresource:Fake-Compute-Resource")
+                    .componentName("test_componenet_name")
+                    .componentType("test_componenet_type")
+                    .build();
+
+            Response<Void> response = identityservice.deleteLinkByParameters(deleteLinkOptions).execute();
+
+            // end-delete_link_by_parameters
+
+            System.out.printf("deleteLinkByParameters() response status code: %d%n", response.getStatusCode());
 
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -2139,7 +2184,7 @@ public class IamIdentityExamples {
 
     private static void sleep(int numSecs) {
         try {
-            Thread.sleep(numSecs * 1000);
+            Thread.sleep(numSecs * 2000);
         } catch (Throwable t) {
         }
     }

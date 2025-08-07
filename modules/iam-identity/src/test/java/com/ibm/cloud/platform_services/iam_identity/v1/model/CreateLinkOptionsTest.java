@@ -36,10 +36,14 @@ public class CreateLinkOptionsTest {
       .crn("testString")
       .namespace("testString")
       .name("testString")
+      .componentType("testString")
+      .componentName("testString")
       .build();
     assertEquals(createProfileLinkRequestLinkModel.crn(), "testString");
     assertEquals(createProfileLinkRequestLinkModel.namespace(), "testString");
     assertEquals(createProfileLinkRequestLinkModel.name(), "testString");
+    assertEquals(createProfileLinkRequestLinkModel.componentType(), "testString");
+    assertEquals(createProfileLinkRequestLinkModel.componentName(), "testString");
 
     CreateLinkOptions createLinkOptionsModel = new CreateLinkOptions.Builder()
       .profileId("testString")

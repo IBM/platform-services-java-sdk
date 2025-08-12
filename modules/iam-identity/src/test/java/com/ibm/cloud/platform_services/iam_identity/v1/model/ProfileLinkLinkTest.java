@@ -35,5 +35,7 @@ public class ProfileLinkLinkTest {
     assertNull(profileLinkLinkModel.getCrn());
     assertNull(profileLinkLinkModel.getNamespace());
     assertNull(profileLinkLinkModel.getName());
+    assertNull(profileLinkLinkModel.getComponentType());
+    assertNull(profileLinkLinkModel.getComponentName());
   }
 }

@@ -35,10 +35,14 @@ public class CreateProfileLinkRequestLinkTest {
       .crn("testString")
       .namespace("testString")
       .name("testString")
+      .componentType("testString")
+      .componentName("testString")
       .build();
     assertEquals(createProfileLinkRequestLinkModel.crn(), "testString");
     assertEquals(createProfileLinkRequestLinkModel.namespace(), "testString");
     assertEquals(createProfileLinkRequestLinkModel.name(), "testString");
+    assertEquals(createProfileLinkRequestLinkModel.componentType(), "testString");
+    assertEquals(createProfileLinkRequestLinkModel.componentName(), "testString");
 
     String json = TestUtilities.serialize(createProfileLinkRequestLinkModel);
 
@@ -47,6 +51,8 @@ public class CreateProfileLinkRequestLinkTest {
     assertEquals(createProfileLinkRequestLinkModelNew.crn(), "testString");
     assertEquals(createProfileLinkRequestLinkModelNew.namespace(), "testString");
     assertEquals(createProfileLinkRequestLinkModelNew.name(), "testString");
+    assertEquals(createProfileLinkRequestLinkModelNew.componentType(), "testString");
+    assertEquals(createProfileLinkRequestLinkModelNew.componentName(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

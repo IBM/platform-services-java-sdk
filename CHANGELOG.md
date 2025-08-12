@@ -1,3 +1,10 @@
+## [0.68.5](https://github.com/IBM/platform-services-java-sdk/compare/0.68.4...0.68.5) (2025-08-12)
+
+
+### Bug Fixes
+
+* **IAM Identity:** add delete link with parameter api ([#281](https://github.com/IBM/platform-services-java-sdk/issues/281)) ([d76f5da](https://github.com/IBM/platform-services-java-sdk/commit/d76f5da9942a6625273716384a5f7e89182194ee))
+
 ## [0.68.4](https://github.com/IBM/platform-services-java-sdk/compare/0.68.3...0.68.4) (2025-07-21)
 
 

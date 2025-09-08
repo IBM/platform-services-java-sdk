@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsUserMFAResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,27 +23,20 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the GetAccountSettingsOptions model.
+ * Unit test class for the AccountSettingsUserMFAResponse model.
  */
-public class GetAccountSettingsOptionsTest {
+public class AccountSettingsUserMFAResponseTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testGetAccountSettingsOptions() throws Throwable {
-    GetAccountSettingsOptions getAccountSettingsOptionsModel = new GetAccountSettingsOptions.Builder()
-      .accountId("testString")
-      .includeHistory(false)
-      .resolveUserMfa(false)
-      .build();
-    assertEquals(getAccountSettingsOptionsModel.accountId(), "testString");
-    assertEquals(getAccountSettingsOptionsModel.includeHistory(), Boolean.valueOf(false));
-    assertEquals(getAccountSettingsOptionsModel.resolveUserMfa(), Boolean.valueOf(false));
+  public void testAccountSettingsUserMFAResponse() throws Throwable {
+    AccountSettingsUserMFAResponse accountSettingsUserMfaResponseModel = new AccountSettingsUserMFAResponse();
+    assertNull(accountSettingsUserMfaResponseModel.getIamId());
+    assertNull(accountSettingsUserMfaResponseModel.getMfa());
+    assertNull(accountSettingsUserMfaResponseModel.getName());
+    assertNull(accountSettingsUserMfaResponseModel.getUserName());
+    assertNull(accountSettingsUserMfaResponseModel.getEmail());
+    assertNull(accountSettingsUserMfaResponseModel.getDescription());
   }
-
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetAccountSettingsOptionsError() throws Throwable {
-    new GetAccountSettingsOptions.Builder().build();
-  }
-
 }

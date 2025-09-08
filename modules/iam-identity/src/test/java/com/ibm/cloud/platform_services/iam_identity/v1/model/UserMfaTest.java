@@ -13,11 +13,6 @@
 
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
-import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsComponent;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsTemplateList;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsTemplateResponse;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.EnityHistoryRecord;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ResponseContext;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UserMfa;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -28,21 +23,26 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the AccountSettingsTemplateList model.
+ * Unit test class for the UserMfa model.
  */
-public class AccountSettingsTemplateListTest {
+public class UserMfaTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testAccountSettingsTemplateList() throws Throwable {
-    AccountSettingsTemplateList accountSettingsTemplateListModel = new AccountSettingsTemplateList();
-    assertNull(accountSettingsTemplateListModel.getContext());
-    assertNull(accountSettingsTemplateListModel.getOffset());
-    assertNull(accountSettingsTemplateListModel.getLimit());
-    assertNull(accountSettingsTemplateListModel.getFirst());
-    assertNull(accountSettingsTemplateListModel.getPrevious());
-    assertNull(accountSettingsTemplateListModel.getNext());
-    assertNull(accountSettingsTemplateListModel.getAccountSettingsTemplates());
+  public void testUserMfa() throws Throwable {
+    UserMfa userMfaModel = new UserMfa.Builder()
+      .iamId("testString")
+      .mfa("NONE")
+      .build();
+    assertEquals(userMfaModel.iamId(), "testString");
+    assertEquals(userMfaModel.mfa(), "NONE");
+
+    String json = TestUtilities.serialize(userMfaModel);
+
+    UserMfa userMfaModelNew = TestUtilities.deserialize(json, UserMfa.class);
+    assertTrue(userMfaModelNew instanceof UserMfa);
+    assertEquals(userMfaModelNew.iamId(), "testString");
+    assertEquals(userMfaModelNew.mfa(), "NONE");
   }
 }

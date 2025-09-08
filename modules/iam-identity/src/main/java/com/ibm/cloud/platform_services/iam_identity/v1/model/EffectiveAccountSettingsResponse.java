@@ -27,7 +27,7 @@ public class EffectiveAccountSettingsResponse extends GenericModel {
   @SerializedName("account_id")
   protected String accountId;
   protected AccountSettingsEffectiveSection effective;
-  protected AccountSettingsAccountSection account;
+  protected AccountSettingsResponse account;
   @SerializedName("assigned_templates")
   protected List<AccountSettingsAssignedTemplatesSection> assignedTemplates;
 
@@ -67,9 +67,11 @@ public class EffectiveAccountSettingsResponse extends GenericModel {
   /**
    * Gets the account.
    *
+   * Input body parameters for the Account Settings REST request.
+   *
    * @return the account
    */
-  public AccountSettingsAccountSection getAccount() {
+  public AccountSettingsResponse getAccount() {
     return account;
   }
 

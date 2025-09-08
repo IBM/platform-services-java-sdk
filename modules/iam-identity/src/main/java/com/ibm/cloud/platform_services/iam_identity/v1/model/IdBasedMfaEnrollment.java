@@ -22,7 +22,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class IdBasedMfaEnrollment extends GenericModel {
 
   /**
-   * Defines the MFA trait for the account. Valid values:
+   * MFA trait definitions as follows:
    *   * NONE - No MFA trait set
    *   * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
    *   * TOTP - For all non-federated IBMId users
@@ -49,7 +49,7 @@ public class IdBasedMfaEnrollment extends GenericModel {
   }
 
   /**
-   * Defines the MFA trait for the account. Valid values:
+   * MFA trait definitions as follows:
    *   * NONE - No MFA trait set
    *   * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
    *   * TOTP - For all non-federated IBMId users
@@ -76,7 +76,7 @@ public class IdBasedMfaEnrollment extends GenericModel {
   }
 
   /**
-   * Defines the MFA trait for the account. Valid values:
+   * MFA trait definitions as follows:
    *   * NONE - No MFA trait set
    *   * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
    *   * TOTP - For all non-federated IBMId users
@@ -133,7 +133,7 @@ public class IdBasedMfaEnrollment extends GenericModel {
   /**
    * Gets the traitAccountDefault.
    *
-   * Defines the MFA trait for the account. Valid values:
+   * MFA trait definitions as follows:
    *   * NONE - No MFA trait set
    *   * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
    *   * TOTP - For all non-federated IBMId users
@@ -151,7 +151,7 @@ public class IdBasedMfaEnrollment extends GenericModel {
   /**
    * Gets the traitUserSpecific.
    *
-   * Defines the MFA trait for the account. Valid values:
+   * MFA trait definitions as follows:
    *   * NONE - No MFA trait set
    *   * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
    *   * TOTP - For all non-federated IBMId users
@@ -169,7 +169,7 @@ public class IdBasedMfaEnrollment extends GenericModel {
   /**
    * Gets the traitEffective.
    *
-   * Defines the MFA trait for the account. Valid values:
+   * MFA trait definitions as follows:
    *   * NONE - No MFA trait set
    *   * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
    *   * TOTP - For all non-federated IBMId users

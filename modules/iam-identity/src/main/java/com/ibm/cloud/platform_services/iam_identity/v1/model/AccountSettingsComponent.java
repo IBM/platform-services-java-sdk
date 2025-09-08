@@ -25,7 +25,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class AccountSettingsComponent extends GenericModel {
 
   /**
-   * Defines whether or not creating a service ID is access controlled. Valid values:
+   * Defines whether or not creating the resource is access controlled. Valid values:
    *   * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM Identity Service can create service
    * IDs, including the account owner
    *   * NOT_RESTRICTED - all members of an account can create service IDs
@@ -41,9 +41,10 @@ public class AccountSettingsComponent extends GenericModel {
   }
 
   /**
-   * Defines whether or not creating platform API keys is access controlled. Valid values:
-   *   * RESTRICTED - to apply access control
-   *   * NOT_RESTRICTED - to remove access control
+   * Defines whether or not creating the resource is access controlled. Valid values:
+   *   * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM Identity Service can create service
+   * IDs, including the account owner
+   *   * NOT_RESTRICTED - all members of an account can create service IDs
    *   * NOT_SET - to 'unset' a previous set value.
    */
   public interface RestrictCreatePlatformApikey {
@@ -56,7 +57,7 @@ public class AccountSettingsComponent extends GenericModel {
   }
 
   /**
-   * Defines the MFA trait for the account. Valid values:
+   * MFA trait definitions as follows:
    *   * NONE - No MFA trait set
    *   * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
    *   * TOTP - For all non-federated IBMId users
@@ -90,7 +91,7 @@ public class AccountSettingsComponent extends GenericModel {
   protected String allowedIpAddresses;
   protected String mfa;
   @SerializedName("user_mfa")
-  protected List<AccountSettingsUserMFA> userMfa;
+  protected List<UserMfa> userMfa;
   @SerializedName("session_expiration_in_seconds")
   protected String sessionExpirationInSeconds;
   @SerializedName("session_invalidation_in_seconds")
@@ -110,7 +111,7 @@ public class AccountSettingsComponent extends GenericModel {
     private String restrictCreatePlatformApikey;
     private String allowedIpAddresses;
     private String mfa;
-    private List<AccountSettingsUserMFA> userMfa;
+    private List<UserMfa> userMfa;
     private String sessionExpirationInSeconds;
     private String sessionInvalidationInSeconds;
     private String maxSessionsPerIdentity;
@@ -156,11 +157,11 @@ public class AccountSettingsComponent extends GenericModel {
      * @param userMfa the new element to be added
      * @return the AccountSettingsComponent builder
      */
-    public Builder addUserMfa(AccountSettingsUserMFA userMfa) {
+    public Builder addUserMfa(UserMfa userMfa) {
       com.ibm.cloud.sdk.core.util.Validator.notNull(userMfa,
         "userMfa cannot be null");
       if (this.userMfa == null) {
-        this.userMfa = new ArrayList<AccountSettingsUserMFA>();
+        this.userMfa = new ArrayList<UserMfa>();
       }
       this.userMfa.add(userMfa);
       return this;
@@ -217,7 +218,7 @@ public class AccountSettingsComponent extends GenericModel {
      * @param userMfa the userMfa
      * @return the AccountSettingsComponent builder
      */
-    public Builder userMfa(List<AccountSettingsUserMFA> userMfa) {
+    public Builder userMfa(List<UserMfa> userMfa) {
       this.userMfa = userMfa;
       return this;
     }
@@ -305,7 +306,7 @@ public class AccountSettingsComponent extends GenericModel {
   /**
    * Gets the restrictCreateServiceId.
    *
-   * Defines whether or not creating a service ID is access controlled. Valid values:
+   * Defines whether or not creating the resource is access controlled. Valid values:
    *   * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM Identity Service can create service
    * IDs, including the account owner
    *   * NOT_RESTRICTED - all members of an account can create service IDs
@@ -320,9 +321,10 @@ public class AccountSettingsComponent extends GenericModel {
   /**
    * Gets the restrictCreatePlatformApikey.
    *
-   * Defines whether or not creating platform API keys is access controlled. Valid values:
-   *   * RESTRICTED - to apply access control
-   *   * NOT_RESTRICTED - to remove access control
+   * Defines whether or not creating the resource is access controlled. Valid values:
+   *   * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM Identity Service can create service
+   * IDs, including the account owner
+   *   * NOT_RESTRICTED - all members of an account can create service IDs
    *   * NOT_SET - to 'unset' a previous set value.
    *
    * @return the restrictCreatePlatformApikey
@@ -345,7 +347,7 @@ public class AccountSettingsComponent extends GenericModel {
   /**
    * Gets the mfa.
    *
-   * Defines the MFA trait for the account. Valid values:
+   * MFA trait definitions as follows:
    *   * NONE - No MFA trait set
    *   * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
    *   * TOTP - For all non-federated IBMId users
@@ -367,7 +369,7 @@ public class AccountSettingsComponent extends GenericModel {
    *
    * @return the userMfa
    */
-  public List<AccountSettingsUserMFA> userMfa() {
+  public List<UserMfa> userMfa() {
     return userMfa;
   }
 

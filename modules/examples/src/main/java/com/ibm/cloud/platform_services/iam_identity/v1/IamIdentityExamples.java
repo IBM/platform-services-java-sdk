@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2020, 2023.
+ * (C) Copyright IBM Corp. 2020, 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -51,14 +51,15 @@ public class IamIdentityExamples {
     protected IamIdentityExamples() {
     }
 
-    private static String apiKeyName = "Example-ApiKey";
-    private static String serviceIdName = "Example-ServiceId";
-    private static String profileName = "Example-Profile";
+    private static long now = System.currentTimeMillis() / 1000;
+    private static String apiKeyName = "JavaSDK-Example-ApiKey-" + now;
+    private static String serviceIdName = "JavaSDK-Example-ServiceId-" + now;
+    private static String profileName = "JavaSDK-Example-Profile-" + now;
     private static String claimRuleType = "Profile-SAML";
     private static String realmName = "https://my.test.realm/1234/saml20";
-    private static String profileTemplateName = "Example-Profile-Template";
-    private static String profileTemplateProfileName = "Profile-From-Example-Template";
-    private static String accountSettingsTemplateName = "Example-Account-Settings-Template";
+    private static String profileTemplateName = "JavaSDK-Example-Profile-Template-" + now;
+    private static String profileTemplateProfileName = "Profile-From-JavaSDK-Example-Template-" + now;
+    private static String accountSettingsTemplateName = "JavaSDK-Example-Account-Settings-Template-" + now;
     private static String service = "console";
     private static String valueString = "/billing";
     private static String preferenceId1 = "landing_page";
@@ -66,7 +67,6 @@ public class IamIdentityExamples {
     //values to be read from the env file
     private static String accountId;
     private static String iamId;
-    private static String iamIdMember;
     private static String iamApiKey;
     private static String enterpriseAccountId;
     private static String enterpriseSubAccountId;
@@ -111,10 +111,8 @@ public class IamIdentityExamples {
         accountId = config.get("ACCOUNT_ID");
         iamApiKey = config.get("APIKEY");
         iamId = config.get("IAM_ID");
-        iamIdMember = config.get("IAM_ID_MEMBER");
         enterpriseAccountId = config.get("ENTERPRISE_ACCOUNT_ID");
         enterpriseSubAccountId = config.get("ENTERPRISE_SUBACCOUNT_ID");
-        trustedProfileForPreferences = "iam-" + config.get("PROFILEID1");
 
         try {
             System.out.println("createApiKey() result:");
@@ -592,6 +590,7 @@ public class IamIdentityExamples {
             Response<TrustedProfile> response = identityservice.createProfile(createProfileOptions).execute();
             TrustedProfile profile = response.getResult();
             profileId = profile.getId();
+            trustedProfileForPreferences = profile.getIamId();
 
             System.out.println(profile);
 
@@ -1011,7 +1010,7 @@ public class IamIdentityExamples {
             SetProfileIdentityOptions setProfileIdentityOptions = new SetProfileIdentityOptions.Builder()
                     .profileId(profileId)
                     .identityType(type)
-                    .identifier(iamIdMember)
+                    .identifier(iamId)
                     .type("user")
                     .accounts(accounts)
                     .description(description)
@@ -1035,7 +1034,7 @@ public class IamIdentityExamples {
             GetProfileIdentityOptions getProfileIdentityOptions = new GetProfileIdentityOptions.Builder()
                     .profileId(profileId)
                     .identityType("user")
-                    .identifierId(iamIdMember)
+                    .identifierId(iamId)
                     .build();
             Response<ProfileIdentityResponse> response = identityservice.getProfileIdentity(getProfileIdentityOptions).execute();
 
@@ -1056,7 +1055,7 @@ public class IamIdentityExamples {
             DeleteProfileIdentityOptions deleteProfileIdentityOptions = new DeleteProfileIdentityOptions.Builder()
                     .profileId(profileId)
                     .identityType("user")
-                    .identifierId(iamIdMember)
+                    .identifierId(iamId)
                     .build();
             Response<Void> response = identityservice.deleteProfileIdentity(deleteProfileIdentityOptions).execute();
 
@@ -1068,27 +1067,6 @@ public class IamIdentityExamples {
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s", e.getStatusCode(),
                     e.getMessage(), e.getDebuggingInfo()), e);
-        }
-
-
-        try {
-            System.out.println("deleteProfile() result:");
-
-            // begin-delete_profile
-
-            DeleteProfileOptions deleteProfileOptions = new DeleteProfileOptions.Builder()
-                    .profileId(profileId)
-                    .build();
-
-            Response<Void> response = identityservice.deleteProfile(deleteProfileOptions).execute();
-
-            // end-delete_profile
-
-            System.out.printf("deleteProfile() response status code: %d%n", response.getStatusCode());
-
-        } catch (ServiceResponseException e) {
-            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
-                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
@@ -1119,13 +1097,21 @@ public class IamIdentityExamples {
 
             // begin-updateAccountSettings
 
-            AccountSettingsUserMFA userMFA = new AccountSettingsUserMFA.Builder()
-                    .iamId(iamIdMember)
+            UserMfa userMFA = new UserMfa.Builder()
+                    .iamId(iamId)
                     .mfa("NONE")
                     .build();
 
-            List<AccountSettingsUserMFA> userMFAExpList = new ArrayList<>();
+            List<UserMfa> userMFAExpList = new ArrayList<>();
             userMFAExpList.add(userMFA);
+
+            AccountSettingsUserDomainRestriction domain = new AccountSettingsUserDomainRestriction.Builder("IBMid")
+                .addInvitationEmailAllowPatterns("*.*@company.com")
+                .restrictInvitation(Boolean.FALSE)
+                .build();
+
+            List<AccountSettingsUserDomainRestriction> userDomainRestrictions = new ArrayList<>();
+            userDomainRestrictions.add(domain);
 
             UpdateAccountSettingsOptions updateAccountSettingsOptions = new UpdateAccountSettingsOptions.Builder()
                     .ifMatch(accountSettingsEtag)
@@ -1134,6 +1120,8 @@ public class IamIdentityExamples {
                     .sessionInvalidationInSeconds("7200")
                     .restrictCreatePlatformApikey("NOT_RESTRICTED")
                     .restrictCreateServiceId("NOT_RESTRICTED")
+                    .restrictUserListVisibility("NOT_RESTRICTED")
+                    .restrictUserDomains(userDomainRestrictions)
                     .mfa("NONE")
                     .userMfa(userMFAExpList)
                     .systemAccessTokenExpirationInSeconds("3600")
@@ -1626,12 +1614,12 @@ public class IamIdentityExamples {
             Response<TemplateAssignmentResponse> updateResponse = identityservice.updateTrustedProfileAssignment(updateOptions).execute();
             TemplateAssignmentResponse updateResult = updateResponse.getResult();
 
-            // Grab the Etag value from the response for use in the update operation.
-            profileTemplateAssignmentEtag = updateResponse.getHeaders().values("Etag").get(0);
-
             System.out.println(updateResult);
 
             // end-update_trusted_profile_assignment
+
+            // Grab the Etag value from the response for use in the update operation.
+            profileTemplateAssignmentEtag = updateResponse.getHeaders().values("Etag").get(0);
 
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
@@ -2175,6 +2163,26 @@ public class IamIdentityExamples {
             identityservice.deletePreferencesOnScopeAccount(deletePreferenceOption).execute();
 
             // end-delete_preferences_on_scope_account
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("deleteProfile() result:");
+
+            // begin-delete_profile
+
+            DeleteProfileOptions deleteProfileOptions = new DeleteProfileOptions.Builder()
+                    .profileId(profileId)
+                    .build();
+
+            Response<Void> response = identityservice.deleteProfile(deleteProfileOptions).execute();
+
+            // end-delete_profile
+
+            System.out.printf("deleteProfile() response status code: %d%n", response.getStatusCode());
 
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",

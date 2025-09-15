@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.global_search.v2.model;
 
 import java.util.ArrayList;
@@ -42,20 +43,6 @@ public class SearchOptions extends GenericModel {
    * If any, both reclaimed and not reclaimed documents are returned.
    */
   public interface IsReclaimed {
-    /** true. */
-    String X_TRUE = "true";
-    /** false. */
-    String X_FALSE = "false";
-    /** any. */
-    String ANY = "any";
-  }
-
-  /**
-   * Determines if public resources should be included in result set or not. Possible values are false (default), true
-   * or any. If false, do not search public resources; if true, search only public resources; If any, search also public
-   * resources.
-   */
-  public interface IsPublic {
     /** true. */
     String X_TRUE = "true";
     /** false. */
@@ -102,7 +89,6 @@ public class SearchOptions extends GenericModel {
   protected List<String> sort;
   protected String isDeleted;
   protected String isReclaimed;
-  protected String isPublic;
   protected String impersonateUser;
   protected String canTag;
   protected String isProjectResource;
@@ -122,7 +108,6 @@ public class SearchOptions extends GenericModel {
     private List<String> sort;
     private String isDeleted;
     private String isReclaimed;
-    private String isPublic;
     private String impersonateUser;
     private String canTag;
     private String isProjectResource;
@@ -144,7 +129,6 @@ public class SearchOptions extends GenericModel {
       this.sort = searchOptions.sort;
       this.isDeleted = searchOptions.isDeleted;
       this.isReclaimed = searchOptions.isReclaimed;
-      this.isPublic = searchOptions.isPublic;
       this.impersonateUser = searchOptions.impersonateUser;
       this.canTag = searchOptions.canTag;
       this.isProjectResource = searchOptions.isProjectResource;
@@ -321,17 +305,6 @@ public class SearchOptions extends GenericModel {
     }
 
     /**
-     * Set the isPublic.
-     *
-     * @param isPublic the isPublic
-     * @return the SearchOptions builder
-     */
-    public Builder isPublic(String isPublic) {
-      this.isPublic = isPublic;
-      return this;
-    }
-
-    /**
      * Set the impersonateUser.
      *
      * @param impersonateUser the impersonateUser
@@ -379,7 +352,6 @@ public class SearchOptions extends GenericModel {
     sort = builder.sort;
     isDeleted = builder.isDeleted;
     isReclaimed = builder.isReclaimed;
-    isPublic = builder.isPublic;
     impersonateUser = builder.impersonateUser;
     canTag = builder.canTag;
     isProjectResource = builder.isProjectResource;
@@ -422,7 +394,9 @@ public class SearchOptions extends GenericModel {
    * Gets the searchCursor.
    *
    * An opaque cursor that is returned on each call and that must be set on the subsequent call to get the next batch of
-   * items. If the search returns no items, then the search_cursor is not present in the response.
+   * items. You can stop paging when the search returns less items than the specified `limit` or when the
+   * `search_cursor` is not present in the response. NOTE: when setting this parameter, any other properties present in
+   * the body will be ignored.
    *
    * @return the searchCursor
    */
@@ -530,19 +504,6 @@ public class SearchOptions extends GenericModel {
    */
   public String isReclaimed() {
     return isReclaimed;
-  }
-
-  /**
-   * Gets the isPublic.
-   *
-   * Determines if public resources should be included in result set or not. Possible values are false (default), true
-   * or any. If false, do not search public resources; if true, search only public resources; If any, search also public
-   * resources.
-   *
-   * @return the isPublic
-   */
-  public String isPublic() {
-    return isPublic;
   }
 
   /**

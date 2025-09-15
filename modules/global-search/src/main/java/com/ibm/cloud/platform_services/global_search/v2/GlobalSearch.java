@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.87.0-91c7c775-20240320-213027
+ * IBM OpenAPI SDK Code Generator Version: 3.100.0-2ad7a784-20250212-162551
  */
 
 package com.ibm.cloud.platform_services.global_search.v2;
@@ -95,22 +95,18 @@ public class GlobalSearch extends BaseService {
    * Find instances of resources (v3).
    *
    * Find IAM-enabled resources or storage and network resources that run on classic infrastructure in a specific
-   * account ID. You can apply query strings if necessary.
-   *
-   * To filter results, you can insert a string by using the Lucene syntax and the query string is parsed into a series
-   * of terms and operators. A term can be a single word or a phrase, in which case the search is performed for all the
-   * words, in the same order. To filter for a specific value regardless of the property that contains it, type the
-   * search term without specifying a field. Only resources that belong to the account ID and that are accessible by the
-   * client are returned.
+   * account ID.
    *
    * You must use `/v3/resources/search` when you need to fetch more than `10000` resource items. On the first call, the
    * operation returns a live cursor on the data that you must use on all the subsequent calls to get the next batch of
    * results until you get the empty result set.
    *
-   * By default, the fields that are returned for every resource are `crn`, `name`,
-   * `family`, `type`, and `account_id`. You can specify the subset of the fields you want in your request using the
-   * `fields` request body attribute. Set `"fields": ["*"]` to discover the set of fields which are available to
-   * request.
+   * To filter results, you can apply query strings following the *Lucene* query syntax.
+   *
+   * By default, the fields that are returned for every resource are **crn**, **name**,
+   * **family**, **type**, and **account_id**. You can specify the subset of the fields you want in your request using
+   * the `fields` request body attribute. Set `"fields": ["*"]` to discover the complete set of fields which are
+   * available to request.
    *
    * @param searchOptions the {@link SearchOptions} containing the options for the call
    * @return a {@link ServiceCall} with a result of type {@link ScanResult}
@@ -148,9 +144,6 @@ public class GlobalSearch extends BaseService {
     if (searchOptions.isReclaimed() != null) {
       builder.query("is_reclaimed", String.valueOf(searchOptions.isReclaimed()));
     }
-    if (searchOptions.isPublic() != null) {
-      builder.query("is_public", String.valueOf(searchOptions.isPublic()));
-    }
     if (searchOptions.impersonateUser() != null) {
       builder.query("impersonate_user", String.valueOf(searchOptions.impersonateUser()));
     }
@@ -180,22 +173,18 @@ public class GlobalSearch extends BaseService {
    * Find instances of resources (v3).
    *
    * Find IAM-enabled resources or storage and network resources that run on classic infrastructure in a specific
-   * account ID. You can apply query strings if necessary.
-   *
-   * To filter results, you can insert a string by using the Lucene syntax and the query string is parsed into a series
-   * of terms and operators. A term can be a single word or a phrase, in which case the search is performed for all the
-   * words, in the same order. To filter for a specific value regardless of the property that contains it, type the
-   * search term without specifying a field. Only resources that belong to the account ID and that are accessible by the
-   * client are returned.
+   * account ID.
    *
    * You must use `/v3/resources/search` when you need to fetch more than `10000` resource items. On the first call, the
    * operation returns a live cursor on the data that you must use on all the subsequent calls to get the next batch of
    * results until you get the empty result set.
    *
-   * By default, the fields that are returned for every resource are `crn`, `name`,
-   * `family`, `type`, and `account_id`. You can specify the subset of the fields you want in your request using the
-   * `fields` request body attribute. Set `"fields": ["*"]` to discover the set of fields which are available to
-   * request.
+   * To filter results, you can apply query strings following the *Lucene* query syntax.
+   *
+   * By default, the fields that are returned for every resource are **crn**, **name**,
+   * **family**, **type**, and **account_id**. You can specify the subset of the fields you want in your request using
+   * the `fields` request body attribute. Set `"fields": ["*"]` to discover the complete set of fields which are
+   * available to request.
    *
    * @return a {@link ServiceCall} with a result of type {@link ScanResult}
    */

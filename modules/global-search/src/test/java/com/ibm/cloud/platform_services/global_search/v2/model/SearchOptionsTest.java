@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -32,7 +32,7 @@ public class SearchOptionsTest {
   @Test
   public void testSearchOptions() throws Throwable {
     SearchOptions searchOptionsModel = new SearchOptions.Builder()
-      .query("testString")
+      .query("*")
       .fields(java.util.Arrays.asList("testString"))
       .searchCursor("testString")
       .xRequestId("testString")
@@ -43,12 +43,11 @@ public class SearchOptionsTest {
       .sort(java.util.Arrays.asList("testString"))
       .isDeleted("false")
       .isReclaimed("false")
-      .isPublic("false")
       .impersonateUser("testString")
       .canTag("false")
       .isProjectResource("false")
       .build();
-    assertEquals(searchOptionsModel.query(), "testString");
+    assertEquals(searchOptionsModel.query(), "*");
     assertEquals(searchOptionsModel.fields(), java.util.Arrays.asList("testString"));
     assertEquals(searchOptionsModel.searchCursor(), "testString");
     assertEquals(searchOptionsModel.xRequestId(), "testString");
@@ -59,7 +58,6 @@ public class SearchOptionsTest {
     assertEquals(searchOptionsModel.sort(), java.util.Arrays.asList("testString"));
     assertEquals(searchOptionsModel.isDeleted(), "false");
     assertEquals(searchOptionsModel.isReclaimed(), "false");
-    assertEquals(searchOptionsModel.isPublic(), "false");
     assertEquals(searchOptionsModel.impersonateUser(), "testString");
     assertEquals(searchOptionsModel.canTag(), "false");
     assertEquals(searchOptionsModel.isProjectResource(), "false");

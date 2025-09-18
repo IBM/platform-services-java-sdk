@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.global_search.v2;
 
 import com.ibm.cloud.platform_services.global_search.v2.GlobalSearch;
@@ -66,7 +67,7 @@ public class GlobalSearchTest {
 
     // Construct an instance of the SearchOptions model
     SearchOptions searchOptionsModel = new SearchOptions.Builder()
-      .query("testString")
+      .query("*")
       .fields(java.util.Arrays.asList("testString"))
       .searchCursor("testString")
       .xRequestId("testString")
@@ -77,7 +78,6 @@ public class GlobalSearchTest {
       .sort(java.util.Arrays.asList("testString"))
       .isDeleted("false")
       .isReclaimed("false")
-      .isPublic("false")
       .impersonateUser("testString")
       .canTag("false")
       .isProjectResource("false")
@@ -105,7 +105,6 @@ public class GlobalSearchTest {
     assertEquals(query.get("sort"), RequestUtils.join(java.util.Arrays.asList("testString"), ","));
     assertEquals(query.get("is_deleted"), "false");
     assertEquals(query.get("is_reclaimed"), "false");
-    assertEquals(query.get("is_public"), "false");
     assertEquals(query.get("impersonate_user"), "testString");
     assertEquals(query.get("can_tag"), "false");
     assertEquals(query.get("is_project_resource"), "false");

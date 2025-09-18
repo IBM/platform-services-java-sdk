@@ -1,3 +1,10 @@
+## [0.68.6](https://github.com/IBM/platform-services-java-sdk/compare/0.68.5...0.68.6) (2025-09-18)
+
+
+### Bug Fixes
+
+* **Global Search:** regenerated services with latest API definition ([#283](https://github.com/IBM/platform-services-java-sdk/issues/283)) ([3cad94c](https://github.com/IBM/platform-services-java-sdk/commit/3cad94c6c35dcea023c7ec656a0a803ed27946bd))
+
 ## [0.68.5](https://github.com/IBM/platform-services-java-sdk/compare/0.68.4...0.68.5) (2025-08-12)
 
 

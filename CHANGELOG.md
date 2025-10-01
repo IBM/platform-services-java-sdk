@@ -1,3 +1,10 @@
+# [0.69.0](https://github.com/IBM/platform-services-java-sdk/compare/0.68.6...0.69.0) (2025-10-01)
+
+
+### Features
+
+* **IAM Identity:** add new account settings ([#285](https://github.com/IBM/platform-services-java-sdk/issues/285)) ([f8a0a6e](https://github.com/IBM/platform-services-java-sdk/commit/f8a0a6ef6a372789c075e056e444eecbda633ba1))
+
 ## [0.68.6](https://github.com/IBM/platform-services-java-sdk/compare/0.68.5...0.68.6) (2025-09-18)
 
 

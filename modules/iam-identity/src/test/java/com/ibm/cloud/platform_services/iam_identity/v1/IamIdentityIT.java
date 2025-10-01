@@ -45,17 +45,18 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     public IamIdentity service = null;
     public static Map<String, String> config = null;
 
-    private static String APIKEY_NAME = "Java-SDK-IT-ApiKey";
-    private static String SERVICEID_NAME = "Java-SDK-IT-ServiceId";
-    private static String SERVICEID_GROUP_NAME = "Java-SDK-IT-ServiceId-Group";
-    private static String PROFILE_NAME_1 = "Java-SDK-IT-TrustedProfile1";
-    private static String PROFILE_NAME_2 = "Java-SDK-IT-TrustedProfile2";
+    private static long now = System.currentTimeMillis() / 1000;
+    private static String APIKEY_NAME = "Java-SDK-IT-ApiKey-" + now;
+    private static String SERVICEID_NAME = "Java-SDK-IT-ServiceId-" + now;
+    private static String SERVICEID_GROUP_NAME = "Java-SDK-IT-ServiceId-Group-" + now;
+    private static String PROFILE_NAME_1 = "Java-SDK-IT-TrustedProfile1-" + now;
+    private static String PROFILE_NAME_2 = "Java-SDK-IT-TrustedProfile2-" + now;
     private static String CLAIMRULE_TYPE = "Profile-SAML";
     private static String REALM_NAME = "https://sdk.test.realm/1234";
-    private static String PROFILE_TEMPLATE_NAME = "Java-SDK-IT-TrustedProfileTemplate";
-    private static String PROFILE_TEMPLATE_PROFILE_NAME = "Java-SDK-IT-TrustedProfile-FromTemplate";
+    private static String PROFILE_TEMPLATE_NAME = "Java-SDK-IT-TrustedProfileTemplate-" + now;
+    private static String PROFILE_TEMPLATE_PROFILE_NAME = "Java-SDK-IT-TrustedProfile-FromTemplate-" + now;
     private static String ASSIGNMENT_TARGET_TYPE_ACCOUNT = "Account";
-    private static String ACCOUNT_SETTINGS_TEMPLATE_NAME = "Java-SDK-IT-AccountSettingsTemplate";
+    private static String ACCOUNT_SETTINGS_TEMPLATE_NAME = "Java-SDK-IT-AccountSettingsTemplate-" + now;
     private static String APIKEY_ACTION_WHEN_LEAKED_DEFAULT="none";
     private static String SERVICE = "console";
     private static String VALUE_STRING = "/billing";
@@ -63,7 +64,6 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
     private static String ACCOUNT_ID;
     private static String IAM_ID;
-    private static String IAM_ID_MEMBER;
     private static String IAM_APIKEY;
     private static String ENTERPRISE_ACCOUNT_ID;
     private static String ENTERPRISE_SUBACCOUNT_ID;
@@ -133,17 +133,14 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
         ACCOUNT_ID = config.get("ACCOUNT_ID");
         IAM_ID = config.get("IAM_ID");
-        IAM_ID_MEMBER = config.get("IAM_ID_MEMBER");
         IAM_APIKEY = config.get("APIKEY");
         ENTERPRISE_ACCOUNT_ID = config.get("ENTERPRISE_ACCOUNT_ID");
         ENTERPRISE_SUBACCOUNT_ID = config.get("ENTERPRISE_SUBACCOUNT_ID");
-        TRUSTED_PROFILE_FOR_PREFERENCES = "iam-"+ config.get("PROFILEID1");
 
         profileId1 = config.get("profileId1");
 
         assertNotNull(ACCOUNT_ID);
         assertNotNull(IAM_ID);
-        assertNotNull(IAM_ID_MEMBER);
         assertNotNull(IAM_APIKEY);
 
         // Make sure we start with a clean slate.
@@ -273,9 +270,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         try {
             List<ApiKey> apiKeys = new ArrayList<>();
 
-            // Retrieve one api key at a time and save off the objects that we're interested in,
-            // then validate the results at the end.
-            long pagesize = 1;
+            long pagesize = 100;
 
             String pagetoken = null;
             do {
@@ -321,9 +316,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         try {
             List<ApiKey> apiKeys = new ArrayList<>();
 
-            // Retrieve one api key at a time and save off the objects that we're interested in,
-            // then validate the results at the end.
-            long pagesize = 1;
+            long pagesize = 100;
             String filterString="name co \"Java\"";
 
             String pagetoken = null;
@@ -498,42 +491,13 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         }
     }
 
-    @Test(dependsOnMethods = { "testDeleteApiKey1", "testEnableApiKey" })
-    public void testDeleteApiKey2() throws Exception {
-        sleep(2);
-        assertNotNull(apikeyId2);
-        try {
-            DeleteApiKeyOptions deleteApiKeyOptions = new DeleteApiKeyOptions.Builder()
-                    .id(apikeyId2)
-                    .build();
-            Response<Void> response = service.deleteApiKey(deleteApiKeyOptions).execute();
-            assertNotNull(response);
-            assertEquals(response.getStatusCode(), 204);
-
-            // Now make sure the get operation does not return it.
-            ApiKey apikey = getApikey(apikeyId2);
-            assertNull(apikey);
-        } catch (ServiceResponseException e) {
-            fail(String.format("Service returned status code %d: %s\nError details: %s",
-                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
-        }
-    }
-
     @Test
     public void testCreateServiceId() throws Exception {
         try {
-//            CreateApiKeyRequest createApiKeyRequestModel = new CreateApiKeyRequest.Builder()
-//                    .name(APIKEY_NAME)
-//                    .description("JavaSDK test apikey for serviceId")
-//                    .iamId(IAM_ID)
-//                    .accountId(ACCOUNT_ID)
-//                    .build();
-
             CreateServiceIdOptions createServiceIdOptions = new CreateServiceIdOptions.Builder()
                     .accountId(ACCOUNT_ID)
                     .name(SERVICEID_NAME)
                     .description("JavaSDK test serviceId")
-                    // .apikey(createApiKeyRequestModel)
                     .build();
             Response<ServiceId> response = service.createServiceId(createServiceIdOptions).execute();
             assertNotNull(response);
@@ -957,6 +921,9 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
             profileId2 = trustedProfileResult.getId();
             assertNotNull(profileId2);
+            
+            TRUSTED_PROFILE_FOR_PREFERENCES = trustedProfileResult.getIamId();
+
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -1802,6 +1769,8 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             assertEquals(accountSettingsResponseResult.getAccountId(), ACCOUNT_ID);
             assertNotNull(accountSettingsResponseResult.getRestrictCreatePlatformApikey());
             assertNotNull(accountSettingsResponseResult.getRestrictCreateServiceId());
+            assertNotNull(accountSettingsResponseResult.getRestrictUserListVisibility());
+            assertNotNull(accountSettingsResponseResult.getRestrictUserDomains());
             assertNotNull(accountSettingsResponseResult.getMfa());
             assertNotNull(accountSettingsResponseResult.getUserMfa());
             assertNotNull(accountSettingsResponseResult.getSessionExpirationInSeconds());
@@ -1824,19 +1793,30 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     public void testUpdateAccountSettings() throws Exception {
         assertNotNull(accountSettingsEtag);
         try {
-            AccountSettingsUserMFA userMFA = new AccountSettingsUserMFA.Builder()
-                    .iamId(IAM_ID_MEMBER)
+            UserMfa userMFA = new UserMfa.Builder()
+                    .iamId(IAM_ID)
                     .mfa("NONE")
                     .build();
 
-            List<AccountSettingsUserMFA> userMFAExpList = new ArrayList<>();
+            List<UserMfa> userMFAExpList = new ArrayList<>();
             userMFAExpList.add(userMFA);
+            
+            AccountSettingsUserDomainRestriction restriction = new AccountSettingsUserDomainRestriction.Builder()
+                    .realmId("IBMid")
+                    .addInvitationEmailAllowPatterns("**@**ibm.com")
+                    .restrictInvitation(Boolean.FALSE)
+                    .build();
 
+            List<AccountSettingsUserDomainRestriction> domainRestrictions = new ArrayList<>();
+            domainRestrictions.add(restriction);
+            
             UpdateAccountSettingsOptions updateAccountSettingsOptions = new UpdateAccountSettingsOptions.Builder()
                     .ifMatch(accountSettingsEtag)
                     .accountId(ACCOUNT_ID)
                     .restrictCreateServiceId("NOT_RESTRICTED")
                     .restrictCreatePlatformApikey("NOT_RESTRICTED")
+                    .restrictUserListVisibility("NOT_RESTRICTED")
+                    .restrictUserDomains(domainRestrictions)
 //                    .allowedIpAddresses("testString")
                     .mfa("NONE")
                     .userMfa(userMFAExpList)
@@ -1859,9 +1839,10 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             //assertEquals(accountSettingsResponseResult.getAllowedIpAddresses(), "");
             assertEquals(accountSettingsResponseResult.getAccountId(), updateAccountSettingsOptions.accountId());
             assertEquals(accountSettingsResponseResult.getMfa(), updateAccountSettingsOptions.mfa());
-            assertEquals(accountSettingsResponseResult.getUserMfa(), updateAccountSettingsOptions.userMfa());
             assertEquals(accountSettingsResponseResult.getRestrictCreatePlatformApikey(), updateAccountSettingsOptions.restrictCreatePlatformApikey());
             assertEquals(accountSettingsResponseResult.getRestrictCreateServiceId(), updateAccountSettingsOptions.restrictCreateServiceId());
+            assertEquals(accountSettingsResponseResult.getRestrictUserListVisibility(), updateAccountSettingsOptions.restrictUserListVisibility());
+            assertEquals(accountSettingsResponseResult.getRestrictUserDomains(), updateAccountSettingsOptions.restrictUserDomains());
             assertEquals(accountSettingsResponseResult.getSessionExpirationInSeconds(), updateAccountSettingsOptions.sessionExpirationInSeconds());
             assertEquals(accountSettingsResponseResult.getSessionInvalidationInSeconds(), updateAccountSettingsOptions.sessionInvalidationInSeconds());
             assertEquals(accountSettingsResponseResult.getSystemAccessTokenExpirationInSeconds(),
@@ -1869,6 +1850,12 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             assertEquals(accountSettingsResponseResult.getSystemRefreshTokenExpirationInSeconds(),
                     updateAccountSettingsOptions.systemRefreshTokenExpirationInSeconds());
             assertNotEquals(accountSettingsResponseResult.getEntityTag(), accountSettingsEtag);
+            
+            List<AccountSettingsUserMFAResponse> userMfaResponses = accountSettingsResponseResult.getUserMfa();
+            assertEquals(userMFAExpList.size(), userMfaResponses.size());
+            assertEquals(userMFA.iamId(), userMfaResponses.get(0).getIamId());
+            assertEquals(userMFA.mfa(), userMfaResponses.get(0).getMfa());
+            
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -2106,6 +2093,15 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             ProfileIdentitiesResponse profileIdentitiesResponseResult = response.getResult();
             assertNotNull(profileIdentitiesResponseResult);
             assertNotNull(profileIdentitiesResponseResult.getIdentities());
+            
+            // delete identity again as we will re-apply in a future test
+            DeleteProfileIdentityOptions deleteProfileIdentityOptions = new DeleteProfileIdentityOptions.Builder()
+                    .profileId(profileId1)
+                    .identityType("user")
+                    .identifierId(IAM_ID)
+                    .build();
+            service.deleteProfileIdentity(deleteProfileIdentityOptions).execute();
+
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -2143,7 +2139,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         	SetProfileIdentityOptions setProfileIdentityOptions = new SetProfileIdentityOptions.Builder()
         			.profileId(profileId1)
         			.identityType(type)
-        			.identifier(IAM_ID_MEMBER)
+        			.identifier(IAM_ID)
         			.type("user")
         			.accounts(accounts)
         			.description(description)
@@ -2156,7 +2152,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             ProfileIdentityResponse profileIdentityResponseResult = response.getResult();
             assertNotNull(profileIdentityResponseResult);
             assertNotNull(profileIdentityResponseResult.getIdentifier());
-            assertEquals(profileIdentityResponseResult.getIdentifier(), IAM_ID_MEMBER);
+            assertEquals(profileIdentityResponseResult.getIdentifier(), IAM_ID);
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
@@ -2169,7 +2165,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         	GetProfileIdentityOptions getProfileIdentityOptions = new GetProfileIdentityOptions.Builder()
                     .profileId(profileId1)
                     .identityType("user")
-                    .identifierId(IAM_ID_MEMBER)
+                    .identifierId(IAM_ID)
                     .build();
             Response<ProfileIdentityResponse> response = service.getProfileIdentity(getProfileIdentityOptions).execute();
             // Validate response
@@ -2191,7 +2187,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         	DeleteProfileIdentityOptions deleteProfileIdentityOptions = new DeleteProfileIdentityOptions.Builder()
                     .profileId(profileId1)
                     .identityType("user")
-                    .identifierId(IAM_ID_MEMBER)
+                    .identifierId(IAM_ID)
                     .build();
             Response<Void> response = service.deleteProfileIdentity(deleteProfileIdentityOptions).execute();
             // Validate response
@@ -2983,6 +2979,27 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             assertNotNull(response);
             assertEquals(response.getStatusCode(), 204);
 
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+    
+    @Test(dependsOnMethods = { "testDeleteApiKey1", "testEnableApiKey" })
+    public void testDeleteApiKey2() throws Exception {
+        sleep(2);
+        assertNotNull(apikeyId2);
+        try {
+            DeleteApiKeyOptions deleteApiKeyOptions = new DeleteApiKeyOptions.Builder()
+                    .id(apikeyId2)
+                    .build();
+            Response<Void> response = service.deleteApiKey(deleteApiKeyOptions).execute();
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 204);
+
+            // Now make sure the get operation does not return it.
+            ApiKey apikey = getApikey(apikeyId2);
+            assertNull(apikey);
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));

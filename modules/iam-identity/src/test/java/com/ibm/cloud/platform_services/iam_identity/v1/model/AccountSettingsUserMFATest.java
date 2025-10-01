@@ -34,9 +34,17 @@ public class AccountSettingsUserMFATest {
     AccountSettingsUserMFA accountSettingsUserMfaModel = new AccountSettingsUserMFA.Builder()
       .iamId("testString")
       .mfa("NONE")
+      .name("testString")
+      .userName("testString")
+      .email("testString")
+      .description("testString")
       .build();
     assertEquals(accountSettingsUserMfaModel.iamId(), "testString");
     assertEquals(accountSettingsUserMfaModel.mfa(), "NONE");
+    assertEquals(accountSettingsUserMfaModel.name(), "testString");
+    assertEquals(accountSettingsUserMfaModel.userName(), "testString");
+    assertEquals(accountSettingsUserMfaModel.email(), "testString");
+    assertEquals(accountSettingsUserMfaModel.description(), "testString");
 
     String json = TestUtilities.serialize(accountSettingsUserMfaModel);
 
@@ -44,6 +52,10 @@ public class AccountSettingsUserMFATest {
     assertTrue(accountSettingsUserMfaModelNew instanceof AccountSettingsUserMFA);
     assertEquals(accountSettingsUserMfaModelNew.iamId(), "testString");
     assertEquals(accountSettingsUserMfaModelNew.mfa(), "NONE");
+    assertEquals(accountSettingsUserMfaModelNew.name(), "testString");
+    assertEquals(accountSettingsUserMfaModelNew.userName(), "testString");
+    assertEquals(accountSettingsUserMfaModelNew.email(), "testString");
+    assertEquals(accountSettingsUserMfaModelNew.description(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

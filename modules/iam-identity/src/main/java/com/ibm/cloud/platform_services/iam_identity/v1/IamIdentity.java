@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.106.0-09823488-20250707-071701
+ * IBM OpenAPI SDK Code Generator Version: 3.107.1-41b0fbd0-20250825-080732
  */
 
 package com.ibm.cloud.platform_services.iam_identity.v1;
@@ -600,7 +600,6 @@ public class IamIdentity extends BaseService {
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
-
 
   /**
    * Get API keys for a given service or user IAM ID and account ID.
@@ -1646,6 +1645,9 @@ public class IamIdentity extends BaseService {
     if (getAccountSettingsOptions.includeHistory() != null) {
       builder.query("include_history", String.valueOf(getAccountSettingsOptions.includeHistory()));
     }
+    if (getAccountSettingsOptions.resolveUserMfa() != null) {
+      builder.query("resolve_user_mfa", String.valueOf(getAccountSettingsOptions.resolveUserMfa()));
+    }
     ResponseConverter<AccountSettingsResponse> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettingsResponse>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -1679,14 +1681,17 @@ public class IamIdentity extends BaseService {
     if (updateAccountSettingsOptions.restrictCreatePlatformApikey() != null) {
       contentJson.addProperty("restrict_create_platform_apikey", updateAccountSettingsOptions.restrictCreatePlatformApikey());
     }
+    if (updateAccountSettingsOptions.restrictUserListVisibility() != null) {
+      contentJson.addProperty("restrict_user_list_visibility", updateAccountSettingsOptions.restrictUserListVisibility());
+    }
+    if (updateAccountSettingsOptions.restrictUserDomains() != null) {
+      contentJson.add("restrict_user_domains", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(updateAccountSettingsOptions.restrictUserDomains()));
+    }
     if (updateAccountSettingsOptions.allowedIpAddresses() != null) {
       contentJson.addProperty("allowed_ip_addresses", updateAccountSettingsOptions.allowedIpAddresses());
     }
     if (updateAccountSettingsOptions.mfa() != null) {
       contentJson.addProperty("mfa", updateAccountSettingsOptions.mfa());
-    }
-    if (updateAccountSettingsOptions.userMfa() != null) {
-      contentJson.add("user_mfa", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(updateAccountSettingsOptions.userMfa()));
     }
     if (updateAccountSettingsOptions.sessionExpirationInSeconds() != null) {
       contentJson.addProperty("session_expiration_in_seconds", updateAccountSettingsOptions.sessionExpirationInSeconds());
@@ -1702,6 +1707,9 @@ public class IamIdentity extends BaseService {
     }
     if (updateAccountSettingsOptions.systemRefreshTokenExpirationInSeconds() != null) {
       contentJson.addProperty("system_refresh_token_expiration_in_seconds", updateAccountSettingsOptions.systemRefreshTokenExpirationInSeconds());
+    }
+    if (updateAccountSettingsOptions.userMfa() != null) {
+      contentJson.add("user_mfa", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(updateAccountSettingsOptions.userMfa()));
     }
     builder.bodyJson(contentJson);
     ResponseConverter<AccountSettingsResponse> responseConverter =

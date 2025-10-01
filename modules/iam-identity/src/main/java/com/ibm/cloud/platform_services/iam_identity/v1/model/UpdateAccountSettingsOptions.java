@@ -24,7 +24,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class UpdateAccountSettingsOptions extends GenericModel {
 
   /**
-   * Defines whether or not creating a service ID is access controlled. Valid values:
+   * Defines whether or not creating the resource is access controlled. Valid values:
    *   * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM Identity Service can create service
    * IDs, including the account owner
    *   * NOT_RESTRICTED - all members of an account can create service IDs
@@ -40,10 +40,10 @@ public class UpdateAccountSettingsOptions extends GenericModel {
   }
 
   /**
-   * Defines whether or not creating platform API keys is access controlled. Valid values:
-   *   * RESTRICTED - only users assigned the 'User API key creator' role on the IAM Identity Service can create API
-   * keys, including the account owner
-   *   * NOT_RESTRICTED - all members of an account can create platform API keys
+   * Defines whether or not creating the resource is access controlled. Valid values:
+   *   * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM Identity Service can create service
+   * IDs, including the account owner
+   *   * NOT_RESTRICTED - all members of an account can create service IDs
    *   * NOT_SET - to 'unset' a previous set value.
    */
   public interface RestrictCreatePlatformApikey {
@@ -56,7 +56,20 @@ public class UpdateAccountSettingsOptions extends GenericModel {
   }
 
   /**
-   * Defines the MFA trait for the account. Valid values:
+   * Defines whether or not user visibility is access controlled. Valid values:
+   *   * RESTRICTED - users can view only specific types of users in the account, such as those the user has invited to
+   * the account, or descendants of those users based on the classic infrastructure hierarchy
+   *   * NOT_RESTRICTED - any user in the account can view other users from the Users page in IBM Cloud console.
+   */
+  public interface RestrictUserListVisibility {
+    /** NOT_RESTRICTED. */
+    String NOT_RESTRICTED = "NOT_RESTRICTED";
+    /** RESTRICTED. */
+    String RESTRICTED = "RESTRICTED";
+  }
+
+  /**
+   * MFA trait definitions as follows:
    *   * NONE - No MFA trait set
    *   * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
    *   * TOTP - For all non-federated IBMId users
@@ -86,14 +99,16 @@ public class UpdateAccountSettingsOptions extends GenericModel {
   protected String accountId;
   protected String restrictCreateServiceId;
   protected String restrictCreatePlatformApikey;
+  protected String restrictUserListVisibility;
+  protected List<AccountSettingsUserDomainRestriction> restrictUserDomains;
   protected String allowedIpAddresses;
   protected String mfa;
-  protected List<AccountSettingsUserMFA> userMfa;
   protected String sessionExpirationInSeconds;
   protected String sessionInvalidationInSeconds;
   protected String maxSessionsPerIdentity;
   protected String systemAccessTokenExpirationInSeconds;
   protected String systemRefreshTokenExpirationInSeconds;
+  protected List<UserMfa> userMfa;
 
   /**
    * Builder.
@@ -103,14 +118,16 @@ public class UpdateAccountSettingsOptions extends GenericModel {
     private String accountId;
     private String restrictCreateServiceId;
     private String restrictCreatePlatformApikey;
+    private String restrictUserListVisibility;
+    private List<AccountSettingsUserDomainRestriction> restrictUserDomains;
     private String allowedIpAddresses;
     private String mfa;
-    private List<AccountSettingsUserMFA> userMfa;
     private String sessionExpirationInSeconds;
     private String sessionInvalidationInSeconds;
     private String maxSessionsPerIdentity;
     private String systemAccessTokenExpirationInSeconds;
     private String systemRefreshTokenExpirationInSeconds;
+    private List<UserMfa> userMfa;
 
     /**
      * Instantiates a new Builder from an existing UpdateAccountSettingsOptions instance.
@@ -122,14 +139,16 @@ public class UpdateAccountSettingsOptions extends GenericModel {
       this.accountId = updateAccountSettingsOptions.accountId;
       this.restrictCreateServiceId = updateAccountSettingsOptions.restrictCreateServiceId;
       this.restrictCreatePlatformApikey = updateAccountSettingsOptions.restrictCreatePlatformApikey;
+      this.restrictUserListVisibility = updateAccountSettingsOptions.restrictUserListVisibility;
+      this.restrictUserDomains = updateAccountSettingsOptions.restrictUserDomains;
       this.allowedIpAddresses = updateAccountSettingsOptions.allowedIpAddresses;
       this.mfa = updateAccountSettingsOptions.mfa;
-      this.userMfa = updateAccountSettingsOptions.userMfa;
       this.sessionExpirationInSeconds = updateAccountSettingsOptions.sessionExpirationInSeconds;
       this.sessionInvalidationInSeconds = updateAccountSettingsOptions.sessionInvalidationInSeconds;
       this.maxSessionsPerIdentity = updateAccountSettingsOptions.maxSessionsPerIdentity;
       this.systemAccessTokenExpirationInSeconds = updateAccountSettingsOptions.systemAccessTokenExpirationInSeconds;
       this.systemRefreshTokenExpirationInSeconds = updateAccountSettingsOptions.systemRefreshTokenExpirationInSeconds;
+      this.userMfa = updateAccountSettingsOptions.userMfa;
     }
 
     /**
@@ -159,16 +178,32 @@ public class UpdateAccountSettingsOptions extends GenericModel {
     }
 
     /**
+     * Adds a new element to restrictUserDomains.
+     *
+     * @param restrictUserDomains the new element to be added
+     * @return the UpdateAccountSettingsOptions builder
+     */
+    public Builder addRestrictUserDomains(AccountSettingsUserDomainRestriction restrictUserDomains) {
+      com.ibm.cloud.sdk.core.util.Validator.notNull(restrictUserDomains,
+        "restrictUserDomains cannot be null");
+      if (this.restrictUserDomains == null) {
+        this.restrictUserDomains = new ArrayList<AccountSettingsUserDomainRestriction>();
+      }
+      this.restrictUserDomains.add(restrictUserDomains);
+      return this;
+    }
+
+    /**
      * Adds a new element to userMfa.
      *
      * @param userMfa the new element to be added
      * @return the UpdateAccountSettingsOptions builder
      */
-    public Builder addUserMfa(AccountSettingsUserMFA userMfa) {
+    public Builder addUserMfa(UserMfa userMfa) {
       com.ibm.cloud.sdk.core.util.Validator.notNull(userMfa,
         "userMfa cannot be null");
       if (this.userMfa == null) {
-        this.userMfa = new ArrayList<AccountSettingsUserMFA>();
+        this.userMfa = new ArrayList<UserMfa>();
       }
       this.userMfa.add(userMfa);
       return this;
@@ -219,6 +254,29 @@ public class UpdateAccountSettingsOptions extends GenericModel {
     }
 
     /**
+     * Set the restrictUserListVisibility.
+     *
+     * @param restrictUserListVisibility the restrictUserListVisibility
+     * @return the UpdateAccountSettingsOptions builder
+     */
+    public Builder restrictUserListVisibility(String restrictUserListVisibility) {
+      this.restrictUserListVisibility = restrictUserListVisibility;
+      return this;
+    }
+
+    /**
+     * Set the restrictUserDomains.
+     * Existing restrictUserDomains will be replaced.
+     *
+     * @param restrictUserDomains the restrictUserDomains
+     * @return the UpdateAccountSettingsOptions builder
+     */
+    public Builder restrictUserDomains(List<AccountSettingsUserDomainRestriction> restrictUserDomains) {
+      this.restrictUserDomains = restrictUserDomains;
+      return this;
+    }
+
+    /**
      * Set the allowedIpAddresses.
      *
      * @param allowedIpAddresses the allowedIpAddresses
@@ -237,18 +295,6 @@ public class UpdateAccountSettingsOptions extends GenericModel {
      */
     public Builder mfa(String mfa) {
       this.mfa = mfa;
-      return this;
-    }
-
-    /**
-     * Set the userMfa.
-     * Existing userMfa will be replaced.
-     *
-     * @param userMfa the userMfa
-     * @return the UpdateAccountSettingsOptions builder
-     */
-    public Builder userMfa(List<AccountSettingsUserMFA> userMfa) {
-      this.userMfa = userMfa;
       return this;
     }
 
@@ -306,6 +352,18 @@ public class UpdateAccountSettingsOptions extends GenericModel {
       this.systemRefreshTokenExpirationInSeconds = systemRefreshTokenExpirationInSeconds;
       return this;
     }
+
+    /**
+     * Set the userMfa.
+     * Existing userMfa will be replaced.
+     *
+     * @param userMfa the userMfa
+     * @return the UpdateAccountSettingsOptions builder
+     */
+    public Builder userMfa(List<UserMfa> userMfa) {
+      this.userMfa = userMfa;
+      return this;
+    }
   }
 
   protected UpdateAccountSettingsOptions() { }
@@ -319,14 +377,16 @@ public class UpdateAccountSettingsOptions extends GenericModel {
     accountId = builder.accountId;
     restrictCreateServiceId = builder.restrictCreateServiceId;
     restrictCreatePlatformApikey = builder.restrictCreatePlatformApikey;
+    restrictUserListVisibility = builder.restrictUserListVisibility;
+    restrictUserDomains = builder.restrictUserDomains;
     allowedIpAddresses = builder.allowedIpAddresses;
     mfa = builder.mfa;
-    userMfa = builder.userMfa;
     sessionExpirationInSeconds = builder.sessionExpirationInSeconds;
     sessionInvalidationInSeconds = builder.sessionInvalidationInSeconds;
     maxSessionsPerIdentity = builder.maxSessionsPerIdentity;
     systemAccessTokenExpirationInSeconds = builder.systemAccessTokenExpirationInSeconds;
     systemRefreshTokenExpirationInSeconds = builder.systemRefreshTokenExpirationInSeconds;
+    userMfa = builder.userMfa;
   }
 
   /**
@@ -365,7 +425,7 @@ public class UpdateAccountSettingsOptions extends GenericModel {
   /**
    * Gets the restrictCreateServiceId.
    *
-   * Defines whether or not creating a service ID is access controlled. Valid values:
+   * Defines whether or not creating the resource is access controlled. Valid values:
    *   * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM Identity Service can create service
    * IDs, including the account owner
    *   * NOT_RESTRICTED - all members of an account can create service IDs
@@ -380,16 +440,42 @@ public class UpdateAccountSettingsOptions extends GenericModel {
   /**
    * Gets the restrictCreatePlatformApikey.
    *
-   * Defines whether or not creating platform API keys is access controlled. Valid values:
-   *   * RESTRICTED - only users assigned the 'User API key creator' role on the IAM Identity Service can create API
-   * keys, including the account owner
-   *   * NOT_RESTRICTED - all members of an account can create platform API keys
+   * Defines whether or not creating the resource is access controlled. Valid values:
+   *   * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM Identity Service can create service
+   * IDs, including the account owner
+   *   * NOT_RESTRICTED - all members of an account can create service IDs
    *   * NOT_SET - to 'unset' a previous set value.
    *
    * @return the restrictCreatePlatformApikey
    */
   public String restrictCreatePlatformApikey() {
     return restrictCreatePlatformApikey;
+  }
+
+  /**
+   * Gets the restrictUserListVisibility.
+   *
+   * Defines whether or not user visibility is access controlled. Valid values:
+   *   * RESTRICTED - users can view only specific types of users in the account, such as those the user has invited to
+   * the account, or descendants of those users based on the classic infrastructure hierarchy
+   *   * NOT_RESTRICTED - any user in the account can view other users from the Users page in IBM Cloud console.
+   *
+   * @return the restrictUserListVisibility
+   */
+  public String restrictUserListVisibility() {
+    return restrictUserListVisibility;
+  }
+
+  /**
+   * Gets the restrictUserDomains.
+   *
+   * Defines if account invitations are restricted to specified domains. To remove an entry for a realm_id, perform an
+   * update (PUT) request with only the realm_id set.
+   *
+   * @return the restrictUserDomains
+   */
+  public List<AccountSettingsUserDomainRestriction> restrictUserDomains() {
+    return restrictUserDomains;
   }
 
   /**
@@ -406,7 +492,7 @@ public class UpdateAccountSettingsOptions extends GenericModel {
   /**
    * Gets the mfa.
    *
-   * Defines the MFA trait for the account. Valid values:
+   * MFA trait definitions as follows:
    *   * NONE - No MFA trait set
    *   * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
    *   * TOTP - For all non-federated IBMId users
@@ -419,17 +505,6 @@ public class UpdateAccountSettingsOptions extends GenericModel {
    */
   public String mfa() {
     return mfa;
-  }
-
-  /**
-   * Gets the userMfa.
-   *
-   * List of users that are exempted from the MFA requirement of the account.
-   *
-   * @return the userMfa
-   */
-  public List<AccountSettingsUserMFA> userMfa() {
-    return userMfa;
   }
 
   /**
@@ -461,7 +536,7 @@ public class UpdateAccountSettingsOptions extends GenericModel {
   /**
    * Gets the maxSessionsPerIdentity.
    *
-   * Defines the max allowed sessions per identity required by the account. Value values:
+   * Defines the max allowed sessions per identity required by the account. Valid values:
    *   * Any whole number greater than 0
    *   * NOT_SET - To unset account setting and use service default.
    *
@@ -495,6 +570,17 @@ public class UpdateAccountSettingsOptions extends GenericModel {
    */
   public String systemRefreshTokenExpirationInSeconds() {
     return systemRefreshTokenExpirationInSeconds;
+  }
+
+  /**
+   * Gets the userMfa.
+   *
+   * List of users that are exempted from the MFA requirement of the account.
+   *
+   * @return the userMfa
+   */
+  public List<UserMfa> userMfa() {
+    return userMfa;
   }
 }
 

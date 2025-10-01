@@ -24,7 +24,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class AccountSettingsEffectiveSection extends GenericModel {
 
   /**
-   * Defines whether or not creating a service ID is access controlled. Valid values:
+   * Defines whether or not creating the resource is access controlled. Valid values:
    *   * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM Identity Service can create service
    * IDs, including the account owner
    *   * NOT_RESTRICTED - all members of an account can create service IDs
@@ -40,9 +40,10 @@ public class AccountSettingsEffectiveSection extends GenericModel {
   }
 
   /**
-   * Defines whether or not creating platform API keys is access controlled. Valid values:
-   *   * RESTRICTED - to apply access control
-   *   * NOT_RESTRICTED - to remove access control
+   * Defines whether or not creating the resource is access controlled. Valid values:
+   *   * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM Identity Service can create service
+   * IDs, including the account owner
+   *   * NOT_RESTRICTED - all members of an account can create service IDs
    *   * NOT_SET - to 'unset' a previous set value.
    */
   public interface RestrictCreatePlatformApikey {
@@ -55,7 +56,20 @@ public class AccountSettingsEffectiveSection extends GenericModel {
   }
 
   /**
-   * Defines the MFA requirement for the user. Valid values:
+   * Defines whether or not user visibility is access controlled. Valid values:
+   *   * RESTRICTED - users can view only specific types of users in the account, such as those the user has invited to
+   * the account, or descendants of those users based on the classic infrastructure hierarchy
+   *   * NOT_RESTRICTED - any user in the account can view other users from the Users page in IBM Cloud console.
+   */
+  public interface RestrictUserListVisibility {
+    /** NOT_RESTRICTED. */
+    String NOT_RESTRICTED = "NOT_RESTRICTED";
+    /** RESTRICTED. */
+    String RESTRICTED = "RESTRICTED";
+  }
+
+  /**
+   * MFA trait definitions as follows:
    *   * NONE - No MFA trait set
    *   * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
    *   * TOTP - For all non-federated IBMId users
@@ -85,11 +99,13 @@ public class AccountSettingsEffectiveSection extends GenericModel {
   protected String restrictCreateServiceId;
   @SerializedName("restrict_create_platform_apikey")
   protected String restrictCreatePlatformApikey;
+  @SerializedName("restrict_user_list_visibility")
+  protected String restrictUserListVisibility;
   @SerializedName("allowed_ip_addresses")
   protected String allowedIpAddresses;
   protected String mfa;
   @SerializedName("user_mfa")
-  protected List<EffectiveAccountSettingsUserMFA> userMfa;
+  protected List<AccountSettingsUserMFAResponse> userMfa;
   @SerializedName("session_expiration_in_seconds")
   protected String sessionExpirationInSeconds;
   @SerializedName("session_invalidation_in_seconds")
@@ -106,7 +122,7 @@ public class AccountSettingsEffectiveSection extends GenericModel {
   /**
    * Gets the restrictCreateServiceId.
    *
-   * Defines whether or not creating a service ID is access controlled. Valid values:
+   * Defines whether or not creating the resource is access controlled. Valid values:
    *   * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM Identity Service can create service
    * IDs, including the account owner
    *   * NOT_RESTRICTED - all members of an account can create service IDs
@@ -121,15 +137,30 @@ public class AccountSettingsEffectiveSection extends GenericModel {
   /**
    * Gets the restrictCreatePlatformApikey.
    *
-   * Defines whether or not creating platform API keys is access controlled. Valid values:
-   *   * RESTRICTED - to apply access control
-   *   * NOT_RESTRICTED - to remove access control
+   * Defines whether or not creating the resource is access controlled. Valid values:
+   *   * RESTRICTED - only users assigned the 'Service ID creator' role on the IAM Identity Service can create service
+   * IDs, including the account owner
+   *   * NOT_RESTRICTED - all members of an account can create service IDs
    *   * NOT_SET - to 'unset' a previous set value.
    *
    * @return the restrictCreatePlatformApikey
    */
   public String getRestrictCreatePlatformApikey() {
     return restrictCreatePlatformApikey;
+  }
+
+  /**
+   * Gets the restrictUserListVisibility.
+   *
+   * Defines whether or not user visibility is access controlled. Valid values:
+   *   * RESTRICTED - users can view only specific types of users in the account, such as those the user has invited to
+   * the account, or descendants of those users based on the classic infrastructure hierarchy
+   *   * NOT_RESTRICTED - any user in the account can view other users from the Users page in IBM Cloud console.
+   *
+   * @return the restrictUserListVisibility
+   */
+  public String getRestrictUserListVisibility() {
+    return restrictUserListVisibility;
   }
 
   /**
@@ -146,7 +177,7 @@ public class AccountSettingsEffectiveSection extends GenericModel {
   /**
    * Gets the mfa.
    *
-   * Defines the MFA requirement for the user. Valid values:
+   * MFA trait definitions as follows:
    *   * NONE - No MFA trait set
    *   * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
    *   * TOTP - For all non-federated IBMId users
@@ -168,7 +199,7 @@ public class AccountSettingsEffectiveSection extends GenericModel {
    *
    * @return the userMfa
    */
-  public List<EffectiveAccountSettingsUserMFA> getUserMfa() {
+  public List<AccountSettingsUserMFAResponse> getUserMfa() {
     return userMfa;
   }
 

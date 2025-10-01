@@ -14,8 +14,8 @@
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsComponent;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsUserMFA;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateAccountSettingsTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.UserMfa;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -33,19 +33,19 @@ public class CreateAccountSettingsTemplateVersionOptionsTest {
 
   @Test
   public void testCreateAccountSettingsTemplateVersionOptions() throws Throwable {
-    AccountSettingsUserMFA accountSettingsUserMfaModel = new AccountSettingsUserMFA.Builder()
+    UserMfa userMfaModel = new UserMfa.Builder()
       .iamId("testString")
       .mfa("NONE")
       .build();
-    assertEquals(accountSettingsUserMfaModel.iamId(), "testString");
-    assertEquals(accountSettingsUserMfaModel.mfa(), "NONE");
+    assertEquals(userMfaModel.iamId(), "testString");
+    assertEquals(userMfaModel.mfa(), "NONE");
 
     AccountSettingsComponent accountSettingsComponentModel = new AccountSettingsComponent.Builder()
       .restrictCreateServiceId("NOT_SET")
       .restrictCreatePlatformApikey("NOT_SET")
       .allowedIpAddresses("testString")
       .mfa("NONE")
-      .userMfa(java.util.Arrays.asList(accountSettingsUserMfaModel))
+      .userMfa(java.util.Arrays.asList(userMfaModel))
       .sessionExpirationInSeconds("86400")
       .sessionInvalidationInSeconds("7200")
       .maxSessionsPerIdentity("testString")
@@ -56,7 +56,7 @@ public class CreateAccountSettingsTemplateVersionOptionsTest {
     assertEquals(accountSettingsComponentModel.restrictCreatePlatformApikey(), "NOT_SET");
     assertEquals(accountSettingsComponentModel.allowedIpAddresses(), "testString");
     assertEquals(accountSettingsComponentModel.mfa(), "NONE");
-    assertEquals(accountSettingsComponentModel.userMfa(), java.util.Arrays.asList(accountSettingsUserMfaModel));
+    assertEquals(accountSettingsComponentModel.userMfa(), java.util.Arrays.asList(userMfaModel));
     assertEquals(accountSettingsComponentModel.sessionExpirationInSeconds(), "86400");
     assertEquals(accountSettingsComponentModel.sessionInvalidationInSeconds(), "7200");
     assertEquals(accountSettingsComponentModel.maxSessionsPerIdentity(), "testString");

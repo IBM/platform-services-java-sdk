@@ -22,6 +22,7 @@ public class GetAccountSettingsOptions extends GenericModel {
 
   protected String accountId;
   protected Boolean includeHistory;
+  protected Boolean resolveUserMfa;
 
   /**
    * Builder.
@@ -29,6 +30,7 @@ public class GetAccountSettingsOptions extends GenericModel {
   public static class Builder {
     private String accountId;
     private Boolean includeHistory;
+    private Boolean resolveUserMfa;
 
     /**
      * Instantiates a new Builder from an existing GetAccountSettingsOptions instance.
@@ -38,6 +40,7 @@ public class GetAccountSettingsOptions extends GenericModel {
     private Builder(GetAccountSettingsOptions getAccountSettingsOptions) {
       this.accountId = getAccountSettingsOptions.accountId;
       this.includeHistory = getAccountSettingsOptions.includeHistory;
+      this.resolveUserMfa = getAccountSettingsOptions.resolveUserMfa;
     }
 
     /**
@@ -85,6 +88,17 @@ public class GetAccountSettingsOptions extends GenericModel {
       this.includeHistory = includeHistory;
       return this;
     }
+
+    /**
+     * Set the resolveUserMfa.
+     *
+     * @param resolveUserMfa the resolveUserMfa
+     * @return the GetAccountSettingsOptions builder
+     */
+    public Builder resolveUserMfa(Boolean resolveUserMfa) {
+      this.resolveUserMfa = resolveUserMfa;
+      return this;
+    }
   }
 
   protected GetAccountSettingsOptions() { }
@@ -94,6 +108,7 @@ public class GetAccountSettingsOptions extends GenericModel {
       "accountId cannot be empty");
     accountId = builder.accountId;
     includeHistory = builder.includeHistory;
+    resolveUserMfa = builder.resolveUserMfa;
   }
 
   /**
@@ -125,6 +140,17 @@ public class GetAccountSettingsOptions extends GenericModel {
    */
   public Boolean includeHistory() {
     return includeHistory;
+  }
+
+  /**
+   * Gets the resolveUserMfa.
+   *
+   * Enrich MFA exemptions with user PI.
+   *
+   * @return the resolveUserMfa
+   */
+  public Boolean resolveUserMfa() {
+    return resolveUserMfa;
   }
 }
 

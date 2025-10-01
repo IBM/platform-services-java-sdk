@@ -22,7 +22,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class AccountSettingsUserMFA extends GenericModel {
 
   /**
-   * Defines the MFA requirement for the user. Valid values:
+   * MFA trait definitions as follows:
    *   * NONE - No MFA trait set
    *   * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
    *   * TOTP - For all non-federated IBMId users
@@ -51,6 +51,10 @@ public class AccountSettingsUserMFA extends GenericModel {
   @SerializedName("iam_id")
   protected String iamId;
   protected String mfa;
+  protected String name;
+  protected String userName;
+  protected String email;
+  protected String description;
 
   /**
    * Builder.
@@ -58,6 +62,10 @@ public class AccountSettingsUserMFA extends GenericModel {
   public static class Builder {
     private String iamId;
     private String mfa;
+    private String name;
+    private String userName;
+    private String email;
+    private String description;
 
     /**
      * Instantiates a new Builder from an existing AccountSettingsUserMFA instance.
@@ -67,6 +75,10 @@ public class AccountSettingsUserMFA extends GenericModel {
     private Builder(AccountSettingsUserMFA accountSettingsUserMfa) {
       this.iamId = accountSettingsUserMfa.iamId;
       this.mfa = accountSettingsUserMfa.mfa;
+      this.name = accountSettingsUserMfa.name;
+      this.userName = accountSettingsUserMfa.userName;
+      this.email = accountSettingsUserMfa.email;
+      this.description = accountSettingsUserMfa.description;
     }
 
     /**
@@ -116,6 +128,50 @@ public class AccountSettingsUserMFA extends GenericModel {
       this.mfa = mfa;
       return this;
     }
+
+    /**
+     * Set the name.
+     *
+     * @param name the name
+     * @return the AccountSettingsUserMFA builder
+     */
+    public Builder name(String name) {
+      this.name = name;
+      return this;
+    }
+
+    /**
+     * Set the userName.
+     *
+     * @param userName the userName
+     * @return the AccountSettingsUserMFA builder
+     */
+    public Builder userName(String userName) {
+      this.userName = userName;
+      return this;
+    }
+
+    /**
+     * Set the email.
+     *
+     * @param email the email
+     * @return the AccountSettingsUserMFA builder
+     */
+    public Builder email(String email) {
+      this.email = email;
+      return this;
+    }
+
+    /**
+     * Set the description.
+     *
+     * @param description the description
+     * @return the AccountSettingsUserMFA builder
+     */
+    public Builder description(String description) {
+      this.description = description;
+      return this;
+    }
   }
 
   protected AccountSettingsUserMFA() { }
@@ -127,6 +183,10 @@ public class AccountSettingsUserMFA extends GenericModel {
       "mfa cannot be null");
     iamId = builder.iamId;
     mfa = builder.mfa;
+    name = builder.name;
+    userName = builder.userName;
+    email = builder.email;
+    description = builder.description;
   }
 
   /**
@@ -152,7 +212,7 @@ public class AccountSettingsUserMFA extends GenericModel {
   /**
    * Gets the mfa.
    *
-   * Defines the MFA requirement for the user. Valid values:
+   * MFA trait definitions as follows:
    *   * NONE - No MFA trait set
    *   * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
    *   * TOTP - For all non-federated IBMId users
@@ -165,6 +225,50 @@ public class AccountSettingsUserMFA extends GenericModel {
    */
   public String mfa() {
     return mfa;
+  }
+
+  /**
+   * Gets the name.
+   *
+   * name of the user account.
+   *
+   * @return the name
+   */
+  public String name() {
+    return name;
+  }
+
+  /**
+   * Gets the userName.
+   *
+   * userName of the user.
+   *
+   * @return the userName
+   */
+  public String userName() {
+    return userName;
+  }
+
+  /**
+   * Gets the email.
+   *
+   * email of the user.
+   *
+   * @return the email
+   */
+  public String email() {
+    return email;
+  }
+
+  /**
+   * Gets the description.
+   *
+   * optional description.
+   *
+   * @return the description
+   */
+  public String description() {
+    return description;
   }
 }
 

@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
-import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsResponseWithoutMetaUserMfaItem;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,27 +23,20 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the GetAccountSettingsOptions model.
+ * Unit test class for the AccountSettingsResponseWithoutMetaUserMfaItem model.
  */
-public class GetAccountSettingsOptionsTest {
+public class AccountSettingsResponseWithoutMetaUserMfaItemTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testGetAccountSettingsOptions() throws Throwable {
-    GetAccountSettingsOptions getAccountSettingsOptionsModel = new GetAccountSettingsOptions.Builder()
-      .accountId("testString")
-      .includeHistory(false)
-      .resolveUserMfa(false)
-      .build();
-    assertEquals(getAccountSettingsOptionsModel.accountId(), "testString");
-    assertEquals(getAccountSettingsOptionsModel.includeHistory(), Boolean.valueOf(false));
-    assertEquals(getAccountSettingsOptionsModel.resolveUserMfa(), Boolean.valueOf(false));
+  public void testAccountSettingsResponseWithoutMetaUserMfaItem() throws Throwable {
+    AccountSettingsResponseWithoutMetaUserMfaItem accountSettingsResponseWithoutMetaUserMfaItemModel = new AccountSettingsResponseWithoutMetaUserMfaItem();
+    assertNull(accountSettingsResponseWithoutMetaUserMfaItemModel.getIamId());
+    assertNull(accountSettingsResponseWithoutMetaUserMfaItemModel.getMfa());
+    assertNull(accountSettingsResponseWithoutMetaUserMfaItemModel.getName());
+    assertNull(accountSettingsResponseWithoutMetaUserMfaItemModel.getUserName());
+    assertNull(accountSettingsResponseWithoutMetaUserMfaItemModel.getEmail());
+    assertNull(accountSettingsResponseWithoutMetaUserMfaItemModel.getDescription());
   }
-
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetAccountSettingsOptionsError() throws Throwable {
-    new GetAccountSettingsOptions.Builder().build();
-  }
-
 }

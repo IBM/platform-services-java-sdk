@@ -14,7 +14,8 @@
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsResponse;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsUserMFA;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsUserDomainRestriction;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsUserMFAResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.EnityHistoryRecord;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ResponseContext;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
@@ -37,17 +38,19 @@ public class AccountSettingsResponseTest {
     AccountSettingsResponse accountSettingsResponseModel = new AccountSettingsResponse();
     assertNull(accountSettingsResponseModel.getContext());
     assertNull(accountSettingsResponseModel.getAccountId());
+    assertNull(accountSettingsResponseModel.getEntityTag());
+    assertNull(accountSettingsResponseModel.getHistory());
     assertNull(accountSettingsResponseModel.getRestrictCreateServiceId());
     assertNull(accountSettingsResponseModel.getRestrictCreatePlatformApikey());
+    assertNull(accountSettingsResponseModel.getRestrictUserListVisibility());
+    assertNull(accountSettingsResponseModel.getRestrictUserDomains());
     assertNull(accountSettingsResponseModel.getAllowedIpAddresses());
-    assertNull(accountSettingsResponseModel.getEntityTag());
     assertNull(accountSettingsResponseModel.getMfa());
-    assertNull(accountSettingsResponseModel.getUserMfa());
-    assertNull(accountSettingsResponseModel.getHistory());
     assertNull(accountSettingsResponseModel.getSessionExpirationInSeconds());
     assertNull(accountSettingsResponseModel.getSessionInvalidationInSeconds());
     assertNull(accountSettingsResponseModel.getMaxSessionsPerIdentity());
     assertNull(accountSettingsResponseModel.getSystemAccessTokenExpirationInSeconds());
     assertNull(accountSettingsResponseModel.getSystemRefreshTokenExpirationInSeconds());
+    assertNull(accountSettingsResponseModel.getUserMfa());
   }
 }

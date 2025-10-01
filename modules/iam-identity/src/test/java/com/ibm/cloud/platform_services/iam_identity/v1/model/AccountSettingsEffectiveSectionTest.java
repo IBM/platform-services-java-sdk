@@ -14,7 +14,7 @@
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsEffectiveSection;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.EffectiveAccountSettingsUserMFA;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsUserMFAResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -35,6 +35,7 @@ public class AccountSettingsEffectiveSectionTest {
     AccountSettingsEffectiveSection accountSettingsEffectiveSectionModel = new AccountSettingsEffectiveSection();
     assertNull(accountSettingsEffectiveSectionModel.getRestrictCreateServiceId());
     assertNull(accountSettingsEffectiveSectionModel.getRestrictCreatePlatformApikey());
+    assertNull(accountSettingsEffectiveSectionModel.getRestrictUserListVisibility());
     assertNull(accountSettingsEffectiveSectionModel.getAllowedIpAddresses());
     assertNull(accountSettingsEffectiveSectionModel.getMfa());
     assertNull(accountSettingsEffectiveSectionModel.getUserMfa());

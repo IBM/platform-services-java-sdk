@@ -14,10 +14,10 @@
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentResourceCreated;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentResourceError;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ConflictsWith;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorDetails;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorObject;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorResponse;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentResourcePolicy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentResources;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;

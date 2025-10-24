@@ -13,14 +13,9 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentResourceCreated;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentResourceError;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentTargetDetails;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ConflictsWith;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorDetails;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorObject;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentResourcePolicy;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1Resources;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleAssignment;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleAssignmentTemplate;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -30,16 +25,16 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the PolicyAssignmentV1Resources model.
+ * Unit test class for the RoleAssignment model.
  */
-public class PolicyAssignmentV1ResourcesTest {
+public class RoleAssignmentTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testPolicyAssignmentV1Resources() throws Throwable {
-    PolicyAssignmentV1Resources policyAssignmentV1ResourcesModel = new PolicyAssignmentV1Resources();
-    assertNull(policyAssignmentV1ResourcesModel.getTarget());
-    assertNull(policyAssignmentV1ResourcesModel.getPolicy());
+  public void testRoleAssignment() throws Throwable {
+    RoleAssignment roleAssignmentModel = new RoleAssignment();
+    assertNull(roleAssignmentModel.getTemplate());
+    assertNull(roleAssignmentModel.getTarget());
   }
 }

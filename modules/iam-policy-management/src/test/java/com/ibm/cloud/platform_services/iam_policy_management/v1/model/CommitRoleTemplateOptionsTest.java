@@ -13,10 +13,7 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ConflictsWith;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorDetails;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorObject;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorResponse;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CommitRoleTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -26,17 +23,25 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the ErrorResponse model.
+ * Unit test class for the CommitRoleTemplateOptions model.
  */
-public class ErrorResponseTest {
+public class CommitRoleTemplateOptionsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testErrorResponse() throws Throwable {
-    ErrorResponse errorResponseModel = new ErrorResponse();
-    assertNull(errorResponseModel.getTrace());
-    assertNull(errorResponseModel.getErrors());
-    assertNull(errorResponseModel.getStatusCode());
+  public void testCommitRoleTemplateOptions() throws Throwable {
+    CommitRoleTemplateOptions commitRoleTemplateOptionsModel = new CommitRoleTemplateOptions.Builder()
+      .roleTemplateId("testString")
+      .version("testString")
+      .build();
+    assertEquals(commitRoleTemplateOptionsModel.roleTemplateId(), "testString");
+    assertEquals(commitRoleTemplateOptionsModel.version(), "testString");
   }
+
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testCommitRoleTemplateOptionsError() throws Throwable {
+    new CommitRoleTemplateOptions.Builder().build();
+  }
+
 }

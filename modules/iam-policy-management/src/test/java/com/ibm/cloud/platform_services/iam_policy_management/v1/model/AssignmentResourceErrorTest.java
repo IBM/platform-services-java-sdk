@@ -13,17 +13,10 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentResourceCreated;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentResourceError;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentTargetDetails;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AssignmentTemplateDetails;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ConflictsWith;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorDetails;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ErrorObject;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentResourcePolicy;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1Resources;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyAssignmentV1Subject;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateAssignmentItems;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -33,16 +26,19 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the PolicyTemplateAssignmentItems model.
+ * Unit test class for the AssignmentResourceError model.
  */
-public class PolicyTemplateAssignmentItemsTest {
+public class AssignmentResourceErrorTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
-  // TODO: Add tests for models that are abstract
   @Test
-  public void testPolicyTemplateAssignmentItems() throws Throwable {
-    PolicyTemplateAssignmentItems policyTemplateAssignmentItemsModel = new PolicyTemplateAssignmentItems();
-    assertNotNull(policyTemplateAssignmentItemsModel);
+  public void testAssignmentResourceError() throws Throwable {
+    AssignmentResourceError assignmentResourceErrorModel = new AssignmentResourceError();
+    assertNull(assignmentResourceErrorModel.getName());
+    assertNull(assignmentResourceErrorModel.getErrorCode());
+    assertNull(assignmentResourceErrorModel.getMessage());
+    assertNull(assignmentResourceErrorModel.getCode());
+    assertNull(assignmentResourceErrorModel.getErrors());
   }
 }

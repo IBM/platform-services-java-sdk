@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.103.0-e8b84313-20250402-201816
+ * IBM OpenAPI SDK Code Generator Version: 3.107.1-41b0fbd0-20250825-080732
  */
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1;
@@ -27,6 +27,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionCont
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlTemplateVersionsCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CommitActionControlTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CommitPolicyTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CommitRoleTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateActionControlTemplateAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateActionControlTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateActionControlTemplateVersionOptions;
@@ -35,6 +36,9 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePoli
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateRoleOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateRoleTemplateAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateRoleTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateRoleTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateV2PolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CustomRole;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteActionControlAssignmentOptions;
@@ -44,7 +48,10 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePoli
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeletePolicyTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteRoleAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteRoleOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteRoleTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteRoleTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteV2PolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetActionControlAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetActionControlTemplateOptions;
@@ -53,7 +60,10 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyA
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetPolicyTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetRoleAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetRoleOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetRoleTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetRoleTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetSettingsOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetV2PolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListActionControlAssignmentsOptions;
@@ -63,6 +73,9 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolici
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyAssignmentsOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyTemplateVersionsOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListPolicyTemplatesOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListRoleAssignmentsOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListRoleTemplateVersionsOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListRoleTemplatesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListRolesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListV2PoliciesOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Policy;
@@ -80,11 +93,18 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceAct
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplacePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplacePolicyTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceRoleOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceRoleTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceV2PolicyOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleAssignment;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleAssignmentCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleTemplate;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleTemplateCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleTemplateVersionsCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdateActionControlAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdatePolicyStateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdateRoleAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdateSettingsOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2Policy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyCollection;
@@ -2068,6 +2088,470 @@ public class IamPolicyManagement extends BaseService {
     pathParamsMap.put("assignment_id", deleteActionControlAssignmentOptions.assignmentId());
     RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/action_control_assignments/{assignment_id}", pathParamsMap));
     Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "deleteActionControlAssignment");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * List role templates by attributes.
+   *
+   * List role templates and filter by attributes by using query parameters. The following attributes are supported:
+   * `account_id`, `name`, `role_name`, `role_service_name`, `state`, `limit`, `start`.
+   * `account_id` is a required query parameter. Only role templates that have the specified attributes and that the
+   * caller has read access to are returned. If the caller does not have read access to any role templates an empty
+   * array is returned.
+   *
+   * @param listRoleTemplatesOptions the {@link ListRoleTemplatesOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link RoleTemplateCollection}
+   */
+  public ServiceCall<RoleTemplateCollection> listRoleTemplates(ListRoleTemplatesOptions listRoleTemplatesOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(listRoleTemplatesOptions,
+      "listRoleTemplatesOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/role_templates"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "listRoleTemplates");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (listRoleTemplatesOptions.acceptLanguage() != null) {
+      builder.header("Accept-Language", listRoleTemplatesOptions.acceptLanguage());
+    }
+    builder.query("account_id", String.valueOf(listRoleTemplatesOptions.accountId()));
+    if (listRoleTemplatesOptions.name() != null) {
+      builder.query("name", String.valueOf(listRoleTemplatesOptions.name()));
+    }
+    if (listRoleTemplatesOptions.roleName() != null) {
+      builder.query("role_name", String.valueOf(listRoleTemplatesOptions.roleName()));
+    }
+    if (listRoleTemplatesOptions.roleServiceName() != null) {
+      builder.query("role_service_name", String.valueOf(listRoleTemplatesOptions.roleServiceName()));
+    }
+    if (listRoleTemplatesOptions.state() != null) {
+      builder.query("state", String.valueOf(listRoleTemplatesOptions.state()));
+    }
+    if (listRoleTemplatesOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listRoleTemplatesOptions.limit()));
+    }
+    if (listRoleTemplatesOptions.start() != null) {
+      builder.query("start", String.valueOf(listRoleTemplatesOptions.start()));
+    }
+    ResponseConverter<RoleTemplateCollection> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<RoleTemplateCollection>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Create role template.
+   *
+   * Create a role template. Role templates define roles from an existing system or service defined role.
+   *
+   * @param createRoleTemplateOptions the {@link CreateRoleTemplateOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link RoleTemplate}
+   */
+  public ServiceCall<RoleTemplate> createRoleTemplate(CreateRoleTemplateOptions createRoleTemplateOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createRoleTemplateOptions,
+      "createRoleTemplateOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/role_templates"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "createRoleTemplate");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (createRoleTemplateOptions.acceptLanguage() != null) {
+      builder.header("Accept-Language", createRoleTemplateOptions.acceptLanguage());
+    }
+    final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("name", createRoleTemplateOptions.name());
+    contentJson.addProperty("account_id", createRoleTemplateOptions.accountId());
+    if (createRoleTemplateOptions.description() != null) {
+      contentJson.addProperty("description", createRoleTemplateOptions.description());
+    }
+    if (createRoleTemplateOptions.committed() != null) {
+      contentJson.addProperty("committed", createRoleTemplateOptions.committed());
+    }
+    if (createRoleTemplateOptions.role() != null) {
+      contentJson.add("role", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createRoleTemplateOptions.role()));
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<RoleTemplate> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<RoleTemplate>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Retrieve the latest version of a role template.
+   *
+   * Retrieve the latest version of a role template by providing a role template ID.
+   *
+   * @param getRoleTemplateOptions the {@link GetRoleTemplateOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link RoleTemplate}
+   */
+  public ServiceCall<RoleTemplate> getRoleTemplate(GetRoleTemplateOptions getRoleTemplateOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getRoleTemplateOptions,
+      "getRoleTemplateOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("role_template_id", getRoleTemplateOptions.roleTemplateId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/role_templates/{role_template_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "getRoleTemplate");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (getRoleTemplateOptions.state() != null) {
+      builder.query("state", String.valueOf(getRoleTemplateOptions.state()));
+    }
+    ResponseConverter<RoleTemplate> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<RoleTemplate>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Delete a Role template.
+   *
+   * Delete a role template by providing the role template ID. This deletes all versions of this template. A role
+   * template can't be deleted if any version of the template is assigned to one or more child accounts. You must remove
+   * the role assignments first.
+   *
+   * @param deleteRoleTemplateOptions the {@link DeleteRoleTemplateOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> deleteRoleTemplate(DeleteRoleTemplateOptions deleteRoleTemplateOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteRoleTemplateOptions,
+      "deleteRoleTemplateOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("role_template_id", deleteRoleTemplateOptions.roleTemplateId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/role_templates/{role_template_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "deleteRoleTemplate");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Create a new role template version.
+   *
+   * Create a new version of a role template. Use this if you need to make updates to a role template that is committed.
+   *
+   * @param createRoleTemplateVersionOptions the {@link CreateRoleTemplateVersionOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link RoleTemplate}
+   */
+  public ServiceCall<RoleTemplate> createRoleTemplateVersion(CreateRoleTemplateVersionOptions createRoleTemplateVersionOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createRoleTemplateVersionOptions,
+      "createRoleTemplateVersionOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("role_template_id", createRoleTemplateVersionOptions.roleTemplateId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/role_templates/{role_template_id}/versions", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "createRoleTemplateVersion");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    final JsonObject contentJson = new JsonObject();
+    contentJson.add("role", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createRoleTemplateVersionOptions.role()));
+    if (createRoleTemplateVersionOptions.name() != null) {
+      contentJson.addProperty("name", createRoleTemplateVersionOptions.name());
+    }
+    if (createRoleTemplateVersionOptions.description() != null) {
+      contentJson.addProperty("description", createRoleTemplateVersionOptions.description());
+    }
+    if (createRoleTemplateVersionOptions.committed() != null) {
+      contentJson.addProperty("committed", createRoleTemplateVersionOptions.committed());
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<RoleTemplate> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<RoleTemplate>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Retrieve role template versions.
+   *
+   * Retrieve the versions of a role template by providing a role template ID.
+   *
+   * @param listRoleTemplateVersionsOptions the {@link ListRoleTemplateVersionsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link RoleTemplateVersionsCollection}
+   */
+  public ServiceCall<RoleTemplateVersionsCollection> listRoleTemplateVersions(ListRoleTemplateVersionsOptions listRoleTemplateVersionsOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(listRoleTemplateVersionsOptions,
+      "listRoleTemplateVersionsOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("role_template_id", listRoleTemplateVersionsOptions.roleTemplateId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/role_templates/{role_template_id}/versions", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "listRoleTemplateVersions");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (listRoleTemplateVersionsOptions.state() != null) {
+      builder.query("state", String.valueOf(listRoleTemplateVersionsOptions.state()));
+    }
+    if (listRoleTemplateVersionsOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listRoleTemplateVersionsOptions.limit()));
+    }
+    if (listRoleTemplateVersionsOptions.start() != null) {
+      builder.query("start", String.valueOf(listRoleTemplateVersionsOptions.start()));
+    }
+    ResponseConverter<RoleTemplateVersionsCollection> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<RoleTemplateVersionsCollection>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Update a role template version.
+   *
+   * Update a specific version of a role template. You can use this only if the version isn't committed.
+   *
+   * @param replaceRoleTemplateOptions the {@link ReplaceRoleTemplateOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link RoleTemplate}
+   */
+  public ServiceCall<RoleTemplate> replaceRoleTemplate(ReplaceRoleTemplateOptions replaceRoleTemplateOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(replaceRoleTemplateOptions,
+      "replaceRoleTemplateOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("role_template_id", replaceRoleTemplateOptions.roleTemplateId());
+    pathParamsMap.put("version", replaceRoleTemplateOptions.version());
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/role_templates/{role_template_id}/versions/{version}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "replaceRoleTemplate");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.header("If-Match", replaceRoleTemplateOptions.ifMatch());
+    final JsonObject contentJson = new JsonObject();
+    contentJson.add("role", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceRoleTemplateOptions.role()));
+    if (replaceRoleTemplateOptions.name() != null) {
+      contentJson.addProperty("name", replaceRoleTemplateOptions.name());
+    }
+    if (replaceRoleTemplateOptions.description() != null) {
+      contentJson.addProperty("description", replaceRoleTemplateOptions.description());
+    }
+    if (replaceRoleTemplateOptions.committed() != null) {
+      contentJson.addProperty("committed", replaceRoleTemplateOptions.committed());
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<RoleTemplate> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<RoleTemplate>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Delete a role template version.
+   *
+   * Delete a specific version of a role template by providing a role template ID and version number. You can't delete a
+   * role template version that is assigned to one or more child accounts. You must remove the role assignments first.
+   *
+   * @param deleteRoleTemplateVersionOptions the {@link DeleteRoleTemplateVersionOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> deleteRoleTemplateVersion(DeleteRoleTemplateVersionOptions deleteRoleTemplateVersionOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteRoleTemplateVersionOptions,
+      "deleteRoleTemplateVersionOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("role_template_id", deleteRoleTemplateVersionOptions.roleTemplateId());
+    pathParamsMap.put("version", deleteRoleTemplateVersionOptions.version());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/role_templates/{role_template_id}/versions/{version}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "deleteRoleTemplateVersion");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Retrieve a role template version.
+   *
+   * Retrieve a role template by providing a role template ID and version number.
+   *
+   * @param getRoleTemplateVersionOptions the {@link GetRoleTemplateVersionOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link RoleTemplate}
+   */
+  public ServiceCall<RoleTemplate> getRoleTemplateVersion(GetRoleTemplateVersionOptions getRoleTemplateVersionOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getRoleTemplateVersionOptions,
+      "getRoleTemplateVersionOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("role_template_id", getRoleTemplateVersionOptions.roleTemplateId());
+    pathParamsMap.put("version", getRoleTemplateVersionOptions.version());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/role_templates/{role_template_id}/versions/{version}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "getRoleTemplateVersion");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<RoleTemplate> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<RoleTemplate>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Commit a role template version.
+   *
+   * Commit a role template version. You cannot make any further changes to the role template once it's committed. If
+   * you have to make updates after committing a version, create a new version.
+   *
+   * @param commitRoleTemplateOptions the {@link CommitRoleTemplateOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> commitRoleTemplate(CommitRoleTemplateOptions commitRoleTemplateOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(commitRoleTemplateOptions,
+      "commitRoleTemplateOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("role_template_id", commitRoleTemplateOptions.roleTemplateId());
+    pathParamsMap.put("version", commitRoleTemplateOptions.version());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/role_templates/{role_template_id}/versions/{version}/commit", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "commitRoleTemplate");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get role template assignments.
+   *
+   * Get role template assignments by attributes. The following attributes are supported:
+   * `account_id`, `template_id`, `template_version`, `target`, `target_type`, `limit`, `start`.
+   * `account_id` is a required query parameter. Only role template assignments with the specified attributes and
+   * accessible by the caller are returned. If the caller does not have read access to any role template assignments, an
+   * empty array is returned.
+   *
+   * @param listRoleAssignmentsOptions the {@link ListRoleAssignmentsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link RoleAssignmentCollection}
+   */
+  public ServiceCall<RoleAssignmentCollection> listRoleAssignments(ListRoleAssignmentsOptions listRoleAssignmentsOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(listRoleAssignmentsOptions,
+      "listRoleAssignmentsOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/role_assignments"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "listRoleAssignments");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (listRoleAssignmentsOptions.acceptLanguage() != null) {
+      builder.header("Accept-Language", listRoleAssignmentsOptions.acceptLanguage());
+    }
+    builder.query("account_id", String.valueOf(listRoleAssignmentsOptions.accountId()));
+    if (listRoleAssignmentsOptions.templateId() != null) {
+      builder.query("template_id", String.valueOf(listRoleAssignmentsOptions.templateId()));
+    }
+    if (listRoleAssignmentsOptions.templateVersion() != null) {
+      builder.query("template_version", String.valueOf(listRoleAssignmentsOptions.templateVersion()));
+    }
+    if (listRoleAssignmentsOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listRoleAssignmentsOptions.limit()));
+    }
+    if (listRoleAssignmentsOptions.start() != null) {
+      builder.query("start", String.valueOf(listRoleAssignmentsOptions.start()));
+    }
+    ResponseConverter<RoleAssignmentCollection> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<RoleAssignmentCollection>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Create a role template assignment.
+   *
+   * Assign a role template to child accounts and account groups. This creates the role in the accounts and account
+   * groups that you specify.
+   *
+   * @param createRoleTemplateAssignmentOptions the {@link CreateRoleTemplateAssignmentOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link RoleAssignmentCollection}
+   */
+  public ServiceCall<RoleAssignmentCollection> createRoleTemplateAssignment(CreateRoleTemplateAssignmentOptions createRoleTemplateAssignmentOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(createRoleTemplateAssignmentOptions,
+      "createRoleTemplateAssignmentOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/role_assignments"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "createRoleTemplateAssignment");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (createRoleTemplateAssignmentOptions.acceptLanguage() != null) {
+      builder.header("Accept-Language", createRoleTemplateAssignmentOptions.acceptLanguage());
+    }
+    final JsonObject contentJson = new JsonObject();
+    contentJson.add("target", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createRoleTemplateAssignmentOptions.target()));
+    contentJson.add("templates", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createRoleTemplateAssignmentOptions.templates()));
+    builder.bodyJson(contentJson);
+    ResponseConverter<RoleAssignmentCollection> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<RoleAssignmentCollection>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Retrieve a role assignment.
+   *
+   * Retrieve a role template assignment by providing a role assignment ID.
+   *
+   * @param getRoleAssignmentOptions the {@link GetRoleAssignmentOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link RoleAssignment}
+   */
+  public ServiceCall<RoleAssignment> getRoleAssignment(GetRoleAssignmentOptions getRoleAssignmentOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getRoleAssignmentOptions,
+      "getRoleAssignmentOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("assignment_id", getRoleAssignmentOptions.assignmentId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/role_assignments/{assignment_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "getRoleAssignment");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    ResponseConverter<RoleAssignment> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<RoleAssignment>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Update a role assignment.
+   *
+   * Update a role assignment by providing a role assignment ID.
+   *
+   * @param updateRoleAssignmentOptions the {@link UpdateRoleAssignmentOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link RoleAssignment}
+   */
+  public ServiceCall<RoleAssignment> updateRoleAssignment(UpdateRoleAssignmentOptions updateRoleAssignmentOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(updateRoleAssignmentOptions,
+      "updateRoleAssignmentOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("assignment_id", updateRoleAssignmentOptions.assignmentId());
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/role_assignments/{assignment_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "updateRoleAssignment");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.header("If-Match", updateRoleAssignmentOptions.ifMatch());
+    final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("template_version", updateRoleAssignmentOptions.templateVersion());
+    builder.bodyJson(contentJson);
+    ResponseConverter<RoleAssignment> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<RoleAssignment>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Remove a role assignment.
+   *
+   * Remove a role template assignment by providing a role assignment ID. You can't delete a role assignment if the
+   * status is "in_progress".
+   *
+   * @param deleteRoleAssignmentOptions the {@link DeleteRoleAssignmentOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> deleteRoleAssignment(DeleteRoleAssignmentOptions deleteRoleAssignmentOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteRoleAssignmentOptions,
+      "deleteRoleAssignmentOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("assignment_id", deleteRoleAssignmentOptions.assignmentId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/role_assignments/{assignment_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_policy_management", "v1", "deleteRoleAssignment");
     for (Entry<String, String> header : sdkHeaders.entrySet()) {
       builder.header(header.getKey(), header.getValue());
     }

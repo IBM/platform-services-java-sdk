@@ -65,6 +65,12 @@ public class ErrorObject extends GenericModel {
     String ACTION_CONTROL_TEMPLATE_NOT_FOUND = "action_control_template_not_found";
     /** action_control_assignment_not_found. */
     String ACTION_CONTROL_ASSIGNMENT_NOT_FOUND = "action_control_assignment_not_found";
+    /** role_template_conflict_error. */
+    String ROLE_TEMPLATE_CONFLICT_ERROR = "role_template_conflict_error";
+    /** role_template_not_found. */
+    String ROLE_TEMPLATE_NOT_FOUND = "role_template_not_found";
+    /** role_assignment_not_found. */
+    String ROLE_ASSIGNMENT_NOT_FOUND = "role_assignment_not_found";
   }
 
   protected String code;

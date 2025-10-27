@@ -98,6 +98,11 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
     String testActionControlTemplateETag = null;
     String testActionControlAssignmentId = null;
     String testActionControlAssignmentETag = null;
+    String testRoleTemplateId = null;
+    String testRoleTemplateVersion = null;
+    String testRoleTemplateEtag = null;
+    String testRoleTemplateAssignmentId = null;
+    String testRoleTemplateAssignmentETag = null;
 
     @Override
     public String getConfigFilename() {
@@ -1293,7 +1298,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
       assertNotNull(result);
       assertEquals(result.getId(), testAssignmentId);
     }
-
+    
     @Test(dependsOnMethods = { "testGetPolicyAssignment" })
       public void testGetTemplateMetaDataV2AccessPolicy() {
         assertNotNull(testAssignmentPolicyId);
@@ -1311,8 +1316,8 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         assertEquals(result.getId(), testAssignmentPolicyId);
         assertNotNull(result.getTemplate());
     }
-
-    @Test(dependsOnMethods = {"testGetTemplateMetaDataV2AccessPolicy"})
+    
+    @Test(dependsOnMethods = {"testGetPolicyAssignment"})
     public void testDeletePolicyAssignment() {
       DeletePolicyAssignmentOptions deletePolicyAssignmentOptions = new DeletePolicyAssignmentOptions.Builder()
         .assignmentId(testAssignmentId)
@@ -1721,6 +1726,309 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 204);
     }
+
+    /* Role Template Integration Tests - Start */
+    @Test
+    public void testCreateRoleTemplate() throws Exception {
+      TemplateRole templateRoleModel = new TemplateRole.Builder()
+        .name(testCustomRoleName)
+        .displayName(testCustomRoleDisplayName)
+        .serviceName(TEST_SERVICE_NAME)
+        .description(testCustomRoleDescription)
+        .actions(testCustomRoleActions)
+        .build();
+
+      CreateRoleTemplateOptions createRoleTemplateOptions = new CreateRoleTemplateOptions.Builder()
+        .name("SDKTestRoleTemplate")
+        .accountId(testAccountId)
+        .description("SDKTestRoleTemplate Description")
+        .committed(true)
+        .role(templateRoleModel)
+        .acceptLanguage("default")
+        .build();
+
+      // Invoke operation
+      Response<RoleTemplate> response = service.createRoleTemplate(createRoleTemplateOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 201);
+
+      RoleTemplate roleTemplateResult = response.getResult();
+      testRoleTemplateId = roleTemplateResult.getId();
+      assertNotNull(roleTemplateResult);
+    }
+
+    @Test(dependsOnMethods = { "testCreateRoleTemplate" })
+    public void testGetRoleTemplate() throws Exception {
+      GetRoleTemplateOptions getRoleTemplateOptions = new GetRoleTemplateOptions.Builder()
+        .roleTemplateId(testRoleTemplateId)
+        .state("active")
+        .build();
+
+      // Invoke operation
+      Response<RoleTemplate> response = service.getRoleTemplate(getRoleTemplateOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      RoleTemplate roleTemplateResult = response.getResult();
+      testActionControlBaseTemplateVersion = roleTemplateResult.getVersion();
+      assertNotNull(roleTemplateResult);
+      List<String> values = response.getHeaders().values(HEADER_ETAG);
+      assertNotNull(values);
+      testRoleTemplateEtag = values.get(0);
+    }
+
+    @Test(dependsOnMethods = { "testGetRoleTemplate" })
+    public void testListRoleTemplates() throws Exception {
+      ListRoleTemplatesOptions listRoleTemplatesOptions = new ListRoleTemplatesOptions.Builder()
+        .accountId(testAccountId)
+        .state("active")
+        .build();
+
+      // Invoke operation
+      Response<RoleTemplateCollection> response = service.listRoleTemplates(listRoleTemplatesOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      RoleTemplateCollection roleTemplateCollectionResult = response.getResult();
+      assertNotNull(roleTemplateCollectionResult);
+    }
+
+    @Test(dependsOnMethods = { "testListRoleTemplates" })
+    public void testCreateRoleTemplateVersion() throws Exception {
+      TemplateRole templateRoleModel = new TemplateRole.Builder()
+        .name("SDKTestRoleVersion")
+        .displayName("SDKTestRoleVersionDisp")
+        .serviceName("am-test-service")
+        .description("am-test-service versioon customRole")
+        .actions(java.util.Arrays.asList("am-test-service.test.delete"))
+        .build();
+
+      CreateRoleTemplateVersionOptions createRoleTemplateVersionOptions = new CreateRoleTemplateVersionOptions.Builder()
+        .roleTemplateId(testRoleTemplateId)
+        .role(templateRoleModel)
+        .name("SDKroleTemplateVersion")
+        .description("SDKroleTemplateVersionDesc")
+        .build();
+
+      // Invoke operation
+      Response<RoleTemplate> response = service.createRoleTemplateVersion(createRoleTemplateVersionOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 201);
+
+      List<String> values = response.getHeaders().values(HEADER_ETAG);
+      assertNotNull(values);
+      testRoleTemplateEtag = values.get(0);
+
+      RoleTemplate roleTemplateResult = response.getResult();
+      testRoleTemplateVersion = roleTemplateResult.getVersion();
+      assertNotNull(roleTemplateResult);
+    }
+
+    @Test(dependsOnMethods = { "testCreateRoleTemplateVersion" })
+    public void testListRoleTemplateVersions() throws Exception {
+      ListRoleTemplateVersionsOptions listRoleTemplateVersionsOptions = new ListRoleTemplateVersionsOptions.Builder()
+        .roleTemplateId(testRoleTemplateId)
+        .state("active")
+        .limit(Long.valueOf("10"))
+        .build();
+
+      // Invoke operation
+      Response<RoleTemplateVersionsCollection> response = service.listRoleTemplateVersions(listRoleTemplateVersionsOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      RoleTemplateVersionsCollection roleTemplateVersionsCollectionResult = response.getResult();
+      assertNotNull(roleTemplateVersionsCollectionResult);
+    }
+
+    @Test(dependsOnMethods = { "testListRoleTemplateVersions" })
+    public void testReplaceRoleTemplate() throws Exception {
+      TemplateRole templateRoleModel = new TemplateRole.Builder()
+        .actions(java.util.Arrays.asList("testString"))
+        .name("SDKTestRoleVersionRep")
+        .displayName("SDKTestRoleVersionDispRep")
+        .serviceName("am-test-service")
+        .description("am-test-service versioon customRole Rep")
+        .actions(java.util.Arrays.asList("am-test-service.test.create"))
+        .build();
+
+      ReplaceRoleTemplateOptions replaceRoleTemplateOptions = new ReplaceRoleTemplateOptions.Builder()
+        .roleTemplateId(testRoleTemplateId)
+        .version(testRoleTemplateVersion)
+        .ifMatch(testRoleTemplateEtag)
+        .role(templateRoleModel)
+        .name("TestSDKRoleTemplateRep")
+        .description("TestSDKRoleTemplateRepDesc")
+        .build();
+
+      // Invoke operation
+      Response<RoleTemplate> response = service.replaceRoleTemplate(replaceRoleTemplateOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      RoleTemplate roleTemplateResult = response.getResult();
+      assertNotNull(roleTemplateResult);
+    }
+
+    @Test(dependsOnMethods = { "testReplaceRoleTemplate" })
+    public void testGetRoleTemplateVersion() throws Exception {
+      GetRoleTemplateVersionOptions getRoleTemplateVersionOptions = new GetRoleTemplateVersionOptions.Builder()
+        .roleTemplateId(testRoleTemplateId)
+        .version(testRoleTemplateVersion)
+        .build();
+
+      // Invoke operation
+      Response<RoleTemplate> response = service.getRoleTemplateVersion(getRoleTemplateVersionOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      RoleTemplate roleTemplateResult = response.getResult();
+      assertNotNull(roleTemplateResult);
+    }
+
+    @Test(dependsOnMethods = { "testGetRoleTemplateVersion" })
+    public void testCommitRoleTemplate() throws Exception {
+      CommitRoleTemplateOptions commitRoleTemplateOptions = new CommitRoleTemplateOptions.Builder()
+        .roleTemplateId(testRoleTemplateId)
+        .version(testRoleTemplateVersion)
+        .build();
+
+      // Invoke operation
+      Response<Void> response = service.commitRoleTemplate(commitRoleTemplateOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 204);
+    }
+
+    @Test(dependsOnMethods = { "testCommitRoleTemplate" })
+    public void testCreateRoleTemplateAssignment() throws Exception {
+      AssignmentTargetDetails assignmentTargetDetailsModel = new AssignmentTargetDetails.Builder()
+        .type("Account")
+        .id(testTargetAccountId)
+        .build();
+
+      RoleAssignmentTemplate roleAssignmentTemplateModel = new RoleAssignmentTemplate.Builder()
+        .id(testRoleTemplateId)
+        .version(testRoleTemplateVersion)
+        .build();
+
+      CreateRoleTemplateAssignmentOptions createRoleTemplateAssignmentOptions = new CreateRoleTemplateAssignmentOptions.Builder()
+        .target(assignmentTargetDetailsModel)
+        .templates(java.util.Arrays.asList(roleAssignmentTemplateModel))
+        .acceptLanguage("default")
+        .build();
+
+      // Invoke operation
+      Response<RoleAssignmentCollection> response = service.createRoleTemplateAssignment(createRoleTemplateAssignmentOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 201);
+
+      RoleAssignmentCollection roleAssignmentCollectionResult = response.getResult();
+      testRoleTemplateAssignmentId = roleAssignmentCollectionResult.getAssignments().get(0).getId();
+      List<String> values = response.getHeaders().values(HEADER_ETAG);
+        assertNotNull(values);
+        testRoleTemplateAssignmentETag = values.get(0);
+      assertNotNull(roleAssignmentCollectionResult);
+    }
+
+    @Test(dependsOnMethods = { "testCreateRoleTemplateAssignment" })
+    public void testGetRoleAssignment() throws Exception {
+      GetRoleAssignmentOptions getRoleAssignmentOptions = new GetRoleAssignmentOptions.Builder()
+        .assignmentId(testRoleTemplateAssignmentId)
+        .build();
+
+      // Invoke operation
+      Response<RoleAssignment> response = service.getRoleAssignment(getRoleAssignmentOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      RoleAssignment roleAssignmentResult = response.getResult();
+      assertNotNull(roleAssignmentResult);
+    }
+
+    @Test(dependsOnMethods = { "testGetRoleAssignment" })
+    public void testListRoleAssignments() throws Exception {
+      ListRoleAssignmentsOptions listRoleAssignmentsOptions = new ListRoleAssignmentsOptions.Builder()
+        .accountId(testAccountId)
+        .build();
+
+      // Invoke operation
+      Response<RoleAssignmentCollection> response = service.listRoleAssignments(listRoleAssignmentsOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      RoleAssignmentCollection roleAssignmentCollectionResult = response.getResult();
+      assertNotNull(roleAssignmentCollectionResult);
+    }
+
+    @Test(dependsOnMethods = { "testListRoleAssignments" })
+    public void testUpdateRoleAssignment() throws Exception {
+      UpdateRoleAssignmentOptions updateRoleAssignmentOptions = new UpdateRoleAssignmentOptions.Builder()
+        .assignmentId(testRoleTemplateAssignmentId)
+        .ifMatch(testRoleTemplateAssignmentETag)
+        .templateVersion(testRoleTemplateVersion)
+        .build();
+
+      // Invoke operation
+      Response<RoleAssignment> response = service.updateRoleAssignment(updateRoleAssignmentOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      RoleAssignment roleAssignmentResult = response.getResult();
+      assertNotNull(roleAssignmentResult);
+    }
+
+    @Test(dependsOnMethods = { "testUpdateRoleAssignment" })
+    public void testDeleteRoleAssignment() throws Exception {
+      DeleteRoleAssignmentOptions deleteRoleAssignmentOptions = new DeleteRoleAssignmentOptions.Builder()
+        .assignmentId(testRoleTemplateAssignmentId)
+        .build();
+
+      // Invoke operation
+      Response<Void> response = service.deleteRoleAssignment(deleteRoleAssignmentOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 204);
+    }
+
+    @Test(dependsOnMethods = { "testDeleteRoleAssignment" })
+    public void testDeleteRoleTemplateVersion() throws Exception {
+      DeleteRoleTemplateVersionOptions deleteRoleTemplateVersionOptions = new DeleteRoleTemplateVersionOptions.Builder()
+        .roleTemplateId(testRoleTemplateId)
+        .version(testRoleTemplateVersion)
+        .build();
+
+      // Invoke operation
+      Response<Void> response = service.deleteRoleTemplateVersion(deleteRoleTemplateVersionOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 204);
+    }
+
+    @Test(dependsOnMethods = { "testDeleteRoleTemplateVersion" })
+    public void testDeleteRoleTemplate() throws Exception {
+      DeleteRoleTemplateOptions deleteRoleTemplateOptions = new DeleteRoleTemplateOptions.Builder()
+        .roleTemplateId(testRoleTemplateId)
+        .build();
+
+      // Invoke operation
+      Response<Void> response = service.deleteRoleTemplate(deleteRoleTemplateOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 204);   
+    }
+  // Role Template Integration Tests - End 
 
     @AfterClass
     public void tearDown() {

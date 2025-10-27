@@ -19,14 +19,14 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 /**
  * Set of properties of the assigned resource or error message if assignment failed.
  */
-public class ActionControlAssignmentResourceActionControl extends GenericModel {
+public class RoleAssignmentResourceRole extends GenericModel {
 
   @SerializedName("resource_created")
-  protected ActionControlAssignmentResourceCreated resourceCreated;
+  protected RoleAssignmentResourceCreated resourceCreated;
   @SerializedName("error_message")
   protected AssignmentResourceError errorMessage;
 
-  protected ActionControlAssignmentResourceActionControl() { }
+  protected RoleAssignmentResourceRole() { }
 
   /**
    * Gets the resourceCreated.
@@ -35,7 +35,7 @@ public class ActionControlAssignmentResourceActionControl extends GenericModel {
    *
    * @return the resourceCreated
    */
-  public ActionControlAssignmentResourceCreated getResourceCreated() {
+  public RoleAssignmentResourceCreated getResourceCreated() {
     return resourceCreated;
   }
 

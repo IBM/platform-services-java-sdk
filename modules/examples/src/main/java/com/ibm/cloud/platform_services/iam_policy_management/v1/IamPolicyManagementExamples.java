@@ -13,6 +13,7 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1;
 
+// IBM Cloud IAM Policy Management Models
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.AccountSettingsAccessManagement;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateRoleOptions;
@@ -111,6 +112,30 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListAction
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ActionControlTemplateVersionsCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetActionControlTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CommitActionControlTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CommitRoleTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateRoleTemplateAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateRoleTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateRoleTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteRoleAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteRoleTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.DeleteRoleTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetRoleAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetRoleTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.GetRoleTemplateVersionOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListRoleAssignmentsOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListRoleTemplateVersionsOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ListRoleTemplatesOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleAssignment;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleAssignmentCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleAssignmentTemplate;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleAssignmentsPager;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleTemplate;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleTemplateVersionsPager;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleTemplatesPager;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateRole;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdateRoleAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceRoleTemplateOptions;
+
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
 import com.ibm.cloud.sdk.core.util.CredentialUtils;
@@ -167,6 +192,11 @@ public class IamPolicyManagementExamples {
   private static String exampleBaseActionControlTemplateVersion = null;
   private static String exampleActionControlAssignmentId = null;
   private static String exampleActionControlAssignmentETag = null;
+  private static String exampleRoleTemplateId = null;
+  private static String exampleRoleTemplateEtag = null;
+  private static String exampleRoleTemplateVersion = null;
+  private static String exampleRoleTemplateAssignmentId = null;
+  private static String exampleRoleTemplateAssignmentETag = null;
 
   static {
     System.setProperty("IBM_CREDENTIALS_FILE", "../../iam_policy_management.env");
@@ -1528,5 +1558,309 @@ public class IamPolicyManagementExamples {
         logger.error(String.format("Service returned status code %s: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
+
+    try {
+      System.out.println("createRoleTemplate() result:");
+      // begin-create_role_template
+      CreateRoleTemplateOptions createRoleTemplateOptions = new CreateRoleTemplateOptions.Builder()
+        .name("SDKTestRoleTemplateExample")
+        .accountId(exampleAccountId)
+        .build();
+
+      Response<RoleTemplate> response = service.createRoleTemplate(createRoleTemplateOptions).execute();
+      RoleTemplate roleTemplate = response.getResult();
+
+      exampleRoleTemplateId = roleTemplate.getId();
+      exampleRoleTemplateVersion = roleTemplate.getVersion();
+
+      System.out.println(roleTemplate);
+      // end-create_role_template
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("getRoleTemplate() result:");
+      // begin-get_role_template
+      GetRoleTemplateOptions getRoleTemplateOptions = new GetRoleTemplateOptions.Builder()
+        .roleTemplateId(exampleRoleTemplateId)
+        .build();
+
+      Response<RoleTemplate> response = service.getRoleTemplate(getRoleTemplateOptions).execute();
+      RoleTemplate roleTemplate = response.getResult();
+
+      exampleRoleTemplateEtag = response.getHeaders().values("Etag").get(0);
+
+      System.out.println(roleTemplate);
+      // end-get_role_template
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("replaceRoleTemplate() result:");
+      // begin-replace_role_template
+      TemplateRole templateRoleModel = new TemplateRole.Builder()
+        .name("SDKTestRoleTemplateRep")
+        .displayName("SDKTestRoleTemplateRep")
+        .serviceName("am-test-service")
+        .actions(java.util.Arrays.asList("am-test-service.test.create"))
+        .build();
+      ReplaceRoleTemplateOptions replaceRoleTemplateOptions = new ReplaceRoleTemplateOptions.Builder()
+        .roleTemplateId(exampleRoleTemplateId)
+        .version(exampleRoleTemplateVersion)
+        .ifMatch(exampleRoleTemplateEtag)
+        .role(templateRoleModel)
+        .build();
+
+      Response<RoleTemplate> response = service.replaceRoleTemplate(replaceRoleTemplateOptions).execute();
+      RoleTemplate roleTemplate = response.getResult();
+
+      System.out.println(roleTemplate);
+      // end-replace_role_template
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("listRoleTemplates() result:");
+      // begin-list_role_templates
+      ListRoleTemplatesOptions listRoleTemplatesOptions = new ListRoleTemplatesOptions.Builder()
+        .accountId(exampleAccountId)
+        .state("active")
+        .build();
+
+      RoleTemplatesPager pager = new RoleTemplatesPager(service, listRoleTemplatesOptions);
+      List<RoleTemplate> allResults = new ArrayList<>();
+      while (pager.hasNext()) {
+        List<RoleTemplate> nextPage = pager.getNext();
+        allResults.addAll(nextPage);
+      }
+
+      System.out.println(allResults);
+      // end-list_role_templates
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("createRoleTemplateVersion() result:");
+      // begin-create_role_template_version
+      TemplateRole templateRoleModel = new TemplateRole.Builder()
+        .name("SDKTestRoleVersion")
+        .displayName("SDKTestRoleVersionDisp")
+        .serviceName("am-test-service")
+        .description("am-test-service versioon customRole")
+        .actions(java.util.Arrays.asList("am-test-service.test.create"))
+        .build();
+      CreateRoleTemplateVersionOptions createRoleTemplateVersionOptions = new CreateRoleTemplateVersionOptions.Builder()
+        .roleTemplateId(exampleRoleTemplateId)
+        .role(templateRoleModel)
+        .build();
+
+      Response<RoleTemplate> response = service.createRoleTemplateVersion(createRoleTemplateVersionOptions).execute();
+      RoleTemplate roleTemplate = response.getResult();
+
+      exampleRoleTemplateVersion = roleTemplate.getVersion();
+
+      System.out.println(roleTemplate);
+      // end-create_role_template_version
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("listRoleTemplateVersions() result:");
+      // begin-list_role_template_versions
+      ListRoleTemplateVersionsOptions listRoleTemplateVersionsOptions = new ListRoleTemplateVersionsOptions.Builder()
+        .roleTemplateId(exampleRoleTemplateId)
+        .state("active")
+        .limit(Long.valueOf("10"))
+        .build();
+
+      RoleTemplateVersionsPager pager = new RoleTemplateVersionsPager(service, listRoleTemplateVersionsOptions);
+      List<RoleTemplate> allResults = new ArrayList<>();
+      while (pager.hasNext()) {
+        List<RoleTemplate> nextPage = pager.getNext();
+        allResults.addAll(nextPage);
+      }
+
+      System.out.println(allResults);
+      // end-list_role_template_versions
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("getRoleTemplateVersion() result:");
+      // begin-get_role_template_version
+      GetRoleTemplateVersionOptions getRoleTemplateVersionOptions = new GetRoleTemplateVersionOptions.Builder()
+        .roleTemplateId(exampleRoleTemplateId)
+        .version(exampleRoleTemplateVersion)
+        .build();
+
+      Response<RoleTemplate> response = service.getRoleTemplateVersion(getRoleTemplateVersionOptions).execute();
+      RoleTemplate roleTemplate = response.getResult();
+
+      System.out.println(roleTemplate);
+      // end-get_role_template_version
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-commit_role_template
+      CommitRoleTemplateOptions commitRoleTemplateOptions = new CommitRoleTemplateOptions.Builder()
+        .roleTemplateId(exampleRoleTemplateId)
+        .version(exampleRoleTemplateVersion)
+        .build();
+
+      Response<Void> response = service.commitRoleTemplate(commitRoleTemplateOptions).execute();
+      // end-commit_role_template
+      System.out.printf("commitRoleTemplate() response status code: %d%n", response.getStatusCode());
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("createRoleTemplateAssignment() result:");
+      // begin-create_role_template_assignment
+      AssignmentTargetDetails assignmentTargetDetailsModel = new AssignmentTargetDetails.Builder()
+        .type("Account")
+        .id(exampleTargetAccountId)
+        .build();
+      RoleAssignmentTemplate roleAssignmentTemplateModel = new RoleAssignmentTemplate.Builder()
+        .id(exampleRoleTemplateId)
+        .version(exampleRoleTemplateVersion)
+        .build();
+      CreateRoleTemplateAssignmentOptions createRoleTemplateAssignmentOptions = new CreateRoleTemplateAssignmentOptions.Builder()
+        .target(assignmentTargetDetailsModel)
+        .templates(java.util.Arrays.asList(roleAssignmentTemplateModel))
+        .build();
+
+      Response<RoleAssignmentCollection> response = service.createRoleTemplateAssignment(createRoleTemplateAssignmentOptions).execute();
+      RoleAssignmentCollection result = response.getResult();
+
+      RoleAssignment assignment = result.getAssignments().get(0);
+      exampleRoleTemplateAssignmentId = assignment.getId();
+
+      List<String> values = response.getHeaders().values("Etag");
+      exampleRoleTemplateAssignmentETag = values.get(0);
+
+      System.out.println(result);
+      // end-create_role_template_assignment
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("getRoleAssignment() result:");
+      // begin-get_role_assignment
+      GetRoleAssignmentOptions getRoleAssignmentOptions = new GetRoleAssignmentOptions.Builder()
+        .assignmentId(exampleRoleTemplateAssignmentId)
+        .build();
+
+      Response<RoleAssignment> response = service.getRoleAssignment(getRoleAssignmentOptions).execute();
+      RoleAssignment roleAssignment = response.getResult();
+
+      System.out.println(roleAssignment);
+      // end-get_role_assignment
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("listRoleAssignments() result:");
+      // begin-list_role_assignments
+      ListRoleAssignmentsOptions listRoleAssignmentsOptions = new ListRoleAssignmentsOptions.Builder()
+        .accountId(exampleAccountId)
+        .limit(Long.valueOf("10"))
+        .build();
+
+      RoleAssignmentsPager pager = new RoleAssignmentsPager(service, listRoleAssignmentsOptions);
+      List<RoleAssignment> allResults = new ArrayList<>();
+      while (pager.hasNext()) {
+        List<RoleAssignment> nextPage = pager.getNext();
+        allResults.addAll(nextPage);
+      }
+
+      System.out.println(allResults);
+      // end-list_role_assignments
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("updateRoleAssignment() result:");
+      // begin-update_role_assignment
+      UpdateRoleAssignmentOptions updateRoleAssignmentOptions = new UpdateRoleAssignmentOptions.Builder()
+        .assignmentId(exampleRoleTemplateAssignmentId)
+        .ifMatch(exampleRoleTemplateAssignmentETag)
+        .templateVersion(exampleRoleTemplateVersion)
+        .build();
+
+      Response<RoleAssignment> response = service.updateRoleAssignment(updateRoleAssignmentOptions).execute();
+      RoleAssignment roleAssignment = response.getResult();
+
+      System.out.println(roleAssignment);
+      // end-update_role_assignment
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-delete_role_assignment
+      DeleteRoleAssignmentOptions deleteRoleAssignmentOptions = new DeleteRoleAssignmentOptions.Builder()
+        .assignmentId(exampleRoleTemplateAssignmentId)
+        .build();
+
+      Response<Void> response = service.deleteRoleAssignment(deleteRoleAssignmentOptions).execute();
+      // end-delete_role_assignment
+      System.out.printf("deleteRoleAssignment() response status code: %d%n", response.getStatusCode());
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+    try {
+      // begin-delete_role_template_version
+      DeleteRoleTemplateVersionOptions deleteRoleTemplateVersionOptions = new DeleteRoleTemplateVersionOptions.Builder()
+        .roleTemplateId(exampleRoleTemplateId)
+        .version(exampleRoleTemplateVersion)
+        .build();
+
+      Response<Void> response = service.deleteRoleTemplateVersion(deleteRoleTemplateVersionOptions).execute();
+      // end-delete_role_template_version
+      System.out.printf("deleteRoleTemplateVersion() response status code: %d%n", response.getStatusCode());
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      // begin-delete_role_template
+      DeleteRoleTemplateOptions deleteRoleTemplateOptions = new DeleteRoleTemplateOptions.Builder()
+        .roleTemplateId(exampleRoleTemplateId)
+        .build();
+
+      Response<Void> response = service.deleteRoleTemplate(deleteRoleTemplateOptions).execute();
+      // end-delete_role_template
+      System.out.printf("deleteRoleTemplate() response status code: %d%n", response.getStatusCode());
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
   }
 }

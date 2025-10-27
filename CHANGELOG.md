@@ -1,3 +1,10 @@
+# [0.70.0](https://github.com/IBM/platform-services-java-sdk/compare/0.69.0...0.70.0) (2025-10-27)
+
+
+### Features
+
+* **IAM Policy Management:** add enterprise custom role template ([#286](https://github.com/IBM/platform-services-java-sdk/issues/286)) ([3e26b5b](https://github.com/IBM/platform-services-java-sdk/commit/3e26b5b6975079dddf0d56e7a9a85f8b6f326997))
+
 # [0.69.0](https://github.com/IBM/platform-services-java-sdk/compare/0.68.6...0.69.0) (2025-10-01)
 
 

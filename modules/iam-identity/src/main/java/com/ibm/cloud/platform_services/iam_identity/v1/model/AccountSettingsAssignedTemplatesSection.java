@@ -19,7 +19,7 @@ import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * Response body format for Account Settings REST requests.
+ * Input body parameters for the Account Settings REST request.
  */
 public class AccountSettingsAssignedTemplatesSection extends GenericModel {
 
@@ -56,19 +56,6 @@ public class AccountSettingsAssignedTemplatesSection extends GenericModel {
   }
 
   /**
-   * Defines whether or not user visibility is access controlled. Valid values:
-   *   * RESTRICTED - users can view only specific types of users in the account, such as those the user has invited to
-   * the account, or descendants of those users based on the classic infrastructure hierarchy
-   *   * NOT_RESTRICTED - any user in the account can view other users from the Users page in IBM Cloud console.
-   */
-  public interface RestrictUserListVisibility {
-    /** NOT_RESTRICTED. */
-    String NOT_RESTRICTED = "NOT_RESTRICTED";
-    /** RESTRICTED. */
-    String RESTRICTED = "RESTRICTED";
-  }
-
-  /**
    * MFA trait definitions as follows:
    *   * NONE - No MFA trait set
    *   * NONE_NO_ROPC- No MFA, disable CLI logins with only a password
@@ -95,6 +82,22 @@ public class AccountSettingsAssignedTemplatesSection extends GenericModel {
     String LEVEL3 = "LEVEL3";
   }
 
+  /**
+   * Defines whether or not user visibility is access controlled. Valid values:
+   *   * RESTRICTED - users can view only specific types of users in the account, such as those the user has invited to
+   * the account, or descendants of those users based on the classic infrastructure hierarchy
+   *   * NOT_RESTRICTED - any user in the account can view other users from the Users page in IBM Cloud console
+   *   * NOT_SET - to 'unset' a previous set value.
+   */
+  public interface RestrictUserListVisibility {
+    /** RESTRICTED. */
+    String RESTRICTED = "RESTRICTED";
+    /** NOT_RESTRICTED. */
+    String NOT_RESTRICTED = "NOT_RESTRICTED";
+    /** NOT_SET. */
+    String NOT_SET = "NOT_SET";
+  }
+
   @SerializedName("template_id")
   protected String templateId;
   @SerializedName("template_version")
@@ -105,10 +108,6 @@ public class AccountSettingsAssignedTemplatesSection extends GenericModel {
   protected String restrictCreateServiceId;
   @SerializedName("restrict_create_platform_apikey")
   protected String restrictCreatePlatformApikey;
-  @SerializedName("restrict_user_list_visibility")
-  protected String restrictUserListVisibility;
-  @SerializedName("restrict_user_domains")
-  protected List<AccountSettingsUserDomainRestriction> restrictUserDomains;
   @SerializedName("allowed_ip_addresses")
   protected String allowedIpAddresses;
   protected String mfa;
@@ -122,8 +121,12 @@ public class AccountSettingsAssignedTemplatesSection extends GenericModel {
   protected String systemAccessTokenExpirationInSeconds;
   @SerializedName("system_refresh_token_expiration_in_seconds")
   protected String systemRefreshTokenExpirationInSeconds;
+  @SerializedName("restrict_user_list_visibility")
+  protected String restrictUserListVisibility;
   @SerializedName("user_mfa")
   protected List<AccountSettingsUserMFAResponse> userMfa;
+  @SerializedName("restrict_user_domains")
+  protected AssignedTemplatesAccountSettingsRestrictUserDomains restrictUserDomains;
 
   protected AccountSettingsAssignedTemplatesSection() { }
 
@@ -188,32 +191,6 @@ public class AccountSettingsAssignedTemplatesSection extends GenericModel {
    */
   public String getRestrictCreatePlatformApikey() {
     return restrictCreatePlatformApikey;
-  }
-
-  /**
-   * Gets the restrictUserListVisibility.
-   *
-   * Defines whether or not user visibility is access controlled. Valid values:
-   *   * RESTRICTED - users can view only specific types of users in the account, such as those the user has invited to
-   * the account, or descendants of those users based on the classic infrastructure hierarchy
-   *   * NOT_RESTRICTED - any user in the account can view other users from the Users page in IBM Cloud console.
-   *
-   * @return the restrictUserListVisibility
-   */
-  public String getRestrictUserListVisibility() {
-    return restrictUserListVisibility;
-  }
-
-  /**
-   * Gets the restrictUserDomains.
-   *
-   * Defines if account invitations are restricted to specified domains. To remove an entry for a realm_id, perform an
-   * update (PUT) request with only the realm_id set.
-   *
-   * @return the restrictUserDomains
-   */
-  public List<AccountSettingsUserDomainRestriction> getRestrictUserDomains() {
-    return restrictUserDomains;
   }
 
   /**
@@ -311,6 +288,21 @@ public class AccountSettingsAssignedTemplatesSection extends GenericModel {
   }
 
   /**
+   * Gets the restrictUserListVisibility.
+   *
+   * Defines whether or not user visibility is access controlled. Valid values:
+   *   * RESTRICTED - users can view only specific types of users in the account, such as those the user has invited to
+   * the account, or descendants of those users based on the classic infrastructure hierarchy
+   *   * NOT_RESTRICTED - any user in the account can view other users from the Users page in IBM Cloud console
+   *   * NOT_SET - to 'unset' a previous set value.
+   *
+   * @return the restrictUserListVisibility
+   */
+  public String getRestrictUserListVisibility() {
+    return restrictUserListVisibility;
+  }
+
+  /**
    * Gets the userMfa.
    *
    * List of users that are exempted from the MFA requirement of the account.
@@ -319,6 +311,15 @@ public class AccountSettingsAssignedTemplatesSection extends GenericModel {
    */
   public List<AccountSettingsUserMFAResponse> getUserMfa() {
     return userMfa;
+  }
+
+  /**
+   * Gets the restrictUserDomains.
+   *
+   * @return the restrictUserDomains
+   */
+  public AssignedTemplatesAccountSettingsRestrictUserDomains getRestrictUserDomains() {
+    return restrictUserDomains;
   }
 }
 

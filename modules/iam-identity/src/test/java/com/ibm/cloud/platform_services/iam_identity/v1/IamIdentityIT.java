@@ -1880,7 +1880,6 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
 
             assertNotNull(effectiveAccountSettingsResponseResult);
 
-            assertEquals(effectiveAccountSettingsResponseResult.getAccountId(), ACCOUNT_ID);
             assertNotNull(effectiveAccountSettingsResponseResult.getEffective());
             assertNotNull(effectiveAccountSettingsResponseResult.getAccount());
 
@@ -2576,16 +2575,41 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     @Test
     public void testCreateAccountSettingsTemplate() throws Exception {
         try {
+            UserMfa userMfaModel = new UserMfa.Builder()
+                    .iamId(IAM_ID)
+                    .mfa("NONE")
+                    .build();
 
-        	AccountSettingsComponent accountSettings = new AccountSettingsComponent.Builder()
-        			.mfa("LEVEL1")
-        			.systemAccessTokenExpirationInSeconds("3000")
-        			.build();
+            AccountSettingsUserDomainRestriction accountSettingsUserDomainRestrictionModel = new AccountSettingsUserDomainRestriction.Builder()
+                    .realmId("IBMid")
+                    .invitationEmailAllowPatterns(java.util.Arrays.asList("*.*@company.com"))
+                    .restrictInvitation(true)
+                    .build();
+
+            TemplateAccountSettingsRestrictUserDomains templateAccountSettingsRestrictUserDomainsModel = new TemplateAccountSettingsRestrictUserDomains.Builder()
+                    .accountSufficient(true)
+                    .restrictions(java.util.Arrays.asList(accountSettingsUserDomainRestrictionModel))
+                    .build();
+
+            TemplateAccountSettings templateAccountSettingsModel = new TemplateAccountSettings.Builder()
+                    .restrictCreateServiceId("NOT_SET")
+                    .restrictCreatePlatformApikey("NOT_SET")
+                    .mfa("NONE")
+                    .userMfa(java.util.Arrays.asList(userMfaModel))
+                    .sessionExpirationInSeconds("86400")
+                    .sessionInvalidationInSeconds("7200")
+                    .maxSessionsPerIdentity("10")
+                    .systemAccessTokenExpirationInSeconds("3600")
+                    .systemRefreshTokenExpirationInSeconds("259200")
+                    .restrictUserListVisibility("RESTRICTED")
+                    .restrictUserDomains(templateAccountSettingsRestrictUserDomainsModel)
+                    .build();
+
         	CreateAccountSettingsTemplateOptions createOptions = new CreateAccountSettingsTemplateOptions.Builder()
         			.accountId(ENTERPRISE_ACCOUNT_ID)
         			.name(ACCOUNT_SETTINGS_TEMPLATE_NAME)
         			.description("JavaSDK test Account Settings Template #1")
-        			.accountSettings(accountSettings)
+        			.accountSettings(templateAccountSettingsModel)
         			.build();
         	Response<AccountSettingsTemplateResponse> createResponse = service.createAccountSettingsTemplate(createOptions).execute();
             assertNotNull(createResponse);
@@ -2655,10 +2679,35 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     @Test(dependsOnMethods = { "testCreateAccountSettingsTemplate" })
     public void testUpdateAccountSettingsTemplate() throws Exception {
         try {
-        	AccountSettingsComponent accountSettings = new AccountSettingsComponent.Builder()
-        			.mfa("LEVEL1")
-        			.systemAccessTokenExpirationInSeconds("3000")
-        			.build();
+            UserMfa userMfaModel = new UserMfa.Builder()
+                    .iamId(IAM_ID)
+                    .mfa("LEVEL1")
+                    .build();
+
+            AccountSettingsUserDomainRestriction accountSettingsUserDomainRestrictionModel = new AccountSettingsUserDomainRestriction.Builder()
+                    .realmId("IBMid")
+                    .invitationEmailAllowPatterns(java.util.Arrays.asList("*.*@company.com"))
+                    .restrictInvitation(false)
+                    .build();
+
+            TemplateAccountSettingsRestrictUserDomains templateAccountSettingsRestrictUserDomainsModel = new TemplateAccountSettingsRestrictUserDomains.Builder()
+                    .accountSufficient(false)
+                    .restrictions(java.util.Arrays.asList(accountSettingsUserDomainRestrictionModel))
+                    .build();
+
+            TemplateAccountSettings templateAccountSettingsModel = new TemplateAccountSettings.Builder()
+                    .restrictCreateServiceId("NOT_RESTRICTED")
+                    .restrictCreatePlatformApikey("RESTRICTED")
+                    .mfa("LEVEL1")
+                    .userMfa(java.util.Arrays.asList(userMfaModel))
+                    .sessionExpirationInSeconds("86400")
+                    .sessionInvalidationInSeconds("7200")
+                    .maxSessionsPerIdentity("10")
+                    .systemAccessTokenExpirationInSeconds("3600")
+                    .systemRefreshTokenExpirationInSeconds("259200")
+                    .restrictUserListVisibility("NOT_RESTRICTED")
+                    .restrictUserDomains(templateAccountSettingsRestrictUserDomainsModel)
+                    .build();
         	UpdateAccountSettingsTemplateVersionOptions updateOptions = new UpdateAccountSettingsTemplateVersionOptions.Builder()
         			.accountId(ENTERPRISE_ACCOUNT_ID)
         			.templateId(accountSettingsTemplateId)
@@ -2666,7 +2715,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
         			.ifMatch(accountSettingsTemplateEtag)
         			.name(ACCOUNT_SETTINGS_TEMPLATE_NAME)
         			.description("JavaSDK test Account Settings Template #1 - updated")
-        			.accountSettings(accountSettings)
+        			.accountSettings(templateAccountSettingsModel)
         			.build();
 
         	Response<AccountSettingsTemplateResponse> updateResponse = service.updateAccountSettingsTemplateVersion(updateOptions).execute();
@@ -2729,18 +2778,42 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     @Test(dependsOnMethods = { "testAssignAccountSettingsTemplate" })
     public void testCreateNewAccountSettingsTemplateVersion() throws Exception {
         try {
-        	AccountSettingsComponent accountSettings = new AccountSettingsComponent.Builder()
-        			.mfa("LEVEL1")
-        			.systemAccessTokenExpirationInSeconds("2600")
-        			.restrictCreatePlatformApikey("RESTRICTED")
-        			.restrictCreateServiceId("RESTRICTED")
-        			.build();
+            UserMfa userMfaModel = new UserMfa.Builder()
+                    .iamId(IAM_ID)
+                    .mfa("NONE")
+                    .build();
+
+            AccountSettingsUserDomainRestriction accountSettingsUserDomainRestrictionModel = new AccountSettingsUserDomainRestriction.Builder()
+                    .realmId("IBMid")
+                    .invitationEmailAllowPatterns(java.util.Arrays.asList("*.*@ibm.com"))
+                    .restrictInvitation(false)
+                    .build();
+
+            TemplateAccountSettingsRestrictUserDomains templateAccountSettingsRestrictUserDomainsModel = new TemplateAccountSettingsRestrictUserDomains.Builder()
+                    .accountSufficient(false)
+                    .restrictions(java.util.Arrays.asList(accountSettingsUserDomainRestrictionModel))
+                    .build();
+
+            TemplateAccountSettings templateAccountSettingsModel = new TemplateAccountSettings.Builder()
+                    .restrictCreateServiceId("NOT_SET")
+                    .restrictCreatePlatformApikey("NOT_SET")
+                    .mfa("NONE")
+                    .userMfa(java.util.Arrays.asList(userMfaModel))
+                    .sessionExpirationInSeconds("86400")
+                    .sessionInvalidationInSeconds("7200")
+                    .maxSessionsPerIdentity("12")
+                    .systemAccessTokenExpirationInSeconds("3600")
+                    .systemRefreshTokenExpirationInSeconds("259200")
+                    .restrictUserListVisibility("RESTRICTED")
+                    .restrictUserDomains(templateAccountSettingsRestrictUserDomainsModel)
+                    .build();
+
         	CreateAccountSettingsTemplateVersionOptions createOptions = new CreateAccountSettingsTemplateVersionOptions.Builder()
         			.accountId(ENTERPRISE_ACCOUNT_ID)
         			.templateId(accountSettingsTemplateId)
         			.name(ACCOUNT_SETTINGS_TEMPLATE_NAME)
         			.description("JavaSDK test AccountSettings Template #1 - new version")
-        			.accountSettings(accountSettings)
+        			.accountSettings(templateAccountSettingsModel)
         			.build();
 
         	Response<AccountSettingsTemplateResponse> createResponse = service.createAccountSettingsTemplateVersion(createOptions).execute();

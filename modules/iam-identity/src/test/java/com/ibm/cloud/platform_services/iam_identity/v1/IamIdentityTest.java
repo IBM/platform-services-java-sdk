@@ -16,7 +16,6 @@ package com.ibm.cloud.platform_services.iam_identity.v1;
 import com.ibm.cloud.platform_services.iam_identity.v1.IamIdentity;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountBasedMfaEnrollment;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsAssignedTemplatesSection;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsComponent;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsEffectiveSection;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsTemplateList;
@@ -34,6 +33,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApikeyActivity;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApikeyActivityServiceid;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApikeyActivityUser;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.AssignedTemplatesAccountSettingsRestrictUserDomains;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CommitAccountSettingsTemplateOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CommitProfileTemplateOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateAccountSettingsAssignmentOptions;
@@ -134,6 +134,8 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdGroupList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.SetProfileIdentitiesOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.SetProfileIdentityOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.TemplateAccountSettings;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.TemplateAccountSettingsRestrictUserDomains;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TemplateAssignmentListResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TemplateAssignmentResource;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TemplateAssignmentResourceError;
@@ -2649,7 +2651,7 @@ public class IamIdentityTest {
   @Test
   public void testGetAccountSettingsWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"account_id\": \"accountId\", \"entity_tag\": \"entityTag\", \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"restrict_user_list_visibility\": \"NOT_RESTRICTED\", \"restrict_user_domains\": [{\"realm_id\": \"IBMid\", \"invitation_email_allow_patterns\": [\"invitationEmailAllowPatterns\"], \"restrict_invitation\": true}], \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\", \"name\": \"name\", \"userName\": \"userName\", \"email\": \"email\", \"description\": \"description\"}]}";
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"account_id\": \"accountId\", \"entity_tag\": \"entityTag\", \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\", \"restrict_user_list_visibility\": \"NOT_RESTRICTED\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\", \"name\": \"name\", \"userName\": \"userName\", \"email\": \"email\", \"description\": \"description\"}], \"restrict_user_domains\": [{\"realm_id\": \"IBMid\", \"invitation_email_allow_patterns\": [\"invitationEmailAllowPatterns\"], \"restrict_invitation\": true}]}";
     String getAccountSettingsPath = "/v1/accounts/testString/settings/identity";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -2704,12 +2706,18 @@ public class IamIdentityTest {
   @Test
   public void testUpdateAccountSettingsWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"account_id\": \"accountId\", \"entity_tag\": \"entityTag\", \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"restrict_user_list_visibility\": \"NOT_RESTRICTED\", \"restrict_user_domains\": [{\"realm_id\": \"IBMid\", \"invitation_email_allow_patterns\": [\"invitationEmailAllowPatterns\"], \"restrict_invitation\": true}], \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\", \"name\": \"name\", \"userName\": \"userName\", \"email\": \"email\", \"description\": \"description\"}]}";
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"account_id\": \"accountId\", \"entity_tag\": \"entityTag\", \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\", \"restrict_user_list_visibility\": \"NOT_RESTRICTED\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\", \"name\": \"name\", \"userName\": \"userName\", \"email\": \"email\", \"description\": \"description\"}], \"restrict_user_domains\": [{\"realm_id\": \"IBMid\", \"invitation_email_allow_patterns\": [\"invitationEmailAllowPatterns\"], \"restrict_invitation\": true}]}";
     String updateAccountSettingsPath = "/v1/accounts/testString/settings/identity";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(200)
       .setBody(mockResponseBody));
+
+    // Construct an instance of the UserMfa model
+    UserMfa userMfaModel = new UserMfa.Builder()
+      .iamId("testString")
+      .mfa("NONE")
+      .build();
 
     // Construct an instance of the AccountSettingsUserDomainRestriction model
     AccountSettingsUserDomainRestriction accountSettingsUserDomainRestrictionModel = new AccountSettingsUserDomainRestriction.Builder()
@@ -2718,28 +2726,22 @@ public class IamIdentityTest {
       .restrictInvitation(true)
       .build();
 
-    // Construct an instance of the UserMfa model
-    UserMfa userMfaModel = new UserMfa.Builder()
-      .iamId("testString")
-      .mfa("NONE")
-      .build();
-
     // Construct an instance of the UpdateAccountSettingsOptions model
     UpdateAccountSettingsOptions updateAccountSettingsOptionsModel = new UpdateAccountSettingsOptions.Builder()
       .ifMatch("testString")
       .accountId("testString")
       .restrictCreateServiceId("NOT_SET")
       .restrictCreatePlatformApikey("NOT_SET")
-      .restrictUserListVisibility("NOT_RESTRICTED")
-      .restrictUserDomains(java.util.Arrays.asList(accountSettingsUserDomainRestrictionModel))
       .allowedIpAddresses("testString")
       .mfa("NONE")
+      .userMfa(java.util.Arrays.asList(userMfaModel))
       .sessionExpirationInSeconds("86400")
       .sessionInvalidationInSeconds("7200")
       .maxSessionsPerIdentity("testString")
       .systemAccessTokenExpirationInSeconds("3600")
       .systemRefreshTokenExpirationInSeconds("259200")
-      .userMfa(java.util.Arrays.asList(userMfaModel))
+      .restrictUserListVisibility("NOT_RESTRICTED")
+      .restrictUserDomains(java.util.Arrays.asList(accountSettingsUserDomainRestrictionModel))
       .build();
 
     // Invoke updateAccountSettings() with a valid options model and verify the result
@@ -2783,7 +2785,7 @@ public class IamIdentityTest {
   @Test
   public void testGetEffectiveAccountSettingsWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"account_id\": \"accountId\", \"effective\": {\"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"restrict_user_list_visibility\": \"NOT_RESTRICTED\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\", \"name\": \"name\", \"userName\": \"userName\", \"email\": \"email\", \"description\": \"description\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\"}, \"account\": {\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"account_id\": \"accountId\", \"entity_tag\": \"entityTag\", \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"restrict_user_list_visibility\": \"NOT_RESTRICTED\", \"restrict_user_domains\": [{\"realm_id\": \"IBMid\", \"invitation_email_allow_patterns\": [\"invitationEmailAllowPatterns\"], \"restrict_invitation\": true}], \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\", \"name\": \"name\", \"userName\": \"userName\", \"email\": \"email\", \"description\": \"description\"}]}, \"assigned_templates\": [{\"template_id\": \"templateId\", \"template_version\": 15, \"template_name\": \"templateName\", \"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"restrict_user_list_visibility\": \"NOT_RESTRICTED\", \"restrict_user_domains\": [{\"realm_id\": \"IBMid\", \"invitation_email_allow_patterns\": [\"invitationEmailAllowPatterns\"], \"restrict_invitation\": true}], \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\", \"name\": \"name\", \"userName\": \"userName\", \"email\": \"email\", \"description\": \"description\"}]}]}";
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"account_id\": \"accountId\", \"effective\": {\"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"restrict_user_list_visibility\": \"NOT_RESTRICTED\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\", \"name\": \"name\", \"userName\": \"userName\", \"email\": \"email\", \"description\": \"description\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\"}, \"account\": {\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"account_id\": \"accountId\", \"entity_tag\": \"entityTag\", \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\", \"restrict_user_list_visibility\": \"NOT_RESTRICTED\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\", \"name\": \"name\", \"userName\": \"userName\", \"email\": \"email\", \"description\": \"description\"}], \"restrict_user_domains\": [{\"realm_id\": \"IBMid\", \"invitation_email_allow_patterns\": [\"invitationEmailAllowPatterns\"], \"restrict_invitation\": true}]}, \"assigned_templates\": [{\"template_id\": \"templateId\", \"template_version\": 15, \"template_name\": \"templateName\", \"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\", \"restrict_user_list_visibility\": \"RESTRICTED\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\", \"name\": \"name\", \"userName\": \"userName\", \"email\": \"email\", \"description\": \"description\"}], \"restrict_user_domains\": {\"account_sufficient\": false, \"restrictions\": [{\"realm_id\": \"IBMid\", \"invitation_email_allow_patterns\": [\"invitationEmailAllowPatterns\"], \"restrict_invitation\": true}]}}]}";
     String getEffectiveAccountSettingsPath = "/v1/accounts/testString/effective_settings/identity";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -4221,7 +4223,7 @@ public class IamIdentityTest {
   @Test
   public void testListAccountSettingsTemplatesWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"offset\": 6, \"limit\": 20, \"first\": \"first\", \"previous\": \"previous\", \"next\": \"next\", \"account_settings_templates\": [{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"account_settings\": {\"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\"}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"offset\": 6, \"limit\": 20, \"first\": \"first\", \"previous\": \"previous\", \"next\": \"next\", \"account_settings_templates\": [{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"account_settings\": {\"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\", \"restrict_user_list_visibility\": \"RESTRICTED\", \"restrict_user_domains\": {\"account_sufficient\": false, \"restrictions\": [{\"realm_id\": \"IBMid\", \"invitation_email_allow_patterns\": [\"invitationEmailAllowPatterns\"], \"restrict_invitation\": true}]}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
     String listAccountSettingsTemplatesPath = "/v1/account_settings_templates";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -4276,7 +4278,7 @@ public class IamIdentityTest {
   @Test
   public void testCreateAccountSettingsTemplateWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"account_settings\": {\"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\"}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"account_settings\": {\"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\", \"restrict_user_list_visibility\": \"RESTRICTED\", \"restrict_user_domains\": {\"account_sufficient\": false, \"restrictions\": [{\"realm_id\": \"IBMid\", \"invitation_email_allow_patterns\": [\"invitationEmailAllowPatterns\"], \"restrict_invitation\": true}]}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String createAccountSettingsTemplatePath = "/v1/account_settings_templates";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -4289,8 +4291,21 @@ public class IamIdentityTest {
       .mfa("NONE")
       .build();
 
-    // Construct an instance of the AccountSettingsComponent model
-    AccountSettingsComponent accountSettingsComponentModel = new AccountSettingsComponent.Builder()
+    // Construct an instance of the AccountSettingsUserDomainRestriction model
+    AccountSettingsUserDomainRestriction accountSettingsUserDomainRestrictionModel = new AccountSettingsUserDomainRestriction.Builder()
+      .realmId("IBMid")
+      .invitationEmailAllowPatterns(java.util.Arrays.asList("*.*@company.com"))
+      .restrictInvitation(true)
+      .build();
+
+    // Construct an instance of the TemplateAccountSettingsRestrictUserDomains model
+    TemplateAccountSettingsRestrictUserDomains templateAccountSettingsRestrictUserDomainsModel = new TemplateAccountSettingsRestrictUserDomains.Builder()
+      .accountSufficient(true)
+      .restrictions(java.util.Arrays.asList(accountSettingsUserDomainRestrictionModel))
+      .build();
+
+    // Construct an instance of the TemplateAccountSettings model
+    TemplateAccountSettings templateAccountSettingsModel = new TemplateAccountSettings.Builder()
       .restrictCreateServiceId("NOT_SET")
       .restrictCreatePlatformApikey("NOT_SET")
       .allowedIpAddresses("testString")
@@ -4301,6 +4316,8 @@ public class IamIdentityTest {
       .maxSessionsPerIdentity("testString")
       .systemAccessTokenExpirationInSeconds("3600")
       .systemRefreshTokenExpirationInSeconds("259200")
+      .restrictUserListVisibility("RESTRICTED")
+      .restrictUserDomains(templateAccountSettingsRestrictUserDomainsModel)
       .build();
 
     // Construct an instance of the CreateAccountSettingsTemplateOptions model
@@ -4308,7 +4325,7 @@ public class IamIdentityTest {
       .accountId("testString")
       .name("testString")
       .description("testString")
-      .accountSettings(accountSettingsComponentModel)
+      .accountSettings(templateAccountSettingsModel)
       .build();
 
     // Invoke createAccountSettingsTemplate() with a valid options model and verify the result
@@ -4343,7 +4360,7 @@ public class IamIdentityTest {
   @Test
   public void testGetLatestAccountSettingsTemplateVersionWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"account_settings\": {\"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\"}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"account_settings\": {\"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\", \"restrict_user_list_visibility\": \"RESTRICTED\", \"restrict_user_domains\": {\"account_sufficient\": false, \"restrictions\": [{\"realm_id\": \"IBMid\", \"invitation_email_allow_patterns\": [\"invitationEmailAllowPatterns\"], \"restrict_invitation\": true}]}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String getLatestAccountSettingsTemplateVersionPath = "/v1/account_settings_templates/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -4446,7 +4463,7 @@ public class IamIdentityTest {
   @Test
   public void testListVersionsOfAccountSettingsTemplateWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"offset\": 6, \"limit\": 20, \"first\": \"first\", \"previous\": \"previous\", \"next\": \"next\", \"account_settings_templates\": [{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"account_settings\": {\"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\"}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
+    String mockResponseBody = "{\"context\": {\"transaction_id\": \"transactionId\", \"operation\": \"operation\", \"user_agent\": \"userAgent\", \"url\": \"url\", \"instance_id\": \"instanceId\", \"thread_id\": \"threadId\", \"host\": \"host\", \"start_time\": \"startTime\", \"end_time\": \"endTime\", \"elapsed_time\": \"elapsedTime\", \"cluster_name\": \"clusterName\"}, \"offset\": 6, \"limit\": 20, \"first\": \"first\", \"previous\": \"previous\", \"next\": \"next\", \"account_settings_templates\": [{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"account_settings\": {\"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\", \"restrict_user_list_visibility\": \"RESTRICTED\", \"restrict_user_domains\": {\"account_sufficient\": false, \"restrictions\": [{\"realm_id\": \"IBMid\", \"invitation_email_allow_patterns\": [\"invitationEmailAllowPatterns\"], \"restrict_invitation\": true}]}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
     String listVersionsOfAccountSettingsTemplatePath = "/v1/account_settings_templates/testString/versions";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -4507,7 +4524,7 @@ public class IamIdentityTest {
   @Test
   public void testCreateAccountSettingsTemplateVersionWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"account_settings\": {\"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\"}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"account_settings\": {\"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\", \"restrict_user_list_visibility\": \"RESTRICTED\", \"restrict_user_domains\": {\"account_sufficient\": false, \"restrictions\": [{\"realm_id\": \"IBMid\", \"invitation_email_allow_patterns\": [\"invitationEmailAllowPatterns\"], \"restrict_invitation\": true}]}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String createAccountSettingsTemplateVersionPath = "/v1/account_settings_templates/testString/versions";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -4520,8 +4537,21 @@ public class IamIdentityTest {
       .mfa("NONE")
       .build();
 
-    // Construct an instance of the AccountSettingsComponent model
-    AccountSettingsComponent accountSettingsComponentModel = new AccountSettingsComponent.Builder()
+    // Construct an instance of the AccountSettingsUserDomainRestriction model
+    AccountSettingsUserDomainRestriction accountSettingsUserDomainRestrictionModel = new AccountSettingsUserDomainRestriction.Builder()
+      .realmId("IBMid")
+      .invitationEmailAllowPatterns(java.util.Arrays.asList("*.*@company.com"))
+      .restrictInvitation(true)
+      .build();
+
+    // Construct an instance of the TemplateAccountSettingsRestrictUserDomains model
+    TemplateAccountSettingsRestrictUserDomains templateAccountSettingsRestrictUserDomainsModel = new TemplateAccountSettingsRestrictUserDomains.Builder()
+      .accountSufficient(true)
+      .restrictions(java.util.Arrays.asList(accountSettingsUserDomainRestrictionModel))
+      .build();
+
+    // Construct an instance of the TemplateAccountSettings model
+    TemplateAccountSettings templateAccountSettingsModel = new TemplateAccountSettings.Builder()
       .restrictCreateServiceId("NOT_SET")
       .restrictCreatePlatformApikey("NOT_SET")
       .allowedIpAddresses("testString")
@@ -4532,6 +4562,8 @@ public class IamIdentityTest {
       .maxSessionsPerIdentity("testString")
       .systemAccessTokenExpirationInSeconds("3600")
       .systemRefreshTokenExpirationInSeconds("259200")
+      .restrictUserListVisibility("RESTRICTED")
+      .restrictUserDomains(templateAccountSettingsRestrictUserDomainsModel)
       .build();
 
     // Construct an instance of the CreateAccountSettingsTemplateVersionOptions model
@@ -4540,7 +4572,7 @@ public class IamIdentityTest {
       .accountId("testString")
       .name("testString")
       .description("testString")
-      .accountSettings(accountSettingsComponentModel)
+      .accountSettings(templateAccountSettingsModel)
       .build();
 
     // Invoke createAccountSettingsTemplateVersion() with a valid options model and verify the result
@@ -4582,7 +4614,7 @@ public class IamIdentityTest {
   @Test
   public void testGetAccountSettingsTemplateVersionWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"account_settings\": {\"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\"}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"account_settings\": {\"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\", \"restrict_user_list_visibility\": \"RESTRICTED\", \"restrict_user_domains\": {\"account_sufficient\": false, \"restrictions\": [{\"realm_id\": \"IBMid\", \"invitation_email_allow_patterns\": [\"invitationEmailAllowPatterns\"], \"restrict_invitation\": true}]}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String getAccountSettingsTemplateVersionPath = "/v1/account_settings_templates/testString/versions/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -4636,7 +4668,7 @@ public class IamIdentityTest {
   @Test
   public void testUpdateAccountSettingsTemplateVersionWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"account_settings\": {\"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\"}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"version\": 7, \"account_id\": \"accountId\", \"name\": \"name\", \"description\": \"description\", \"committed\": false, \"account_settings\": {\"restrict_create_service_id\": \"NOT_SET\", \"restrict_create_platform_apikey\": \"NOT_SET\", \"allowed_ip_addresses\": \"allowedIpAddresses\", \"mfa\": \"NONE\", \"user_mfa\": [{\"iam_id\": \"iamId\", \"mfa\": \"NONE\"}], \"session_expiration_in_seconds\": \"86400\", \"session_invalidation_in_seconds\": \"7200\", \"max_sessions_per_identity\": \"maxSessionsPerIdentity\", \"system_access_token_expiration_in_seconds\": \"3600\", \"system_refresh_token_expiration_in_seconds\": \"259200\", \"restrict_user_list_visibility\": \"RESTRICTED\", \"restrict_user_domains\": {\"account_sufficient\": false, \"restrictions\": [{\"realm_id\": \"IBMid\", \"invitation_email_allow_patterns\": [\"invitationEmailAllowPatterns\"], \"restrict_invitation\": true}]}}, \"history\": [{\"timestamp\": \"timestamp\", \"iam_id\": \"iamId\", \"iam_id_account\": \"iamIdAccount\", \"action\": \"action\", \"params\": [\"params\"], \"message\": \"message\"}], \"entity_tag\": \"entityTag\", \"crn\": \"crn\", \"created_at\": \"createdAt\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"lastModifiedAt\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String updateAccountSettingsTemplateVersionPath = "/v1/account_settings_templates/testString/versions/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -4649,8 +4681,21 @@ public class IamIdentityTest {
       .mfa("NONE")
       .build();
 
-    // Construct an instance of the AccountSettingsComponent model
-    AccountSettingsComponent accountSettingsComponentModel = new AccountSettingsComponent.Builder()
+    // Construct an instance of the AccountSettingsUserDomainRestriction model
+    AccountSettingsUserDomainRestriction accountSettingsUserDomainRestrictionModel = new AccountSettingsUserDomainRestriction.Builder()
+      .realmId("IBMid")
+      .invitationEmailAllowPatterns(java.util.Arrays.asList("*.*@company.com"))
+      .restrictInvitation(true)
+      .build();
+
+    // Construct an instance of the TemplateAccountSettingsRestrictUserDomains model
+    TemplateAccountSettingsRestrictUserDomains templateAccountSettingsRestrictUserDomainsModel = new TemplateAccountSettingsRestrictUserDomains.Builder()
+      .accountSufficient(true)
+      .restrictions(java.util.Arrays.asList(accountSettingsUserDomainRestrictionModel))
+      .build();
+
+    // Construct an instance of the TemplateAccountSettings model
+    TemplateAccountSettings templateAccountSettingsModel = new TemplateAccountSettings.Builder()
       .restrictCreateServiceId("NOT_SET")
       .restrictCreatePlatformApikey("NOT_SET")
       .allowedIpAddresses("testString")
@@ -4661,6 +4706,8 @@ public class IamIdentityTest {
       .maxSessionsPerIdentity("testString")
       .systemAccessTokenExpirationInSeconds("3600")
       .systemRefreshTokenExpirationInSeconds("259200")
+      .restrictUserListVisibility("RESTRICTED")
+      .restrictUserDomains(templateAccountSettingsRestrictUserDomainsModel)
       .build();
 
     // Construct an instance of the UpdateAccountSettingsTemplateVersionOptions model
@@ -4671,7 +4718,7 @@ public class IamIdentityTest {
       .accountId("testString")
       .name("testString")
       .description("testString")
-      .accountSettings(accountSettingsComponentModel)
+      .accountSettings(templateAccountSettingsModel)
       .build();
 
     // Invoke updateAccountSettingsTemplateVersion() with a valid options model and verify the result

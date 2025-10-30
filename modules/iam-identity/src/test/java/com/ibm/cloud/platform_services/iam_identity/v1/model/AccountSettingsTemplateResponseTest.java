@@ -13,9 +13,11 @@
 
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
-import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsComponent;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsTemplateResponse;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsUserDomainRestriction;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.EnityHistoryRecord;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.TemplateAccountSettings;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.TemplateAccountSettingsRestrictUserDomains;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UserMfa;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;

@@ -16,12 +16,13 @@ package com.ibm.cloud.platform_services.iam_identity.v1.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.gson.annotations.SerializedName;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * The updateAccountSettings options.
+ * Input body parameters for the Account Settings REST request.
  */
-public class UpdateAccountSettingsOptions extends GenericModel {
+public class TemplateAccountSettings extends GenericModel {
 
   /**
    * Defines whether or not creating the resource is access controlled. Valid values:
@@ -86,36 +87,46 @@ public class UpdateAccountSettingsOptions extends GenericModel {
    * Defines whether or not user visibility is access controlled. Valid values:
    *   * RESTRICTED - users can view only specific types of users in the account, such as those the user has invited to
    * the account, or descendants of those users based on the classic infrastructure hierarchy
-   *   * NOT_RESTRICTED - any user in the account can view other users from the Users page in IBM Cloud console.
+   *   * NOT_RESTRICTED - any user in the account can view other users from the Users page in IBM Cloud console
+   *   * NOT_SET - to 'unset' a previous set value.
    */
   public interface RestrictUserListVisibility {
-    /** NOT_RESTRICTED. */
-    String NOT_RESTRICTED = "NOT_RESTRICTED";
     /** RESTRICTED. */
     String RESTRICTED = "RESTRICTED";
+    /** NOT_RESTRICTED. */
+    String NOT_RESTRICTED = "NOT_RESTRICTED";
+    /** NOT_SET. */
+    String NOT_SET = "NOT_SET";
   }
 
-  protected String ifMatch;
-  protected String accountId;
+  @SerializedName("restrict_create_service_id")
   protected String restrictCreateServiceId;
+  @SerializedName("restrict_create_platform_apikey")
   protected String restrictCreatePlatformApikey;
+  @SerializedName("allowed_ip_addresses")
   protected String allowedIpAddresses;
   protected String mfa;
+  @SerializedName("user_mfa")
   protected List<UserMfa> userMfa;
+  @SerializedName("session_expiration_in_seconds")
   protected String sessionExpirationInSeconds;
+  @SerializedName("session_invalidation_in_seconds")
   protected String sessionInvalidationInSeconds;
+  @SerializedName("max_sessions_per_identity")
   protected String maxSessionsPerIdentity;
+  @SerializedName("system_access_token_expiration_in_seconds")
   protected String systemAccessTokenExpirationInSeconds;
+  @SerializedName("system_refresh_token_expiration_in_seconds")
   protected String systemRefreshTokenExpirationInSeconds;
+  @SerializedName("restrict_user_list_visibility")
   protected String restrictUserListVisibility;
-  protected List<AccountSettingsUserDomainRestriction> restrictUserDomains;
+  @SerializedName("restrict_user_domains")
+  protected TemplateAccountSettingsRestrictUserDomains restrictUserDomains;
 
   /**
    * Builder.
    */
   public static class Builder {
-    private String ifMatch;
-    private String accountId;
     private String restrictCreateServiceId;
     private String restrictCreatePlatformApikey;
     private String allowedIpAddresses;
@@ -127,28 +138,26 @@ public class UpdateAccountSettingsOptions extends GenericModel {
     private String systemAccessTokenExpirationInSeconds;
     private String systemRefreshTokenExpirationInSeconds;
     private String restrictUserListVisibility;
-    private List<AccountSettingsUserDomainRestriction> restrictUserDomains;
+    private TemplateAccountSettingsRestrictUserDomains restrictUserDomains;
 
     /**
-     * Instantiates a new Builder from an existing UpdateAccountSettingsOptions instance.
+     * Instantiates a new Builder from an existing TemplateAccountSettings instance.
      *
-     * @param updateAccountSettingsOptions the instance to initialize the Builder with
+     * @param templateAccountSettings the instance to initialize the Builder with
      */
-    private Builder(UpdateAccountSettingsOptions updateAccountSettingsOptions) {
-      this.ifMatch = updateAccountSettingsOptions.ifMatch;
-      this.accountId = updateAccountSettingsOptions.accountId;
-      this.restrictCreateServiceId = updateAccountSettingsOptions.restrictCreateServiceId;
-      this.restrictCreatePlatformApikey = updateAccountSettingsOptions.restrictCreatePlatformApikey;
-      this.allowedIpAddresses = updateAccountSettingsOptions.allowedIpAddresses;
-      this.mfa = updateAccountSettingsOptions.mfa;
-      this.userMfa = updateAccountSettingsOptions.userMfa;
-      this.sessionExpirationInSeconds = updateAccountSettingsOptions.sessionExpirationInSeconds;
-      this.sessionInvalidationInSeconds = updateAccountSettingsOptions.sessionInvalidationInSeconds;
-      this.maxSessionsPerIdentity = updateAccountSettingsOptions.maxSessionsPerIdentity;
-      this.systemAccessTokenExpirationInSeconds = updateAccountSettingsOptions.systemAccessTokenExpirationInSeconds;
-      this.systemRefreshTokenExpirationInSeconds = updateAccountSettingsOptions.systemRefreshTokenExpirationInSeconds;
-      this.restrictUserListVisibility = updateAccountSettingsOptions.restrictUserListVisibility;
-      this.restrictUserDomains = updateAccountSettingsOptions.restrictUserDomains;
+    private Builder(TemplateAccountSettings templateAccountSettings) {
+      this.restrictCreateServiceId = templateAccountSettings.restrictCreateServiceId;
+      this.restrictCreatePlatformApikey = templateAccountSettings.restrictCreatePlatformApikey;
+      this.allowedIpAddresses = templateAccountSettings.allowedIpAddresses;
+      this.mfa = templateAccountSettings.mfa;
+      this.userMfa = templateAccountSettings.userMfa;
+      this.sessionExpirationInSeconds = templateAccountSettings.sessionExpirationInSeconds;
+      this.sessionInvalidationInSeconds = templateAccountSettings.sessionInvalidationInSeconds;
+      this.maxSessionsPerIdentity = templateAccountSettings.maxSessionsPerIdentity;
+      this.systemAccessTokenExpirationInSeconds = templateAccountSettings.systemAccessTokenExpirationInSeconds;
+      this.systemRefreshTokenExpirationInSeconds = templateAccountSettings.systemRefreshTokenExpirationInSeconds;
+      this.restrictUserListVisibility = templateAccountSettings.restrictUserListVisibility;
+      this.restrictUserDomains = templateAccountSettings.restrictUserDomains;
     }
 
     /**
@@ -158,30 +167,19 @@ public class UpdateAccountSettingsOptions extends GenericModel {
     }
 
     /**
-     * Instantiates a new builder with required properties.
+     * Builds a TemplateAccountSettings.
      *
-     * @param ifMatch the ifMatch
-     * @param accountId the accountId
+     * @return the new TemplateAccountSettings instance
      */
-    public Builder(String ifMatch, String accountId) {
-      this.ifMatch = ifMatch;
-      this.accountId = accountId;
-    }
-
-    /**
-     * Builds a UpdateAccountSettingsOptions.
-     *
-     * @return the new UpdateAccountSettingsOptions instance
-     */
-    public UpdateAccountSettingsOptions build() {
-      return new UpdateAccountSettingsOptions(this);
+    public TemplateAccountSettings build() {
+      return new TemplateAccountSettings(this);
     }
 
     /**
      * Adds a new element to userMfa.
      *
      * @param userMfa the new element to be added
-     * @return the UpdateAccountSettingsOptions builder
+     * @return the TemplateAccountSettings builder
      */
     public Builder addUserMfa(UserMfa userMfa) {
       com.ibm.cloud.sdk.core.util.Validator.notNull(userMfa,
@@ -194,48 +192,10 @@ public class UpdateAccountSettingsOptions extends GenericModel {
     }
 
     /**
-     * Adds a new element to restrictUserDomains.
-     *
-     * @param restrictUserDomains the new element to be added
-     * @return the UpdateAccountSettingsOptions builder
-     */
-    public Builder addRestrictUserDomains(AccountSettingsUserDomainRestriction restrictUserDomains) {
-      com.ibm.cloud.sdk.core.util.Validator.notNull(restrictUserDomains,
-        "restrictUserDomains cannot be null");
-      if (this.restrictUserDomains == null) {
-        this.restrictUserDomains = new ArrayList<AccountSettingsUserDomainRestriction>();
-      }
-      this.restrictUserDomains.add(restrictUserDomains);
-      return this;
-    }
-
-    /**
-     * Set the ifMatch.
-     *
-     * @param ifMatch the ifMatch
-     * @return the UpdateAccountSettingsOptions builder
-     */
-    public Builder ifMatch(String ifMatch) {
-      this.ifMatch = ifMatch;
-      return this;
-    }
-
-    /**
-     * Set the accountId.
-     *
-     * @param accountId the accountId
-     * @return the UpdateAccountSettingsOptions builder
-     */
-    public Builder accountId(String accountId) {
-      this.accountId = accountId;
-      return this;
-    }
-
-    /**
      * Set the restrictCreateServiceId.
      *
      * @param restrictCreateServiceId the restrictCreateServiceId
-     * @return the UpdateAccountSettingsOptions builder
+     * @return the TemplateAccountSettings builder
      */
     public Builder restrictCreateServiceId(String restrictCreateServiceId) {
       this.restrictCreateServiceId = restrictCreateServiceId;
@@ -246,7 +206,7 @@ public class UpdateAccountSettingsOptions extends GenericModel {
      * Set the restrictCreatePlatformApikey.
      *
      * @param restrictCreatePlatformApikey the restrictCreatePlatformApikey
-     * @return the UpdateAccountSettingsOptions builder
+     * @return the TemplateAccountSettings builder
      */
     public Builder restrictCreatePlatformApikey(String restrictCreatePlatformApikey) {
       this.restrictCreatePlatformApikey = restrictCreatePlatformApikey;
@@ -257,7 +217,7 @@ public class UpdateAccountSettingsOptions extends GenericModel {
      * Set the allowedIpAddresses.
      *
      * @param allowedIpAddresses the allowedIpAddresses
-     * @return the UpdateAccountSettingsOptions builder
+     * @return the TemplateAccountSettings builder
      */
     public Builder allowedIpAddresses(String allowedIpAddresses) {
       this.allowedIpAddresses = allowedIpAddresses;
@@ -268,7 +228,7 @@ public class UpdateAccountSettingsOptions extends GenericModel {
      * Set the mfa.
      *
      * @param mfa the mfa
-     * @return the UpdateAccountSettingsOptions builder
+     * @return the TemplateAccountSettings builder
      */
     public Builder mfa(String mfa) {
       this.mfa = mfa;
@@ -280,7 +240,7 @@ public class UpdateAccountSettingsOptions extends GenericModel {
      * Existing userMfa will be replaced.
      *
      * @param userMfa the userMfa
-     * @return the UpdateAccountSettingsOptions builder
+     * @return the TemplateAccountSettings builder
      */
     public Builder userMfa(List<UserMfa> userMfa) {
       this.userMfa = userMfa;
@@ -291,7 +251,7 @@ public class UpdateAccountSettingsOptions extends GenericModel {
      * Set the sessionExpirationInSeconds.
      *
      * @param sessionExpirationInSeconds the sessionExpirationInSeconds
-     * @return the UpdateAccountSettingsOptions builder
+     * @return the TemplateAccountSettings builder
      */
     public Builder sessionExpirationInSeconds(String sessionExpirationInSeconds) {
       this.sessionExpirationInSeconds = sessionExpirationInSeconds;
@@ -302,7 +262,7 @@ public class UpdateAccountSettingsOptions extends GenericModel {
      * Set the sessionInvalidationInSeconds.
      *
      * @param sessionInvalidationInSeconds the sessionInvalidationInSeconds
-     * @return the UpdateAccountSettingsOptions builder
+     * @return the TemplateAccountSettings builder
      */
     public Builder sessionInvalidationInSeconds(String sessionInvalidationInSeconds) {
       this.sessionInvalidationInSeconds = sessionInvalidationInSeconds;
@@ -313,7 +273,7 @@ public class UpdateAccountSettingsOptions extends GenericModel {
      * Set the maxSessionsPerIdentity.
      *
      * @param maxSessionsPerIdentity the maxSessionsPerIdentity
-     * @return the UpdateAccountSettingsOptions builder
+     * @return the TemplateAccountSettings builder
      */
     public Builder maxSessionsPerIdentity(String maxSessionsPerIdentity) {
       this.maxSessionsPerIdentity = maxSessionsPerIdentity;
@@ -324,7 +284,7 @@ public class UpdateAccountSettingsOptions extends GenericModel {
      * Set the systemAccessTokenExpirationInSeconds.
      *
      * @param systemAccessTokenExpirationInSeconds the systemAccessTokenExpirationInSeconds
-     * @return the UpdateAccountSettingsOptions builder
+     * @return the TemplateAccountSettings builder
      */
     public Builder systemAccessTokenExpirationInSeconds(String systemAccessTokenExpirationInSeconds) {
       this.systemAccessTokenExpirationInSeconds = systemAccessTokenExpirationInSeconds;
@@ -335,7 +295,7 @@ public class UpdateAccountSettingsOptions extends GenericModel {
      * Set the systemRefreshTokenExpirationInSeconds.
      *
      * @param systemRefreshTokenExpirationInSeconds the systemRefreshTokenExpirationInSeconds
-     * @return the UpdateAccountSettingsOptions builder
+     * @return the TemplateAccountSettings builder
      */
     public Builder systemRefreshTokenExpirationInSeconds(String systemRefreshTokenExpirationInSeconds) {
       this.systemRefreshTokenExpirationInSeconds = systemRefreshTokenExpirationInSeconds;
@@ -346,7 +306,7 @@ public class UpdateAccountSettingsOptions extends GenericModel {
      * Set the restrictUserListVisibility.
      *
      * @param restrictUserListVisibility the restrictUserListVisibility
-     * @return the UpdateAccountSettingsOptions builder
+     * @return the TemplateAccountSettings builder
      */
     public Builder restrictUserListVisibility(String restrictUserListVisibility) {
       this.restrictUserListVisibility = restrictUserListVisibility;
@@ -355,26 +315,19 @@ public class UpdateAccountSettingsOptions extends GenericModel {
 
     /**
      * Set the restrictUserDomains.
-     * Existing restrictUserDomains will be replaced.
      *
      * @param restrictUserDomains the restrictUserDomains
-     * @return the UpdateAccountSettingsOptions builder
+     * @return the TemplateAccountSettings builder
      */
-    public Builder restrictUserDomains(List<AccountSettingsUserDomainRestriction> restrictUserDomains) {
+    public Builder restrictUserDomains(TemplateAccountSettingsRestrictUserDomains restrictUserDomains) {
       this.restrictUserDomains = restrictUserDomains;
       return this;
     }
   }
 
-  protected UpdateAccountSettingsOptions() { }
+  protected TemplateAccountSettings() { }
 
-  protected UpdateAccountSettingsOptions(Builder builder) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.ifMatch,
-      "ifMatch cannot be null");
-    com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.accountId,
-      "accountId cannot be empty");
-    ifMatch = builder.ifMatch;
-    accountId = builder.accountId;
+  protected TemplateAccountSettings(Builder builder) {
     restrictCreateServiceId = builder.restrictCreateServiceId;
     restrictCreatePlatformApikey = builder.restrictCreatePlatformApikey;
     allowedIpAddresses = builder.allowedIpAddresses;
@@ -392,34 +345,10 @@ public class UpdateAccountSettingsOptions extends GenericModel {
   /**
    * New builder.
    *
-   * @return a UpdateAccountSettingsOptions builder
+   * @return a TemplateAccountSettings builder
    */
   public Builder newBuilder() {
     return new Builder(this);
-  }
-
-  /**
-   * Gets the ifMatch.
-   *
-   * Version of the account settings to be updated. Specify the version that you retrieved as entity_tag (ETag header)
-   * when reading the account. This value helps identifying parallel usage of this API. Pass * to indicate to update any
-   * version available. This might result in stale updates.
-   *
-   * @return the ifMatch
-   */
-  public String ifMatch() {
-    return ifMatch;
-  }
-
-  /**
-   * Gets the accountId.
-   *
-   * The id of the account to update the settings for.
-   *
-   * @return the accountId
-   */
-  public String accountId() {
-    return accountId;
   }
 
   /**
@@ -563,7 +492,8 @@ public class UpdateAccountSettingsOptions extends GenericModel {
    * Defines whether or not user visibility is access controlled. Valid values:
    *   * RESTRICTED - users can view only specific types of users in the account, such as those the user has invited to
    * the account, or descendants of those users based on the classic infrastructure hierarchy
-   *   * NOT_RESTRICTED - any user in the account can view other users from the Users page in IBM Cloud console.
+   *   * NOT_RESTRICTED - any user in the account can view other users from the Users page in IBM Cloud console
+   *   * NOT_SET - to 'unset' a previous set value.
    *
    * @return the restrictUserListVisibility
    */
@@ -574,12 +504,9 @@ public class UpdateAccountSettingsOptions extends GenericModel {
   /**
    * Gets the restrictUserDomains.
    *
-   * Defines if account invitations are restricted to specified domains. To remove an entry for a realm_id, perform an
-   * update (PUT) request with only the realm_id set.
-   *
    * @return the restrictUserDomains
    */
-  public List<AccountSettingsUserDomainRestriction> restrictUserDomains() {
+  public TemplateAccountSettingsRestrictUserDomains restrictUserDomains() {
     return restrictUserDomains;
   }
 }

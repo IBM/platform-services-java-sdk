@@ -16,7 +16,6 @@ package com.ibm.cloud.platform_services.iam_identity.v1.model;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsUserDomainRestriction;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TemplateAccountSettings;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TemplateAccountSettingsRestrictUserDomains;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.UpdateAccountSettingsTemplateVersionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UserMfa;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -27,14 +26,14 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the UpdateAccountSettingsTemplateVersionOptions model.
+ * Unit test class for the TemplateAccountSettings model.
  */
-public class UpdateAccountSettingsTemplateVersionOptionsTest {
+public class TemplateAccountSettingsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testUpdateAccountSettingsTemplateVersionOptions() throws Throwable {
+  public void testTemplateAccountSettings() throws Throwable {
     UserMfa userMfaModel = new UserMfa.Builder()
       .iamId("testString")
       .mfa("NONE")
@@ -85,27 +84,20 @@ public class UpdateAccountSettingsTemplateVersionOptionsTest {
     assertEquals(templateAccountSettingsModel.restrictUserListVisibility(), "RESTRICTED");
     assertEquals(templateAccountSettingsModel.restrictUserDomains(), templateAccountSettingsRestrictUserDomainsModel);
 
-    UpdateAccountSettingsTemplateVersionOptions updateAccountSettingsTemplateVersionOptionsModel = new UpdateAccountSettingsTemplateVersionOptions.Builder()
-      .ifMatch("testString")
-      .templateId("testString")
-      .version("testString")
-      .accountId("testString")
-      .name("testString")
-      .description("testString")
-      .accountSettings(templateAccountSettingsModel)
-      .build();
-    assertEquals(updateAccountSettingsTemplateVersionOptionsModel.ifMatch(), "testString");
-    assertEquals(updateAccountSettingsTemplateVersionOptionsModel.templateId(), "testString");
-    assertEquals(updateAccountSettingsTemplateVersionOptionsModel.version(), "testString");
-    assertEquals(updateAccountSettingsTemplateVersionOptionsModel.accountId(), "testString");
-    assertEquals(updateAccountSettingsTemplateVersionOptionsModel.name(), "testString");
-    assertEquals(updateAccountSettingsTemplateVersionOptionsModel.description(), "testString");
-    assertEquals(updateAccountSettingsTemplateVersionOptionsModel.accountSettings(), templateAccountSettingsModel);
-  }
+    String json = TestUtilities.serialize(templateAccountSettingsModel);
 
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testUpdateAccountSettingsTemplateVersionOptionsError() throws Throwable {
-    new UpdateAccountSettingsTemplateVersionOptions.Builder().build();
+    TemplateAccountSettings templateAccountSettingsModelNew = TestUtilities.deserialize(json, TemplateAccountSettings.class);
+    assertTrue(templateAccountSettingsModelNew instanceof TemplateAccountSettings);
+    assertEquals(templateAccountSettingsModelNew.restrictCreateServiceId(), "NOT_SET");
+    assertEquals(templateAccountSettingsModelNew.restrictCreatePlatformApikey(), "NOT_SET");
+    assertEquals(templateAccountSettingsModelNew.allowedIpAddresses(), "testString");
+    assertEquals(templateAccountSettingsModelNew.mfa(), "NONE");
+    assertEquals(templateAccountSettingsModelNew.sessionExpirationInSeconds(), "86400");
+    assertEquals(templateAccountSettingsModelNew.sessionInvalidationInSeconds(), "7200");
+    assertEquals(templateAccountSettingsModelNew.maxSessionsPerIdentity(), "testString");
+    assertEquals(templateAccountSettingsModelNew.systemAccessTokenExpirationInSeconds(), "3600");
+    assertEquals(templateAccountSettingsModelNew.systemRefreshTokenExpirationInSeconds(), "259200");
+    assertEquals(templateAccountSettingsModelNew.restrictUserListVisibility(), "RESTRICTED");
+    assertEquals(templateAccountSettingsModelNew.restrictUserDomains().toString(), templateAccountSettingsRestrictUserDomainsModel.toString());
   }
-
 }

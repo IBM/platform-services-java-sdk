@@ -33,6 +33,13 @@ public class UpdateAccountSettingsOptionsTest {
 
   @Test
   public void testUpdateAccountSettingsOptions() throws Throwable {
+    UserMfa userMfaModel = new UserMfa.Builder()
+      .iamId("testString")
+      .mfa("NONE")
+      .build();
+    assertEquals(userMfaModel.iamId(), "testString");
+    assertEquals(userMfaModel.mfa(), "NONE");
+
     AccountSettingsUserDomainRestriction accountSettingsUserDomainRestrictionModel = new AccountSettingsUserDomainRestriction.Builder()
       .realmId("IBMid")
       .invitationEmailAllowPatterns(java.util.Arrays.asList("*.*@company.com"))
@@ -42,43 +49,36 @@ public class UpdateAccountSettingsOptionsTest {
     assertEquals(accountSettingsUserDomainRestrictionModel.invitationEmailAllowPatterns(), java.util.Arrays.asList("*.*@company.com"));
     assertEquals(accountSettingsUserDomainRestrictionModel.restrictInvitation(), Boolean.valueOf(true));
 
-    UserMfa userMfaModel = new UserMfa.Builder()
-      .iamId("testString")
-      .mfa("NONE")
-      .build();
-    assertEquals(userMfaModel.iamId(), "testString");
-    assertEquals(userMfaModel.mfa(), "NONE");
-
     UpdateAccountSettingsOptions updateAccountSettingsOptionsModel = new UpdateAccountSettingsOptions.Builder()
       .ifMatch("testString")
       .accountId("testString")
       .restrictCreateServiceId("NOT_SET")
       .restrictCreatePlatformApikey("NOT_SET")
-      .restrictUserListVisibility("NOT_RESTRICTED")
-      .restrictUserDomains(java.util.Arrays.asList(accountSettingsUserDomainRestrictionModel))
       .allowedIpAddresses("testString")
       .mfa("NONE")
+      .userMfa(java.util.Arrays.asList(userMfaModel))
       .sessionExpirationInSeconds("86400")
       .sessionInvalidationInSeconds("7200")
       .maxSessionsPerIdentity("testString")
       .systemAccessTokenExpirationInSeconds("3600")
       .systemRefreshTokenExpirationInSeconds("259200")
-      .userMfa(java.util.Arrays.asList(userMfaModel))
+      .restrictUserListVisibility("NOT_RESTRICTED")
+      .restrictUserDomains(java.util.Arrays.asList(accountSettingsUserDomainRestrictionModel))
       .build();
     assertEquals(updateAccountSettingsOptionsModel.ifMatch(), "testString");
     assertEquals(updateAccountSettingsOptionsModel.accountId(), "testString");
     assertEquals(updateAccountSettingsOptionsModel.restrictCreateServiceId(), "NOT_SET");
     assertEquals(updateAccountSettingsOptionsModel.restrictCreatePlatformApikey(), "NOT_SET");
-    assertEquals(updateAccountSettingsOptionsModel.restrictUserListVisibility(), "NOT_RESTRICTED");
-    assertEquals(updateAccountSettingsOptionsModel.restrictUserDomains(), java.util.Arrays.asList(accountSettingsUserDomainRestrictionModel));
     assertEquals(updateAccountSettingsOptionsModel.allowedIpAddresses(), "testString");
     assertEquals(updateAccountSettingsOptionsModel.mfa(), "NONE");
+    assertEquals(updateAccountSettingsOptionsModel.userMfa(), java.util.Arrays.asList(userMfaModel));
     assertEquals(updateAccountSettingsOptionsModel.sessionExpirationInSeconds(), "86400");
     assertEquals(updateAccountSettingsOptionsModel.sessionInvalidationInSeconds(), "7200");
     assertEquals(updateAccountSettingsOptionsModel.maxSessionsPerIdentity(), "testString");
     assertEquals(updateAccountSettingsOptionsModel.systemAccessTokenExpirationInSeconds(), "3600");
     assertEquals(updateAccountSettingsOptionsModel.systemRefreshTokenExpirationInSeconds(), "259200");
-    assertEquals(updateAccountSettingsOptionsModel.userMfa(), java.util.Arrays.asList(userMfaModel));
+    assertEquals(updateAccountSettingsOptionsModel.restrictUserListVisibility(), "NOT_RESTRICTED");
+    assertEquals(updateAccountSettingsOptionsModel.restrictUserDomains(), java.util.Arrays.asList(accountSettingsUserDomainRestrictionModel));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

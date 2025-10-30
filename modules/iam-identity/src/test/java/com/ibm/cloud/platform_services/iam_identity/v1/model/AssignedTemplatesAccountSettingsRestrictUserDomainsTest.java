@@ -13,15 +13,8 @@
 
 package com.ibm.cloud.platform_services.iam_identity.v1.model;
 
-import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsAssignedTemplatesSection;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsEffectiveSection;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsUserDomainRestriction;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsUserMFAResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AssignedTemplatesAccountSettingsRestrictUserDomains;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.EffectiveAccountSettingsResponse;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.EnityHistoryRecord;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.ResponseContext;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -31,19 +24,16 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the EffectiveAccountSettingsResponse model.
+ * Unit test class for the AssignedTemplatesAccountSettingsRestrictUserDomains model.
  */
-public class EffectiveAccountSettingsResponseTest {
+public class AssignedTemplatesAccountSettingsRestrictUserDomainsTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testEffectiveAccountSettingsResponse() throws Throwable {
-    EffectiveAccountSettingsResponse effectiveAccountSettingsResponseModel = new EffectiveAccountSettingsResponse();
-    assertNull(effectiveAccountSettingsResponseModel.getContext());
-    assertNull(effectiveAccountSettingsResponseModel.getAccountId());
-    assertNull(effectiveAccountSettingsResponseModel.getEffective());
-    assertNull(effectiveAccountSettingsResponseModel.getAccount());
-    assertNull(effectiveAccountSettingsResponseModel.getAssignedTemplates());
+  public void testAssignedTemplatesAccountSettingsRestrictUserDomains() throws Throwable {
+    AssignedTemplatesAccountSettingsRestrictUserDomains assignedTemplatesAccountSettingsRestrictUserDomainsModel = new AssignedTemplatesAccountSettingsRestrictUserDomains();
+    assertNull(assignedTemplatesAccountSettingsRestrictUserDomainsModel.isAccountSufficient());
+    assertNull(assignedTemplatesAccountSettingsRestrictUserDomainsModel.getRestrictions());
   }
 }

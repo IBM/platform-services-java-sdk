@@ -23,7 +23,7 @@ public class CreateAccountSettingsTemplateOptions extends GenericModel {
   protected String accountId;
   protected String name;
   protected String description;
-  protected AccountSettingsComponent accountSettings;
+  protected TemplateAccountSettings accountSettings;
 
   /**
    * Builder.
@@ -32,7 +32,7 @@ public class CreateAccountSettingsTemplateOptions extends GenericModel {
     private String accountId;
     private String name;
     private String description;
-    private AccountSettingsComponent accountSettings;
+    private TemplateAccountSettings accountSettings;
 
     /**
      * Instantiates a new Builder from an existing CreateAccountSettingsTemplateOptions instance.
@@ -100,7 +100,7 @@ public class CreateAccountSettingsTemplateOptions extends GenericModel {
      * @param accountSettings the accountSettings
      * @return the CreateAccountSettingsTemplateOptions builder
      */
-    public Builder accountSettings(AccountSettingsComponent accountSettings) {
+    public Builder accountSettings(TemplateAccountSettings accountSettings) {
       this.accountSettings = accountSettings;
       return this;
     }
@@ -160,9 +160,11 @@ public class CreateAccountSettingsTemplateOptions extends GenericModel {
   /**
    * Gets the accountSettings.
    *
+   * Input body parameters for the Account Settings REST request.
+   *
    * @return the accountSettings
    */
-  public AccountSettingsComponent accountSettings() {
+  public TemplateAccountSettings accountSettings() {
     return accountSettings;
   }
 }

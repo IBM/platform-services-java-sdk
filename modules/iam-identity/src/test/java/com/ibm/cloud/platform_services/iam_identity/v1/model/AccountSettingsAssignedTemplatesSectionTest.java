@@ -16,6 +16,7 @@ package com.ibm.cloud.platform_services.iam_identity.v1.model;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsAssignedTemplatesSection;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsUserDomainRestriction;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsUserMFAResponse;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.AssignedTemplatesAccountSettingsRestrictUserDomains;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -39,8 +40,6 @@ public class AccountSettingsAssignedTemplatesSectionTest {
     assertNull(accountSettingsAssignedTemplatesSectionModel.getTemplateName());
     assertNull(accountSettingsAssignedTemplatesSectionModel.getRestrictCreateServiceId());
     assertNull(accountSettingsAssignedTemplatesSectionModel.getRestrictCreatePlatformApikey());
-    assertNull(accountSettingsAssignedTemplatesSectionModel.getRestrictUserListVisibility());
-    assertNull(accountSettingsAssignedTemplatesSectionModel.getRestrictUserDomains());
     assertNull(accountSettingsAssignedTemplatesSectionModel.getAllowedIpAddresses());
     assertNull(accountSettingsAssignedTemplatesSectionModel.getMfa());
     assertNull(accountSettingsAssignedTemplatesSectionModel.getSessionExpirationInSeconds());
@@ -48,6 +47,8 @@ public class AccountSettingsAssignedTemplatesSectionTest {
     assertNull(accountSettingsAssignedTemplatesSectionModel.getMaxSessionsPerIdentity());
     assertNull(accountSettingsAssignedTemplatesSectionModel.getSystemAccessTokenExpirationInSeconds());
     assertNull(accountSettingsAssignedTemplatesSectionModel.getSystemRefreshTokenExpirationInSeconds());
+    assertNull(accountSettingsAssignedTemplatesSectionModel.getRestrictUserListVisibility());
     assertNull(accountSettingsAssignedTemplatesSectionModel.getUserMfa());
+    assertNull(accountSettingsAssignedTemplatesSectionModel.getRestrictUserDomains());
   }
 }

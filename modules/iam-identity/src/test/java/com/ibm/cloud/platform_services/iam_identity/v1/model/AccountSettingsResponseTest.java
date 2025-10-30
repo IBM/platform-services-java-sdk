@@ -42,8 +42,6 @@ public class AccountSettingsResponseTest {
     assertNull(accountSettingsResponseModel.getHistory());
     assertNull(accountSettingsResponseModel.getRestrictCreateServiceId());
     assertNull(accountSettingsResponseModel.getRestrictCreatePlatformApikey());
-    assertNull(accountSettingsResponseModel.getRestrictUserListVisibility());
-    assertNull(accountSettingsResponseModel.getRestrictUserDomains());
     assertNull(accountSettingsResponseModel.getAllowedIpAddresses());
     assertNull(accountSettingsResponseModel.getMfa());
     assertNull(accountSettingsResponseModel.getSessionExpirationInSeconds());
@@ -51,6 +49,8 @@ public class AccountSettingsResponseTest {
     assertNull(accountSettingsResponseModel.getMaxSessionsPerIdentity());
     assertNull(accountSettingsResponseModel.getSystemAccessTokenExpirationInSeconds());
     assertNull(accountSettingsResponseModel.getSystemRefreshTokenExpirationInSeconds());
+    assertNull(accountSettingsResponseModel.getRestrictUserListVisibility());
     assertNull(accountSettingsResponseModel.getUserMfa());
+    assertNull(accountSettingsResponseModel.getRestrictUserDomains());
   }
 }

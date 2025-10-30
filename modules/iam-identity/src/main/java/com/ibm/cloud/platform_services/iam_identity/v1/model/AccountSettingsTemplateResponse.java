@@ -31,7 +31,7 @@ public class AccountSettingsTemplateResponse extends GenericModel {
   protected String description;
   protected Boolean committed;
   @SerializedName("account_settings")
-  protected AccountSettingsComponent accountSettings;
+  protected TemplateAccountSettings accountSettings;
   protected List<EnityHistoryRecord> history;
   @SerializedName("entity_tag")
   protected String entityTag;
@@ -116,9 +116,11 @@ public class AccountSettingsTemplateResponse extends GenericModel {
   /**
    * Gets the accountSettings.
    *
+   * Input body parameters for the Account Settings REST request.
+   *
    * @return the accountSettings
    */
-  public AccountSettingsComponent getAccountSettings() {
+  public TemplateAccountSettings getAccountSettings() {
     return accountSettings;
   }
 

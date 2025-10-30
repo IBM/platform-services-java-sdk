@@ -1697,16 +1697,41 @@ public class IamIdentityExamples {
 
             // begin-create_account_settings_template
 
-            AccountSettingsComponent accountSettings = new AccountSettingsComponent.Builder()
-                    .mfa("LEVEL1")
-                    .systemAccessTokenExpirationInSeconds("3000")
+            UserMfa userMfaModel = new UserMfa.Builder()
+                    .iamId(iamId)
+                    .mfa("NONE")
+                    .build();
+
+            AccountSettingsUserDomainRestriction accountSettingsUserDomainRestrictionModel = new AccountSettingsUserDomainRestriction.Builder()
+                    .realmId("IBMid")
+                    .invitationEmailAllowPatterns(java.util.Arrays.asList("*.*@ibm.com"))
+                    .restrictInvitation(false)
+                    .build();
+
+            TemplateAccountSettingsRestrictUserDomains templateAccountSettingsRestrictUserDomainsModel = new TemplateAccountSettingsRestrictUserDomains.Builder()
+                    .accountSufficient(false)
+                    .restrictions(java.util.Arrays.asList(accountSettingsUserDomainRestrictionModel))
+                    .build();
+
+            TemplateAccountSettings templateAccountSettingsModel = new TemplateAccountSettings.Builder()
+                    .restrictCreateServiceId("NOT_SET")
+                    .restrictCreatePlatformApikey("NOT_SET")
+                    .mfa("NONE")
+                    .userMfa(java.util.Arrays.asList(userMfaModel))
+                    .sessionExpirationInSeconds("86400")
+                    .sessionInvalidationInSeconds("7200")
+                    .maxSessionsPerIdentity("12")
+                    .systemAccessTokenExpirationInSeconds("3600")
+                    .systemRefreshTokenExpirationInSeconds("259200")
+                    .restrictUserListVisibility("RESTRICTED")
+                    .restrictUserDomains(templateAccountSettingsRestrictUserDomainsModel)
                     .build();
 
             CreateAccountSettingsTemplateOptions createOptions = new CreateAccountSettingsTemplateOptions.Builder()
                     .accountId(enterpriseAccountId)
                     .name(accountSettingsTemplateName)
                     .description("IAM enterprise account settings template example")
-                    .accountSettings(accountSettings)
+                    .accountSettings(templateAccountSettingsModel)
                     .build();
 
             Response<AccountSettingsTemplateResponse> createResponse = identityservice.createAccountSettingsTemplate(createOptions).execute();
@@ -1776,10 +1801,36 @@ public class IamIdentityExamples {
 
             // begin-update_account_settings_template_version
 
-            AccountSettingsComponent accountSettings = new AccountSettingsComponent.Builder()
+            UserMfa userMfaModel = new UserMfa.Builder()
+                    .iamId(iamId)
                     .mfa("LEVEL1")
-                    .systemAccessTokenExpirationInSeconds("3000")
                     .build();
+
+            AccountSettingsUserDomainRestriction accountSettingsUserDomainRestrictionModel = new AccountSettingsUserDomainRestriction.Builder()
+                    .realmId("IBMid")
+                    .invitationEmailAllowPatterns(java.util.Arrays.asList("*.*@company.com"))
+                    .restrictInvitation(false)
+                    .build();
+
+            TemplateAccountSettingsRestrictUserDomains templateAccountSettingsRestrictUserDomainsModel = new TemplateAccountSettingsRestrictUserDomains.Builder()
+                    .accountSufficient(false)
+                    .restrictions(java.util.Arrays.asList(accountSettingsUserDomainRestrictionModel))
+                    .build();
+
+            TemplateAccountSettings templateAccountSettingsModel = new TemplateAccountSettings.Builder()
+                    .restrictCreateServiceId("NOT_RESTRICTED")
+                    .restrictCreatePlatformApikey("RESTRICTED")
+                    .mfa("LEVEL1")
+                    .userMfa(java.util.Arrays.asList(userMfaModel))
+                    .sessionExpirationInSeconds("86400")
+                    .sessionInvalidationInSeconds("7200")
+                    .maxSessionsPerIdentity("10")
+                    .systemAccessTokenExpirationInSeconds("3600")
+                    .systemRefreshTokenExpirationInSeconds("259200")
+                    .restrictUserListVisibility("NOT_RESTRICTED")
+                    .restrictUserDomains(templateAccountSettingsRestrictUserDomainsModel)
+                    .build();
+
             UpdateAccountSettingsTemplateVersionOptions updateOptions = new UpdateAccountSettingsTemplateVersionOptions.Builder()
                     .accountId(enterpriseAccountId)
                     .templateId(accountSettingsTemplateId)
@@ -1787,7 +1838,7 @@ public class IamIdentityExamples {
                     .ifMatch(accountSettingsTemplateEtag)
                     .name(accountSettingsTemplateName)
                     .description("IAM enterprise account settings template example - updated")
-                    .accountSettings(accountSettings)
+                    .accountSettings(templateAccountSettingsModel)
                     .build();
 
             Response<AccountSettingsTemplateResponse> updateResponse = identityservice.updateAccountSettingsTemplateVersion(updateOptions).execute();
@@ -1905,18 +1956,42 @@ public class IamIdentityExamples {
 
             // begin-create_account_settings_template_version
 
-            AccountSettingsComponent accountSettings = new AccountSettingsComponent.Builder()
-                    .mfa("LEVEL1")
-                    .systemAccessTokenExpirationInSeconds("2600")
-                    .restrictCreatePlatformApikey("RESTRICTED")
-                    .restrictCreateServiceId("RESTRICTED")
+            UserMfa userMfaModel = new UserMfa.Builder()
+                    .iamId(iamId)
+                    .mfa("NONE")
                     .build();
+
+            AccountSettingsUserDomainRestriction accountSettingsUserDomainRestrictionModel = new AccountSettingsUserDomainRestriction.Builder()
+                    .realmId("IBMid")
+                    .invitationEmailAllowPatterns(java.util.Arrays.asList("*.*@ibm.com"))
+                    .restrictInvitation(false)
+                    .build();
+
+            TemplateAccountSettingsRestrictUserDomains templateAccountSettingsRestrictUserDomainsModel = new TemplateAccountSettingsRestrictUserDomains.Builder()
+                    .accountSufficient(false)
+                    .restrictions(java.util.Arrays.asList(accountSettingsUserDomainRestrictionModel))
+                    .build();
+
+            TemplateAccountSettings templateAccountSettingsModel = new TemplateAccountSettings.Builder()
+                    .restrictCreateServiceId("NOT_SET")
+                    .restrictCreatePlatformApikey("NOT_SET")
+                    .mfa("NONE")
+                    .userMfa(java.util.Arrays.asList(userMfaModel))
+                    .sessionExpirationInSeconds("86400")
+                    .sessionInvalidationInSeconds("7200")
+                    .maxSessionsPerIdentity("12")
+                    .systemAccessTokenExpirationInSeconds("3600")
+                    .systemRefreshTokenExpirationInSeconds("259200")
+                    .restrictUserListVisibility("RESTRICTED")
+                    .restrictUserDomains(templateAccountSettingsRestrictUserDomainsModel)
+                    .build();
+
             CreateAccountSettingsTemplateVersionOptions createOptions = new CreateAccountSettingsTemplateVersionOptions.Builder()
                     .accountId(enterpriseAccountId)
                     .templateId(accountSettingsTemplateId)
                     .name(accountSettingsTemplateName)
                     .description("IAM enterprise account settings template example - new version")
-                    .accountSettings(accountSettings)
+                    .accountSettings(templateAccountSettingsModel)
                     .build();
 
             Response<AccountSettingsTemplateResponse> createResponse = identityservice.createAccountSettingsTemplateVersion(createOptions).execute();

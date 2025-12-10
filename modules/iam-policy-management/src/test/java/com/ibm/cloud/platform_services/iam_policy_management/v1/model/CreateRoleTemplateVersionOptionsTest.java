@@ -33,13 +33,11 @@ public class CreateRoleTemplateVersionOptionsTest {
   @Test
   public void testCreateRoleTemplateVersionOptions() throws Throwable {
     TemplateRole templateRoleModel = new TemplateRole.Builder()
-      .name("testString")
       .displayName("testString")
       .serviceName("testString")
       .description("testString")
       .actions(java.util.Arrays.asList("testString"))
       .build();
-    assertEquals(templateRoleModel.name(), "testString");
     assertEquals(templateRoleModel.displayName(), "testString");
     assertEquals(templateRoleModel.serviceName(), "testString");
     assertEquals(templateRoleModel.description(), "testString");
@@ -47,15 +45,15 @@ public class CreateRoleTemplateVersionOptionsTest {
 
     CreateRoleTemplateVersionOptions createRoleTemplateVersionOptionsModel = new CreateRoleTemplateVersionOptions.Builder()
       .roleTemplateId("testString")
-      .role(templateRoleModel)
       .name("testString")
       .description("testString")
+      .role(templateRoleModel)
       .committed(true)
       .build();
     assertEquals(createRoleTemplateVersionOptionsModel.roleTemplateId(), "testString");
-    assertEquals(createRoleTemplateVersionOptionsModel.role(), templateRoleModel);
     assertEquals(createRoleTemplateVersionOptionsModel.name(), "testString");
     assertEquals(createRoleTemplateVersionOptionsModel.description(), "testString");
+    assertEquals(createRoleTemplateVersionOptionsModel.role(), templateRoleModel);
     assertEquals(createRoleTemplateVersionOptionsModel.committed(), Boolean.valueOf(true));
   }
 

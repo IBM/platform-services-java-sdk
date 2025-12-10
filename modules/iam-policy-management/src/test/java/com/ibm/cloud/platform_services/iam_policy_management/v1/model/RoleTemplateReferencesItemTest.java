@@ -13,7 +13,7 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateRole;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleTemplateReferencesItem;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -23,37 +23,32 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the TemplateRole model.
+ * Unit test class for the RoleTemplateReferencesItem model.
  */
-public class TemplateRoleTest {
+public class RoleTemplateReferencesItemTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testTemplateRole() throws Throwable {
-    TemplateRole templateRoleModel = new TemplateRole.Builder()
-      .displayName("testString")
-      .serviceName("testString")
-      .description("testString")
-      .actions(java.util.Arrays.asList("testString"))
+  public void testRoleTemplateReferencesItem() throws Throwable {
+    RoleTemplateReferencesItem roleTemplateReferencesItemModel = new RoleTemplateReferencesItem.Builder()
+      .id("testString")
+      .version("testString")
       .build();
-    assertEquals(templateRoleModel.displayName(), "testString");
-    assertEquals(templateRoleModel.serviceName(), "testString");
-    assertEquals(templateRoleModel.description(), "testString");
-    assertEquals(templateRoleModel.actions(), java.util.Arrays.asList("testString"));
+    assertEquals(roleTemplateReferencesItemModel.id(), "testString");
+    assertEquals(roleTemplateReferencesItemModel.version(), "testString");
 
-    String json = TestUtilities.serialize(templateRoleModel);
+    String json = TestUtilities.serialize(roleTemplateReferencesItemModel);
 
-    TemplateRole templateRoleModelNew = TestUtilities.deserialize(json, TemplateRole.class);
-    assertTrue(templateRoleModelNew instanceof TemplateRole);
-    assertEquals(templateRoleModelNew.displayName(), "testString");
-    assertEquals(templateRoleModelNew.serviceName(), "testString");
-    assertEquals(templateRoleModelNew.description(), "testString");
+    RoleTemplateReferencesItem roleTemplateReferencesItemModelNew = TestUtilities.deserialize(json, RoleTemplateReferencesItem.class);
+    assertTrue(roleTemplateReferencesItemModelNew instanceof RoleTemplateReferencesItem);
+    assertEquals(roleTemplateReferencesItemModelNew.id(), "testString");
+    assertEquals(roleTemplateReferencesItemModelNew.version(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testTemplateRoleError() throws Throwable {
-    new TemplateRole.Builder().build();
+  public void testRoleTemplateReferencesItemError() throws Throwable {
+    new RoleTemplateReferencesItem.Builder().build();
   }
 
 }

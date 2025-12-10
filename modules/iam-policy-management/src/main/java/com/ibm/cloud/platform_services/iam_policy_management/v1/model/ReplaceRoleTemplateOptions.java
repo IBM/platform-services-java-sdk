@@ -23,9 +23,9 @@ public class ReplaceRoleTemplateOptions extends GenericModel {
   protected String roleTemplateId;
   protected String version;
   protected String ifMatch;
-  protected TemplateRole role;
   protected String name;
   protected String description;
+  protected TemplateRole role;
   protected Boolean committed;
 
   /**
@@ -35,9 +35,9 @@ public class ReplaceRoleTemplateOptions extends GenericModel {
     private String roleTemplateId;
     private String version;
     private String ifMatch;
-    private TemplateRole role;
     private String name;
     private String description;
+    private TemplateRole role;
     private Boolean committed;
 
     /**
@@ -49,9 +49,9 @@ public class ReplaceRoleTemplateOptions extends GenericModel {
       this.roleTemplateId = replaceRoleTemplateOptions.roleTemplateId;
       this.version = replaceRoleTemplateOptions.version;
       this.ifMatch = replaceRoleTemplateOptions.ifMatch;
-      this.role = replaceRoleTemplateOptions.role;
       this.name = replaceRoleTemplateOptions.name;
       this.description = replaceRoleTemplateOptions.description;
+      this.role = replaceRoleTemplateOptions.role;
       this.committed = replaceRoleTemplateOptions.committed;
     }
 
@@ -67,13 +67,11 @@ public class ReplaceRoleTemplateOptions extends GenericModel {
      * @param roleTemplateId the roleTemplateId
      * @param version the version
      * @param ifMatch the ifMatch
-     * @param role the role
      */
-    public Builder(String roleTemplateId, String version, String ifMatch, TemplateRole role) {
+    public Builder(String roleTemplateId, String version, String ifMatch) {
       this.roleTemplateId = roleTemplateId;
       this.version = version;
       this.ifMatch = ifMatch;
-      this.role = role;
     }
 
     /**
@@ -119,17 +117,6 @@ public class ReplaceRoleTemplateOptions extends GenericModel {
     }
 
     /**
-     * Set the role.
-     *
-     * @param role the role
-     * @return the ReplaceRoleTemplateOptions builder
-     */
-    public Builder role(TemplateRole role) {
-      this.role = role;
-      return this;
-    }
-
-    /**
      * Set the name.
      *
      * @param name the name
@@ -148,6 +135,17 @@ public class ReplaceRoleTemplateOptions extends GenericModel {
      */
     public Builder description(String description) {
       this.description = description;
+      return this;
+    }
+
+    /**
+     * Set the role.
+     *
+     * @param role the role
+     * @return the ReplaceRoleTemplateOptions builder
+     */
+    public Builder role(TemplateRole role) {
+      this.role = role;
       return this;
     }
 
@@ -172,14 +170,12 @@ public class ReplaceRoleTemplateOptions extends GenericModel {
       "version cannot be empty");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.ifMatch,
       "ifMatch cannot be null");
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.role,
-      "role cannot be null");
     roleTemplateId = builder.roleTemplateId;
     version = builder.version;
     ifMatch = builder.ifMatch;
-    role = builder.role;
     name = builder.name;
     description = builder.description;
+    role = builder.role;
     committed = builder.committed;
   }
 
@@ -228,17 +224,6 @@ public class ReplaceRoleTemplateOptions extends GenericModel {
   }
 
   /**
-   * Gets the role.
-   *
-   * The role properties that are created in an action resource when the template is assigned.
-   *
-   * @return the role
-   */
-  public TemplateRole role() {
-    return role;
-  }
-
-  /**
    * Gets the name.
    *
    * Required field when creating a new template. Otherwise, this field is optional. If the field is included, it will
@@ -260,6 +245,17 @@ public class ReplaceRoleTemplateOptions extends GenericModel {
    */
   public String description() {
     return description;
+  }
+
+  /**
+   * Gets the role.
+   *
+   * The role properties that are created in an action resource when the template is assigned.
+   *
+   * @return the role
+   */
+  public TemplateRole role() {
+    return role;
   }
 
   /**

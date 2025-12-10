@@ -13,12 +13,13 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Control;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Grant;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.LimitData;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplateLimitData;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleTemplateReferencesItem;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Roles;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateControl;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateCountData;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateGrant;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplatePolicy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResource;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceAttribute;

@@ -38,7 +38,7 @@ public class RoleTemplate extends GenericModel {
   @SerializedName("account_id")
   protected String accountId;
   protected Boolean committed;
-  protected TemplateRole role;
+  protected RoleTemplatePrototypeRole role;
   protected String id;
   protected String href;
   @SerializedName("created_at")
@@ -107,7 +107,7 @@ public class RoleTemplate extends GenericModel {
    *
    * @return the role
    */
-  public TemplateRole getRole() {
+  public RoleTemplatePrototypeRole getRole() {
     return role;
   }
 

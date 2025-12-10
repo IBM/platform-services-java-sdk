@@ -13,7 +13,6 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreateRoleTemplateOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleTemplatePrototypeRole;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -24,14 +23,14 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the CreateRoleTemplateOptions model.
+ * Unit test class for the RoleTemplatePrototypeRole model.
  */
-public class CreateRoleTemplateOptionsTest {
+public class RoleTemplatePrototypeRoleTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testCreateRoleTemplateOptions() throws Throwable {
+  public void testRoleTemplatePrototypeRole() throws Throwable {
     RoleTemplatePrototypeRole roleTemplatePrototypeRoleModel = new RoleTemplatePrototypeRole.Builder()
       .name("testString")
       .displayName("testString")
@@ -45,25 +44,19 @@ public class CreateRoleTemplateOptionsTest {
     assertEquals(roleTemplatePrototypeRoleModel.description(), "testString");
     assertEquals(roleTemplatePrototypeRoleModel.actions(), java.util.Arrays.asList("testString"));
 
-    CreateRoleTemplateOptions createRoleTemplateOptionsModel = new CreateRoleTemplateOptions.Builder()
-      .name("testString")
-      .accountId("testString")
-      .description("testString")
-      .committed(true)
-      .role(roleTemplatePrototypeRoleModel)
-      .acceptLanguage("default")
-      .build();
-    assertEquals(createRoleTemplateOptionsModel.name(), "testString");
-    assertEquals(createRoleTemplateOptionsModel.accountId(), "testString");
-    assertEquals(createRoleTemplateOptionsModel.description(), "testString");
-    assertEquals(createRoleTemplateOptionsModel.committed(), Boolean.valueOf(true));
-    assertEquals(createRoleTemplateOptionsModel.role(), roleTemplatePrototypeRoleModel);
-    assertEquals(createRoleTemplateOptionsModel.acceptLanguage(), "default");
+    String json = TestUtilities.serialize(roleTemplatePrototypeRoleModel);
+
+    RoleTemplatePrototypeRole roleTemplatePrototypeRoleModelNew = TestUtilities.deserialize(json, RoleTemplatePrototypeRole.class);
+    assertTrue(roleTemplatePrototypeRoleModelNew instanceof RoleTemplatePrototypeRole);
+    assertEquals(roleTemplatePrototypeRoleModelNew.name(), "testString");
+    assertEquals(roleTemplatePrototypeRoleModelNew.displayName(), "testString");
+    assertEquals(roleTemplatePrototypeRoleModelNew.serviceName(), "testString");
+    assertEquals(roleTemplatePrototypeRoleModelNew.description(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testCreateRoleTemplateOptionsError() throws Throwable {
-    new CreateRoleTemplateOptions.Builder().build();
+  public void testRoleTemplatePrototypeRoleError() throws Throwable {
+    new RoleTemplatePrototypeRole.Builder().build();
   }
 
 }

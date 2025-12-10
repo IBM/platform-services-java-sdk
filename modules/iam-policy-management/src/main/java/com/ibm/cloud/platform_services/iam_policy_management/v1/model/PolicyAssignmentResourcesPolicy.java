@@ -23,7 +23,7 @@ public class PolicyAssignmentResourcesPolicy extends GenericModel {
   @SerializedName("resource_created")
   protected AssignmentResourceCreated resourceCreated;
   @SerializedName("error_message")
-  protected ErrorResponse errorMessage;
+  protected AssignmentResourceError errorMessage;
 
   protected PolicyAssignmentResourcesPolicy() { }
 
@@ -45,7 +45,7 @@ public class PolicyAssignmentResourcesPolicy extends GenericModel {
    *
    * @return the errorMessage
    */
-  public ErrorResponse getErrorMessage() {
+  public AssignmentResourceError getErrorMessage() {
     return errorMessage;
   }
 }

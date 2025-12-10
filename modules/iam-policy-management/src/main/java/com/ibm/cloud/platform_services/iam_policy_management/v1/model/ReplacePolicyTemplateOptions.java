@@ -217,9 +217,9 @@ public class ReplacePolicyTemplateOptions extends GenericModel {
   /**
    * Gets the ifMatch.
    *
-   * The revision number for updating a policy template version and must match the ETag value of the existing policy
+   * The revision number for updating a policy template version and must match the Etag value of the existing policy
    * template version. The Etag can be retrieved using the GET
-   * /v1/policy_templates/{policy_template_id}/versions/{version} API and looking at the ETag response header.
+   * /v1/policy_templates/{policy_template_id}/versions/{version} API and looking at the Etag response header.
    *
    * @return the ifMatch
    */

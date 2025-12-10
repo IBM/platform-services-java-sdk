@@ -150,6 +150,8 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleAssign
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleTemplate;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleTemplateCollection;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleTemplatePrototypeRole;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleTemplateReferencesItem;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleTemplateVersionsCollection;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleTemplateVersionsPager;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleTemplatesPager;
@@ -157,7 +159,9 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Roles;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RuleAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.SubjectAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateActionControl;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateControl;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateCountData;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateGrant;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateMetadata;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplatePolicy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateRole;
@@ -1479,7 +1483,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testListPolicyTemplatesWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"limit\": 1, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"start\": \"start\"}, \"previous\": {\"href\": \"href\", \"start\": \"start\"}, \"policy_templates\": [{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"policy\": {\"type\": \"access\", \"description\": \"description\", \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}]}}}, \"state\": \"active\", \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
+    String mockResponseBody = "{\"limit\": 1, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"start\": \"start\"}, \"previous\": {\"href\": \"href\", \"start\": \"start\"}, \"policy_templates\": [{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"policy\": {\"type\": \"access\", \"description\": \"description\", \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}], \"role_template_references\": [{\"id\": \"id\", \"version\": \"version\"}]}}}, \"state\": \"active\", \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
     String listPolicyTemplatesPath = "/v1/policy_templates";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -1548,8 +1552,8 @@ public class IamPolicyManagementTest {
   @Test
   public void testListPolicyTemplatesWithPagerGetNext() throws Throwable {
     // Set up the two-page mock response.
-    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"policy_templates\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"policy\":{\"type\":\"access\",\"description\":\"description\",\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}]}}},\"state\":\"active\",\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
-    String mockResponsePage2 = "{\"policy_templates\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"policy\":{\"type\":\"access\",\"description\":\"description\",\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}]}}},\"state\":\"active\",\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
+    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"policy_templates\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"policy\":{\"type\":\"access\",\"description\":\"description\",\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}],\"role_template_references\":[{\"id\":\"id\",\"version\":\"version\"}]}}},\"state\":\"active\",\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
+    String mockResponsePage2 = "{\"policy_templates\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"policy\":{\"type\":\"access\",\"description\":\"description\",\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}],\"role_template_references\":[{\"id\":\"id\",\"version\":\"version\"}]}}},\"state\":\"active\",\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(200)
@@ -1589,8 +1593,8 @@ public class IamPolicyManagementTest {
   @Test
   public void testListPolicyTemplatesWithPagerGetAll() throws Throwable {
     // Set up the two-page mock response.
-    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"policy_templates\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"policy\":{\"type\":\"access\",\"description\":\"description\",\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}]}}},\"state\":\"active\",\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
-    String mockResponsePage2 = "{\"policy_templates\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"policy\":{\"type\":\"access\",\"description\":\"description\",\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}]}}},\"state\":\"active\",\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
+    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"policy_templates\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"policy\":{\"type\":\"access\",\"description\":\"description\",\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}],\"role_template_references\":[{\"id\":\"id\",\"version\":\"version\"}]}}},\"state\":\"active\",\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
+    String mockResponsePage2 = "{\"policy_templates\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"policy\":{\"type\":\"access\",\"description\":\"description\",\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}],\"role_template_references\":[{\"id\":\"id\",\"version\":\"version\"}]}}},\"state\":\"active\",\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(200)
@@ -1626,7 +1630,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testCreatePolicyTemplateWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"policy\": {\"type\": \"access\", \"description\": \"description\", \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}]}}}, \"state\": \"active\", \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"counts\": {\"template\": {\"current\": 7, \"limit\": 5}, \"version\": {\"current\": 7, \"limit\": 5}}}";
+    String mockResponseBody = "{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"policy\": {\"type\": \"access\", \"description\": \"description\", \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}], \"role_template_references\": [{\"id\": \"id\", \"version\": \"version\"}]}}}, \"state\": \"active\", \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"counts\": {\"template\": {\"current\": 7, \"limit\": 5}, \"version\": {\"current\": 7, \"limit\": 5}}}";
     String createPolicyTemplatePath = "/v1/policy_templates";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -1677,14 +1681,21 @@ public class IamPolicyManagementTest {
       .roleId("testString")
       .build();
 
-    // Construct an instance of the Grant model
-    Grant grantModel = new Grant.Builder()
-      .roles(java.util.Arrays.asList(rolesModel))
+    // Construct an instance of the RoleTemplateReferencesItem model
+    RoleTemplateReferencesItem roleTemplateReferencesItemModel = new RoleTemplateReferencesItem.Builder()
+      .id("testString")
+      .version("testString")
       .build();
 
-    // Construct an instance of the Control model
-    Control controlModel = new Control.Builder()
-      .grant(grantModel)
+    // Construct an instance of the TemplateGrant model
+    TemplateGrant templateGrantModel = new TemplateGrant.Builder()
+      .roles(java.util.Arrays.asList(rolesModel))
+      .roleTemplateReferences(java.util.Arrays.asList(roleTemplateReferencesItemModel))
+      .build();
+
+    // Construct an instance of the TemplateControl model
+    TemplateControl templateControlModel = new TemplateControl.Builder()
+      .grant(templateGrantModel)
       .build();
 
     // Construct an instance of the TemplatePolicy model
@@ -1695,7 +1706,7 @@ public class IamPolicyManagementTest {
       .subject(v2PolicySubjectModel)
       .pattern("testString")
       .rule(v2PolicyRuleModel)
-      .control(controlModel)
+      .control(templateControlModel)
       .build();
 
     // Construct an instance of the CreatePolicyTemplateOptions model
@@ -1747,7 +1758,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testGetPolicyTemplateWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"policy\": {\"type\": \"access\", \"description\": \"description\", \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}]}}}, \"state\": \"active\", \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"policy\": {\"type\": \"access\", \"description\": \"description\", \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}], \"role_template_references\": [{\"id\": \"id\", \"version\": \"version\"}]}}}, \"state\": \"active\", \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String getPolicyTemplatePath = "/v1/policy_templates/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -1850,7 +1861,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testCreatePolicyTemplateVersionWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"policy\": {\"type\": \"access\", \"description\": \"description\", \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}]}}}, \"state\": \"active\", \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"counts\": {\"template\": {\"current\": 7, \"limit\": 5}, \"version\": {\"current\": 7, \"limit\": 5}}}";
+    String mockResponseBody = "{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"policy\": {\"type\": \"access\", \"description\": \"description\", \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}], \"role_template_references\": [{\"id\": \"id\", \"version\": \"version\"}]}}}, \"state\": \"active\", \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\", \"counts\": {\"template\": {\"current\": 7, \"limit\": 5}, \"version\": {\"current\": 7, \"limit\": 5}}}";
     String createPolicyTemplateVersionPath = "/v1/policy_templates/testString/versions";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -1901,14 +1912,21 @@ public class IamPolicyManagementTest {
       .roleId("testString")
       .build();
 
-    // Construct an instance of the Grant model
-    Grant grantModel = new Grant.Builder()
-      .roles(java.util.Arrays.asList(rolesModel))
+    // Construct an instance of the RoleTemplateReferencesItem model
+    RoleTemplateReferencesItem roleTemplateReferencesItemModel = new RoleTemplateReferencesItem.Builder()
+      .id("testString")
+      .version("testString")
       .build();
 
-    // Construct an instance of the Control model
-    Control controlModel = new Control.Builder()
-      .grant(grantModel)
+    // Construct an instance of the TemplateGrant model
+    TemplateGrant templateGrantModel = new TemplateGrant.Builder()
+      .roles(java.util.Arrays.asList(rolesModel))
+      .roleTemplateReferences(java.util.Arrays.asList(roleTemplateReferencesItemModel))
+      .build();
+
+    // Construct an instance of the TemplateControl model
+    TemplateControl templateControlModel = new TemplateControl.Builder()
+      .grant(templateGrantModel)
       .build();
 
     // Construct an instance of the TemplatePolicy model
@@ -1919,7 +1937,7 @@ public class IamPolicyManagementTest {
       .subject(v2PolicySubjectModel)
       .pattern("testString")
       .rule(v2PolicyRuleModel)
-      .control(controlModel)
+      .control(templateControlModel)
       .build();
 
     // Construct an instance of the CreatePolicyTemplateVersionOptions model
@@ -1970,7 +1988,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testListPolicyTemplateVersionsWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"limit\": 1, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"start\": \"start\"}, \"previous\": {\"href\": \"href\", \"start\": \"start\"}, \"versions\": [{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"policy\": {\"type\": \"access\", \"description\": \"description\", \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}]}}}, \"state\": \"active\", \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
+    String mockResponseBody = "{\"limit\": 1, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\", \"start\": \"start\"}, \"previous\": {\"href\": \"href\", \"start\": \"start\"}, \"versions\": [{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"policy\": {\"type\": \"access\", \"description\": \"description\", \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}], \"role_template_references\": [{\"id\": \"id\", \"version\": \"version\"}]}}}, \"state\": \"active\", \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
     String listPolicyTemplateVersionsPath = "/v1/policy_templates/testString/versions";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -2027,8 +2045,8 @@ public class IamPolicyManagementTest {
   @Test
   public void testListPolicyTemplateVersionsWithPagerGetNext() throws Throwable {
     // Set up the two-page mock response.
-    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"versions\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"policy\":{\"type\":\"access\",\"description\":\"description\",\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}]}}},\"state\":\"active\",\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
-    String mockResponsePage2 = "{\"versions\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"policy\":{\"type\":\"access\",\"description\":\"description\",\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}]}}},\"state\":\"active\",\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
+    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"versions\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"policy\":{\"type\":\"access\",\"description\":\"description\",\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}],\"role_template_references\":[{\"id\":\"id\",\"version\":\"version\"}]}}},\"state\":\"active\",\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
+    String mockResponsePage2 = "{\"versions\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"policy\":{\"type\":\"access\",\"description\":\"description\",\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}],\"role_template_references\":[{\"id\":\"id\",\"version\":\"version\"}]}}},\"state\":\"active\",\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(200)
@@ -2062,8 +2080,8 @@ public class IamPolicyManagementTest {
   @Test
   public void testListPolicyTemplateVersionsWithPagerGetAll() throws Throwable {
     // Set up the two-page mock response.
-    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"versions\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"policy\":{\"type\":\"access\",\"description\":\"description\",\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}]}}},\"state\":\"active\",\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
-    String mockResponsePage2 = "{\"versions\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"policy\":{\"type\":\"access\",\"description\":\"description\",\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}]}}},\"state\":\"active\",\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
+    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"versions\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"policy\":{\"type\":\"access\",\"description\":\"description\",\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}],\"role_template_references\":[{\"id\":\"id\",\"version\":\"version\"}]}}},\"state\":\"active\",\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
+    String mockResponsePage2 = "{\"versions\":[{\"name\":\"name\",\"description\":\"description\",\"account_id\":\"accountId\",\"version\":\"version\",\"committed\":false,\"policy\":{\"type\":\"access\",\"description\":\"description\",\"resource\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}],\"tags\":[{\"key\":\"key\",\"value\":\"value\",\"operator\":\"stringEquals\"}]},\"subject\":{\"attributes\":[{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"}]},\"pattern\":\"pattern\",\"rule\":{\"key\":\"key\",\"operator\":\"stringEquals\",\"value\":\"anyValue\"},\"control\":{\"grant\":{\"roles\":[{\"role_id\":\"roleId\"}],\"role_template_references\":[{\"id\":\"id\",\"version\":\"version\"}]}}},\"state\":\"active\",\"id\":\"id\",\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}],\"total_count\":2,\"limit\":1}";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
       .setResponseCode(200)
@@ -2093,7 +2111,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testReplacePolicyTemplateWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"policy\": {\"type\": \"access\", \"description\": \"description\", \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}]}}}, \"state\": \"active\", \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"policy\": {\"type\": \"access\", \"description\": \"description\", \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}], \"role_template_references\": [{\"id\": \"id\", \"version\": \"version\"}]}}}, \"state\": \"active\", \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String replacePolicyTemplatePath = "/v1/policy_templates/testString/versions/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -2144,14 +2162,21 @@ public class IamPolicyManagementTest {
       .roleId("testString")
       .build();
 
-    // Construct an instance of the Grant model
-    Grant grantModel = new Grant.Builder()
-      .roles(java.util.Arrays.asList(rolesModel))
+    // Construct an instance of the RoleTemplateReferencesItem model
+    RoleTemplateReferencesItem roleTemplateReferencesItemModel = new RoleTemplateReferencesItem.Builder()
+      .id("testString")
+      .version("testString")
       .build();
 
-    // Construct an instance of the Control model
-    Control controlModel = new Control.Builder()
-      .grant(grantModel)
+    // Construct an instance of the TemplateGrant model
+    TemplateGrant templateGrantModel = new TemplateGrant.Builder()
+      .roles(java.util.Arrays.asList(rolesModel))
+      .roleTemplateReferences(java.util.Arrays.asList(roleTemplateReferencesItemModel))
+      .build();
+
+    // Construct an instance of the TemplateControl model
+    TemplateControl templateControlModel = new TemplateControl.Builder()
+      .grant(templateGrantModel)
       .build();
 
     // Construct an instance of the TemplatePolicy model
@@ -2162,7 +2187,7 @@ public class IamPolicyManagementTest {
       .subject(v2PolicySubjectModel)
       .pattern("testString")
       .rule(v2PolicyRuleModel)
-      .control(controlModel)
+      .control(templateControlModel)
       .build();
 
     // Construct an instance of the ReplacePolicyTemplateOptions model
@@ -2268,7 +2293,7 @@ public class IamPolicyManagementTest {
   @Test
   public void testGetPolicyTemplateVersionWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"policy\": {\"type\": \"access\", \"description\": \"description\", \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}]}}}, \"state\": \"active\", \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"name\": \"name\", \"description\": \"description\", \"account_id\": \"accountId\", \"version\": \"version\", \"committed\": false, \"policy\": {\"type\": \"access\", \"description\": \"description\", \"resource\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}], \"tags\": [{\"key\": \"key\", \"value\": \"value\", \"operator\": \"stringEquals\"}]}, \"subject\": {\"attributes\": [{\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}]}, \"pattern\": \"pattern\", \"rule\": {\"key\": \"key\", \"operator\": \"stringEquals\", \"value\": \"anyValue\"}, \"control\": {\"grant\": {\"roles\": [{\"role_id\": \"roleId\"}], \"role_template_references\": [{\"id\": \"id\", \"version\": \"version\"}]}}}, \"state\": \"active\", \"id\": \"id\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String getPolicyTemplateVersionPath = "/v1/policy_templates/testString/versions/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -4051,8 +4076,8 @@ public class IamPolicyManagementTest {
       .setResponseCode(201)
       .setBody(mockResponseBody));
 
-    // Construct an instance of the TemplateRole model
-    TemplateRole templateRoleModel = new TemplateRole.Builder()
+    // Construct an instance of the RoleTemplatePrototypeRole model
+    RoleTemplatePrototypeRole roleTemplatePrototypeRoleModel = new RoleTemplatePrototypeRole.Builder()
       .name("testString")
       .displayName("testString")
       .serviceName("testString")
@@ -4066,7 +4091,7 @@ public class IamPolicyManagementTest {
       .accountId("testString")
       .description("testString")
       .committed(true)
-      .role(templateRoleModel)
+      .role(roleTemplatePrototypeRoleModel)
       .acceptLanguage("default")
       .build();
 
@@ -4221,7 +4246,6 @@ public class IamPolicyManagementTest {
 
     // Construct an instance of the TemplateRole model
     TemplateRole templateRoleModel = new TemplateRole.Builder()
-      .name("testString")
       .displayName("testString")
       .serviceName("testString")
       .description("testString")
@@ -4231,9 +4255,9 @@ public class IamPolicyManagementTest {
     // Construct an instance of the CreateRoleTemplateVersionOptions model
     CreateRoleTemplateVersionOptions createRoleTemplateVersionOptionsModel = new CreateRoleTemplateVersionOptions.Builder()
       .roleTemplateId("testString")
-      .role(templateRoleModel)
       .name("testString")
       .description("testString")
+      .role(templateRoleModel)
       .committed(true)
       .build();
 
@@ -4408,7 +4432,6 @@ public class IamPolicyManagementTest {
 
     // Construct an instance of the TemplateRole model
     TemplateRole templateRoleModel = new TemplateRole.Builder()
-      .name("testString")
       .displayName("testString")
       .serviceName("testString")
       .description("testString")
@@ -4420,9 +4443,9 @@ public class IamPolicyManagementTest {
       .roleTemplateId("testString")
       .version("testString")
       .ifMatch("testString")
-      .role(templateRoleModel)
       .name("testString")
       .description("testString")
+      .role(templateRoleModel)
       .committed(true)
       .build();
 

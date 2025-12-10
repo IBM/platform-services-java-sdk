@@ -13,18 +13,9 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.PolicyTemplate;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleTemplateReferencesItem;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Roles;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateControl;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateGrant;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplatePolicy;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResource;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceAttribute;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceTag;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyRuleRuleAttribute;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicySubject;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicySubjectAttribute;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -34,21 +25,36 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the PolicyTemplate model.
+ * Unit test class for the TemplateGrant model.
  */
-public class PolicyTemplateTest {
+public class TemplateGrantTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testPolicyTemplate() throws Throwable {
-    PolicyTemplate policyTemplateModel = new PolicyTemplate();
-    assertNull(policyTemplateModel.getName());
-    assertNull(policyTemplateModel.getDescription());
-    assertNull(policyTemplateModel.getAccountId());
-    assertNull(policyTemplateModel.getVersion());
-    assertNull(policyTemplateModel.isCommitted());
-    assertNull(policyTemplateModel.getPolicy());
-    assertNull(policyTemplateModel.getState());
+  public void testTemplateGrant() throws Throwable {
+    Roles rolesModel = new Roles.Builder()
+      .roleId("testString")
+      .build();
+    assertEquals(rolesModel.roleId(), "testString");
+
+    RoleTemplateReferencesItem roleTemplateReferencesItemModel = new RoleTemplateReferencesItem.Builder()
+      .id("testString")
+      .version("testString")
+      .build();
+    assertEquals(roleTemplateReferencesItemModel.id(), "testString");
+    assertEquals(roleTemplateReferencesItemModel.version(), "testString");
+
+    TemplateGrant templateGrantModel = new TemplateGrant.Builder()
+      .roles(java.util.Arrays.asList(rolesModel))
+      .roleTemplateReferences(java.util.Arrays.asList(roleTemplateReferencesItemModel))
+      .build();
+    assertEquals(templateGrantModel.roles(), java.util.Arrays.asList(rolesModel));
+    assertEquals(templateGrantModel.roleTemplateReferences(), java.util.Arrays.asList(roleTemplateReferencesItemModel));
+
+    String json = TestUtilities.serialize(templateGrantModel);
+
+    TemplateGrant templateGrantModelNew = TestUtilities.deserialize(json, TemplateGrant.class);
+    assertTrue(templateGrantModelNew instanceof TemplateGrant);
   }
 }

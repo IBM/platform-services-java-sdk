@@ -31,7 +31,7 @@ public class RoleAssignmentResourceRole extends GenericModel {
   /**
    * Gets the resourceCreated.
    *
-   * On success, it includes the action control assigned.
+   * On success, it includes the role assigned.
    *
    * @return the resourceCreated
    */

@@ -99,10 +99,12 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
     String testActionControlAssignmentId = null;
     String testActionControlAssignmentETag = null;
     String testRoleTemplateId = null;
+    String testRoleBaseTemplateVersion = null;
     String testRoleTemplateVersion = null;
     String testRoleTemplateEtag = null;
     String testRoleTemplateAssignmentId = null;
     String testRoleTemplateAssignmentETag = null;
+    String testRolePolicyTemplateId = null;
 
     @Override
     public String getConfigFilename() {
@@ -741,11 +743,11 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         .roleId(TEST_VIEW_ROLE_CRN)
         .build();
       
-      Grant policyGrantModel = new Grant.Builder()
+      TemplateGrant policyGrantModel = new TemplateGrant.Builder()
         .roles(Arrays.asList(rolesModel))
         .build();
 
-      Control controlModel = new Control.Builder()
+      TemplateControl controlModel = new TemplateControl.Builder()
         .grant(policyGrantModel)
         .build();
 
@@ -815,11 +817,11 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         .roleId(TEST_EDITOR_ROLE_CRN)
         .build();
       
-      Grant policyGrantModel = new Grant.Builder()
+      TemplateGrant policyGrantModel = new TemplateGrant.Builder()
         .roles(Arrays.asList(rolesModel))
         .build();
 
-      Control controlModel = new Control.Builder()
+      TemplateControl controlModel = new TemplateControl.Builder()
         .grant(policyGrantModel)
         .build();
 
@@ -896,11 +898,11 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         .roleId(TEST_VIEW_ROLE_CRN)
         .build();
       
-      Grant policyGrantModel = new Grant.Builder()
+      TemplateGrant policyGrantModel = new TemplateGrant.Builder()
         .roles(Arrays.asList(rolesModel))
         .build();
 
-      Control controlModel = new Control.Builder()
+      TemplateControl controlModel = new TemplateControl.Builder()
         .grant(policyGrantModel)
         .build();
 
@@ -994,11 +996,11 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
           .roleId(TEST_EDITOR_ROLE_CRN)
           .build();
         
-        Grant policyGrantModel = new Grant.Builder()
+        TemplateGrant policyGrantModel = new TemplateGrant.Builder()
           .roles(Arrays.asList(rolesModel))
           .build();
 
-        Control controlModel = new Control.Builder()
+        TemplateControl controlModel = new TemplateControl.Builder()
           .grant(policyGrantModel)
           .build();
 
@@ -1082,11 +1084,11 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         .roleId("crn:v1:bluemix:public:iam::::serviceRole:Writer")
         .build();
       
-      Grant policyGrantModel = new Grant.Builder()
+      TemplateGrant policyGrantModel = new TemplateGrant.Builder()
         .roles(Arrays.asList(rolesModel))
         .build();
 
-      Control controlModel = new Control.Builder()
+      TemplateControl controlModel = new TemplateControl.Builder()
         .grant(policyGrantModel)
         .build();
 
@@ -1147,11 +1149,11 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         .roleId("crn:v1:bluemix:public:iam::::serviceRole:Reader")
         .build();
       
-      Grant policyGrantModel = new Grant.Builder()
+      TemplateGrant policyGrantModel = new TemplateGrant.Builder()
         .roles(Arrays.asList(rolesModel))
         .build();
 
-      Control controlModel = new Control.Builder()
+      TemplateControl controlModel = new TemplateControl.Builder()
         .grant(policyGrantModel)
         .build();
 
@@ -1730,12 +1732,12 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
     /* Role Template Integration Tests - Start */
     @Test
     public void testCreateRoleTemplate() throws Exception {
-      TemplateRole templateRoleModel = new TemplateRole.Builder()
+      RoleTemplatePrototypeRole templateRoleModel = new RoleTemplatePrototypeRole.Builder()
         .name(testCustomRoleName)
         .displayName(testCustomRoleDisplayName)
-        .serviceName(TEST_SERVICE_NAME)
+        .serviceName("am-test-service")
         .description(testCustomRoleDescription)
-        .actions(testCustomRoleActions)
+        .actions(java.util.Arrays.asList("am-test-service.test.create"))
         .build();
 
       CreateRoleTemplateOptions createRoleTemplateOptions = new CreateRoleTemplateOptions.Builder()
@@ -1755,7 +1757,64 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
 
       RoleTemplate roleTemplateResult = response.getResult();
       testRoleTemplateId = roleTemplateResult.getId();
+      testRoleBaseTemplateVersion = roleTemplateResult.getVersion();
       assertNotNull(roleTemplateResult);
+    }
+
+    @Test(dependsOnMethods = { "testCreateRoleTemplate" })
+    public void testCreateRolePolicyTemplate() throws Exception {
+      V2PolicyResourceAttribute resourceAttributeService = new V2PolicyResourceAttribute.Builder()
+        .key("serviceName")
+        .value("am-test-service")
+        .operator("stringEquals")
+        .build();
+
+      Roles rolesModel = new Roles.Builder()
+        .roleId(TEST_VIEW_ROLE_CRN)
+        .build();
+
+      RoleTemplateReferencesItem roleTemplateReferencesModel = new RoleTemplateReferencesItem.Builder()
+        .id(testRoleTemplateId)
+        .version(testRoleBaseTemplateVersion)
+        .build();
+
+      TemplateGrant policyGrantModel = new TemplateGrant.Builder()
+        .roles(Arrays.asList(rolesModel))
+        .roleTemplateReferences(Arrays.asList(roleTemplateReferencesModel))
+        .build();
+
+      TemplateControl controlModel = new TemplateControl.Builder()
+        .grant(policyGrantModel)
+        .build();
+
+      V2PolicyResource policyResourceModel = new V2PolicyResource.Builder()
+        .attributes(new ArrayList<V2PolicyResourceAttribute>(Arrays.asList(resourceAttributeService)))
+        .build();
+
+      TemplatePolicy templatePolicyModel = new TemplatePolicy.Builder()
+        .type(POLICY_TYPE)
+        .description("SDK Test Policy")
+        .resource(policyResourceModel)
+        .control(controlModel)
+        .build();
+
+      CreatePolicyTemplateOptions createPolicyTemplateOptions = new CreatePolicyTemplateOptions.Builder()
+        .name("SDKJavaRolePolicyTemplate" + TEST_UNIQUE_ID)
+        .accountId(testAccountId)
+        .policy(templatePolicyModel)
+        .description("SDK Test template with viewer role")
+        .build();
+
+      Response<PolicyTemplateLimitData> response = service.createPolicyTemplate(createPolicyTemplateOptions).execute();
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 201);
+
+      PolicyTemplateLimitData result = response.getResult();
+
+      assertNotNull(result);
+      assertEquals(result.getPolicy(), templatePolicyModel);
+      testRolePolicyTemplateId = result.getId();
+      assertEquals(result.getState(), "active");
     }
 
     @Test(dependsOnMethods = { "testCreateRoleTemplate" })
@@ -1772,7 +1831,6 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
       assertEquals(response.getStatusCode(), 200);
 
       RoleTemplate roleTemplateResult = response.getResult();
-      testActionControlBaseTemplateVersion = roleTemplateResult.getVersion();
       assertNotNull(roleTemplateResult);
       List<String> values = response.getHeaders().values(HEADER_ETAG);
       assertNotNull(values);
@@ -1799,9 +1857,7 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
     @Test(dependsOnMethods = { "testListRoleTemplates" })
     public void testCreateRoleTemplateVersion() throws Exception {
       TemplateRole templateRoleModel = new TemplateRole.Builder()
-        .name("SDKTestRoleVersion")
         .displayName("SDKTestRoleVersionDisp")
-        .serviceName("am-test-service")
         .description("am-test-service versioon customRole")
         .actions(java.util.Arrays.asList("am-test-service.test.delete"))
         .build();
@@ -1850,11 +1906,9 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
     public void testReplaceRoleTemplate() throws Exception {
       TemplateRole templateRoleModel = new TemplateRole.Builder()
         .actions(java.util.Arrays.asList("testString"))
-        .name("SDKTestRoleVersionRep")
         .displayName("SDKTestRoleVersionDispRep")
-        .serviceName("am-test-service")
         .description("am-test-service versioon customRole Rep")
-        .actions(java.util.Arrays.asList("am-test-service.test.create"))
+        .actions(java.util.Arrays.asList("am-test-service.test.create", "am-test-service.test.delete"))
         .build();
 
       ReplaceRoleTemplateOptions replaceRoleTemplateOptions = new ReplaceRoleTemplateOptions.Builder()
@@ -1862,7 +1916,6 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
         .version(testRoleTemplateVersion)
         .ifMatch(testRoleTemplateEtag)
         .role(templateRoleModel)
-        .name("TestSDKRoleTemplateRep")
         .description("TestSDKRoleTemplateRepDesc")
         .build();
 
@@ -1998,6 +2051,17 @@ public class IamPolicyManagementIT extends SdkIntegrationTestBase {
       // Invoke operation
       Response<Void> response = service.deleteRoleAssignment(deleteRoleAssignmentOptions).execute();
       // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 204);
+    }
+
+    @Test(dependsOnMethods = { "testCreateRolePolicyTemplate" })
+    public void testDeleteRolePolicyTemplate() {
+      DeletePolicyTemplateOptions deletePolicyTemplateOptions = new DeletePolicyTemplateOptions.Builder()
+        .policyTemplateId(testRolePolicyTemplateId)
+        .build();
+
+      Response<Void> response = service.deletePolicyTemplate(deletePolicyTemplateOptions).execute();
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 204);
     }

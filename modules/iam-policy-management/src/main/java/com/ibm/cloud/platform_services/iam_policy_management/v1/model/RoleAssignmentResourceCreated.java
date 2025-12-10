@@ -16,7 +16,7 @@ package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 import com.ibm.cloud.sdk.core.service.model.GenericModel;
 
 /**
- * On success, it includes the action control assigned.
+ * On success, it includes the role assigned.
  */
 public class RoleAssignmentResourceCreated extends GenericModel {
 

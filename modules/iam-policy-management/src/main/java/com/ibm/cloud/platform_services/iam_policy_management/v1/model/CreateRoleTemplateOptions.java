@@ -24,7 +24,7 @@ public class CreateRoleTemplateOptions extends GenericModel {
   protected String accountId;
   protected String description;
   protected Boolean committed;
-  protected TemplateRole role;
+  protected RoleTemplatePrototypeRole role;
   protected String acceptLanguage;
 
   /**
@@ -35,7 +35,7 @@ public class CreateRoleTemplateOptions extends GenericModel {
     private String accountId;
     private String description;
     private Boolean committed;
-    private TemplateRole role;
+    private RoleTemplatePrototypeRole role;
     private String acceptLanguage;
 
     /**
@@ -128,7 +128,7 @@ public class CreateRoleTemplateOptions extends GenericModel {
      * @param role the role
      * @return the CreateRoleTemplateOptions builder
      */
-    public Builder role(TemplateRole role) {
+    public Builder role(RoleTemplatePrototypeRole role) {
       this.role = role;
       return this;
     }
@@ -222,7 +222,7 @@ public class CreateRoleTemplateOptions extends GenericModel {
    *
    * @return the role
    */
-  public TemplateRole role() {
+  public RoleTemplatePrototypeRole role() {
     return role;
   }
 

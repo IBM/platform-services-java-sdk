@@ -21,9 +21,9 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 public class CreateRoleTemplateVersionOptions extends GenericModel {
 
   protected String roleTemplateId;
-  protected TemplateRole role;
   protected String name;
   protected String description;
+  protected TemplateRole role;
   protected Boolean committed;
 
   /**
@@ -31,9 +31,9 @@ public class CreateRoleTemplateVersionOptions extends GenericModel {
    */
   public static class Builder {
     private String roleTemplateId;
-    private TemplateRole role;
     private String name;
     private String description;
+    private TemplateRole role;
     private Boolean committed;
 
     /**
@@ -43,9 +43,9 @@ public class CreateRoleTemplateVersionOptions extends GenericModel {
      */
     private Builder(CreateRoleTemplateVersionOptions createRoleTemplateVersionOptions) {
       this.roleTemplateId = createRoleTemplateVersionOptions.roleTemplateId;
-      this.role = createRoleTemplateVersionOptions.role;
       this.name = createRoleTemplateVersionOptions.name;
       this.description = createRoleTemplateVersionOptions.description;
+      this.role = createRoleTemplateVersionOptions.role;
       this.committed = createRoleTemplateVersionOptions.committed;
     }
 
@@ -59,11 +59,9 @@ public class CreateRoleTemplateVersionOptions extends GenericModel {
      * Instantiates a new builder with required properties.
      *
      * @param roleTemplateId the roleTemplateId
-     * @param role the role
      */
-    public Builder(String roleTemplateId, TemplateRole role) {
+    public Builder(String roleTemplateId) {
       this.roleTemplateId = roleTemplateId;
-      this.role = role;
     }
 
     /**
@@ -83,17 +81,6 @@ public class CreateRoleTemplateVersionOptions extends GenericModel {
      */
     public Builder roleTemplateId(String roleTemplateId) {
       this.roleTemplateId = roleTemplateId;
-      return this;
-    }
-
-    /**
-     * Set the role.
-     *
-     * @param role the role
-     * @return the CreateRoleTemplateVersionOptions builder
-     */
-    public Builder role(TemplateRole role) {
-      this.role = role;
       return this;
     }
 
@@ -120,6 +107,17 @@ public class CreateRoleTemplateVersionOptions extends GenericModel {
     }
 
     /**
+     * Set the role.
+     *
+     * @param role the role
+     * @return the CreateRoleTemplateVersionOptions builder
+     */
+    public Builder role(TemplateRole role) {
+      this.role = role;
+      return this;
+    }
+
+    /**
      * Set the committed.
      *
      * @param committed the committed
@@ -136,12 +134,10 @@ public class CreateRoleTemplateVersionOptions extends GenericModel {
   protected CreateRoleTemplateVersionOptions(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.roleTemplateId,
       "roleTemplateId cannot be empty");
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.role,
-      "role cannot be null");
     roleTemplateId = builder.roleTemplateId;
-    role = builder.role;
     name = builder.name;
     description = builder.description;
+    role = builder.role;
     committed = builder.committed;
   }
 
@@ -166,17 +162,6 @@ public class CreateRoleTemplateVersionOptions extends GenericModel {
   }
 
   /**
-   * Gets the role.
-   *
-   * The role properties that are created in an action resource when the template is assigned.
-   *
-   * @return the role
-   */
-  public TemplateRole role() {
-    return role;
-  }
-
-  /**
    * Gets the name.
    *
    * Required field when creating a new template. Otherwise, this field is optional. If the field is included, it will
@@ -198,6 +183,17 @@ public class CreateRoleTemplateVersionOptions extends GenericModel {
    */
   public String description() {
     return description;
+  }
+
+  /**
+   * Gets the role.
+   *
+   * The role properties that are created in an action resource when the template is assigned.
+   *
+   * @return the role
+   */
+  public TemplateRole role() {
+    return role;
   }
 
   /**

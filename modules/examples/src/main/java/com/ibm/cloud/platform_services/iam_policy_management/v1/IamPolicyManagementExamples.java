@@ -135,6 +135,9 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleTempla
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateRole;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.UpdateRoleAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.ReplaceRoleTemplateOptions;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleTemplateReferencesItem;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateControl;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateGrant;
 
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
@@ -197,6 +200,7 @@ public class IamPolicyManagementExamples {
   private static String exampleRoleTemplateVersion = null;
   private static String exampleRoleTemplateAssignmentId = null;
   private static String exampleRoleTemplateAssignmentETag = null;
+  private static String exampleRolePolicyTemplateId = null;
 
   static {
     System.setProperty("IBM_CREDENTIALS_FILE", "../../iam_policy_management.env");
@@ -809,10 +813,10 @@ public class IamPolicyManagementExamples {
       Roles rolesModel = new Roles.Builder()
         .roleId("crn:v1:bluemix:public:iam::::serviceRole:Writer")
         .build();
-      Grant grantModel = new Grant.Builder()
+      TemplateGrant grantModel = new TemplateGrant.Builder()
         .roles(java.util.Arrays.asList(rolesModel))
         .build();
-      Control controlModel = new Control.Builder()
+      TemplateControl controlModel = new TemplateControl.Builder()
         .grant(grantModel)
         .build();
        V2PolicySubjectAttribute subjectAttributeService = new V2PolicySubjectAttribute.Builder()
@@ -883,10 +887,10 @@ public class IamPolicyManagementExamples {
       Roles rolesModel = new Roles.Builder()
         .roleId("crn:v1:bluemix:public:iam::::serviceRole:Reader")
         .build();
-      Grant grantModel = new Grant.Builder()
+      TemplateGrant grantModel = new TemplateGrant.Builder()
         .roles(java.util.Arrays.asList(rolesModel))
         .build();
-      Control controlModel = new Control.Builder()
+      TemplateControl controlModel = new TemplateControl.Builder()
         .grant(grantModel)
         .build();
       V2PolicySubjectAttribute subjectAttributeService = new V2PolicySubjectAttribute.Builder()
@@ -951,10 +955,10 @@ public class IamPolicyManagementExamples {
       Roles rolesModel = new Roles.Builder()
         .roleId("crn:v1:bluemix:public:iam::::role:Viewer")
         .build();
-      Grant grantModel = new Grant.Builder()
+      TemplateGrant grantModel = new TemplateGrant.Builder()
         .roles(java.util.Arrays.asList(rolesModel))
         .build();
-      Control controlModel = new Control.Builder()
+      TemplateControl controlModel = new TemplateControl.Builder()
         .grant(grantModel)
         .build();
        V2PolicySubjectAttribute subjectAttributeService = new V2PolicySubjectAttribute.Builder()
@@ -1581,6 +1585,55 @@ public class IamPolicyManagementExamples {
     }
 
     try {
+      System.out.println("createRolePolicyTemplate() result:");
+      // begin-create_policy_template
+      V2PolicyResourceAttribute v2PolicyResourceAttributeModel = new V2PolicyResourceAttribute.Builder()
+        .key("serviceName")
+        .value("am-test-service")
+        .operator("stringEquals")
+        .build();
+      V2PolicyResource v2PolicyResourceModel = new V2PolicyResource.Builder()
+        .attributes(java.util.Arrays.asList(v2PolicyResourceAttributeModel))
+        .build();
+      Roles rolesModel = new Roles.Builder()
+        .roleId("crn:v1:bluemix:public:iam::::role:Viewer")
+        .build();
+      RoleTemplateReferencesItem roleTemplateReferencesModel = new RoleTemplateReferencesItem.Builder()
+        .id(exampleRoleTemplateId)
+        .version(exampleRoleTemplateVersion)
+        .build();
+      TemplateGrant grantModel = new TemplateGrant.Builder()
+        .roles(java.util.Arrays.asList(rolesModel))
+        .roleTemplateReferences(java.util.Arrays.asList(roleTemplateReferencesModel))
+        .build();
+      TemplateControl controlModel = new TemplateControl.Builder()
+        .grant(grantModel)
+        .build();
+      TemplatePolicy templatePolicyModel = new TemplatePolicy.Builder()
+        .type("access")
+        .resource(v2PolicyResourceModel)
+        .control(controlModel)
+        .build();
+      CreatePolicyTemplateOptions createPolicyTemplateOptions = new CreatePolicyTemplateOptions.Builder()
+        .name("SDKRolePTExamplesTest")
+        .accountId(exampleAccountId)
+        .policy(templatePolicyModel)
+        .build();
+
+      Response<PolicyTemplateLimitData> response = service.createPolicyTemplate(createPolicyTemplateOptions).execute();
+      PolicyTemplateLimitData policyTemplate = response.getResult();
+
+      exampleRolePolicyTemplateId = policyTemplate.getId();
+
+      System.out.println(policyTemplate);
+      // end-create_role_policy_template
+
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
       System.out.println("getRoleTemplate() result:");
       // begin-get_role_template
       GetRoleTemplateOptions getRoleTemplateOptions = new GetRoleTemplateOptions.Builder()
@@ -1603,9 +1656,7 @@ public class IamPolicyManagementExamples {
       System.out.println("replaceRoleTemplate() result:");
       // begin-replace_role_template
       TemplateRole templateRoleModel = new TemplateRole.Builder()
-        .name("SDKTestRoleTemplateRep")
         .displayName("SDKTestRoleTemplateRep")
-        .serviceName("am-test-service")
         .actions(java.util.Arrays.asList("am-test-service.test.create"))
         .build();
       ReplaceRoleTemplateOptions replaceRoleTemplateOptions = new ReplaceRoleTemplateOptions.Builder()
@@ -1651,9 +1702,7 @@ public class IamPolicyManagementExamples {
       System.out.println("createRoleTemplateVersion() result:");
       // begin-create_role_template_version
       TemplateRole templateRoleModel = new TemplateRole.Builder()
-        .name("SDKTestRoleVersion")
         .displayName("SDKTestRoleVersionDisp")
-        .serviceName("am-test-service")
         .description("am-test-service versioon customRole")
         .actions(java.util.Arrays.asList("am-test-service.test.create"))
         .build();
@@ -1833,6 +1882,21 @@ public class IamPolicyManagementExamples {
         logger.error(String.format("Service returned status code %s: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
     }
+
+    try {
+      // begin-delete_role_policy_template
+      DeletePolicyTemplateOptions deletePolicyTemplateOptions = new DeletePolicyTemplateOptions.Builder()
+        .policyTemplateId(exampleRolePolicyTemplateId)
+        .build();
+
+      Response<Void> response = service.deletePolicyTemplate(deletePolicyTemplateOptions).execute();
+      // end-delete_role_policy_template
+      System.out.printf("deleteRolePolicyTemplate() response status code: %d%n", response.getStatusCode());
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
     try {
       // begin-delete_role_template_version
       DeleteRoleTemplateVersionOptions deleteRoleTemplateVersionOptions = new DeleteRoleTemplateVersionOptions.Builder()

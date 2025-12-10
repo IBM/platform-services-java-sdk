@@ -1,3 +1,10 @@
+# [0.72.0](https://github.com/IBM/platform-services-java-sdk/compare/0.71.0...0.72.0) (2025-12-10)
+
+
+### Features
+
+* **IAM Policy Management:** re-gen service after recent API changes for role template references ([#289](https://github.com/IBM/platform-services-java-sdk/issues/289)) ([85722d1](https://github.com/IBM/platform-services-java-sdk/commit/85722d12a45b8a08d27b15baf461c73d724af90f))
+
 # [0.71.0](https://github.com/IBM/platform-services-java-sdk/compare/0.70.0...0.71.0) (2025-10-30)
 
 

@@ -22,8 +22,9 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
 /**
  * The role properties that are created in an action resource when the template is assigned.
  */
-public class TemplateRole extends GenericModel {
+public class RoleTemplatePrototypeRole extends GenericModel {
 
+  protected String name;
   @SerializedName("display_name")
   protected String displayName;
   @SerializedName("service_name")
@@ -35,21 +36,23 @@ public class TemplateRole extends GenericModel {
    * Builder.
    */
   public static class Builder {
+    private String name;
     private String displayName;
     private String serviceName;
     private String description;
     private List<String> actions;
 
     /**
-     * Instantiates a new Builder from an existing TemplateRole instance.
+     * Instantiates a new Builder from an existing RoleTemplatePrototypeRole instance.
      *
-     * @param templateRole the instance to initialize the Builder with
+     * @param roleTemplatePrototypeRole the instance to initialize the Builder with
      */
-    private Builder(TemplateRole templateRole) {
-      this.displayName = templateRole.displayName;
-      this.serviceName = templateRole.serviceName;
-      this.description = templateRole.description;
-      this.actions = templateRole.actions;
+    private Builder(RoleTemplatePrototypeRole roleTemplatePrototypeRole) {
+      this.name = roleTemplatePrototypeRole.name;
+      this.displayName = roleTemplatePrototypeRole.displayName;
+      this.serviceName = roleTemplatePrototypeRole.serviceName;
+      this.description = roleTemplatePrototypeRole.description;
+      this.actions = roleTemplatePrototypeRole.actions;
     }
 
     /**
@@ -61,28 +64,30 @@ public class TemplateRole extends GenericModel {
     /**
      * Instantiates a new builder with required properties.
      *
+     * @param name the name
      * @param displayName the displayName
      * @param actions the actions
      */
-    public Builder(String displayName, List<String> actions) {
+    public Builder(String name, String displayName, List<String> actions) {
+      this.name = name;
       this.displayName = displayName;
       this.actions = actions;
     }
 
     /**
-     * Builds a TemplateRole.
+     * Builds a RoleTemplatePrototypeRole.
      *
-     * @return the new TemplateRole instance
+     * @return the new RoleTemplatePrototypeRole instance
      */
-    public TemplateRole build() {
-      return new TemplateRole(this);
+    public RoleTemplatePrototypeRole build() {
+      return new RoleTemplatePrototypeRole(this);
     }
 
     /**
      * Adds a new element to actions.
      *
      * @param actions the new element to be added
-     * @return the TemplateRole builder
+     * @return the RoleTemplatePrototypeRole builder
      */
     public Builder addActions(String actions) {
       com.ibm.cloud.sdk.core.util.Validator.notNull(actions,
@@ -95,10 +100,21 @@ public class TemplateRole extends GenericModel {
     }
 
     /**
+     * Set the name.
+     *
+     * @param name the name
+     * @return the RoleTemplatePrototypeRole builder
+     */
+    public Builder name(String name) {
+      this.name = name;
+      return this;
+    }
+
+    /**
      * Set the displayName.
      *
      * @param displayName the displayName
-     * @return the TemplateRole builder
+     * @return the RoleTemplatePrototypeRole builder
      */
     public Builder displayName(String displayName) {
       this.displayName = displayName;
@@ -109,7 +125,7 @@ public class TemplateRole extends GenericModel {
      * Set the serviceName.
      *
      * @param serviceName the serviceName
-     * @return the TemplateRole builder
+     * @return the RoleTemplatePrototypeRole builder
      */
     public Builder serviceName(String serviceName) {
       this.serviceName = serviceName;
@@ -120,7 +136,7 @@ public class TemplateRole extends GenericModel {
      * Set the description.
      *
      * @param description the description
-     * @return the TemplateRole builder
+     * @return the RoleTemplatePrototypeRole builder
      */
     public Builder description(String description) {
       this.description = description;
@@ -132,7 +148,7 @@ public class TemplateRole extends GenericModel {
      * Existing actions will be replaced.
      *
      * @param actions the actions
-     * @return the TemplateRole builder
+     * @return the RoleTemplatePrototypeRole builder
      */
     public Builder actions(List<String> actions) {
       this.actions = actions;
@@ -140,13 +156,16 @@ public class TemplateRole extends GenericModel {
     }
   }
 
-  protected TemplateRole() { }
+  protected RoleTemplatePrototypeRole() { }
 
-  protected TemplateRole(Builder builder) {
+  protected RoleTemplatePrototypeRole(Builder builder) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.name,
+      "name cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.displayName,
       "displayName cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.actions,
       "actions cannot be null");
+    name = builder.name;
     displayName = builder.displayName;
     serviceName = builder.serviceName;
     description = builder.description;
@@ -156,10 +175,21 @@ public class TemplateRole extends GenericModel {
   /**
    * New builder.
    *
-   * @return a TemplateRole builder
+   * @return a RoleTemplatePrototypeRole builder
    */
   public Builder newBuilder() {
     return new Builder(this);
+  }
+
+  /**
+   * Gets the name.
+   *
+   * The name of the role that is used in the CRN. This must be alphanumeric and capitalized.
+   *
+   * @return the name
+   */
+  public String name() {
+    return name;
   }
 
   /**
@@ -206,4 +236,3 @@ public class TemplateRole extends GenericModel {
     return actions;
   }
 }
-

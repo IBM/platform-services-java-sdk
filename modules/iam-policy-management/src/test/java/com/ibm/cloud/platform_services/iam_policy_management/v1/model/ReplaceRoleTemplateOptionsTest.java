@@ -33,13 +33,11 @@ public class ReplaceRoleTemplateOptionsTest {
   @Test
   public void testReplaceRoleTemplateOptions() throws Throwable {
     TemplateRole templateRoleModel = new TemplateRole.Builder()
-      .name("testString")
       .displayName("testString")
       .serviceName("testString")
       .description("testString")
       .actions(java.util.Arrays.asList("testString"))
       .build();
-    assertEquals(templateRoleModel.name(), "testString");
     assertEquals(templateRoleModel.displayName(), "testString");
     assertEquals(templateRoleModel.serviceName(), "testString");
     assertEquals(templateRoleModel.description(), "testString");
@@ -49,17 +47,17 @@ public class ReplaceRoleTemplateOptionsTest {
       .roleTemplateId("testString")
       .version("testString")
       .ifMatch("testString")
-      .role(templateRoleModel)
       .name("testString")
       .description("testString")
+      .role(templateRoleModel)
       .committed(true)
       .build();
     assertEquals(replaceRoleTemplateOptionsModel.roleTemplateId(), "testString");
     assertEquals(replaceRoleTemplateOptionsModel.version(), "testString");
     assertEquals(replaceRoleTemplateOptionsModel.ifMatch(), "testString");
-    assertEquals(replaceRoleTemplateOptionsModel.role(), templateRoleModel);
     assertEquals(replaceRoleTemplateOptionsModel.name(), "testString");
     assertEquals(replaceRoleTemplateOptionsModel.description(), "testString");
+    assertEquals(replaceRoleTemplateOptionsModel.role(), templateRoleModel);
     assertEquals(replaceRoleTemplateOptionsModel.committed(), Boolean.valueOf(true));
   }
 

@@ -2252,12 +2252,14 @@ public class IamPolicyManagement extends BaseService {
     }
     builder.header("Accept", "application/json");
     final JsonObject contentJson = new JsonObject();
-    contentJson.add("role", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createRoleTemplateVersionOptions.role()));
     if (createRoleTemplateVersionOptions.name() != null) {
       contentJson.addProperty("name", createRoleTemplateVersionOptions.name());
     }
     if (createRoleTemplateVersionOptions.description() != null) {
       contentJson.addProperty("description", createRoleTemplateVersionOptions.description());
+    }
+    if (createRoleTemplateVersionOptions.role() != null) {
+      contentJson.add("role", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createRoleTemplateVersionOptions.role()));
     }
     if (createRoleTemplateVersionOptions.committed() != null) {
       contentJson.addProperty("committed", createRoleTemplateVersionOptions.committed());
@@ -2323,12 +2325,14 @@ public class IamPolicyManagement extends BaseService {
     builder.header("Accept", "application/json");
     builder.header("If-Match", replaceRoleTemplateOptions.ifMatch());
     final JsonObject contentJson = new JsonObject();
-    contentJson.add("role", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceRoleTemplateOptions.role()));
     if (replaceRoleTemplateOptions.name() != null) {
       contentJson.addProperty("name", replaceRoleTemplateOptions.name());
     }
     if (replaceRoleTemplateOptions.description() != null) {
       contentJson.addProperty("description", replaceRoleTemplateOptions.description());
+    }
+    if (replaceRoleTemplateOptions.role() != null) {
+      contentJson.add("role", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(replaceRoleTemplateOptions.role()));
     }
     if (replaceRoleTemplateOptions.committed() != null) {
       contentJson.addProperty("committed", replaceRoleTemplateOptions.committed());

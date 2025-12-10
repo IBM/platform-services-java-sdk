@@ -18,7 +18,7 @@ import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Next;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Previous;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleTemplate;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleTemplateCollection;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateRole;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleTemplatePrototypeRole;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;

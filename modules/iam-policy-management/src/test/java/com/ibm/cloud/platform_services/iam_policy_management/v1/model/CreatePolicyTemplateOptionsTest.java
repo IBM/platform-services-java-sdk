@@ -13,10 +13,11 @@
 
 package com.ibm.cloud.platform_services.iam_policy_management.v1.model;
 
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Control;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.CreatePolicyTemplateOptions;
-import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Grant;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.RoleTemplateReferencesItem;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.Roles;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateControl;
+import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplateGrant;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.TemplatePolicy;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResource;
 import com.ibm.cloud.platform_services.iam_policy_management.v1.model.V2PolicyResourceAttribute;
@@ -94,15 +95,24 @@ public class CreatePolicyTemplateOptionsTest {
       .build();
     assertEquals(rolesModel.roleId(), "testString");
 
-    Grant grantModel = new Grant.Builder()
-      .roles(java.util.Arrays.asList(rolesModel))
+    RoleTemplateReferencesItem roleTemplateReferencesItemModel = new RoleTemplateReferencesItem.Builder()
+      .id("testString")
+      .version("testString")
       .build();
-    assertEquals(grantModel.roles(), java.util.Arrays.asList(rolesModel));
+    assertEquals(roleTemplateReferencesItemModel.id(), "testString");
+    assertEquals(roleTemplateReferencesItemModel.version(), "testString");
 
-    Control controlModel = new Control.Builder()
-      .grant(grantModel)
+    TemplateGrant templateGrantModel = new TemplateGrant.Builder()
+      .roles(java.util.Arrays.asList(rolesModel))
+      .roleTemplateReferences(java.util.Arrays.asList(roleTemplateReferencesItemModel))
       .build();
-    assertEquals(controlModel.grant(), grantModel);
+    assertEquals(templateGrantModel.roles(), java.util.Arrays.asList(rolesModel));
+    assertEquals(templateGrantModel.roleTemplateReferences(), java.util.Arrays.asList(roleTemplateReferencesItemModel));
+
+    TemplateControl templateControlModel = new TemplateControl.Builder()
+      .grant(templateGrantModel)
+      .build();
+    assertEquals(templateControlModel.grant(), templateGrantModel);
 
     TemplatePolicy templatePolicyModel = new TemplatePolicy.Builder()
       .type("access")
@@ -111,7 +121,7 @@ public class CreatePolicyTemplateOptionsTest {
       .subject(v2PolicySubjectModel)
       .pattern("testString")
       .rule(v2PolicyRuleModel)
-      .control(controlModel)
+      .control(templateControlModel)
       .build();
     assertEquals(templatePolicyModel.type(), "access");
     assertEquals(templatePolicyModel.description(), "testString");
@@ -119,7 +129,7 @@ public class CreatePolicyTemplateOptionsTest {
     assertEquals(templatePolicyModel.subject(), v2PolicySubjectModel);
     assertEquals(templatePolicyModel.pattern(), "testString");
     assertEquals(templatePolicyModel.rule(), v2PolicyRuleModel);
-    assertEquals(templatePolicyModel.control(), controlModel);
+    assertEquals(templatePolicyModel.control(), templateControlModel);
 
     CreatePolicyTemplateOptions createPolicyTemplateOptionsModel = new CreatePolicyTemplateOptions.Builder()
       .name("testString")

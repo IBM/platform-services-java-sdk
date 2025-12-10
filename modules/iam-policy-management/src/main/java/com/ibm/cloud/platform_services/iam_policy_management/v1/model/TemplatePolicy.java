@@ -36,7 +36,7 @@ public class TemplatePolicy extends GenericModel {
   protected V2PolicySubject subject;
   protected String pattern;
   protected V2PolicyRule rule;
-  protected Control control;
+  protected TemplateControl control;
 
   /**
    * Builder.
@@ -48,7 +48,7 @@ public class TemplatePolicy extends GenericModel {
     private V2PolicySubject subject;
     private String pattern;
     private V2PolicyRule rule;
-    private Control control;
+    private TemplateControl control;
 
     /**
      * Instantiates a new Builder from an existing TemplatePolicy instance.
@@ -161,7 +161,7 @@ public class TemplatePolicy extends GenericModel {
      * @param control the control
      * @return the TemplatePolicy builder
      */
-    public Builder control(Control control) {
+    public Builder control(TemplateControl control) {
       this.control = control;
       return this;
     }
@@ -265,7 +265,7 @@ public class TemplatePolicy extends GenericModel {
    *
    * @return the control
    */
-  public Control control() {
+  public TemplateControl control() {
     return control;
   }
 }

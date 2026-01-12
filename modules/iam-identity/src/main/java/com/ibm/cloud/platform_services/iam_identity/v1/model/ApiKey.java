@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2025.
+ * (C) Copyright IBM Corp. 2026.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -42,6 +42,8 @@ public class ApiKey extends GenericModel {
   protected Boolean supportSessions;
   @SerializedName("action_when_leaked")
   protected String actionWhenLeaked;
+  @SerializedName("expires_at")
+  protected String expiresAt;
   protected String description;
   @SerializedName("iam_id")
   protected String iamId;
@@ -188,6 +190,17 @@ public class ApiKey extends GenericModel {
    */
   public String getActionWhenLeaked() {
     return actionWhenLeaked;
+  }
+
+  /**
+   * Gets the expiresAt.
+   *
+   * Date and time when the API key becomes invalid, ISO 8601 datetime in the format 'yyyy-MM-ddTHH:mm+0000'.
+   *
+   * @return the expiresAt
+   */
+  public String getExpiresAt() {
+    return expiresAt;
   }
 
   /**

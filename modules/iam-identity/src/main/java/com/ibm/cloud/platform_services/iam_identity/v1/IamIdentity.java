@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2025.
+ * (C) Copyright IBM Corp. 2026.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -715,6 +715,9 @@ public class IamIdentity extends BaseService {
     if (createApiKeyOptions.actionWhenLeaked() != null) {
       contentJson.addProperty("action_when_leaked", createApiKeyOptions.actionWhenLeaked());
     }
+    if (createApiKeyOptions.expiresAt() != null) {
+      contentJson.addProperty("expires_at", createApiKeyOptions.expiresAt());
+    }
     builder.bodyJson(contentJson);
     ResponseConverter<ApiKey> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ApiKey>() { }.getType());
@@ -829,6 +832,9 @@ public class IamIdentity extends BaseService {
     }
     if (updateApiKeyOptions.actionWhenLeaked() != null) {
       contentJson.addProperty("action_when_leaked", updateApiKeyOptions.actionWhenLeaked());
+    }
+    if (updateApiKeyOptions.expiresAt() != null) {
+      contentJson.addProperty("expires_at", updateApiKeyOptions.expiresAt());
     }
     builder.bodyJson(contentJson);
     ResponseConverter<ApiKey> responseConverter =

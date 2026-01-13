@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2025.
+ * (C) Copyright IBM Corp. 2026.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -26,6 +26,7 @@ public class UpdateApiKeyOptions extends GenericModel {
   protected String description;
   protected Boolean supportSessions;
   protected String actionWhenLeaked;
+  protected String expiresAt;
 
   /**
    * Builder.
@@ -37,6 +38,7 @@ public class UpdateApiKeyOptions extends GenericModel {
     private String description;
     private Boolean supportSessions;
     private String actionWhenLeaked;
+    private String expiresAt;
 
     /**
      * Instantiates a new Builder from an existing UpdateApiKeyOptions instance.
@@ -50,6 +52,7 @@ public class UpdateApiKeyOptions extends GenericModel {
       this.description = updateApiKeyOptions.description;
       this.supportSessions = updateApiKeyOptions.supportSessions;
       this.actionWhenLeaked = updateApiKeyOptions.actionWhenLeaked;
+      this.expiresAt = updateApiKeyOptions.expiresAt;
     }
 
     /**
@@ -143,6 +146,17 @@ public class UpdateApiKeyOptions extends GenericModel {
       this.actionWhenLeaked = actionWhenLeaked;
       return this;
     }
+
+    /**
+     * Set the expiresAt.
+     *
+     * @param expiresAt the expiresAt
+     * @return the UpdateApiKeyOptions builder
+     */
+    public Builder expiresAt(String expiresAt) {
+      this.expiresAt = expiresAt;
+      return this;
+    }
   }
 
   protected UpdateApiKeyOptions() { }
@@ -158,6 +172,7 @@ public class UpdateApiKeyOptions extends GenericModel {
     description = builder.description;
     supportSessions = builder.supportSessions;
     actionWhenLeaked = builder.actionWhenLeaked;
+    expiresAt = builder.expiresAt;
   }
 
   /**
@@ -239,6 +254,17 @@ public class UpdateApiKeyOptions extends GenericModel {
    */
   public String actionWhenLeaked() {
     return actionWhenLeaked;
+  }
+
+  /**
+   * Gets the expiresAt.
+   *
+   * Date and time when the API key becomes invalid, ISO 8601 datetime in the format 'yyyy-MM-ddTHH:mm+0000'.
+   *
+   * @return the expiresAt
+   */
+  public String expiresAt() {
+    return expiresAt;
   }
 }
 

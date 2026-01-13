@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2025.
+ * (C) Copyright IBM Corp. 2026.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -28,6 +28,7 @@ public class CreateApiKeyOptions extends GenericModel {
   protected Boolean storeValue;
   protected Boolean supportSessions;
   protected String actionWhenLeaked;
+  protected String expiresAt;
   protected String entityLock;
   protected String entityDisable;
 
@@ -43,6 +44,7 @@ public class CreateApiKeyOptions extends GenericModel {
     private Boolean storeValue;
     private Boolean supportSessions;
     private String actionWhenLeaked;
+    private String expiresAt;
     private String entityLock;
     private String entityDisable;
 
@@ -60,6 +62,7 @@ public class CreateApiKeyOptions extends GenericModel {
       this.storeValue = createApiKeyOptions.storeValue;
       this.supportSessions = createApiKeyOptions.supportSessions;
       this.actionWhenLeaked = createApiKeyOptions.actionWhenLeaked;
+      this.expiresAt = createApiKeyOptions.expiresAt;
       this.entityLock = createApiKeyOptions.entityLock;
       this.entityDisable = createApiKeyOptions.entityDisable;
     }
@@ -179,6 +182,17 @@ public class CreateApiKeyOptions extends GenericModel {
     }
 
     /**
+     * Set the expiresAt.
+     *
+     * @param expiresAt the expiresAt
+     * @return the CreateApiKeyOptions builder
+     */
+    public Builder expiresAt(String expiresAt) {
+      this.expiresAt = expiresAt;
+      return this;
+    }
+
+    /**
      * Set the entityLock.
      *
      * @param entityLock the entityLock
@@ -216,6 +230,7 @@ public class CreateApiKeyOptions extends GenericModel {
     storeValue = builder.storeValue;
     supportSessions = builder.supportSessions;
     actionWhenLeaked = builder.actionWhenLeaked;
+    expiresAt = builder.expiresAt;
     entityLock = builder.entityLock;
     entityDisable = builder.entityDisable;
   }
@@ -325,6 +340,17 @@ public class CreateApiKeyOptions extends GenericModel {
    */
   public String actionWhenLeaked() {
     return actionWhenLeaked;
+  }
+
+  /**
+   * Gets the expiresAt.
+   *
+   * Date and time when the API key becomes invalid, ISO 8601 datetime in the format 'yyyy-MM-ddTHH:mm+0000'.
+   *
+   * @return the expiresAt
+   */
+  public String expiresAt() {
+    return expiresAt;
   }
 
   /**

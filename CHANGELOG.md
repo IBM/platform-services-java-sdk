@@ -1,3 +1,10 @@
+## [0.73.1](https://github.com/IBM/platform-services-java-sdk/compare/0.73.0...0.73.1) (2026-01-15)
+
+
+### Bug Fixes
+
+* **Context-Based Restrictions:** add display name to service ref response ([#290](https://github.com/IBM/platform-services-java-sdk/issues/290)) ([dd2444e](https://github.com/IBM/platform-services-java-sdk/commit/dd2444e7492c654f1c74355d9c6cdcd23a90ea65))
+
 # [0.73.0](https://github.com/IBM/platform-services-java-sdk/compare/0.72.0...0.73.0) (2026-01-13)
 
 

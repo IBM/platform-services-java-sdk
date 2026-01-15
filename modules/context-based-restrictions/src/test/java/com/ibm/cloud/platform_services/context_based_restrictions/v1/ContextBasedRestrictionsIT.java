@@ -136,7 +136,7 @@ public class ContextBasedRestrictionsIT extends SdkIntegrationTestBase {
             ServiceRefValue serviceRefValueModel = new ServiceRefValue.Builder()
                     .accountId(testAccountID)
                     .serviceName("containers-kubernetes")
-                    .location("us-south")
+                    .location("dal")
                     .build();
             AddressServiceRef serviceRefAddressModel = new AddressServiceRef.Builder()
                     .type("serviceRef")

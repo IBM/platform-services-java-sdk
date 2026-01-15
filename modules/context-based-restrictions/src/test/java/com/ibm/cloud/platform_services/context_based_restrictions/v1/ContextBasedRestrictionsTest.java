@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.context_based_restrictions.v1;
 
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.ContextBasedRestrictions;
@@ -380,7 +381,7 @@ public class ContextBasedRestrictionsTest {
   @Test
   public void testListAvailableServicerefTargetsWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"count\": 5, \"targets\": [{\"service_name\": \"serviceName\", \"service_type\": \"serviceType\", \"locations\": [{\"display_name\": \"displayName\", \"kind\": \"kind\", \"name\": \"name\"}]}]}";
+    String mockResponseBody = "{\"count\": 5, \"targets\": [{\"service_name\": \"serviceName\", \"service_type\": \"serviceType\", \"locations\": [{\"display_name\": \"displayName\", \"kind\": \"kind\", \"name\": \"name\"}], \"display_name\": \"displayName\"}]}";
     String listAvailableServicerefTargetsPath = "/v1/zones/serviceref_targets";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -427,7 +428,7 @@ public class ContextBasedRestrictionsTest {
   @Test
   public void testGetServicerefTargetWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"service_name\": \"serviceName\", \"service_type\": \"serviceType\", \"locations\": [{\"display_name\": \"displayName\", \"kind\": \"kind\", \"name\": \"name\"}]}";
+    String mockResponseBody = "{\"service_name\": \"serviceName\", \"service_type\": \"serviceType\", \"locations\": [{\"display_name\": \"displayName\", \"kind\": \"kind\", \"name\": \"name\"}], \"display_name\": \"displayName\"}";
     String getServicerefTargetPath = "/v1/zones/serviceref_targets/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")

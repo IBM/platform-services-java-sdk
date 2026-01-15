@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2024.
+ * (C) Copyright IBM Corp. 2025.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -10,6 +10,7 @@
  * an "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the License for the
  * specific language governing permissions and limitations under the License.
  */
+
 package com.ibm.cloud.platform_services.context_based_restrictions.v1.model;
 
 import java.util.List;
@@ -27,6 +28,8 @@ public class ServiceRefTarget extends GenericModel {
   @SerializedName("service_type")
   protected String serviceType;
   protected List<ServiceRefTargetLocationsItem> locations;
+  @SerializedName("display_name")
+  protected String displayName;
 
   protected ServiceRefTarget() { }
 
@@ -61,6 +64,17 @@ public class ServiceRefTarget extends GenericModel {
    */
   public List<ServiceRefTargetLocationsItem> getLocations() {
     return locations;
+  }
+
+  /**
+   * Gets the displayName.
+   *
+   * The display name of the service.
+   *
+   * @return the displayName
+   */
+  public String getDisplayName() {
+    return displayName;
   }
 }
 

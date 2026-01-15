@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2025.
+ * (C) Copyright IBM Corp. 2026.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -26,7 +26,12 @@ public class UserReportMfaEnrollmentStatus extends GenericModel {
   protected String name;
   protected String username;
   protected String email;
-  protected MfaEnrollments enrollments;
+  @SerializedName("effective_mfa_type")
+  protected String effectiveMfaType;
+  @SerializedName("id_based_mfa")
+  protected IdBasedMfaEnrollment idBasedMfa;
+  @SerializedName("account_based_mfa")
+  protected AccountBasedMfaEnrollment accountBasedMfa;
 
   protected UserReportMfaEnrollmentStatus() { }
 
@@ -75,12 +80,32 @@ public class UserReportMfaEnrollmentStatus extends GenericModel {
   }
 
   /**
-   * Gets the enrollments.
+   * Gets the effectiveMfaType.
    *
-   * @return the enrollments
+   * currently effective mfa type i.e. id_based_mfa or account_based_mfa.
+   *
+   * @return the effectiveMfaType
    */
-  public MfaEnrollments getEnrollments() {
-    return enrollments;
+  public String getEffectiveMfaType() {
+    return effectiveMfaType;
+  }
+
+  /**
+   * Gets the idBasedMfa.
+   *
+   * @return the idBasedMfa
+   */
+  public IdBasedMfaEnrollment getIdBasedMfa() {
+    return idBasedMfa;
+  }
+
+  /**
+   * Gets the accountBasedMfa.
+   *
+   * @return the accountBasedMfa
+   */
+  public AccountBasedMfaEnrollment getAccountBasedMfa() {
+    return accountBasedMfa;
   }
 }
 

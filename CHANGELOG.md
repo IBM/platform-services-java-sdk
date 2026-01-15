@@ -1,3 +1,10 @@
+# [0.73.0](https://github.com/IBM/platform-services-java-sdk/compare/0.72.0...0.73.0) (2026-01-13)
+
+
+### Features
+
+* **IAM Identity:** add apikey expiration ([#291](https://github.com/IBM/platform-services-java-sdk/issues/291)) ([b3ea211](https://github.com/IBM/platform-services-java-sdk/commit/b3ea2117115905a45c952eb6c0909413db65c171))
+
 # [0.72.0](https://github.com/IBM/platform-services-java-sdk/compare/0.71.0...0.72.0) (2025-12-10)
 
 

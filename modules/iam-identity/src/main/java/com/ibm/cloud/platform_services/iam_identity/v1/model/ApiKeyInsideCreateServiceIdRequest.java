@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2025.
+ * (C) Copyright IBM Corp. 2026.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -26,6 +26,10 @@ public class ApiKeyInsideCreateServiceIdRequest extends GenericModel {
   protected String apikey;
   @SerializedName("store_value")
   protected Boolean storeValue;
+  @SerializedName("action_when_leaked")
+  protected String actionWhenLeaked;
+  @SerializedName("expires_at")
+  protected String expiresAt;
 
   /**
    * Builder.
@@ -35,6 +39,8 @@ public class ApiKeyInsideCreateServiceIdRequest extends GenericModel {
     private String description;
     private String apikey;
     private Boolean storeValue;
+    private String actionWhenLeaked;
+    private String expiresAt;
 
     /**
      * Instantiates a new Builder from an existing ApiKeyInsideCreateServiceIdRequest instance.
@@ -46,6 +52,8 @@ public class ApiKeyInsideCreateServiceIdRequest extends GenericModel {
       this.description = apiKeyInsideCreateServiceIdRequest.description;
       this.apikey = apiKeyInsideCreateServiceIdRequest.apikey;
       this.storeValue = apiKeyInsideCreateServiceIdRequest.storeValue;
+      this.actionWhenLeaked = apiKeyInsideCreateServiceIdRequest.actionWhenLeaked;
+      this.expiresAt = apiKeyInsideCreateServiceIdRequest.expiresAt;
     }
 
     /**
@@ -115,6 +123,28 @@ public class ApiKeyInsideCreateServiceIdRequest extends GenericModel {
       this.storeValue = storeValue;
       return this;
     }
+
+    /**
+     * Set the actionWhenLeaked.
+     *
+     * @param actionWhenLeaked the actionWhenLeaked
+     * @return the ApiKeyInsideCreateServiceIdRequest builder
+     */
+    public Builder actionWhenLeaked(String actionWhenLeaked) {
+      this.actionWhenLeaked = actionWhenLeaked;
+      return this;
+    }
+
+    /**
+     * Set the expiresAt.
+     *
+     * @param expiresAt the expiresAt
+     * @return the ApiKeyInsideCreateServiceIdRequest builder
+     */
+    public Builder expiresAt(String expiresAt) {
+      this.expiresAt = expiresAt;
+      return this;
+    }
   }
 
   protected ApiKeyInsideCreateServiceIdRequest() { }
@@ -126,6 +156,8 @@ public class ApiKeyInsideCreateServiceIdRequest extends GenericModel {
     description = builder.description;
     apikey = builder.apikey;
     storeValue = builder.storeValue;
+    actionWhenLeaked = builder.actionWhenLeaked;
+    expiresAt = builder.expiresAt;
   }
 
   /**
@@ -187,6 +219,28 @@ public class ApiKeyInsideCreateServiceIdRequest extends GenericModel {
    */
   public Boolean storeValue() {
     return storeValue;
+  }
+
+  /**
+   * Gets the actionWhenLeaked.
+   *
+   * Defines the action to take when API key is leaked, valid values are 'none', 'disable' and 'delete'.
+   *
+   * @return the actionWhenLeaked
+   */
+  public String actionWhenLeaked() {
+    return actionWhenLeaked;
+  }
+
+  /**
+   * Gets the expiresAt.
+   *
+   * Date and time when the API key becomes invalid, ISO 8601 datetime in the format 'yyyy-MM-ddTHH:mm+0000'.
+   *
+   * @return the expiresAt
+   */
+  public String expiresAt() {
+    return expiresAt;
   }
 }
 

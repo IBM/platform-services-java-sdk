@@ -155,6 +155,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .name(APIKEY_NAME)
                     .iamId(IAM_ID)
                     .description("JavaSDK test apikey #1")
+                    .expiresAt("2049-01-02T18:30:00+0000")
                     .build();
 
             Response<ApiKey> response = service.createApiKey(createApiKeyOptions).execute();
@@ -369,6 +370,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .id(apikeyId1)
                     .ifMatch(apikeyEtag1)
                     .description(newDescription)
+                    .expiresAt("2049-01-02T18:30:00+0000")
                     .build();
 
             Response<ApiKey> response = service.updateApiKey(updateApiKeyOptions).execute();
@@ -494,10 +496,17 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
     @Test
     public void testCreateServiceId() throws Exception {
         try {
+            ApiKeyInsideCreateServiceIdRequest apiKeyInsideCreateServiceIdRequestModel = new ApiKeyInsideCreateServiceIdRequest.Builder()
+                    .name("APIKey name")
+                    .storeValue(true)
+                    .expiresAt("2049-01-02T18:30:00+0000")
+                    .build();
+
             CreateServiceIdOptions createServiceIdOptions = new CreateServiceIdOptions.Builder()
                     .accountId(ACCOUNT_ID)
                     .name(SERVICEID_NAME)
                     .description("JavaSDK test serviceId")
+                    .apikey(apiKeyInsideCreateServiceIdRequestModel)
                     .build();
             Response<ServiceId> response = service.createServiceId(createServiceIdOptions).execute();
             assertNotNull(response);

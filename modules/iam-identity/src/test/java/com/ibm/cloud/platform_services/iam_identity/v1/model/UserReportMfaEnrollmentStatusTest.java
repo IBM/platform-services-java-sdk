@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2025.
+ * (C) Copyright IBM Corp. 2026.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -16,7 +16,6 @@ package com.ibm.cloud.platform_services.iam_identity.v1.model;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountBasedMfaEnrollment;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.IdBasedMfaEnrollment;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.MfaEnrollmentTypeStatus;
-import com.ibm.cloud.platform_services.iam_identity.v1.model.MfaEnrollments;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.UserReportMfaEnrollmentStatus;
 import com.ibm.cloud.platform_services.iam_identity.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
@@ -40,6 +39,8 @@ public class UserReportMfaEnrollmentStatusTest {
     assertNull(userReportMfaEnrollmentStatusModel.getName());
     assertNull(userReportMfaEnrollmentStatusModel.getUsername());
     assertNull(userReportMfaEnrollmentStatusModel.getEmail());
-    assertNull(userReportMfaEnrollmentStatusModel.getEnrollments());
+    assertNull(userReportMfaEnrollmentStatusModel.getEffectiveMfaType());
+    assertNull(userReportMfaEnrollmentStatusModel.getIdBasedMfa());
+    assertNull(userReportMfaEnrollmentStatusModel.getAccountBasedMfa());
   }
 }

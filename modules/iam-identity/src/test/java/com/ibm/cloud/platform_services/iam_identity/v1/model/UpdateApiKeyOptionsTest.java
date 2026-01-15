@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2025.
+ * (C) Copyright IBM Corp. 2026.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -38,6 +38,7 @@ public class UpdateApiKeyOptionsTest {
       .description("testString")
       .supportSessions(true)
       .actionWhenLeaked("testString")
+      .expiresAt("testString")
       .build();
     assertEquals(updateApiKeyOptionsModel.id(), "testString");
     assertEquals(updateApiKeyOptionsModel.ifMatch(), "testString");
@@ -45,6 +46,7 @@ public class UpdateApiKeyOptionsTest {
     assertEquals(updateApiKeyOptionsModel.description(), "testString");
     assertEquals(updateApiKeyOptionsModel.supportSessions(), Boolean.valueOf(true));
     assertEquals(updateApiKeyOptionsModel.actionWhenLeaked(), "testString");
+    assertEquals(updateApiKeyOptionsModel.expiresAt(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

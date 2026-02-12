@@ -25,6 +25,8 @@ public class TagResultsItem extends GenericModel {
   protected String resourceId;
   @SerializedName("is_error")
   protected Boolean isError;
+  @SerializedName("message")
+  protected String message;
 
   protected TagResultsItem() { }
 
@@ -48,6 +50,17 @@ public class TagResultsItem extends GenericModel {
    */
   public Boolean isIsError() {
     return isError;
+  }
+
+  /**
+   * Gets the message.
+   *
+   * Error message returned when the operation fails.
+   *
+   * @return the message
+   */
+  public String getMessage() {
+    return message;
   }
 }
 

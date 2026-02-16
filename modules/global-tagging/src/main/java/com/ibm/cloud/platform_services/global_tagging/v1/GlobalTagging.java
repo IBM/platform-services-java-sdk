@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2025.
+ * (C) Copyright IBM Corp. 2026.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.105.0-3c13b041-20250605-193116
+ * IBM OpenAPI SDK Code Generator Version: 3.111.0-1bfb72c2-20260206-185521
  */
 
 package com.ibm.cloud.platform_services.global_tagging.v1;

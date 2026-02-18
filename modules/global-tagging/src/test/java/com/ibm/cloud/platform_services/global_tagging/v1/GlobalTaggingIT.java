@@ -396,7 +396,8 @@ public class GlobalTaggingIT extends SdkIntegrationTestBase {
 
             assertNotNull(deleteTagResults.getResults());
             for (DeleteTagResultsItem result : deleteTagResults.getResults()) {
-                assertFalse(result.isIsError());
+                // tags are already deleted at detach time if not attached to any resource
+                assertTrue(result.isIsError());
             }
         } catch (ServiceResponseException e) {
             fail(String.format("Service returned status code %d: %s\nError details: %s", e.getStatusCode(),

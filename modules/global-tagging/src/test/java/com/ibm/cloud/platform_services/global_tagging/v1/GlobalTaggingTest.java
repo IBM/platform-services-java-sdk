@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2025.
+ * (C) Copyright IBM Corp. 2026.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -305,7 +305,7 @@ public class GlobalTaggingTest {
   @Test
   public void testAttachTagWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"results\": [{\"resource_id\": \"resourceId\", \"is_error\": false}]}";
+    String mockResponseBody = "{\"results\": [{\"resource_id\": \"resourceId\", \"is_error\": false, \"message\": \"message\"}]}";
     String attachTagPath = "/v3/tags/attach";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -373,7 +373,7 @@ public class GlobalTaggingTest {
   @Test
   public void testDetachTagWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"results\": [{\"resource_id\": \"resourceId\", \"is_error\": false}]}";
+    String mockResponseBody = "{\"results\": [{\"resource_id\": \"resourceId\", \"is_error\": false, \"message\": \"message\"}]}";
     String detachTagPath = "/v3/tags/detach";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")

@@ -22,6 +22,7 @@ import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagResults;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.DeleteTagsResult;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.DetachTagOptions;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.ListTagsOptions;
+import com.ibm.cloud.platform_services.global_tagging.v1.model.Resource;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.TagList;
 import com.ibm.cloud.platform_services.global_tagging.v1.model.TagResults;
 import com.ibm.cloud.sdk.core.http.Response;
@@ -113,7 +114,12 @@ public class GlobalTaggingExamples {
 
             // begin-attach_tag
 
+            Resource resourceModel = new Resource.Builder()
+                    .resourceId(resourceCRN)
+                    .build();
+
             AttachTagOptions attachTagOptions = new AttachTagOptions.Builder()
+                    .addResources(resourceModel)
                     .addTagNames("tag_test_1")
                     .addTagNames("tag_test_2")
                     .build();
@@ -134,7 +140,12 @@ public class GlobalTaggingExamples {
 
             // begin-detach_tag
 
+            Resource resourceModel = new Resource.Builder()
+                    .resourceId(resourceCRN)
+                    .build();
+
             DetachTagOptions detachTagOptions = new DetachTagOptions.Builder()
+                    .addResources(resourceModel)
                     .addTagNames("tag_test_1")
                     .addTagNames("tag_test_2")
                     .tagType("user")

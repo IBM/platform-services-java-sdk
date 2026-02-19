@@ -1,3 +1,10 @@
+## [0.73.2](https://github.com/IBM/platform-services-java-sdk/compare/0.73.1...0.73.2) (2026-02-19)
+
+
+### Bug Fixes
+
+* **Global Tagging:** add `message` field to `TagResultsItem` ([#295](https://github.com/IBM/platform-services-java-sdk/issues/295)) ([cba25a6](https://github.com/IBM/platform-services-java-sdk/commit/cba25a6761d73a11a6844b6f3d0c296c3ccdd680))
+
 ## [0.73.1](https://github.com/IBM/platform-services-java-sdk/compare/0.73.0...0.73.1) (2026-01-15)
 
 

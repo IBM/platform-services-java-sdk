@@ -60,6 +60,7 @@
         <module>modules/common</module>
 
         <!-- Each of the service modules should be listed here -->
+        <module>modules/account-management</module>
         <module>modules/case-management</module>
         <module>modules/catalog-management</module>
         <module>modules/context-based-restrictions</module>

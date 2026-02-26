@@ -46,6 +46,7 @@ The IBM Cloud Platform Services Java SDK allows developers to programmatically i
 
 Service Name | Artifact Coordinates
 --- | --- 
+[Account Management](https://test.cloud.ibm.com/apidocs/account-management) | com.ibm.cloud:account-management:0.73.2
 [Case Management](https://cloud.ibm.com/apidocs/case-management?code=java) | com.ibm.cloud:case-management:0.73.2
 [Catalog Management](https://cloud.ibm.com/apidocs/resource-catalog/private-catalog?code=java) | com.ibm.cloud:catalog-management:0.73.2
 [Context Based Restrictions](https://cloud.ibm.com/apidocs/context-based-restrictions?code=java) | com.ibm.cloud:context-based-restrictions:0.73.2

@@ -1,3 +1,10 @@
+# [0.74.0](https://github.com/IBM/platform-services-java-sdk/compare/0.73.2...0.74.0) (2026-02-27)
+
+
+### Features
+
+* **Account Management:** add new service to the project ([#296](https://github.com/IBM/platform-services-java-sdk/issues/296)) ([1b8b242](https://github.com/IBM/platform-services-java-sdk/commit/1b8b24246d42d7f79bc69b0eb7f2b03302da0481))
+
 ## [0.73.2](https://github.com/IBM/platform-services-java-sdk/compare/0.73.1...0.73.2) (2026-02-19)
 
 

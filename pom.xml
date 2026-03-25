@@ -42,12 +42,12 @@
         <slf4j-version>2.0.16</slf4j-version>
 
         <maven-enforcer-version>3.4.1</maven-enforcer-version>
-        <min-jdk-version>21</min-jdk-version>
+        <min-jdk-version>11</min-jdk-version>
         <min-maven-version>3.5.0</min-maven-version>
 
         <maven-compiler-plugin-version>3.11.0</maven-compiler-plugin-version>
-        <java-source-version>21</java-source-version>
-        <java-target-version>21</java-target-version>
+        <java-source-version>1.8</java-source-version>
+        <java-target-version>1.8</java-target-version>
 
 
         <!-- versions of transitive dependencies we need to override to avoid
@@ -426,7 +426,7 @@
                     <show>public</show>
                     <doctitle>${project.name}, version ${project.version}</doctitle>
                     <footer>IBM Corporation</footer>
-                    <source>21</source>
+                    <source>8</source>
                     <detectJavaApiLink>false</detectJavaApiLink>
                 </configuration>
                 <executions>
@@ -439,13 +439,10 @@
                     </execution>
                 </executions>
             </plugin>
-            <!-- JaCoCo disabled due to incompatibility with Java 25 runtime -->
-            <!--
             <plugin>
                 <groupId>org.jacoco</groupId>
                 <artifactId>jacoco-maven-plugin</artifactId>
             </plugin>
-            -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-checkstyle-plugin</artifactId>

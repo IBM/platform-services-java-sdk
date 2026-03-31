@@ -14,6 +14,7 @@
 package com.ibm.cloud.platform_services.iam_identity.v1;
 
 import com.ibm.cloud.platform_services.iam_identity.v1.IamIdentity;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.AccessGroupCount;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountBasedMfaEnrollment;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsAssignedTemplatesSection;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsEffectiveSection;
@@ -34,6 +35,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ApikeyActivity;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApikeyActivityServiceid;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApikeyActivityUser;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AssignedTemplatesAccountSettingsRestrictUserDomains;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.BulkListAccountEntityConsumptionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CommitAccountSettingsTemplateOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CommitProfileTemplateOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateAccountSettingsAssignmentOptions;
@@ -73,6 +75,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.EnityHistoryRecord;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.EntityActivity;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.Error;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ExceptionResponse;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountLimitsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsTemplateVersionOptions;
@@ -96,8 +99,18 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdGroupOp
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetTrustedProfileAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.IdBasedMfaEnrollment;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.IdentityCount;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.IdentityLimitsUsageResponse;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.IdentityLimitsUsageResponseApikeysPerIdentity;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.IdentityLimitsUsageResponseClaimRulesPerGroup;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.IdentityLimitsUsageResponseClaimRulesPerProfile;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.IdentityLimitsUsageResponseCrLinksPerProfile;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.IdentityLimitsUsageResponseCrRulesPerProfile;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.IdentityLimitsUsageResponseServiceidsPerGroup;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.IdentityLimitsUsageResponseTemplateVersionsPerTemplate;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.IdentityPreferenceResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.IdentityPreferencesResponse;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.LimitCount;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListAccountSettingsAssignmentsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListAccountSettingsTemplatesOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListApiKeysOptions;
@@ -117,6 +130,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.PolicyTemplateRefer
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRule;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleConditions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileClaimRuleList;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileCount;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileIdentitiesResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileIdentityRequest;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ProfileIdentityResponse;
@@ -129,6 +143,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.ReportReference;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ResponseContext;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceId;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdGroup;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdGroupCount;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdGroupList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ServiceIdList;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.SetProfileIdentitiesOptions;
@@ -141,6 +156,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.TemplateAssignmentR
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TemplateAssignmentResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TemplateAssignmentResponseResource;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TemplateAssignmentResponseResourceDetail;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.TemplateCount;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TemplateProfileComponentRequest;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TemplateProfileComponentResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.TrustedProfile;
@@ -1993,7 +2009,7 @@ public class IamIdentityTest {
   @Test
   public void testCreateLinkWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"entity_tag\": \"entityTag\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"cr_type\": \"crType\", \"link\": {\"crn\": \"crn\", \"namespace\": \"namespace\", \"name\": \"name\", \"component_type\": \"componentType\", \"component_name\": \"componentName\"}}";
+    String mockResponseBody = "{\"id\": \"id\", \"entity_tag\": \"entityTag\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"cr_type\": \"crType\", \"is_cross_account\": true, \"link\": {\"crn\": \"crn\", \"namespace\": \"namespace\", \"name\": \"name\", \"component_type\": \"componentType\", \"component_name\": \"componentName\"}}";
     String createLinkPath = "/v1/profiles/testString/links";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -2015,6 +2031,7 @@ public class IamIdentityTest {
       .crType("testString")
       .link(createProfileLinkRequestLinkModel)
       .name("testString")
+      .isCrossAccount(true)
       .build();
 
     // Invoke createLink() with a valid options model and verify the result
@@ -2056,7 +2073,7 @@ public class IamIdentityTest {
   @Test
   public void testListLinksWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"links\": [{\"id\": \"id\", \"entity_tag\": \"entityTag\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"cr_type\": \"crType\", \"link\": {\"crn\": \"crn\", \"namespace\": \"namespace\", \"name\": \"name\", \"component_type\": \"componentType\", \"component_name\": \"componentName\"}}]}";
+    String mockResponseBody = "{\"links\": [{\"id\": \"id\", \"entity_tag\": \"entityTag\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"cr_type\": \"crType\", \"is_cross_account\": true, \"link\": {\"crn\": \"crn\", \"namespace\": \"namespace\", \"name\": \"name\", \"component_type\": \"componentType\", \"component_name\": \"componentName\"}}]}";
     String listLinksPath = "/v1/profiles/testString/links";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -2169,7 +2186,7 @@ public class IamIdentityTest {
   @Test
   public void testGetLinkWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"entity_tag\": \"entityTag\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"cr_type\": \"crType\", \"link\": {\"crn\": \"crn\", \"namespace\": \"namespace\", \"name\": \"name\", \"component_type\": \"componentType\", \"component_name\": \"componentName\"}}";
+    String mockResponseBody = "{\"id\": \"id\", \"entity_tag\": \"entityTag\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"modified_at\": \"2019-01-01T12:00:00.000Z\", \"name\": \"name\", \"cr_type\": \"crType\", \"is_cross_account\": true, \"link\": {\"crn\": \"crn\", \"namespace\": \"namespace\", \"name\": \"name\", \"component_type\": \"componentType\", \"component_name\": \"componentName\"}}";
     String getLinkPath = "/v1/profiles/testString/links/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -2725,7 +2742,7 @@ public class IamIdentityTest {
     // Construct an instance of the AccountSettingsUserDomainRestriction model
     AccountSettingsUserDomainRestriction accountSettingsUserDomainRestrictionModel = new AccountSettingsUserDomainRestriction.Builder()
       .realmId("IBMid")
-      .invitationEmailAllowPatterns(java.util.Arrays.asList("*.*@company.com"))
+      .invitationEmailAllowPatterns(java.util.Arrays.asList(".*@company.co"))
       .restrictInvitation(true)
       .build();
 
@@ -4297,7 +4314,7 @@ public class IamIdentityTest {
     // Construct an instance of the AccountSettingsUserDomainRestriction model
     AccountSettingsUserDomainRestriction accountSettingsUserDomainRestrictionModel = new AccountSettingsUserDomainRestriction.Builder()
       .realmId("IBMid")
-      .invitationEmailAllowPatterns(java.util.Arrays.asList("*.*@company.com"))
+      .invitationEmailAllowPatterns(java.util.Arrays.asList(".*@company.co"))
       .restrictInvitation(true)
       .build();
 
@@ -4543,7 +4560,7 @@ public class IamIdentityTest {
     // Construct an instance of the AccountSettingsUserDomainRestriction model
     AccountSettingsUserDomainRestriction accountSettingsUserDomainRestrictionModel = new AccountSettingsUserDomainRestriction.Builder()
       .realmId("IBMid")
-      .invitationEmailAllowPatterns(java.util.Arrays.asList("*.*@company.com"))
+      .invitationEmailAllowPatterns(java.util.Arrays.asList(".*@company.co"))
       .restrictInvitation(true)
       .build();
 
@@ -4687,7 +4704,7 @@ public class IamIdentityTest {
     // Construct an instance of the AccountSettingsUserDomainRestriction model
     AccountSettingsUserDomainRestriction accountSettingsUserDomainRestrictionModel = new AccountSettingsUserDomainRestriction.Builder()
       .realmId("IBMid")
-      .invitationEmailAllowPatterns(java.util.Arrays.asList("*.*@company.com"))
+      .invitationEmailAllowPatterns(java.util.Arrays.asList(".*@company.co"))
       .restrictInvitation(true)
       .build();
 
@@ -5137,6 +5154,147 @@ public class IamIdentityTest {
   public void testUpdateAccountSettingsAssignmentNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
     iamIdentityService.updateAccountSettingsAssignment(null).execute();
+  }
+
+  // Test the getAccountLimits operation with a valid options model parameter
+  @Test
+  public void testGetAccountLimitsWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"serviceid_groups\": {\"limit\": 5, \"count\": 5}, \"serviceids_per_group\": {\"limit\": 5, \"serviceid_groups\": [{\"group_id\": \"groupId\", \"count\": 5}]}, \"profiles\": {\"limit\": 5, \"count\": 5}, \"apikeys_per_identity\": {\"limit\": 5, \"identities\": [{\"iam_id\": \"iamId\", \"count\": 5}]}, \"profile_templates\": {\"limit\": 5, \"count\": 5}, \"account_settings_templates\": {\"limit\": 5, \"count\": 5}, \"template_versions_per_template\": {\"limit\": 5, \"templates\": [{\"template_id\": \"templateId\", \"count\": 5}]}, \"idps\": {\"limit\": 5, \"count\": 5}, \"claim_rules_per_group\": {\"limit\": 5, \"access_groups\": [{\"group_id\": \"groupId\", \"count\": 5}]}, \"claim_rules_per_profile\": {\"limit\": 5, \"profiles\": [{\"profile_id\": \"profileId\", \"count\": 5}]}, \"cr_links\": {\"limit\": 5, \"count\": 5}, \"cr_links_per_profile\": {\"limit\": 5, \"profiles\": [{\"profile_id\": \"profileId\", \"count\": 5}]}, \"cr_rules\": {\"limit\": 5, \"count\": 5}, \"cr_rules_per_profile\": {\"limit\": 5, \"profiles\": [{\"profile_id\": \"profileId\", \"count\": 5}]}}";
+    String getAccountLimitsPath = "/v1/accounts/testString/limits/identity";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the GetAccountLimitsOptions model
+    GetAccountLimitsOptions getAccountLimitsOptionsModel = new GetAccountLimitsOptions.Builder()
+      .accountId("testString")
+      .serviceidGroups(true)
+      .serviceidsPerGroup("testString")
+      .profiles("testString")
+      .apikeysPerIdentity("testString")
+      .templates("testString")
+      .templateVersionsPerTemplate("testString")
+      .idps("testString")
+      .claimRulesPerGroup("testString")
+      .claimRulesPerProfile("testString")
+      .crLinks("testString")
+      .crLinksPerProfile("testString")
+      .crRules("testString")
+      .crRulesPerProfile("testString")
+      .build();
+
+    // Invoke getAccountLimits() with a valid options model and verify the result
+    Response<IdentityLimitsUsageResponse> response = iamIdentityService.getAccountLimits(getAccountLimitsOptionsModel).execute();
+    assertNotNull(response);
+    IdentityLimitsUsageResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getAccountLimitsPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(Boolean.valueOf(query.get("serviceid_groups")), Boolean.valueOf(true));
+    assertEquals(query.get("serviceids_per_group"), "testString");
+    assertEquals(query.get("profiles"), "testString");
+    assertEquals(query.get("apikeys_per_identity"), "testString");
+    assertEquals(query.get("templates"), "testString");
+    assertEquals(query.get("template_versions_per_template"), "testString");
+    assertEquals(query.get("idps"), "testString");
+    assertEquals(query.get("claim_rules_per_group"), "testString");
+    assertEquals(query.get("claim_rules_per_profile"), "testString");
+    assertEquals(query.get("cr_links"), "testString");
+    assertEquals(query.get("cr_links_per_profile"), "testString");
+    assertEquals(query.get("cr_rules"), "testString");
+    assertEquals(query.get("cr_rules_per_profile"), "testString");
+  }
+
+  // Test the getAccountLimits operation with and without retries enabled
+  @Test
+  public void testGetAccountLimitsWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testGetAccountLimitsWOptions();
+
+    iamIdentityService.disableRetries();
+    testGetAccountLimitsWOptions();
+  }
+
+  // Test the getAccountLimits operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetAccountLimitsNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.getAccountLimits(null).execute();
+  }
+
+  // Test the bulkListAccountEntityConsumption operation with a valid options model parameter
+  @Test
+  public void testBulkListAccountEntityConsumptionWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"serviceid_groups\": {\"limit\": 5, \"count\": 5}, \"serviceids_per_group\": {\"limit\": 5, \"serviceid_groups\": [{\"group_id\": \"groupId\", \"count\": 5}]}, \"profiles\": {\"limit\": 5, \"count\": 5}, \"apikeys_per_identity\": {\"limit\": 5, \"identities\": [{\"iam_id\": \"iamId\", \"count\": 5}]}, \"profile_templates\": {\"limit\": 5, \"count\": 5}, \"account_settings_templates\": {\"limit\": 5, \"count\": 5}, \"template_versions_per_template\": {\"limit\": 5, \"templates\": [{\"template_id\": \"templateId\", \"count\": 5}]}, \"idps\": {\"limit\": 5, \"count\": 5}, \"claim_rules_per_group\": {\"limit\": 5, \"access_groups\": [{\"group_id\": \"groupId\", \"count\": 5}]}, \"claim_rules_per_profile\": {\"limit\": 5, \"profiles\": [{\"profile_id\": \"profileId\", \"count\": 5}]}, \"cr_links\": {\"limit\": 5, \"count\": 5}, \"cr_links_per_profile\": {\"limit\": 5, \"profiles\": [{\"profile_id\": \"profileId\", \"count\": 5}]}, \"cr_rules\": {\"limit\": 5, \"count\": 5}, \"cr_rules_per_profile\": {\"limit\": 5, \"profiles\": [{\"profile_id\": \"profileId\", \"count\": 5}]}}";
+    String bulkListAccountEntityConsumptionPath = "/v1/accounts/testString/limits/identity";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the BulkListAccountEntityConsumptionOptions model
+    BulkListAccountEntityConsumptionOptions bulkListAccountEntityConsumptionOptionsModel = new BulkListAccountEntityConsumptionOptions.Builder()
+      .accountId("testString")
+      .serviceidGroups(true)
+      .serviceidsPerGroup(java.util.Arrays.asList("ServiceIdGroup-12345678-1234-1234-1234-123456789abc", "ServiceIdGroup-12345678-1234-1234-1234-123456789def"))
+      .profiles(true)
+      .apikeysPerIdentity(java.util.Arrays.asList("iam-ServiceId-12345678-1234-1234-1234-123456789def", "IBMid-1234567ABC"))
+      .templates(true)
+      .templateVersionsPerTemplate(java.util.Arrays.asList("AccountSettingsTemplate-12345678-1234-1234-1234-123456789abc", "ProfileTemplate-12345678-1234-1234-1234-123456789def"))
+      .idps(true)
+      .claimRulesPerGroup(java.util.Arrays.asList("AccessGroupId-12345678-1234-1234-1234-123456789abc", "AccessGroupId-12345678-1234-1234-1234-123456789def"))
+      .claimRulesPerProfile(java.util.Arrays.asList("Profile-12345678-1234-1234-123456789abc", "Profile-12345678-1234-1234-123456789def"))
+      .crLinks(true)
+      .crLinksPerProfile(java.util.Arrays.asList("Profile-12345678-1234-1234-123456789abc", "Profile-12345678-1234-1234-123456789def"))
+      .crRules(true)
+      .crRulesPerProfile(java.util.Arrays.asList("Profile-12345678-1234-1234-123456789abc", "Profile-12345678-1234-1234-123456789def"))
+      .build();
+
+    // Invoke bulkListAccountEntityConsumption() with a valid options model and verify the result
+    Response<IdentityLimitsUsageResponse> response = iamIdentityService.bulkListAccountEntityConsumption(bulkListAccountEntityConsumptionOptionsModel).execute();
+    assertNotNull(response);
+    IdentityLimitsUsageResponse responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, bulkListAccountEntityConsumptionPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the bulkListAccountEntityConsumption operation with and without retries enabled
+  @Test
+  public void testBulkListAccountEntityConsumptionWRetries() throws Throwable {
+    iamIdentityService.enableRetries(4, 30);
+    testBulkListAccountEntityConsumptionWOptions();
+
+    iamIdentityService.disableRetries();
+    testBulkListAccountEntityConsumptionWOptions();
+  }
+
+  // Test the bulkListAccountEntityConsumption operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testBulkListAccountEntityConsumptionNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    iamIdentityService.bulkListAccountEntityConsumption(null).execute();
   }
 
   // Perform setup needed before each test method

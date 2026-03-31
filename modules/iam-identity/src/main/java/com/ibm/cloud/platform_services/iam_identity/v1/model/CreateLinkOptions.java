@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2025.
+ * (C) Copyright IBM Corp. 2026.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -24,6 +24,7 @@ public class CreateLinkOptions extends GenericModel {
   protected String crType;
   protected CreateProfileLinkRequestLink link;
   protected String name;
+  protected Boolean isCrossAccount;
 
   /**
    * Builder.
@@ -33,6 +34,7 @@ public class CreateLinkOptions extends GenericModel {
     private String crType;
     private CreateProfileLinkRequestLink link;
     private String name;
+    private Boolean isCrossAccount;
 
     /**
      * Instantiates a new Builder from an existing CreateLinkOptions instance.
@@ -44,6 +46,7 @@ public class CreateLinkOptions extends GenericModel {
       this.crType = createLinkOptions.crType;
       this.link = createLinkOptions.link;
       this.name = createLinkOptions.name;
+      this.isCrossAccount = createLinkOptions.isCrossAccount;
     }
 
     /**
@@ -117,6 +120,17 @@ public class CreateLinkOptions extends GenericModel {
       this.name = name;
       return this;
     }
+
+    /**
+     * Set the isCrossAccount.
+     *
+     * @param isCrossAccount the isCrossAccount
+     * @return the CreateLinkOptions builder
+     */
+    public Builder isCrossAccount(Boolean isCrossAccount) {
+      this.isCrossAccount = isCrossAccount;
+      return this;
+    }
   }
 
   protected CreateLinkOptions() { }
@@ -132,6 +146,7 @@ public class CreateLinkOptions extends GenericModel {
     crType = builder.crType;
     link = builder.link;
     name = builder.name;
+    isCrossAccount = builder.isCrossAccount;
   }
 
   /**
@@ -185,6 +200,18 @@ public class CreateLinkOptions extends GenericModel {
    */
   public String name() {
     return name;
+  }
+
+  /**
+   * Gets the isCrossAccount.
+   *
+   * Flag to indicate that the link provides cross account access. If not provided then the account scope of the CRN
+   * must match the Profile's account.
+   *
+   * @return the isCrossAccount
+   */
+  public Boolean isCrossAccount() {
+    return isCrossAccount;
   }
 }
 

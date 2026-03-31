@@ -236,6 +236,8 @@ public class ApiKeyInsideCreateServiceIdRequest extends GenericModel {
    * Gets the expiresAt.
    *
    * Date and time when the API key becomes invalid, ISO 8601 datetime in the format 'yyyy-MM-ddTHH:mm+0000'.
+   * **WARNING** An API key will be permanently and irrevocably deleted when both the expires_at and modified_at
+   * timestamps are more than ninety (90) days in the past, regardless of the key’s locked status or any other state.
    *
    * @return the expiresAt
    */

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2025.
+ * (C) Copyright IBM Corp. 2026.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -33,6 +33,8 @@ public class ProfileLink extends GenericModel {
   protected String name;
   @SerializedName("cr_type")
   protected String crType;
+  @SerializedName("is_cross_account")
+  protected Boolean isCrossAccount;
   protected ProfileLinkLink link;
 
   protected ProfileLink() { }
@@ -101,6 +103,18 @@ public class ProfileLink extends GenericModel {
    */
   public String getCrType() {
     return crType;
+  }
+
+  /**
+   * Gets the isCrossAccount.
+   *
+   * Flag to indicate that the link provides cross account access. If not provided then the account scope of the CRN
+   * must match the Profile's account.
+   *
+   * @return the isCrossAccount
+   */
+  public Boolean isIsCrossAccount() {
+    return isCrossAccount;
   }
 
   /**

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2025.
+ * (C) Copyright IBM Corp. 2026.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -50,11 +50,13 @@ public class CreateLinkOptionsTest {
       .crType("testString")
       .link(createProfileLinkRequestLinkModel)
       .name("testString")
+      .isCrossAccount(true)
       .build();
     assertEquals(createLinkOptionsModel.profileId(), "testString");
     assertEquals(createLinkOptionsModel.crType(), "testString");
     assertEquals(createLinkOptionsModel.link(), createProfileLinkRequestLinkModel);
     assertEquals(createLinkOptionsModel.name(), "testString");
+    assertEquals(createLinkOptionsModel.isCrossAccount(), Boolean.valueOf(true));
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2025.
+ * (C) Copyright IBM Corp. 2026.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -34,11 +34,11 @@ public class TemplateAccountSettingsRestrictUserDomainsTest {
   public void testTemplateAccountSettingsRestrictUserDomains() throws Throwable {
     AccountSettingsUserDomainRestriction accountSettingsUserDomainRestrictionModel = new AccountSettingsUserDomainRestriction.Builder()
       .realmId("IBMid")
-      .invitationEmailAllowPatterns(java.util.Arrays.asList("*.*@company.com"))
+      .invitationEmailAllowPatterns(java.util.Arrays.asList(".*@company.co"))
       .restrictInvitation(true)
       .build();
     assertEquals(accountSettingsUserDomainRestrictionModel.realmId(), "IBMid");
-    assertEquals(accountSettingsUserDomainRestrictionModel.invitationEmailAllowPatterns(), java.util.Arrays.asList("*.*@company.com"));
+    assertEquals(accountSettingsUserDomainRestrictionModel.invitationEmailAllowPatterns(), java.util.Arrays.asList(".*@company.co"));
     assertEquals(accountSettingsUserDomainRestrictionModel.restrictInvitation(), Boolean.valueOf(true));
 
     TemplateAccountSettingsRestrictUserDomains templateAccountSettingsRestrictUserDomainsModel = new TemplateAccountSettingsRestrictUserDomains.Builder()

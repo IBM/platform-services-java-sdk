@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.107.1-41b0fbd0-20250825-080732
+ * IBM OpenAPI SDK Code Generator Version: 3.113.0-3f9df07a-20260317-160650
  */
 
 package com.ibm.cloud.platform_services.iam_identity.v1;
@@ -24,6 +24,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsTemp
 import com.ibm.cloud.platform_services.iam_identity.v1.model.AccountSettingsTemplateResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKey;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ApiKeyList;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.BulkListAccountEntityConsumptionOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CommitAccountSettingsTemplateOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CommitProfileTemplateOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.CreateAccountSettingsAssignmentOptions;
@@ -59,6 +60,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.DisableApiKeyOption
 import com.ibm.cloud.platform_services.iam_identity.v1.model.EffectiveAccountSettingsResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.EnableApiKeyOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ExceptionResponse;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountLimitsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsAssignmentOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetAccountSettingsTemplateVersionOptions;
@@ -81,6 +83,7 @@ import com.ibm.cloud.platform_services.iam_identity.v1.model.GetReportOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdGroupOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetServiceIdOptions;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.GetTrustedProfileAssignmentOptions;
+import com.ibm.cloud.platform_services.iam_identity.v1.model.IdentityLimitsUsageResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.IdentityPreferenceResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.IdentityPreferencesResponse;
 import com.ibm.cloud.platform_services.iam_identity.v1.model.ListAccountSettingsAssignmentsOptions;
@@ -1308,6 +1311,9 @@ public class IamIdentity extends BaseService {
     contentJson.add("link", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createLinkOptions.link()));
     if (createLinkOptions.name() != null) {
       contentJson.addProperty("name", createLinkOptions.name());
+    }
+    if (createLinkOptions.isCrossAccount() != null) {
+      contentJson.addProperty("is_cross_account", createLinkOptions.isCrossAccount());
     }
     builder.bodyJson(contentJson);
     ResponseConverter<ProfileLink> responseConverter =
@@ -3052,6 +3058,135 @@ public class IamIdentity extends BaseService {
     builder.bodyJson(contentJson);
     ResponseConverter<TemplateAssignmentResponse> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TemplateAssignmentResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get account entity limits.
+   *
+   * Returns the details of an account's entity limits with query parameters for consumption details.
+   *
+   * @param getAccountLimitsOptions the {@link GetAccountLimitsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link IdentityLimitsUsageResponse}
+   */
+  public ServiceCall<IdentityLimitsUsageResponse> getAccountLimits(GetAccountLimitsOptions getAccountLimitsOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getAccountLimitsOptions,
+      "getAccountLimitsOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", getAccountLimitsOptions.accountId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/accounts/{account_id}/limits/identity", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "getAccountLimits");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (getAccountLimitsOptions.serviceidGroups() != null) {
+      builder.query("serviceid_groups", String.valueOf(getAccountLimitsOptions.serviceidGroups()));
+    }
+    if (getAccountLimitsOptions.serviceidsPerGroup() != null) {
+      builder.query("serviceids_per_group", String.valueOf(getAccountLimitsOptions.serviceidsPerGroup()));
+    }
+    if (getAccountLimitsOptions.profiles() != null) {
+      builder.query("profiles", String.valueOf(getAccountLimitsOptions.profiles()));
+    }
+    if (getAccountLimitsOptions.apikeysPerIdentity() != null) {
+      builder.query("apikeys_per_identity", String.valueOf(getAccountLimitsOptions.apikeysPerIdentity()));
+    }
+    if (getAccountLimitsOptions.templates() != null) {
+      builder.query("templates", String.valueOf(getAccountLimitsOptions.templates()));
+    }
+    if (getAccountLimitsOptions.templateVersionsPerTemplate() != null) {
+      builder.query("template_versions_per_template", String.valueOf(getAccountLimitsOptions.templateVersionsPerTemplate()));
+    }
+    if (getAccountLimitsOptions.idps() != null) {
+      builder.query("idps", String.valueOf(getAccountLimitsOptions.idps()));
+    }
+    if (getAccountLimitsOptions.claimRulesPerGroup() != null) {
+      builder.query("claim_rules_per_group", String.valueOf(getAccountLimitsOptions.claimRulesPerGroup()));
+    }
+    if (getAccountLimitsOptions.claimRulesPerProfile() != null) {
+      builder.query("claim_rules_per_profile", String.valueOf(getAccountLimitsOptions.claimRulesPerProfile()));
+    }
+    if (getAccountLimitsOptions.crLinks() != null) {
+      builder.query("cr_links", String.valueOf(getAccountLimitsOptions.crLinks()));
+    }
+    if (getAccountLimitsOptions.crLinksPerProfile() != null) {
+      builder.query("cr_links_per_profile", String.valueOf(getAccountLimitsOptions.crLinksPerProfile()));
+    }
+    if (getAccountLimitsOptions.crRules() != null) {
+      builder.query("cr_rules", String.valueOf(getAccountLimitsOptions.crRules()));
+    }
+    if (getAccountLimitsOptions.crRulesPerProfile() != null) {
+      builder.query("cr_rules_per_profile", String.valueOf(getAccountLimitsOptions.crRulesPerProfile()));
+    }
+    ResponseConverter<IdentityLimitsUsageResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<IdentityLimitsUsageResponse>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get account entity limits via POST request.
+   *
+   * Returns the details of an account's entity limits using a body for larger list of parameters for consumption
+   * details.
+   *
+   * @param bulkListAccountEntityConsumptionOptions the {@link BulkListAccountEntityConsumptionOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link IdentityLimitsUsageResponse}
+   */
+  public ServiceCall<IdentityLimitsUsageResponse> bulkListAccountEntityConsumption(BulkListAccountEntityConsumptionOptions bulkListAccountEntityConsumptionOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(bulkListAccountEntityConsumptionOptions,
+      "bulkListAccountEntityConsumptionOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("account_id", bulkListAccountEntityConsumptionOptions.accountId());
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/accounts/{account_id}/limits/identity", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("iam_identity", "v1", "bulkListAccountEntityConsumption");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    final JsonObject contentJson = new JsonObject();
+    if (bulkListAccountEntityConsumptionOptions.serviceidGroups() != null) {
+      contentJson.addProperty("serviceid_groups", bulkListAccountEntityConsumptionOptions.serviceidGroups());
+    }
+    if (bulkListAccountEntityConsumptionOptions.serviceidsPerGroup() != null) {
+      contentJson.add("serviceids_per_group", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(bulkListAccountEntityConsumptionOptions.serviceidsPerGroup()));
+    }
+    if (bulkListAccountEntityConsumptionOptions.profiles() != null) {
+      contentJson.addProperty("profiles", bulkListAccountEntityConsumptionOptions.profiles());
+    }
+    if (bulkListAccountEntityConsumptionOptions.apikeysPerIdentity() != null) {
+      contentJson.add("apikeys_per_identity", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(bulkListAccountEntityConsumptionOptions.apikeysPerIdentity()));
+    }
+    if (bulkListAccountEntityConsumptionOptions.templates() != null) {
+      contentJson.addProperty("templates", bulkListAccountEntityConsumptionOptions.templates());
+    }
+    if (bulkListAccountEntityConsumptionOptions.templateVersionsPerTemplate() != null) {
+      contentJson.add("template_versions_per_template", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(bulkListAccountEntityConsumptionOptions.templateVersionsPerTemplate()));
+    }
+    if (bulkListAccountEntityConsumptionOptions.idps() != null) {
+      contentJson.addProperty("idps", bulkListAccountEntityConsumptionOptions.idps());
+    }
+    if (bulkListAccountEntityConsumptionOptions.claimRulesPerGroup() != null) {
+      contentJson.add("claim_rules_per_group", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(bulkListAccountEntityConsumptionOptions.claimRulesPerGroup()));
+    }
+    if (bulkListAccountEntityConsumptionOptions.claimRulesPerProfile() != null) {
+      contentJson.add("claim_rules_per_profile", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(bulkListAccountEntityConsumptionOptions.claimRulesPerProfile()));
+    }
+    if (bulkListAccountEntityConsumptionOptions.crLinks() != null) {
+      contentJson.addProperty("cr_links", bulkListAccountEntityConsumptionOptions.crLinks());
+    }
+    if (bulkListAccountEntityConsumptionOptions.crLinksPerProfile() != null) {
+      contentJson.add("cr_links_per_profile", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(bulkListAccountEntityConsumptionOptions.crLinksPerProfile()));
+    }
+    if (bulkListAccountEntityConsumptionOptions.crRules() != null) {
+      contentJson.addProperty("cr_rules", bulkListAccountEntityConsumptionOptions.crRules());
+    }
+    if (bulkListAccountEntityConsumptionOptions.crRulesPerProfile() != null) {
+      contentJson.add("cr_rules_per_profile", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(bulkListAccountEntityConsumptionOptions.crRulesPerProfile()));
+    }
+    builder.bodyJson(contentJson);
+    ResponseConverter<IdentityLimitsUsageResponse> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<IdentityLimitsUsageResponse>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 

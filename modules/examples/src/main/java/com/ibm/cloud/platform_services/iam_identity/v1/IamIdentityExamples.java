@@ -2263,6 +2263,61 @@ public class IamIdentityExamples {
             logger.error(String.format("Service returned status code %s: %s\nError details: %s",
                     e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
+
+        try {
+            System.out.println("getAccountLimits() result:");
+
+            // begin-getAccountLimits
+
+            GetAccountLimitsOptions getAccountLimitsOptions = new GetAccountLimitsOptions.Builder()
+                    .accountId(accountId)
+                    .build();
+
+            Response<IdentityLimitsUsageResponse> response = identityservice.getAccountLimits(getAccountLimitsOptions).execute();
+            IdentityLimitsUsageResponse identityLimitsUsageResponse = response.getResult();
+
+            System.out.println(identityLimitsUsageResponse);
+
+            // end-getAccountLimits
+
+            System.out.printf("getAccountLimits() response status code: %d%n", response.getStatusCode());
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("bulkListAccountEntityConsumption() result:");
+
+            // begin-bulkListAccountEntityConsumption
+
+            BulkListAccountEntityConsumptionOptions bulkListAccountEntityConsumptionOptions = new BulkListAccountEntityConsumptionOptions.Builder()
+                    .accountId(accountId)
+                    .serviceidGroups(true)
+                    .serviceidsPerGroup(java.util.Arrays.asList("ServiceIdGroup-12345678-1234-1234-1234-123456789abc"))
+                    .profiles(true)
+                    .apikeysPerIdentity(java.util.Arrays.asList("iam-ServiceId-12345678-1234-1234-1234-123456789def"))
+                    .templates(true)
+                    .templateVersionsPerTemplate(java.util.Arrays.asList("AccountSettingsTemplate-12345678-1234-1234-1234-123456789abc"))
+                    .idps(true)
+                    .claimRulesPerGroup(java.util.Arrays.asList("AccessGroupId-12345678-1234-1234-1234-123456789abc"))
+                    .build();
+
+            Response<IdentityLimitsUsageResponse> response = identityservice.bulkListAccountEntityConsumption(bulkListAccountEntityConsumptionOptions).execute();
+            IdentityLimitsUsageResponse identityLimitsUsageResponse = response.getResult();
+
+            System.out.println(identityLimitsUsageResponse);
+
+            // end-bulkListAccountEntityConsumption
+
+            System.out.printf("bulkListAccountEntityConsumption() response status code: %d%n", response.getStatusCode());
+
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s\nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
     }
 
     private static void sleep(int numSecs) {

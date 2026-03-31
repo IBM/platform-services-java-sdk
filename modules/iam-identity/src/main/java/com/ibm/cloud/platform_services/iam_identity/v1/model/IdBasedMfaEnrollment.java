@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2025.
+ * (C) Copyright IBM Corp. 2026.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -29,7 +29,7 @@ public class IdBasedMfaEnrollment extends GenericModel {
    *   * TOTP4ALL - For all users
    *   * LEVEL1 - Email-based MFA for all users
    *   * LEVEL2 - TOTP-based MFA for all users
-   *   * LEVEL3 - U2F MFA for all users.
+   *   * LEVEL3 - Security Key MFA for all users.
    */
   public interface TraitAccountDefault {
     /** NONE. */
@@ -56,7 +56,7 @@ public class IdBasedMfaEnrollment extends GenericModel {
    *   * TOTP4ALL - For all users
    *   * LEVEL1 - Email-based MFA for all users
    *   * LEVEL2 - TOTP-based MFA for all users
-   *   * LEVEL3 - U2F MFA for all users.
+   *   * LEVEL3 - Security Key MFA for all users.
    */
   public interface TraitUserSpecific {
     /** NONE. */
@@ -83,7 +83,7 @@ public class IdBasedMfaEnrollment extends GenericModel {
    *   * TOTP4ALL - For all users
    *   * LEVEL1 - Email-based MFA for all users
    *   * LEVEL2 - TOTP-based MFA for all users
-   *   * LEVEL3 - U2F MFA for all users.
+   *   * LEVEL3 - Security Key MFA for all users.
    */
   public interface TraitEffective {
     /** NONE. */
@@ -140,7 +140,7 @@ public class IdBasedMfaEnrollment extends GenericModel {
    *   * TOTP4ALL - For all users
    *   * LEVEL1 - Email-based MFA for all users
    *   * LEVEL2 - TOTP-based MFA for all users
-   *   * LEVEL3 - U2F MFA for all users.
+   *   * LEVEL3 - Security Key MFA for all users.
    *
    * @return the traitAccountDefault
    */
@@ -158,7 +158,7 @@ public class IdBasedMfaEnrollment extends GenericModel {
    *   * TOTP4ALL - For all users
    *   * LEVEL1 - Email-based MFA for all users
    *   * LEVEL2 - TOTP-based MFA for all users
-   *   * LEVEL3 - U2F MFA for all users.
+   *   * LEVEL3 - Security Key MFA for all users.
    *
    * @return the traitUserSpecific
    */
@@ -176,7 +176,7 @@ public class IdBasedMfaEnrollment extends GenericModel {
    *   * TOTP4ALL - For all users
    *   * LEVEL1 - Email-based MFA for all users
    *   * LEVEL2 - TOTP-based MFA for all users
-   *   * LEVEL3 - U2F MFA for all users.
+   *   * LEVEL3 - Security Key MFA for all users.
    *
    * @return the traitEffective
    */

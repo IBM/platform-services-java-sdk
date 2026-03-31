@@ -3431,4 +3431,55 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             throw t;
         }
     }
+
+    public void testGetAccountLimits() throws Exception {
+        try {
+            GetAccountLimitsOptions getAccountLimitsOptions = new GetAccountLimitsOptions.Builder()
+                    .accountId(ACCOUNT_ID)
+                    .build();
+
+            // Invoke operation
+            Response<IdentityLimitsUsageResponse> response = service.getAccountLimits(getAccountLimitsOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            IdentityLimitsUsageResponse identityLimitsUsageResponseResult = response.getResult();
+            assertNotNull(identityLimitsUsageResponseResult);
+
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s%nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
+    public void testBulkListAccountEntityConsumption() throws Exception {
+        try {
+            BulkListAccountEntityConsumptionOptions bulkListAccountEntityConsumptionOptions = new BulkListAccountEntityConsumptionOptions.Builder()
+                    .accountId(ACCOUNT_ID)
+                    .serviceidGroups(true)
+                    .serviceidsPerGroup(java.util.Arrays.asList("ServiceIdGroup-12345678-1234-1234-1234-123456789abc"))
+                    .profiles(true)
+                    .apikeysPerIdentity(java.util.Arrays.asList("iam-ServiceId-12345678-1234-1234-1234-123456789def"))
+                    .templates(true)
+                    .templateVersionsPerTemplate(java.util.Arrays.asList("AccountSettingsTemplate-12345678-1234-1234-1234-123456789abc"))
+                    .idps(true)
+                    .claimRulesPerGroup(java.util.Arrays.asList("AccessGroupId-12345678-1234-1234-1234-123456789abc"))
+                    .build();
+
+            // Invoke operation
+            Response<IdentityLimitsUsageResponse> response = service.bulkListAccountEntityConsumption(bulkListAccountEntityConsumptionOptions).execute();
+            // Validate response
+            assertNotNull(response);
+            assertEquals(response.getStatusCode(), 200);
+
+            IdentityLimitsUsageResponse identityLimitsUsageResponseResult = response.getResult();
+            assertNotNull(identityLimitsUsageResponseResult);
+
+        } catch (ServiceResponseException e) {
+            fail(String.format("Service returned status code %d: %s%nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+        }
+    }
+
 }

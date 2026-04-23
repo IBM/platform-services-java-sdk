@@ -43,11 +43,11 @@ public class TemplateAccountSettingsTest {
 
     AccountSettingsUserDomainRestriction accountSettingsUserDomainRestrictionModel = new AccountSettingsUserDomainRestriction.Builder()
       .realmId("IBMid")
-      .invitationEmailAllowPatterns(java.util.Arrays.asList(".*@company.co"))
+      .invitationEmailAllowPatterns(java.util.Arrays.asList(.*@company.co))
       .restrictInvitation(true)
       .build();
     assertEquals(accountSettingsUserDomainRestrictionModel.realmId(), "IBMid");
-    assertEquals(accountSettingsUserDomainRestrictionModel.invitationEmailAllowPatterns(), java.util.Arrays.asList(".*@company.co"));
+    assertEquals(accountSettingsUserDomainRestrictionModel.invitationEmailAllowPatterns(), java.util.Arrays.asList(.*@company.co));
     assertEquals(accountSettingsUserDomainRestrictionModel.restrictInvitation(), Boolean.valueOf(true));
 
     TemplateAccountSettingsRestrictUserDomains templateAccountSettingsRestrictUserDomainsModel = new TemplateAccountSettingsRestrictUserDomains.Builder()

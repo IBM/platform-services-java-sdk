@@ -97,7 +97,7 @@ public class ProfileLink extends GenericModel {
   /**
    * Gets the crType.
    *
-   * The compute resource type. Valid values are VSI, BMS, IKS_SA, ROKS_SA, CE.
+   * The compute resource type. Valid values are VSI, PVS, BMS, IKS_SA, ROKS_SA, CE.
    *
    * @return the crType
    */

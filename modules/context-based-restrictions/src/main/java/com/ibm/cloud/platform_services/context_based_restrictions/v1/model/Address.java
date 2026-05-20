@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2025.
+ * (C) Copyright IBM Corp. 2026.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -24,6 +24,7 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  * - AddressSubnet
  * - AddressVPC
  * - AddressServiceRef
+ * - AddressInstance
  */
 public class Address extends GenericModel {
   @SuppressWarnings("unused")
@@ -36,6 +37,7 @@ public class Address extends GenericModel {
     discriminatorMapping.put("subnet", AddressSubnet.class);
     discriminatorMapping.put("vpc", AddressVPC.class);
     discriminatorMapping.put("serviceRef", AddressServiceRef.class);
+    discriminatorMapping.put("instance", AddressInstance.class);
   }
   /**
    * The type of address.
@@ -51,6 +53,8 @@ public class Address extends GenericModel {
     String VPC = "vpc";
     /** serviceRef. */
     String SERVICEREF = "serviceRef";
+    /** instance. */
+    String INSTANCE = "instance";
   }
 
   protected String type;

@@ -62,6 +62,7 @@ Service Name | Artifact Coordinates
 [IBM Cloud Shell](https://cloud.ibm.com/apidocs/cloudshell?code=java) | com.ibm.cloud:ibm-cloud-shell:0.75.0
 [Open Service Broker](https://cloud.ibm.com/apidocs/resource-controller/ibm-cloud-osb-api?code=java) | com.ibm.cloud:open-service-broker:0.75.0
 [Partner Management APIs](https://cloud.ibm.com/apidocs/partner-apis/partner?code=go) | com.ibm.cloud:partner-management:0.75.0
+|[Platform Notifications](https://cloud.ibm.com/apidocs/platform-notifications?code=java) | com.ibm.cloud:platform-notifications:0.75.0
 [Resource Controller](https://cloud.ibm.com/apidocs/resource-controller/resource-controller?code=java) | com.ibm.cloud:resource-controller:0.75.0
 [Resource Manager](https://cloud.ibm.com/apidocs/resource-controller/resource-manager?code=java) | com.ibm.cloud:resource-manager:0.75.0
 [Usage Metering](https://cloud.ibm.com/apidocs/usage-metering?code=java) | com.ibm.cloud:usage-metering:0.75.0

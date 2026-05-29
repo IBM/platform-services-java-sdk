@@ -1905,7 +1905,9 @@ public class IamIdentity extends BaseService {
     }
     builder.header("Accept", "application/json");
     final JsonObject contentJson = new JsonObject();
-    contentJson.addProperty("value_string", updatePreferenceOnScopeAccountOptions.valueString());
+    if (updatePreferenceOnScopeAccountOptions.valueString() != null) {
+      contentJson.addProperty("value_string", updatePreferenceOnScopeAccountOptions.valueString());
+    }
     if (updatePreferenceOnScopeAccountOptions.valueListOfStrings() != null) {
       contentJson.add("value_list_of_strings", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(updatePreferenceOnScopeAccountOptions.valueListOfStrings()));
     }

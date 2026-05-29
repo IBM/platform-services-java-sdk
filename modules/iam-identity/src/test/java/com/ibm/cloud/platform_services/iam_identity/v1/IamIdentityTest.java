@@ -2742,7 +2742,7 @@ public class IamIdentityTest {
     // Construct an instance of the AccountSettingsUserDomainRestriction model
     AccountSettingsUserDomainRestriction accountSettingsUserDomainRestrictionModel = new AccountSettingsUserDomainRestriction.Builder()
       .realmId("IBMid")
-      .invitationEmailAllowPatterns(java.util.Arrays.asList(.*@company.co))
+      .invitationEmailAllowPatterns(java.util.Arrays.asList("*.*@company.com"))
       .restrictInvitation(true)
       .build();
 
@@ -4314,7 +4314,7 @@ public class IamIdentityTest {
     // Construct an instance of the AccountSettingsUserDomainRestriction model
     AccountSettingsUserDomainRestriction accountSettingsUserDomainRestrictionModel = new AccountSettingsUserDomainRestriction.Builder()
       .realmId("IBMid")
-      .invitationEmailAllowPatterns(java.util.Arrays.asList(.*@company.co))
+      .invitationEmailAllowPatterns(java.util.Arrays.asList("*.*@company.com"))
       .restrictInvitation(true)
       .build();
 
@@ -4560,7 +4560,7 @@ public class IamIdentityTest {
     // Construct an instance of the AccountSettingsUserDomainRestriction model
     AccountSettingsUserDomainRestriction accountSettingsUserDomainRestrictionModel = new AccountSettingsUserDomainRestriction.Builder()
       .realmId("IBMid")
-      .invitationEmailAllowPatterns(java.util.Arrays.asList(.*@company.co))
+      .invitationEmailAllowPatterns(java.util.Arrays.asList("*.*@company.com"))
       .restrictInvitation(true)
       .build();
 
@@ -4704,7 +4704,7 @@ public class IamIdentityTest {
     // Construct an instance of the AccountSettingsUserDomainRestriction model
     AccountSettingsUserDomainRestriction accountSettingsUserDomainRestrictionModel = new AccountSettingsUserDomainRestriction.Builder()
       .realmId("IBMid")
-      .invitationEmailAllowPatterns(java.util.Arrays.asList(.*@company.co))
+      .invitationEmailAllowPatterns(java.util.Arrays.asList("*.*@company.com"))
       .restrictInvitation(true)
       .build();
 

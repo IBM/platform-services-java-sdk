@@ -68,14 +68,12 @@ public class UpdatePreferenceOnScopeAccountOptions extends GenericModel {
      * @param iamId the iamId
      * @param service the service
      * @param preferenceId the preferenceId
-     * @param valueString the valueString
      */
-    public Builder(String accountId, String iamId, String service, String preferenceId, String valueString) {
+    public Builder(String accountId, String iamId, String service, String preferenceId) {
       this.accountId = accountId;
       this.iamId = iamId;
       this.service = service;
       this.preferenceId = preferenceId;
-      this.valueString = valueString;
     }
 
     /**
@@ -182,8 +180,6 @@ public class UpdatePreferenceOnScopeAccountOptions extends GenericModel {
       "service cannot be empty");
     com.ibm.cloud.sdk.core.util.Validator.notEmpty(builder.preferenceId,
       "preferenceId cannot be empty");
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.valueString,
-      "valueString cannot be null");
     accountId = builder.accountId;
     iamId = builder.iamId;
     service = builder.service;

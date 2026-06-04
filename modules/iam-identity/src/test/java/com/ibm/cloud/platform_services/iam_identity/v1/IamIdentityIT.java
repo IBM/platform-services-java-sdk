@@ -1826,7 +1826,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
                     .restrictCreatePlatformApikey("NOT_RESTRICTED")
                     .restrictUserListVisibility("NOT_RESTRICTED")
                     .restrictUserDomains(domainRestrictions)
-//                    .allowedIpAddresses("testString")
+                    .allowedIpAddresses("*.*.*.*")
                     .mfa("NONE")
                     .userMfa(userMFAExpList)
                     .sessionExpirationInSeconds("86400")
@@ -1845,7 +1845,7 @@ public class IamIdentityIT extends SdkIntegrationTestBase {
             AccountSettingsResponse accountSettingsResponseResult = response.getResult();
             assertNotNull(accountSettingsResponseResult);
 
-            //assertEquals(accountSettingsResponseResult.getAllowedIpAddresses(), "");
+            assertEquals(accountSettingsResponseResult.getAllowedIpAddresses(), "*.*.*.*");
             assertEquals(accountSettingsResponseResult.getAccountId(), updateAccountSettingsOptions.accountId());
             assertEquals(accountSettingsResponseResult.getMfa(), updateAccountSettingsOptions.mfa());
             assertEquals(accountSettingsResponseResult.getRestrictCreatePlatformApikey(), updateAccountSettingsOptions.restrictCreatePlatformApikey());

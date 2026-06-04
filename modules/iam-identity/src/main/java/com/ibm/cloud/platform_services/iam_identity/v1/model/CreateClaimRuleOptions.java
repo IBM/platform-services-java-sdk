@@ -294,7 +294,7 @@ public class CreateClaimRuleOptions extends GenericModel {
    * Gets the crType.
    *
    * The compute resource type the rule applies to, required only if type is specified as 'Profile-CR'. Valid values are
-   * VSI, PVS, IKS_SA, ROKS_SA.
+   * VSI, PVS, BMS, IKS_SA, ROKS_SA, CE.
    *
    * @return the crType
    */

@@ -133,7 +133,8 @@ public class ProfileClaimRule extends GenericModel {
   /**
    * Gets the crType.
    *
-   * The compute resource type. Not required if type is Profile-SAML. Valid values are VSI, PVS, IKS_SA, ROKS_SA.
+   * The compute resource type. Not required if type is Profile-SAML. Valid values are VSI, PVS, BMS, IKS_SA, ROKS_SA,
+   * CE.
    *
    * @return the crType
    */

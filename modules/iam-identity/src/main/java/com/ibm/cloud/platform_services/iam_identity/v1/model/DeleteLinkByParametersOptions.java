@@ -209,7 +209,7 @@ public class DeleteLinkByParametersOptions extends GenericModel {
   /**
    * Gets the crn.
    *
-   * CRN of the compute resource (IKS/ROKS/VSI/BMS).
+   * CRN of the compute resource (VSI/PVS/BMS/IKS/ROKS/CE).
    *
    * @return the crn
    */

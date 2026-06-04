@@ -50,5 +50,6 @@ public class NotificationTest {
     assertNull(notificationModel.getSeverity());
     assertNull(notificationModel.getLuceneQuery());
     assertNull(notificationModel.getResourceLink());
+    assertNull(notificationModel.getCreationTimestamp());
   }
 }

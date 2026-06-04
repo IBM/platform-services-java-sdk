@@ -82,7 +82,7 @@ public class GetAcknowledgementOptions extends GenericModel {
   /**
    * Gets the accountId.
    *
-   * The account ID to retrieve acknowledgement for.
+   * The IBM Cloud account ID. If not provided, the account ID from the bearer token will be used.
    *
    * @return the accountId
    */

@@ -104,6 +104,8 @@ public class Notification extends GenericModel {
   protected String luceneQuery;
   @SerializedName("resource_link")
   protected String resourceLink;
+  @SerializedName("creation_timestamp")
+  protected Long creationTimestamp;
 
   protected Notification() { }
 
@@ -165,7 +167,7 @@ public class Notification extends GenericModel {
   /**
    * Gets the startTime.
    *
-   * The start time of the notification in Unix timestamp (milliseconds).
+   * The start time of the notification in Unix timestamp (seconds).
    *
    * @return the startTime
    */
@@ -253,7 +255,7 @@ public class Notification extends GenericModel {
   /**
    * Gets the endTime.
    *
-   * The end time of the notification in Unix timestamp (milliseconds).
+   * The end time of the notification in Unix timestamp (seconds).
    *
    * @return the endTime
    */
@@ -264,7 +266,7 @@ public class Notification extends GenericModel {
   /**
    * Gets the updateTime.
    *
-   * The last update time of the notification in Unix timestamp (milliseconds).
+   * The last update time of the notification in Unix timestamp (seconds).
    *
    * @return the updateTime
    */
@@ -320,6 +322,17 @@ public class Notification extends GenericModel {
    */
   public String getResourceLink() {
     return resourceLink;
+  }
+
+  /**
+   * Gets the creationTimestamp.
+   *
+   * The timestamp when the notification was created.
+   *
+   * @return the creationTimestamp
+   */
+  public Long getCreationTimestamp() {
+    return creationTimestamp;
   }
 }
 

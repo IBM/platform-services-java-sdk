@@ -32,8 +32,8 @@ public class GetAcknowledgementOptionsTest {
   @Test
   public void testGetAcknowledgementOptions() throws Throwable {
     GetAcknowledgementOptions getAcknowledgementOptionsModel = new GetAcknowledgementOptions.Builder()
-      .accountId("1369339417d906e5620b8d861d40cfd7")
+      .accountId("a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6")
       .build();
-    assertEquals(getAcknowledgementOptionsModel.accountId(), "1369339417d906e5620b8d861d40cfd7");
+    assertEquals(getAcknowledgementOptionsModel.accountId(), "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6");
   }
 }

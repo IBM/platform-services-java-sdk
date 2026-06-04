@@ -23,10 +23,8 @@ public class Acknowledgement extends GenericModel {
 
   @SerializedName("has_unread")
   protected Boolean hasUnread;
-  @SerializedName("latest_notification_id")
-  protected String latestNotificationId;
-  @SerializedName("last_acknowledged_id")
-  protected String lastAcknowledgedId;
+  @SerializedName("last_acknowledged")
+  protected Long lastAcknowledged;
 
   protected Acknowledgement() { }
 
@@ -42,25 +40,14 @@ public class Acknowledgement extends GenericModel {
   }
 
   /**
-   * Gets the latestNotificationId.
+   * Gets the lastAcknowledged.
    *
-   * The ID of the most recent notification available to the user.
+   * The timestamp of the last acknowledgement.
    *
-   * @return the latestNotificationId
+   * @return the lastAcknowledged
    */
-  public String getLatestNotificationId() {
-    return latestNotificationId;
-  }
-
-  /**
-   * Gets the lastAcknowledgedId.
-   *
-   * The ID of the last notification acknowledged by the user.
-   *
-   * @return the lastAcknowledgedId
-   */
-  public String getLastAcknowledgedId() {
-    return lastAcknowledgedId;
+  public Long getLastAcknowledged() {
+    return lastAcknowledged;
   }
 }
 

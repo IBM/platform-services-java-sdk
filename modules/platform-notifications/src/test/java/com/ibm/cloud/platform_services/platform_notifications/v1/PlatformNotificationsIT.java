@@ -67,7 +67,6 @@ public class PlatformNotificationsIT extends SdkIntegrationTestBase {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
-
   private static String accountId;
   private static String destinationId;
   private static String iamId;
@@ -94,6 +93,9 @@ public class PlatformNotificationsIT extends SdkIntegrationTestBase {
     // Load up our test-specific config properties.
     config = CredentialUtils.getServiceProperties(PlatformNotifications.DEFAULT_SERVICE_NAME);
     assertNotNull(config);
+
+    service.setServiceUrl(config.get("URL"));
+    
     assertFalse(config.isEmpty());
     assertEquals(service.getServiceUrl(), config.get("URL"));
 
@@ -112,27 +114,21 @@ public class PlatformNotificationsIT extends SdkIntegrationTestBase {
   }
 
   @Test
-  public void testTestDistributionListDestination() throws Exception {
+  public void testListNotifications() throws Exception {
     try {
-      TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype testDestinationRequestBodyPrototypeModel = new TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype.Builder()
-        .destinationType("event_notifications")
-        .notificationType("incident")
-        .build();
-
-      TestDistributionListDestinationOptions testDistributionListDestinationOptions = new TestDistributionListDestinationOptions.Builder()
+      ListNotificationsOptions listNotificationsOptions = new ListNotificationsOptions.Builder()
         .accountId(accountId)
-        .destinationId(destinationId)
-        .testDestinationRequestBodyPrototype(testDestinationRequestBodyPrototypeModel)
+        .limit(Long.valueOf("50"))
         .build();
 
       // Invoke operation
-      Response<TestDestinationResponseBody> response = service.testDistributionListDestination(testDistributionListDestinationOptions).execute();
+      Response<NotificationCollection> response = service.listNotifications(listNotificationsOptions).execute();
       // Validate response
       assertNotNull(response);
       assertEquals(response.getStatusCode(), 200);
 
-      TestDestinationResponseBody testDestinationResponseBodyResult = response.getResult();
-      assertNotNull(testDestinationResponseBodyResult);
+      NotificationCollection notificationCollectionResult = response.getResult();
+      assertNotNull(notificationCollectionResult);
 
     } catch (ServiceResponseException e) {
         fail(String.format("Service returned status code %d: %s%nError details: %s",
@@ -140,7 +136,84 @@ public class PlatformNotificationsIT extends SdkIntegrationTestBase {
     }
   }
 
-  @Test(dependsOnMethods = { "testTestDistributionListDestination" })
+  @Test(dependsOnMethods = { "testListNotifications" })
+  public void testListNotificationsWithPager() throws Exception {
+    try {
+      ListNotificationsOptions options = new ListNotificationsOptions.Builder()
+        .accountId(accountId)
+        .limit(Long.valueOf("50"))
+        .build();
+
+      // Test getNext().
+      List<Notification> allResults = new ArrayList<>();
+      NotificationsPager pager = new NotificationsPager(service, options);
+      while (pager.hasNext()) {
+        List<Notification> nextPage = pager.getNext();
+        assertNotNull(nextPage);
+        allResults.addAll(nextPage);
+      }
+      assertFalse(allResults.isEmpty());
+
+      // Test getAll();
+      pager = new NotificationsPager(service, options);
+      List<Notification> allItems = pager.getAll();
+      assertNotNull(allItems);
+      assertFalse(allItems.isEmpty());
+
+      assertEquals(allItems.size(), allResults.size());
+      System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = { "testListNotifications" })
+  public void testGetAcknowledgement() throws Exception {
+    try {
+      GetAcknowledgementOptions getAcknowledgementOptions = new GetAcknowledgementOptions.Builder()
+        .accountId(accountId)
+        .build();
+
+      // Invoke operation
+      Response<Acknowledgement> response = service.getAcknowledgement(getAcknowledgementOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      Acknowledgement acknowledgementResult = response.getResult();
+      assertNotNull(acknowledgementResult);
+
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = { "testGetAcknowledgement" })
+  public void testReplaceNotificationAcknowledgement() throws Exception {
+    try {
+      ReplaceNotificationAcknowledgementOptions replaceNotificationAcknowledgementOptions = new ReplaceNotificationAcknowledgementOptions.Builder()
+        .lastAcknowledged(Long.valueOf("1772804159452"))
+        .accountId(accountId)
+        .build();
+
+      // Invoke operation
+      Response<Acknowledgement> response = service.replaceNotificationAcknowledgement(replaceNotificationAcknowledgementOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      Acknowledgement acknowledgementResult = response.getResult();
+      assertNotNull(acknowledgementResult);
+
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = { "testReplaceNotificationAcknowledgement" })
   public void testListDistributionListDestinations() throws Exception {
     try {
       ListDistributionListDestinationsOptions listDistributionListDestinationsOptions = new ListDistributionListDestinationsOptions.Builder()
@@ -163,25 +236,6 @@ public class PlatformNotificationsIT extends SdkIntegrationTestBase {
   }
 
   @Test(dependsOnMethods = { "testListDistributionListDestinations" })
-  public void testDeleteDistributionListDestination() throws Exception {
-    try {
-      DeleteDistributionListDestinationOptions deleteDistributionListDestinationOptions = new DeleteDistributionListDestinationOptions.Builder()
-        .accountId(accountId)
-        .destinationId(destinationId)
-        .build();
-
-      // Invoke operation
-      Response<Void> response = service.deleteDistributionListDestination(deleteDistributionListDestinationOptions).execute();
-      // Validate response
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 204);
-    } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s%nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
-    }
-  }
-
-  @Test(dependsOnMethods = { "testDeleteDistributionListDestination" })
   public void testCreateDistributionListDestination() throws Exception {
     try {
       AddDestinationPrototypeEventNotificationDestinationPrototype addDestinationPrototypeModel = new AddDestinationPrototypeEventNotificationDestinationPrototype.Builder()
@@ -225,6 +279,35 @@ public class PlatformNotificationsIT extends SdkIntegrationTestBase {
 
       AddDestination addDestinationResult = response.getResult();
       assertNotNull(addDestinationResult);
+
+    } catch (ServiceResponseException e) {
+        fail(String.format("Service returned status code %d: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
+    }
+  }
+
+  @Test(dependsOnMethods = { "testGetDistributionListDestination" })
+  public void testTestDistributionListDestination() throws Exception {
+    try {
+      TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype testDestinationRequestBodyPrototypeModel = new TestDestinationRequestBodyPrototypeTestEventNotificationDestinationRequestBodyPrototype.Builder()
+        .destinationType("event_notifications")
+        .notificationType("incident")
+        .build();
+
+      TestDistributionListDestinationOptions testDistributionListDestinationOptions = new TestDistributionListDestinationOptions.Builder()
+        .accountId(accountId)
+        .destinationId(destinationId)
+        .testDestinationRequestBodyPrototype(testDestinationRequestBodyPrototypeModel)
+        .build();
+
+      // Invoke operation
+      Response<TestDestinationResponseBody> response = service.testDistributionListDestination(testDistributionListDestinationOptions).execute();
+      // Validate response
+      assertNotNull(response);
+      assertEquals(response.getStatusCode(), 200);
+
+      TestDestinationResponseBody testDestinationResponseBodyResult = response.getResult();
+      assertNotNull(testDestinationResponseBodyResult);
 
     } catch (ServiceResponseException e) {
         fail(String.format("Service returned status code %d: %s%nError details: %s",
@@ -368,106 +451,25 @@ public class PlatformNotificationsIT extends SdkIntegrationTestBase {
   }
 
   @Test(dependsOnMethods = { "testReplaceNotificationPreferences" })
-  public void testListNotifications() throws Exception {
+  public void testDeleteDistributionListDestination() throws Exception {
     try {
-      ListNotificationsOptions listNotificationsOptions = new ListNotificationsOptions.Builder()
+      DeleteDistributionListDestinationOptions deleteDistributionListDestinationOptions = new DeleteDistributionListDestinationOptions.Builder()
         .accountId(accountId)
-        .limit(Long.valueOf("50"))
+        .destinationId(destinationId)
         .build();
 
       // Invoke operation
-      Response<NotificationCollection> response = service.listNotifications(listNotificationsOptions).execute();
+      Response<Void> response = service.deleteDistributionListDestination(deleteDistributionListDestinationOptions).execute();
       // Validate response
       assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
-
-      NotificationCollection notificationCollectionResult = response.getResult();
-      assertNotNull(notificationCollectionResult);
-
+      assertEquals(response.getStatusCode(), 204);
     } catch (ServiceResponseException e) {
         fail(String.format("Service returned status code %d: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
     }
   }
 
-  @Test(dependsOnMethods = { "testListNotifications" })
-  public void testListNotificationsWithPager() throws Exception {
-    try {
-      ListNotificationsOptions options = new ListNotificationsOptions.Builder()
-        .accountId(accountId)
-        .limit(Long.valueOf("50"))
-        .build();
-
-      // Test getNext().
-      List<Notification> allResults = new ArrayList<>();
-      NotificationsPager pager = new NotificationsPager(service, options);
-      while (pager.hasNext()) {
-        List<Notification> nextPage = pager.getNext();
-        assertNotNull(nextPage);
-        allResults.addAll(nextPage);
-      }
-      assertFalse(allResults.isEmpty());
-
-      // Test getAll();
-      pager = new NotificationsPager(service, options);
-      List<Notification> allItems = pager.getAll();
-      assertNotNull(allItems);
-      assertFalse(allItems.isEmpty());
-
-      assertEquals(allItems.size(), allResults.size());
-      System.out.println(String.format("Retrieved a total of %d item(s) with pagination.", allResults.size()));
-    } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s%nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
-    }
-  }
-
-  @Test(dependsOnMethods = { "testListNotificationsWithPager" })
-  public void testGetAcknowledgement() throws Exception {
-    try {
-      GetAcknowledgementOptions getAcknowledgementOptions = new GetAcknowledgementOptions.Builder()
-        .accountId(accountId)
-        .build();
-
-      // Invoke operation
-      Response<Acknowledgement> response = service.getAcknowledgement(getAcknowledgementOptions).execute();
-      // Validate response
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
-
-      Acknowledgement acknowledgementResult = response.getResult();
-      assertNotNull(acknowledgementResult);
-
-    } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s%nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
-    }
-  }
-
-  @Test(dependsOnMethods = { "testGetAcknowledgement" })
-  public void testReplaceNotificationAcknowledgement() throws Exception {
-    try {
-      ReplaceNotificationAcknowledgementOptions replaceNotificationAcknowledgementOptions = new ReplaceNotificationAcknowledgementOptions.Builder()
-        .lastAcknowledgedId("1777909855390")
-        .accountId(accountId)
-        .build();
-
-      // Invoke operation
-      Response<Acknowledgement> response = service.replaceNotificationAcknowledgement(replaceNotificationAcknowledgementOptions).execute();
-      // Validate response
-      assertNotNull(response);
-      assertEquals(response.getStatusCode(), 200);
-
-      Acknowledgement acknowledgementResult = response.getResult();
-      assertNotNull(acknowledgementResult);
-
-    } catch (ServiceResponseException e) {
-        fail(String.format("Service returned status code %d: %s%nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()));
-    }
-  }
-
-  @Test(dependsOnMethods = { "testReplaceNotificationAcknowledgement" })
+  @Test(dependsOnMethods = { "testDeleteDistributionListDestination" })
   public void testDeleteNotificationPreferences() throws Exception {
     try {
       DeleteNotificationPreferencesOptions deleteNotificationPreferencesOptions = new DeleteNotificationPreferencesOptions.Builder()

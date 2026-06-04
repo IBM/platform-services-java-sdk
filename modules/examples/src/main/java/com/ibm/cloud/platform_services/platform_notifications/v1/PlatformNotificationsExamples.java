@@ -85,6 +85,63 @@ public class PlatformNotificationsExamples {
     String iamId = testConfigProperties.get("IAM_ID");
 
     try {
+      System.out.println("listNotifications() result:");
+      // begin-list_notifications
+      ListNotificationsOptions listNotificationsOptions = new ListNotificationsOptions.Builder()
+        .accountId(accountId)
+        .limit(Long.valueOf("50"))
+        .build();
+
+      NotificationsPager pager = new NotificationsPager(platformNotificationsService, listNotificationsOptions);
+      List<Notification> allResults = new ArrayList<>();
+      while (pager.hasNext()) {
+        List<Notification> nextPage = pager.getNext();
+        allResults.addAll(nextPage);
+      }
+
+      System.out.println(GsonSingleton.getGson().toJson(allResults));
+      // end-list_notifications
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("getAcknowledgement() result:");
+      // begin-get_acknowledgement
+      GetAcknowledgementOptions getAcknowledgementOptions = new GetAcknowledgementOptions.Builder()
+        .accountId(accountId)
+        .build();
+
+      Response<Acknowledgement> response = platformNotificationsService.getAcknowledgement(getAcknowledgementOptions).execute();
+      Acknowledgement acknowledgement = response.getResult();
+
+      System.out.println(acknowledgement);
+      // end-get_acknowledgement
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
+      System.out.println("replaceNotificationAcknowledgement() result:");
+      // begin-replace_notification_acknowledgement
+      ReplaceNotificationAcknowledgementOptions replaceNotificationAcknowledgementOptions = new ReplaceNotificationAcknowledgementOptions.Builder()
+        .lastAcknowledged(Long.valueOf("1772804159452"))
+        .accountId(accountId)
+        .build();
+
+      Response<Acknowledgement> response = platformNotificationsService.replaceNotificationAcknowledgement(replaceNotificationAcknowledgementOptions).execute();
+      Acknowledgement acknowledgement = response.getResult();
+
+      System.out.println(acknowledgement);
+      // end-replace_notification_acknowledgement
+    } catch (ServiceResponseException e) {
+        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+    }
+
+    try {
       System.out.println("listDistributionListDestinations() result:");
       // begin-list_distribution_list_destinations
       ListDistributionListDestinationsOptions listDistributionListDestinationsOptions = new ListDistributionListDestinationsOptions.Builder()
@@ -231,63 +288,6 @@ public class PlatformNotificationsExamples {
 
       System.out.println(preferencesObject);
       // end-replace_notification_preferences
-    } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-    }
-
-    try {
-      System.out.println("listNotifications() result:");
-      // begin-list_notifications
-      ListNotificationsOptions listNotificationsOptions = new ListNotificationsOptions.Builder()
-        .accountId(accountId)
-        .limit(Long.valueOf("50"))
-        .build();
-
-      NotificationsPager pager = new NotificationsPager(platformNotificationsService, listNotificationsOptions);
-      List<Notification> allResults = new ArrayList<>();
-      while (pager.hasNext()) {
-        List<Notification> nextPage = pager.getNext();
-        allResults.addAll(nextPage);
-      }
-
-      System.out.println(GsonSingleton.getGson().toJson(allResults));
-      // end-list_notifications
-    } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-    }
-
-    try {
-      System.out.println("getAcknowledgement() result:");
-      // begin-get_acknowledgement
-      GetAcknowledgementOptions getAcknowledgementOptions = new GetAcknowledgementOptions.Builder()
-        .accountId(accountId)
-        .build();
-
-      Response<Acknowledgement> response = platformNotificationsService.getAcknowledgement(getAcknowledgementOptions).execute();
-      Acknowledgement acknowledgement = response.getResult();
-
-      System.out.println(acknowledgement);
-      // end-get_acknowledgement
-    } catch (ServiceResponseException e) {
-        logger.error(String.format("Service returned status code %s: %s%nError details: %s",
-          e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
-    }
-
-    try {
-      System.out.println("replaceNotificationAcknowledgement() result:");
-      // begin-replace_notification_acknowledgement
-      ReplaceNotificationAcknowledgementOptions replaceNotificationAcknowledgementOptions = new ReplaceNotificationAcknowledgementOptions.Builder()
-        .lastAcknowledgedId("1777909855390")
-        .accountId(accountId)
-        .build();
-
-      Response<Acknowledgement> response = platformNotificationsService.replaceNotificationAcknowledgement(replaceNotificationAcknowledgementOptions).execute();
-      Acknowledgement acknowledgement = response.getResult();
-
-      System.out.println(acknowledgement);
-      // end-replace_notification_acknowledgement
     } catch (ServiceResponseException e) {
         logger.error(String.format("Service returned status code %s: %s%nError details: %s",
           e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);

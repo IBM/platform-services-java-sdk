@@ -33,7 +33,6 @@ public class AcknowledgementTest {
   public void testAcknowledgement() throws Throwable {
     Acknowledgement acknowledgementModel = new Acknowledgement();
     assertNull(acknowledgementModel.isHasUnread());
-    assertNull(acknowledgementModel.getLatestNotificationId());
-    assertNull(acknowledgementModel.getLastAcknowledgedId());
+    assertNull(acknowledgementModel.getLastAcknowledged());
   }
 }

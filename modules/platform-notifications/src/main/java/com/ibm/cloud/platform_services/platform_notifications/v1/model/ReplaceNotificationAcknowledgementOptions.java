@@ -20,14 +20,14 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class ReplaceNotificationAcknowledgementOptions extends GenericModel {
 
-  protected String lastAcknowledgedId;
+  protected Long lastAcknowledged;
   protected String accountId;
 
   /**
    * Builder.
    */
   public static class Builder {
-    private String lastAcknowledgedId;
+    private Long lastAcknowledged;
     private String accountId;
 
     /**
@@ -36,7 +36,7 @@ public class ReplaceNotificationAcknowledgementOptions extends GenericModel {
      * @param replaceNotificationAcknowledgementOptions the instance to initialize the Builder with
      */
     private Builder(ReplaceNotificationAcknowledgementOptions replaceNotificationAcknowledgementOptions) {
-      this.lastAcknowledgedId = replaceNotificationAcknowledgementOptions.lastAcknowledgedId;
+      this.lastAcknowledged = replaceNotificationAcknowledgementOptions.lastAcknowledged;
       this.accountId = replaceNotificationAcknowledgementOptions.accountId;
     }
 
@@ -49,10 +49,10 @@ public class ReplaceNotificationAcknowledgementOptions extends GenericModel {
     /**
      * Instantiates a new builder with required properties.
      *
-     * @param lastAcknowledgedId the lastAcknowledgedId
+     * @param lastAcknowledged the lastAcknowledged
      */
-    public Builder(String lastAcknowledgedId) {
-      this.lastAcknowledgedId = lastAcknowledgedId;
+    public Builder(Long lastAcknowledged) {
+      this.lastAcknowledged = lastAcknowledged;
     }
 
     /**
@@ -65,13 +65,13 @@ public class ReplaceNotificationAcknowledgementOptions extends GenericModel {
     }
 
     /**
-     * Set the lastAcknowledgedId.
+     * Set the lastAcknowledged.
      *
-     * @param lastAcknowledgedId the lastAcknowledgedId
+     * @param lastAcknowledged the lastAcknowledged
      * @return the ReplaceNotificationAcknowledgementOptions builder
      */
-    public Builder lastAcknowledgedId(String lastAcknowledgedId) {
-      this.lastAcknowledgedId = lastAcknowledgedId;
+    public Builder lastAcknowledged(long lastAcknowledged) {
+      this.lastAcknowledged = lastAcknowledged;
       return this;
     }
 
@@ -90,9 +90,9 @@ public class ReplaceNotificationAcknowledgementOptions extends GenericModel {
   protected ReplaceNotificationAcknowledgementOptions() { }
 
   protected ReplaceNotificationAcknowledgementOptions(Builder builder) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.lastAcknowledgedId,
-      "lastAcknowledgedId cannot be null");
-    lastAcknowledgedId = builder.lastAcknowledgedId;
+    com.ibm.cloud.sdk.core.util.Validator.notNull(builder.lastAcknowledged,
+      "lastAcknowledged cannot be null");
+    lastAcknowledged = builder.lastAcknowledged;
     accountId = builder.accountId;
   }
 
@@ -106,20 +106,20 @@ public class ReplaceNotificationAcknowledgementOptions extends GenericModel {
   }
 
   /**
-   * Gets the lastAcknowledgedId.
+   * Gets the lastAcknowledged.
    *
-   * The ID of a notification.
+   * The timestamp of the last acknowledgement.
    *
-   * @return the lastAcknowledgedId
+   * @return the lastAcknowledged
    */
-  public String lastAcknowledgedId() {
-    return lastAcknowledgedId;
+  public Long lastAcknowledged() {
+    return lastAcknowledged;
   }
 
   /**
    * Gets the accountId.
    *
-   * The account ID to update acknowledgement for.
+   * The IBM Cloud account ID. If not provided, the account ID from the bearer token will be used.
    *
    * @return the accountId
    */

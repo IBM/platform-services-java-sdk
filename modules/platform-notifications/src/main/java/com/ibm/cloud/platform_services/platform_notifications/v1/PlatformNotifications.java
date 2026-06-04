@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.113.1-d76630af-20260320-135953
+ * IBM OpenAPI SDK Code Generator Version: 3.108.0-56772134-20251111-102802
  */
 
 package com.ibm.cloud.platform_services.platform_notifications.v1;
@@ -49,9 +49,12 @@ import java.util.Map;
 import java.util.Map.Entry;
 
 /**
- * **This API is currently in beta and subject to change.**
- *
- * API for managing notification distribution lists for IBM Cloud accounts.
+ * API for IBM Cloud account notifications, providing capabilities to:
+ * - View notifications
+ * - Get and update acknowledgements
+ * - Manage user communication preferences
+ * - Manage notification distribution lists
+ * .
  *
  * API Version: 1.0.0
  */
@@ -101,6 +104,114 @@ public class PlatformNotifications extends BaseService {
   public PlatformNotifications(String serviceName, Authenticator authenticator) {
     super(serviceName, authenticator);
     setServiceUrl(DEFAULT_SERVICE_URL);
+  }
+
+  /**
+   * Get user notifications.
+   *
+   * Retrieve all notifications for the requested user.
+   *
+   * @param listNotificationsOptions the {@link ListNotificationsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link NotificationCollection}
+   */
+  public ServiceCall<NotificationCollection> listNotifications(ListNotificationsOptions listNotificationsOptions) {
+    if (listNotificationsOptions == null) {
+      listNotificationsOptions = new ListNotificationsOptions.Builder().build();
+    }
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/notifications"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("platform_notifications", "v1", "listNotifications");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (listNotificationsOptions.accountId() != null) {
+      builder.query("account_id", String.valueOf(listNotificationsOptions.accountId()));
+    }
+    if (listNotificationsOptions.start() != null) {
+      builder.query("start", String.valueOf(listNotificationsOptions.start()));
+    }
+    if (listNotificationsOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listNotificationsOptions.limit()));
+    }
+    ResponseConverter<NotificationCollection> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<NotificationCollection>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get user notifications.
+   *
+   * Retrieve all notifications for the requested user.
+   *
+   * @return a {@link ServiceCall} with a result of type {@link NotificationCollection}
+   */
+  public ServiceCall<NotificationCollection> listNotifications() {
+    return listNotifications(null);
+  }
+
+  /**
+   * Get acknowledgement.
+   *
+   * Retrieve the ID of the last notification acknowledged by the user for a specific account.
+   *
+   * @param getAcknowledgementOptions the {@link GetAcknowledgementOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link Acknowledgement}
+   */
+  public ServiceCall<Acknowledgement> getAcknowledgement(GetAcknowledgementOptions getAcknowledgementOptions) {
+    if (getAcknowledgementOptions == null) {
+      getAcknowledgementOptions = new GetAcknowledgementOptions.Builder().build();
+    }
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/notifications/acknowledgement"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("platform_notifications", "v1", "getAcknowledgement");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (getAcknowledgementOptions.accountId() != null) {
+      builder.query("account_id", String.valueOf(getAcknowledgementOptions.accountId()));
+    }
+    ResponseConverter<Acknowledgement> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Acknowledgement>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get acknowledgement.
+   *
+   * Retrieve the ID of the last notification acknowledged by the user for a specific account.
+   *
+   * @return a {@link ServiceCall} with a result of type {@link Acknowledgement}
+   */
+  public ServiceCall<Acknowledgement> getAcknowledgement() {
+    return getAcknowledgement(null);
+  }
+
+  /**
+   * Update acknowledgement.
+   *
+   * Update the ID of the last notification acknowledged by the user for a specific account.
+   *
+   * @param replaceNotificationAcknowledgementOptions the {@link ReplaceNotificationAcknowledgementOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link Acknowledgement}
+   */
+  public ServiceCall<Acknowledgement> replaceNotificationAcknowledgement(ReplaceNotificationAcknowledgementOptions replaceNotificationAcknowledgementOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(replaceNotificationAcknowledgementOptions,
+      "replaceNotificationAcknowledgementOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/notifications/acknowledgement"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("platform_notifications", "v1", "replaceNotificationAcknowledgement");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (replaceNotificationAcknowledgementOptions.accountId() != null) {
+      builder.query("account_id", String.valueOf(replaceNotificationAcknowledgementOptions.accountId()));
+    }
+    final JsonObject contentJson = new JsonObject();
+    contentJson.addProperty("last_acknowledged", replaceNotificationAcknowledgementOptions.lastAcknowledged());
+    builder.bodyJson(contentJson);
+    ResponseConverter<Acknowledgement> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Acknowledgement>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
   }
 
   /**
@@ -181,7 +292,7 @@ public class PlatformNotifications extends BaseService {
   }
 
   /**
-   * Delete destination entry.
+   * Delete a destination entry.
    *
    * Remove a destination entry.
    *
@@ -204,7 +315,7 @@ public class PlatformNotifications extends BaseService {
   }
 
   /**
-   * Test destination entry.
+   * Test a destination entry.
    *
    * Send a test notification to a destination in the distribution list. This allows you to verify that the destination
    * is properly configured and can receive notifications.
@@ -227,6 +338,33 @@ public class PlatformNotifications extends BaseService {
     builder.bodyContent(com.ibm.cloud.sdk.core.util.GsonSingleton.getGsonWithoutPrettyPrinting().toJson(testDistributionListDestinationOptions.testDestinationRequestBodyPrototype()), "application/json");
     ResponseConverter<TestDestinationResponseBody> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<TestDestinationResponseBody>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get all communication preferences.
+   *
+   * Retrieve all communication preferences of a user in an account.
+   *
+   * @param getPreferencesOptions the {@link GetPreferencesOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link PreferencesObject}
+   */
+  public ServiceCall<PreferencesObject> getPreferences(GetPreferencesOptions getPreferencesOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getPreferencesOptions,
+      "getPreferencesOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("iam_id", getPreferencesOptions.iamId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/notifications/{iam_id}/preferences", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("platform_notifications", "v1", "getPreferences");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (getPreferencesOptions.accountId() != null) {
+      builder.query("account_id", String.valueOf(getPreferencesOptions.accountId()));
+    }
+    ResponseConverter<PreferencesObject> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PreferencesObject>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 
@@ -326,33 +464,6 @@ public class PlatformNotifications extends BaseService {
       contentJson.add("provisioning_complete_server", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createPreferencesOptions.provisioningCompleteServer()));
     }
     builder.bodyJson(contentJson);
-    ResponseConverter<PreferencesObject> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PreferencesObject>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Get all communication preferences for a user in an account.
-   *
-   * Retrieve all communication preferences of a user in an account.
-   *
-   * @param getPreferencesOptions the {@link GetPreferencesOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link PreferencesObject}
-   */
-  public ServiceCall<PreferencesObject> getPreferences(GetPreferencesOptions getPreferencesOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(getPreferencesOptions,
-      "getPreferencesOptions cannot be null");
-    Map<String, String> pathParamsMap = new HashMap<String, String>();
-    pathParamsMap.put("iam_id", getPreferencesOptions.iamId());
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/notifications/{iam_id}/preferences", pathParamsMap));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("platform_notifications", "v1", "getPreferences");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    if (getPreferencesOptions.accountId() != null) {
-      builder.query("account_id", String.valueOf(getPreferencesOptions.accountId()));
-    }
     ResponseConverter<PreferencesObject> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<PreferencesObject>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
@@ -460,9 +571,9 @@ public class PlatformNotifications extends BaseService {
   }
 
   /**
-   * Resets all preferences to their default values.
+   * Reset all preferences to their default values.
    *
-   * Delete all communication preferences for the specified account, and resets all preferences to their default values.
+   * Delete all communication preferences for the specified account, and reset all preferences to their default values.
    *
    * @param deleteNotificationPreferencesOptions the {@link DeleteNotificationPreferencesOptions} containing the options for the call
    * @return a {@link ServiceCall} with a void result
@@ -481,114 +592,6 @@ public class PlatformNotifications extends BaseService {
       builder.query("account_id", String.valueOf(deleteNotificationPreferencesOptions.accountId()));
     }
     ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Get user notifications.
-   *
-   * Retrieve all notifications for the requested user.
-   *
-   * @param listNotificationsOptions the {@link ListNotificationsOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link NotificationCollection}
-   */
-  public ServiceCall<NotificationCollection> listNotifications(ListNotificationsOptions listNotificationsOptions) {
-    if (listNotificationsOptions == null) {
-      listNotificationsOptions = new ListNotificationsOptions.Builder().build();
-    }
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/notifications"));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("platform_notifications", "v1", "listNotifications");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    if (listNotificationsOptions.accountId() != null) {
-      builder.query("account_id", String.valueOf(listNotificationsOptions.accountId()));
-    }
-    if (listNotificationsOptions.start() != null) {
-      builder.query("start", String.valueOf(listNotificationsOptions.start()));
-    }
-    if (listNotificationsOptions.limit() != null) {
-      builder.query("limit", String.valueOf(listNotificationsOptions.limit()));
-    }
-    ResponseConverter<NotificationCollection> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<NotificationCollection>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Get user notifications.
-   *
-   * Retrieve all notifications for the requested user.
-   *
-   * @return a {@link ServiceCall} with a result of type {@link NotificationCollection}
-   */
-  public ServiceCall<NotificationCollection> listNotifications() {
-    return listNotifications(null);
-  }
-
-  /**
-   * Get user's last acknowledged notification Id.
-   *
-   * Retrieve the ID of the last notification acknowledged by the user for a specific account.
-   *
-   * @param getAcknowledgementOptions the {@link GetAcknowledgementOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link Acknowledgement}
-   */
-  public ServiceCall<Acknowledgement> getAcknowledgement(GetAcknowledgementOptions getAcknowledgementOptions) {
-    if (getAcknowledgementOptions == null) {
-      getAcknowledgementOptions = new GetAcknowledgementOptions.Builder().build();
-    }
-    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/notifications/acknowledgement"));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("platform_notifications", "v1", "getAcknowledgement");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    if (getAcknowledgementOptions.accountId() != null) {
-      builder.query("account_id", String.valueOf(getAcknowledgementOptions.accountId()));
-    }
-    ResponseConverter<Acknowledgement> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Acknowledgement>() { }.getType());
-    return createServiceCall(builder.build(), responseConverter);
-  }
-
-  /**
-   * Get user's last acknowledged notification Id.
-   *
-   * Retrieve the ID of the last notification acknowledged by the user for a specific account.
-   *
-   * @return a {@link ServiceCall} with a result of type {@link Acknowledgement}
-   */
-  public ServiceCall<Acknowledgement> getAcknowledgement() {
-    return getAcknowledgement(null);
-  }
-
-  /**
-   * Update user's last acknowledged notification.
-   *
-   * Update the ID of the last notification acknowledged by the user for a specific account.
-   *
-   * @param replaceNotificationAcknowledgementOptions the {@link ReplaceNotificationAcknowledgementOptions} containing the options for the call
-   * @return a {@link ServiceCall} with a result of type {@link Acknowledgement}
-   */
-  public ServiceCall<Acknowledgement> replaceNotificationAcknowledgement(ReplaceNotificationAcknowledgementOptions replaceNotificationAcknowledgementOptions) {
-    com.ibm.cloud.sdk.core.util.Validator.notNull(replaceNotificationAcknowledgementOptions,
-      "replaceNotificationAcknowledgementOptions cannot be null");
-    RequestBuilder builder = RequestBuilder.put(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/notifications/acknowledgement"));
-    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("platform_notifications", "v1", "replaceNotificationAcknowledgement");
-    for (Entry<String, String> header : sdkHeaders.entrySet()) {
-      builder.header(header.getKey(), header.getValue());
-    }
-    builder.header("Accept", "application/json");
-    if (replaceNotificationAcknowledgementOptions.accountId() != null) {
-      builder.query("account_id", String.valueOf(replaceNotificationAcknowledgementOptions.accountId()));
-    }
-    final JsonObject contentJson = new JsonObject();
-    contentJson.addProperty("last_acknowledged_id", replaceNotificationAcknowledgementOptions.lastAcknowledgedId());
-    builder.bodyJson(contentJson);
-    ResponseConverter<Acknowledgement> responseConverter =
-      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<Acknowledgement>() { }.getType());
     return createServiceCall(builder.build(), responseConverter);
   }
 

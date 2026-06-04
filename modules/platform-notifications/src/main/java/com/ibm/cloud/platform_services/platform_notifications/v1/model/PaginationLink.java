@@ -27,7 +27,7 @@ public class PaginationLink extends GenericModel {
   /**
    * Gets the href.
    *
-   * Complete URL to the page.
+   * The full URL path to the page.
    *
    * @return the href
    */

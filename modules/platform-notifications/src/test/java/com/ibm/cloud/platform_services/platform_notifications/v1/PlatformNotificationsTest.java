@@ -80,6 +80,217 @@ public class PlatformNotificationsTest {
     new PlatformNotifications(serviceName, null);
   }
 
+  // Test the listNotifications operation with a valid options model parameter
+  @Test
+  public void testListNotificationsWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"limit\": 50, \"total_count\": 232, \"first\": {\"href\": \"https://notifications.cloud.ibm.com/api/v1/notifications?limit=50\"}, \"previous\": {\"href\": \"https://notifications.cloud.ibm.com/api/v1/notifications?start=3fe78a36b9aa7f26&limit=50\", \"start\": \"3fe78a36b9aa7f26\"}, \"next\": {\"href\": \"https://notifications.cloud.ibm.com/api/v1/notifications?start=3fe78a36b9aa7f26&limit=50\", \"start\": \"3fe78a36b9aa7f26\"}, \"last\": {\"href\": \"https://notifications.cloud.ibm.com/api/v1/notifications?start=3fe78a36b9aa7f26&limit=50\", \"start\": \"3fe78a36b9aa7f26\"}, \"notifications\": [{\"title\": \"System Maintenance Scheduled\", \"body\": \"Scheduled maintenance will occur on March 15th from 10:00 AM to 11:00 AM UTC.\", \"id\": \"12345\", \"category\": \"maintenance\", \"component_names\": [\"componentNames\"], \"start_time\": 1771791490, \"is_global\": false, \"state\": \"new\", \"regions\": [\"regions\"], \"crn_masks\": [\"crnMasks\"], \"record_id\": \"rec-67890\", \"source_id\": \"src-11111\", \"completion_code\": \"successful\", \"end_time\": 1771791490, \"update_time\": 1771791490, \"severity\": 2, \"lucene_query\": \"region:us-south AND service_name:event-notifications\", \"resource_link\": \"https://cloud.ibm.com/status/incident/12345\", \"creation_timestamp\": 1772804159452}]}";
+    String listNotificationsPath = "/v1/notifications";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the ListNotificationsOptions model
+    ListNotificationsOptions listNotificationsOptionsModel = new ListNotificationsOptions.Builder()
+      .accountId("a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6")
+      .start("3fe78a36b9aa7f26")
+      .limit(Long.valueOf("50"))
+      .build();
+
+    // Invoke listNotifications() with a valid options model and verify the result
+    Response<NotificationCollection> response = platformNotificationsService.listNotifications(listNotificationsOptionsModel).execute();
+    assertNotNull(response);
+    NotificationCollection responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, listNotificationsPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(query.get("account_id"), "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6");
+    assertEquals(query.get("start"), "3fe78a36b9aa7f26");
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("50"));
+  }
+
+  // Test the listNotifications operation with and without retries enabled
+  @Test
+  public void testListNotificationsWRetries() throws Throwable {
+    platformNotificationsService.enableRetries(4, 30);
+    testListNotificationsWOptions();
+
+    platformNotificationsService.disableRetries();
+    testListNotificationsWOptions();
+  }
+
+  // Test the listNotifications operation using the NotificationsPager.getNext() method
+  @Test
+  public void testListNotificationsWithPagerGetNext() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"total_count\":2,\"limit\":1,\"notifications\":[{\"title\":\"System Maintenance Scheduled\",\"body\":\"Scheduled maintenance will occur on March 15th from 10:00 AM to 11:00 AM UTC.\",\"id\":\"12345\",\"category\":\"maintenance\",\"component_names\":[\"componentNames\"],\"start_time\":1771791490,\"is_global\":false,\"state\":\"new\",\"regions\":[\"regions\"],\"crn_masks\":[\"crnMasks\"],\"record_id\":\"rec-67890\",\"source_id\":\"src-11111\",\"completion_code\":\"successful\",\"end_time\":1771791490,\"update_time\":1771791490,\"severity\":2,\"lucene_query\":\"region:us-south AND service_name:event-notifications\",\"resource_link\":\"https://cloud.ibm.com/status/incident/12345\",\"creation_timestamp\":1772804159452}]}";
+    String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"notifications\":[{\"title\":\"System Maintenance Scheduled\",\"body\":\"Scheduled maintenance will occur on March 15th from 10:00 AM to 11:00 AM UTC.\",\"id\":\"12345\",\"category\":\"maintenance\",\"component_names\":[\"componentNames\"],\"start_time\":1771791490,\"is_global\":false,\"state\":\"new\",\"regions\":[\"regions\"],\"crn_masks\":[\"crnMasks\"],\"record_id\":\"rec-67890\",\"source_id\":\"src-11111\",\"completion_code\":\"successful\",\"end_time\":1771791490,\"update_time\":1771791490,\"severity\":2,\"lucene_query\":\"region:us-south AND service_name:event-notifications\",\"resource_link\":\"https://cloud.ibm.com/status/incident/12345\",\"creation_timestamp\":1772804159452}]}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListNotificationsOptions listNotificationsOptions = new ListNotificationsOptions.Builder()
+      .accountId("a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6")
+      .limit(Long.valueOf("50"))
+      .build();
+
+    List<Notification> allResults = new ArrayList<>();
+    NotificationsPager pager = new NotificationsPager(platformNotificationsService, listNotificationsOptions);
+    while (pager.hasNext()) {
+      List<Notification> nextPage = pager.getNext();
+      assertNotNull(nextPage);
+      allResults.addAll(nextPage);
+    }
+    assertEquals(allResults.size(), 2);
+  }
+  
+  // Test the listNotifications operation using the NotificationsPager.getAll() method
+  @Test
+  public void testListNotificationsWithPagerGetAll() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"total_count\":2,\"limit\":1,\"notifications\":[{\"title\":\"System Maintenance Scheduled\",\"body\":\"Scheduled maintenance will occur on March 15th from 10:00 AM to 11:00 AM UTC.\",\"id\":\"12345\",\"category\":\"maintenance\",\"component_names\":[\"componentNames\"],\"start_time\":1771791490,\"is_global\":false,\"state\":\"new\",\"regions\":[\"regions\"],\"crn_masks\":[\"crnMasks\"],\"record_id\":\"rec-67890\",\"source_id\":\"src-11111\",\"completion_code\":\"successful\",\"end_time\":1771791490,\"update_time\":1771791490,\"severity\":2,\"lucene_query\":\"region:us-south AND service_name:event-notifications\",\"resource_link\":\"https://cloud.ibm.com/status/incident/12345\",\"creation_timestamp\":1772804159452}]}";
+    String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"notifications\":[{\"title\":\"System Maintenance Scheduled\",\"body\":\"Scheduled maintenance will occur on March 15th from 10:00 AM to 11:00 AM UTC.\",\"id\":\"12345\",\"category\":\"maintenance\",\"component_names\":[\"componentNames\"],\"start_time\":1771791490,\"is_global\":false,\"state\":\"new\",\"regions\":[\"regions\"],\"crn_masks\":[\"crnMasks\"],\"record_id\":\"rec-67890\",\"source_id\":\"src-11111\",\"completion_code\":\"successful\",\"end_time\":1771791490,\"update_time\":1771791490,\"severity\":2,\"lucene_query\":\"region:us-south AND service_name:event-notifications\",\"resource_link\":\"https://cloud.ibm.com/status/incident/12345\",\"creation_timestamp\":1772804159452}]}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListNotificationsOptions listNotificationsOptions = new ListNotificationsOptions.Builder()
+      .accountId("a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6")
+      .limit(Long.valueOf("50"))
+      .build();
+
+    NotificationsPager pager = new NotificationsPager(platformNotificationsService, listNotificationsOptions);
+    List<Notification> allResults = pager.getAll();
+    assertNotNull(allResults);
+    assertEquals(allResults.size(), 2);
+  }
+  
+  // Test the getAcknowledgement operation with a valid options model parameter
+  @Test
+  public void testGetAcknowledgementWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"has_unread\": true, \"last_acknowledged\": 1772804159452}";
+    String getAcknowledgementPath = "/v1/notifications/acknowledgement";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the GetAcknowledgementOptions model
+    GetAcknowledgementOptions getAcknowledgementOptionsModel = new GetAcknowledgementOptions.Builder()
+      .accountId("a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6")
+      .build();
+
+    // Invoke getAcknowledgement() with a valid options model and verify the result
+    Response<Acknowledgement> response = platformNotificationsService.getAcknowledgement(getAcknowledgementOptionsModel).execute();
+    assertNotNull(response);
+    Acknowledgement responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getAcknowledgementPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(query.get("account_id"), "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6");
+  }
+
+  // Test the getAcknowledgement operation with and without retries enabled
+  @Test
+  public void testGetAcknowledgementWRetries() throws Throwable {
+    platformNotificationsService.enableRetries(4, 30);
+    testGetAcknowledgementWOptions();
+
+    platformNotificationsService.disableRetries();
+    testGetAcknowledgementWOptions();
+  }
+
+  // Test the replaceNotificationAcknowledgement operation with a valid options model parameter
+  @Test
+  public void testReplaceNotificationAcknowledgementWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"has_unread\": true, \"last_acknowledged\": 1772804159452}";
+    String replaceNotificationAcknowledgementPath = "/v1/notifications/acknowledgement";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the ReplaceNotificationAcknowledgementOptions model
+    ReplaceNotificationAcknowledgementOptions replaceNotificationAcknowledgementOptionsModel = new ReplaceNotificationAcknowledgementOptions.Builder()
+      .lastAcknowledged(Long.valueOf("1772804159452"))
+      .accountId("a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6")
+      .build();
+
+    // Invoke replaceNotificationAcknowledgement() with a valid options model and verify the result
+    Response<Acknowledgement> response = platformNotificationsService.replaceNotificationAcknowledgement(replaceNotificationAcknowledgementOptionsModel).execute();
+    assertNotNull(response);
+    Acknowledgement responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "PUT");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, replaceNotificationAcknowledgementPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(query.get("account_id"), "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6");
+  }
+
+  // Test the replaceNotificationAcknowledgement operation with and without retries enabled
+  @Test
+  public void testReplaceNotificationAcknowledgementWRetries() throws Throwable {
+    platformNotificationsService.enableRetries(4, 30);
+    testReplaceNotificationAcknowledgementWOptions();
+
+    platformNotificationsService.disableRetries();
+    testReplaceNotificationAcknowledgementWOptions();
+  }
+
+  // Test the replaceNotificationAcknowledgement operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testReplaceNotificationAcknowledgementNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    platformNotificationsService.replaceNotificationAcknowledgement(null).execute();
+  }
+
   // Test the listDistributionListDestinations operation with a valid options model parameter
   @Test
   public void testListDistributionListDestinationsWOptions() throws Throwable {
@@ -351,6 +562,59 @@ public class PlatformNotificationsTest {
     platformNotificationsService.testDistributionListDestination(null).execute();
   }
 
+  // Test the getPreferences operation with a valid options model parameter
+  @Test
+  public void testGetPreferencesWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"incident_severity1\": {\"channels\": [\"email\"], \"updates\": true}, \"incident_severity2\": {\"channels\": [\"email\"], \"updates\": true}, \"incident_severity3\": {\"channels\": [\"email\"], \"updates\": true}, \"incident_severity4\": {\"channels\": [\"email\"], \"updates\": true}, \"maintenance_high\": {\"channels\": [\"email\"], \"updates\": true}, \"maintenance_medium\": {\"channels\": [\"email\"], \"updates\": true}, \"maintenance_low\": {\"channels\": [\"email\"], \"updates\": true}, \"announcements_major\": {\"channels\": [\"email\"]}, \"announcements_minor\": {\"channels\": [\"email\"]}, \"security_normal\": {\"channels\": [\"email\"]}, \"account_normal\": {\"channels\": [\"email\"]}, \"billing_and_usage_order\": {\"channels\": [\"email\"]}, \"billing_and_usage_invoices\": {\"channels\": [\"email\"]}, \"billing_and_usage_payments\": {\"channels\": [\"email\"]}, \"billing_and_usage_subscriptions_and_promo_codes\": {\"channels\": [\"email\"]}, \"billing_and_usage_spending_alerts\": {\"channels\": [\"email\"]}, \"resourceactivity_normal\": {\"channels\": [\"email\"]}, \"ordering_review\": {\"channels\": [\"email\"]}, \"ordering_approved\": {\"channels\": [\"email\"]}, \"ordering_approved_vsi\": {\"channels\": [\"email\"]}, \"ordering_approved_server\": {\"channels\": [\"email\"]}, \"provisioning_reload_complete\": {\"channels\": [\"email\"]}, \"provisioning_complete_vsi\": {\"channels\": [\"email\"]}, \"provisioning_complete_server\": {\"channels\": [\"email\"]}}";
+    String getPreferencesPath = "/v1/notifications/IBMid-1234567890/preferences";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the GetPreferencesOptions model
+    GetPreferencesOptions getPreferencesOptionsModel = new GetPreferencesOptions.Builder()
+      .iamId("IBMid-1234567890")
+      .accountId("a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6")
+      .build();
+
+    // Invoke getPreferences() with a valid options model and verify the result
+    Response<PreferencesObject> response = platformNotificationsService.getPreferences(getPreferencesOptionsModel).execute();
+    assertNotNull(response);
+    PreferencesObject responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getPreferencesPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(query.get("account_id"), "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6");
+  }
+
+  // Test the getPreferences operation with and without retries enabled
+  @Test
+  public void testGetPreferencesWRetries() throws Throwable {
+    platformNotificationsService.enableRetries(4, 30);
+    testGetPreferencesWOptions();
+
+    platformNotificationsService.disableRetries();
+    testGetPreferencesWOptions();
+  }
+
+  // Test the getPreferences operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetPreferencesNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    platformNotificationsService.getPreferences(null).execute();
+  }
+
   // Test the createPreferences operation with a valid options model parameter
   @Test
   public void testCreatePreferencesWOptions() throws Throwable {
@@ -437,59 +701,6 @@ public class PlatformNotificationsTest {
   public void testCreatePreferencesNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
     platformNotificationsService.createPreferences(null).execute();
-  }
-
-  // Test the getPreferences operation with a valid options model parameter
-  @Test
-  public void testGetPreferencesWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "{\"incident_severity1\": {\"channels\": [\"email\"], \"updates\": true}, \"incident_severity2\": {\"channels\": [\"email\"], \"updates\": true}, \"incident_severity3\": {\"channels\": [\"email\"], \"updates\": true}, \"incident_severity4\": {\"channels\": [\"email\"], \"updates\": true}, \"maintenance_high\": {\"channels\": [\"email\"], \"updates\": true}, \"maintenance_medium\": {\"channels\": [\"email\"], \"updates\": true}, \"maintenance_low\": {\"channels\": [\"email\"], \"updates\": true}, \"announcements_major\": {\"channels\": [\"email\"]}, \"announcements_minor\": {\"channels\": [\"email\"]}, \"security_normal\": {\"channels\": [\"email\"]}, \"account_normal\": {\"channels\": [\"email\"]}, \"billing_and_usage_order\": {\"channels\": [\"email\"]}, \"billing_and_usage_invoices\": {\"channels\": [\"email\"]}, \"billing_and_usage_payments\": {\"channels\": [\"email\"]}, \"billing_and_usage_subscriptions_and_promo_codes\": {\"channels\": [\"email\"]}, \"billing_and_usage_spending_alerts\": {\"channels\": [\"email\"]}, \"resourceactivity_normal\": {\"channels\": [\"email\"]}, \"ordering_review\": {\"channels\": [\"email\"]}, \"ordering_approved\": {\"channels\": [\"email\"]}, \"ordering_approved_vsi\": {\"channels\": [\"email\"]}, \"ordering_approved_server\": {\"channels\": [\"email\"]}, \"provisioning_reload_complete\": {\"channels\": [\"email\"]}, \"provisioning_complete_vsi\": {\"channels\": [\"email\"]}, \"provisioning_complete_server\": {\"channels\": [\"email\"]}}";
-    String getPreferencesPath = "/v1/notifications/IBMid-1234567890/preferences";
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the GetPreferencesOptions model
-    GetPreferencesOptions getPreferencesOptionsModel = new GetPreferencesOptions.Builder()
-      .iamId("IBMid-1234567890")
-      .accountId("a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6")
-      .build();
-
-    // Invoke getPreferences() with a valid options model and verify the result
-    Response<PreferencesObject> response = platformNotificationsService.getPreferences(getPreferencesOptionsModel).execute();
-    assertNotNull(response);
-    PreferencesObject responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getPreferencesPath);
-    // Verify query params
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    assertEquals(query.get("account_id"), "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6");
-  }
-
-  // Test the getPreferences operation with and without retries enabled
-  @Test
-  public void testGetPreferencesWRetries() throws Throwable {
-    platformNotificationsService.enableRetries(4, 30);
-    testGetPreferencesWOptions();
-
-    platformNotificationsService.disableRetries();
-    testGetPreferencesWOptions();
-  }
-
-  // Test the getPreferences operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testGetPreferencesNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    platformNotificationsService.getPreferences(null).execute();
   }
 
   // Test the replaceNotificationPreferences operation with a valid options model parameter
@@ -630,217 +841,6 @@ public class PlatformNotificationsTest {
   public void testDeleteNotificationPreferencesNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
     platformNotificationsService.deleteNotificationPreferences(null).execute();
-  }
-
-  // Test the listNotifications operation with a valid options model parameter
-  @Test
-  public void testListNotificationsWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "{\"limit\": 50, \"total_count\": 232, \"first\": {\"href\": \"https://api.example.com/v1/notifications?limit=50\"}, \"previous\": {\"href\": \"https://api.example.com/v1/notifications?start=3fe78a36b9aa7f26&limit=50\", \"start\": \"3fe78a36b9aa7f26\"}, \"next\": {\"href\": \"https://api.example.com/v1/notifications?start=3fe78a36b9aa7f26&limit=50\", \"start\": \"3fe78a36b9aa7f26\"}, \"last\": {\"href\": \"https://api.example.com/v1/notifications?start=3fe78a36b9aa7f26&limit=50\", \"start\": \"3fe78a36b9aa7f26\"}, \"notifications\": [{\"title\": \"System Maintenance Scheduled\", \"body\": \"Scheduled maintenance will occur on March 15th from 10:00 AM to 11:00 AM UTC.\", \"id\": \"12345\", \"category\": \"maintenance\", \"component_names\": [\"componentNames\"], \"start_time\": 1771791490, \"is_global\": false, \"state\": \"new\", \"regions\": [\"regions\"], \"crn_masks\": [\"crnMasks\"], \"record_id\": \"rec-67890\", \"source_id\": \"src-11111\", \"completion_code\": \"successful\", \"end_time\": 1771791490, \"update_time\": 1771791490, \"severity\": 2, \"lucene_query\": \"region:us-south AND service_name:event-notifications\", \"resource_link\": \"https://cloud.ibm.com/status/incident/12345\"}]}";
-    String listNotificationsPath = "/v1/notifications";
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the ListNotificationsOptions model
-    ListNotificationsOptions listNotificationsOptionsModel = new ListNotificationsOptions.Builder()
-      .accountId("a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6")
-      .start("3fe78a36b9aa7f26")
-      .limit(Long.valueOf("50"))
-      .build();
-
-    // Invoke listNotifications() with a valid options model and verify the result
-    Response<NotificationCollection> response = platformNotificationsService.listNotifications(listNotificationsOptionsModel).execute();
-    assertNotNull(response);
-    NotificationCollection responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, listNotificationsPath);
-    // Verify query params
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    assertEquals(query.get("account_id"), "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6");
-    assertEquals(query.get("start"), "3fe78a36b9aa7f26");
-    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("50"));
-  }
-
-  // Test the listNotifications operation with and without retries enabled
-  @Test
-  public void testListNotificationsWRetries() throws Throwable {
-    platformNotificationsService.enableRetries(4, 30);
-    testListNotificationsWOptions();
-
-    platformNotificationsService.disableRetries();
-    testListNotificationsWOptions();
-  }
-
-  // Test the listNotifications operation using the NotificationsPager.getNext() method
-  @Test
-  public void testListNotificationsWithPagerGetNext() throws Throwable {
-    // Set up the two-page mock response.
-    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"total_count\":2,\"limit\":1,\"notifications\":[{\"title\":\"System Maintenance Scheduled\",\"body\":\"Scheduled maintenance will occur on March 15th from 10:00 AM to 11:00 AM UTC.\",\"id\":\"12345\",\"category\":\"maintenance\",\"component_names\":[\"componentNames\"],\"start_time\":1771791490,\"is_global\":false,\"state\":\"new\",\"regions\":[\"regions\"],\"crn_masks\":[\"crnMasks\"],\"record_id\":\"rec-67890\",\"source_id\":\"src-11111\",\"completion_code\":\"successful\",\"end_time\":1771791490,\"update_time\":1771791490,\"severity\":2,\"lucene_query\":\"region:us-south AND service_name:event-notifications\",\"resource_link\":\"https://cloud.ibm.com/status/incident/12345\"}]}";
-    String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"notifications\":[{\"title\":\"System Maintenance Scheduled\",\"body\":\"Scheduled maintenance will occur on March 15th from 10:00 AM to 11:00 AM UTC.\",\"id\":\"12345\",\"category\":\"maintenance\",\"component_names\":[\"componentNames\"],\"start_time\":1771791490,\"is_global\":false,\"state\":\"new\",\"regions\":[\"regions\"],\"crn_masks\":[\"crnMasks\"],\"record_id\":\"rec-67890\",\"source_id\":\"src-11111\",\"completion_code\":\"successful\",\"end_time\":1771791490,\"update_time\":1771791490,\"severity\":2,\"lucene_query\":\"region:us-south AND service_name:event-notifications\",\"resource_link\":\"https://cloud.ibm.com/status/incident/12345\"}]}";
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponsePage1));
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponsePage2));
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(400)
-      .setBody("{\"message\": \"No more results available!\"}"));
-
-    ListNotificationsOptions listNotificationsOptions = new ListNotificationsOptions.Builder()
-      .accountId("a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6")
-      .limit(Long.valueOf("50"))
-      .build();
-
-    List<Notification> allResults = new ArrayList<>();
-    NotificationsPager pager = new NotificationsPager(platformNotificationsService, listNotificationsOptions);
-    while (pager.hasNext()) {
-      List<Notification> nextPage = pager.getNext();
-      assertNotNull(nextPage);
-      allResults.addAll(nextPage);
-    }
-    assertEquals(allResults.size(), 2);
-  }
-  
-  // Test the listNotifications operation using the NotificationsPager.getAll() method
-  @Test
-  public void testListNotificationsWithPagerGetAll() throws Throwable {
-    // Set up the two-page mock response.
-    String mockResponsePage1 = "{\"next\":{\"start\":\"1\"},\"total_count\":2,\"limit\":1,\"notifications\":[{\"title\":\"System Maintenance Scheduled\",\"body\":\"Scheduled maintenance will occur on March 15th from 10:00 AM to 11:00 AM UTC.\",\"id\":\"12345\",\"category\":\"maintenance\",\"component_names\":[\"componentNames\"],\"start_time\":1771791490,\"is_global\":false,\"state\":\"new\",\"regions\":[\"regions\"],\"crn_masks\":[\"crnMasks\"],\"record_id\":\"rec-67890\",\"source_id\":\"src-11111\",\"completion_code\":\"successful\",\"end_time\":1771791490,\"update_time\":1771791490,\"severity\":2,\"lucene_query\":\"region:us-south AND service_name:event-notifications\",\"resource_link\":\"https://cloud.ibm.com/status/incident/12345\"}]}";
-    String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"notifications\":[{\"title\":\"System Maintenance Scheduled\",\"body\":\"Scheduled maintenance will occur on March 15th from 10:00 AM to 11:00 AM UTC.\",\"id\":\"12345\",\"category\":\"maintenance\",\"component_names\":[\"componentNames\"],\"start_time\":1771791490,\"is_global\":false,\"state\":\"new\",\"regions\":[\"regions\"],\"crn_masks\":[\"crnMasks\"],\"record_id\":\"rec-67890\",\"source_id\":\"src-11111\",\"completion_code\":\"successful\",\"end_time\":1771791490,\"update_time\":1771791490,\"severity\":2,\"lucene_query\":\"region:us-south AND service_name:event-notifications\",\"resource_link\":\"https://cloud.ibm.com/status/incident/12345\"}]}";
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponsePage1));
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponsePage2));
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(400)
-      .setBody("{\"message\": \"No more results available!\"}"));
-
-    ListNotificationsOptions listNotificationsOptions = new ListNotificationsOptions.Builder()
-      .accountId("a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6")
-      .limit(Long.valueOf("50"))
-      .build();
-
-    NotificationsPager pager = new NotificationsPager(platformNotificationsService, listNotificationsOptions);
-    List<Notification> allResults = pager.getAll();
-    assertNotNull(allResults);
-    assertEquals(allResults.size(), 2);
-  }
-  
-  // Test the getAcknowledgement operation with a valid options model parameter
-  @Test
-  public void testGetAcknowledgementWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "{\"has_unread\": true, \"latest_notification_id\": \"1678901234000\", \"last_acknowledged_id\": \"1678800000000\"}";
-    String getAcknowledgementPath = "/v1/notifications/acknowledgement";
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the GetAcknowledgementOptions model
-    GetAcknowledgementOptions getAcknowledgementOptionsModel = new GetAcknowledgementOptions.Builder()
-      .accountId("1369339417d906e5620b8d861d40cfd7")
-      .build();
-
-    // Invoke getAcknowledgement() with a valid options model and verify the result
-    Response<Acknowledgement> response = platformNotificationsService.getAcknowledgement(getAcknowledgementOptionsModel).execute();
-    assertNotNull(response);
-    Acknowledgement responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "GET");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, getAcknowledgementPath);
-    // Verify query params
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    assertEquals(query.get("account_id"), "1369339417d906e5620b8d861d40cfd7");
-  }
-
-  // Test the getAcknowledgement operation with and without retries enabled
-  @Test
-  public void testGetAcknowledgementWRetries() throws Throwable {
-    platformNotificationsService.enableRetries(4, 30);
-    testGetAcknowledgementWOptions();
-
-    platformNotificationsService.disableRetries();
-    testGetAcknowledgementWOptions();
-  }
-
-  // Test the replaceNotificationAcknowledgement operation with a valid options model parameter
-  @Test
-  public void testReplaceNotificationAcknowledgementWOptions() throws Throwable {
-    // Register a mock response
-    String mockResponseBody = "{\"has_unread\": true, \"latest_notification_id\": \"1678901234000\", \"last_acknowledged_id\": \"1678800000000\"}";
-    String replaceNotificationAcknowledgementPath = "/v1/notifications/acknowledgement";
-    server.enqueue(new MockResponse()
-      .setHeader("Content-type", "application/json")
-      .setResponseCode(200)
-      .setBody(mockResponseBody));
-
-    // Construct an instance of the ReplaceNotificationAcknowledgementOptions model
-    ReplaceNotificationAcknowledgementOptions replaceNotificationAcknowledgementOptionsModel = new ReplaceNotificationAcknowledgementOptions.Builder()
-      .lastAcknowledgedId("1772804159452")
-      .accountId("1369339417d906e5620b8d861d40cfd7")
-      .build();
-
-    // Invoke replaceNotificationAcknowledgement() with a valid options model and verify the result
-    Response<Acknowledgement> response = platformNotificationsService.replaceNotificationAcknowledgement(replaceNotificationAcknowledgementOptionsModel).execute();
-    assertNotNull(response);
-    Acknowledgement responseObj = response.getResult();
-    assertNotNull(responseObj);
-
-    // Verify the contents of the request sent to the mock server
-    RecordedRequest request = server.takeRequest();
-    assertNotNull(request);
-    assertEquals(request.getMethod(), "PUT");
-    // Verify request path
-    String parsedPath = TestUtilities.parseReqPath(request);
-    assertEquals(parsedPath, replaceNotificationAcknowledgementPath);
-    // Verify query params
-    Map<String, String> query = TestUtilities.parseQueryString(request);
-    assertNotNull(query);
-    assertEquals(query.get("account_id"), "1369339417d906e5620b8d861d40cfd7");
-  }
-
-  // Test the replaceNotificationAcknowledgement operation with and without retries enabled
-  @Test
-  public void testReplaceNotificationAcknowledgementWRetries() throws Throwable {
-    platformNotificationsService.enableRetries(4, 30);
-    testReplaceNotificationAcknowledgementWOptions();
-
-    platformNotificationsService.disableRetries();
-    testReplaceNotificationAcknowledgementWOptions();
-  }
-
-  // Test the replaceNotificationAcknowledgement operation with a null options model (negative test)
-  @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testReplaceNotificationAcknowledgementNoOptions() throws Throwable {
-    server.enqueue(new MockResponse());
-    platformNotificationsService.replaceNotificationAcknowledgement(null).execute();
   }
 
   // Perform setup needed before each test method

@@ -32,11 +32,11 @@ public class ReplaceNotificationAcknowledgementOptionsTest {
   @Test
   public void testReplaceNotificationAcknowledgementOptions() throws Throwable {
     ReplaceNotificationAcknowledgementOptions replaceNotificationAcknowledgementOptionsModel = new ReplaceNotificationAcknowledgementOptions.Builder()
-      .lastAcknowledgedId("1772804159452")
-      .accountId("1369339417d906e5620b8d861d40cfd7")
+      .lastAcknowledged(Long.valueOf("1772804159452"))
+      .accountId("a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6")
       .build();
-    assertEquals(replaceNotificationAcknowledgementOptionsModel.lastAcknowledgedId(), "1772804159452");
-    assertEquals(replaceNotificationAcknowledgementOptionsModel.accountId(), "1369339417d906e5620b8d861d40cfd7");
+    assertEquals(replaceNotificationAcknowledgementOptionsModel.lastAcknowledged(), Long.valueOf("1772804159452"));
+    assertEquals(replaceNotificationAcknowledgementOptionsModel.accountId(), "a1b2c3d4e5f6g7h8i9j0k1l2m3n4o5p6");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

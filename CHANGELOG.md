@@ -1,3 +1,10 @@
+## [0.75.1](https://github.com/IBM/platform-services-java-sdk/compare/0.75.0...0.75.1) (2026-06-09)
+
+
+### Bug Fixes
+
+* **IAM Identity:** add PowerVS compute resource type support ([#305](https://github.com/IBM/platform-services-java-sdk/issues/305)) ([cfef722](https://github.com/IBM/platform-services-java-sdk/commit/cfef7223cc20fac050cd7670347c2b9e1e33432d))
+
 # [0.75.0](https://github.com/IBM/platform-services-java-sdk/compare/0.74.0...0.75.0) (2026-04-07)
 
 

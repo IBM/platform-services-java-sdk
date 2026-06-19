@@ -14,6 +14,7 @@
 package com.ibm.cloud.platform_services.context_based_restrictions.v1;
 
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AccountSettings;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressInstance;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressIPAddress;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressIPAddressRange;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressServiceRef;
@@ -124,6 +125,10 @@ public class ContextBasedRestrictionsExamples {
                 .type("vpc")
                 .value(vpcCRN)
                 .build();
+            AddressInstance instanceAddressModel = new AddressInstance.Builder()
+                .type("instance")
+                .value(vpcCRN)
+                .build();
             ServiceRefValue serviceRefValueModel = new ServiceRefValue.Builder()
                 .accountId(accountID)
                 .serviceName("cloud-object-storage")
@@ -140,7 +145,7 @@ public class ContextBasedRestrictionsExamples {
                 .name("an example of zone")
                 .accountId(accountID)
                 .description("this is an example of zone")
-                .addresses(java.util.Arrays.asList(ipAddressModel, ipAddressV6Model, ipRangeAddressModel, ipRangeAddressV6Model, subnetAddressModel, vpcAddressModel, serviceRefAddressModel))
+                .addresses(java.util.Arrays.asList(ipAddressModel, ipAddressV6Model, ipRangeAddressModel, ipRangeAddressV6Model, subnetAddressModel, vpcAddressModel, instanceAddressModel, serviceRefAddressModel))
                 .excluded(java.util.Arrays.asList(excludedIPAddressModel))
                 .build();
 

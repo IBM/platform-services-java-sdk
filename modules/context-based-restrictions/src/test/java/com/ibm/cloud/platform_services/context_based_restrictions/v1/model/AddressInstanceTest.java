@@ -13,8 +13,7 @@
 
 package com.ibm.cloud.platform_services.context_based_restrictions.v1.model;
 
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.NewRuleOperations;
-import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.NewRuleOperationsApiTypesItem;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressInstance;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import java.io.InputStream;
@@ -24,33 +23,32 @@ import org.testng.annotations.Test;
 import static org.testng.Assert.*;
 
 /**
- * Unit test class for the NewRuleOperations model.
+ * Unit test class for the AddressInstance model.
  */
-public class NewRuleOperationsTest {
+public class AddressInstanceTest {
   final HashMap<String, InputStream> mockStreamMap = TestUtilities.createMockStreamMap();
   final List<FileWithMetadata> mockListFileWithMetadata = TestUtilities.creatMockListFileWithMetadata();
 
   @Test
-  public void testNewRuleOperations() throws Throwable {
-    NewRuleOperationsApiTypesItem newRuleOperationsApiTypesItemModel = new NewRuleOperationsApiTypesItem.Builder()
-      .apiTypeId("testString")
+  public void testAddressInstance() throws Throwable {
+    AddressInstance addressInstanceModel = new AddressInstance.Builder()
+      .type("instance")
+      .value("testString")
       .build();
-    assertEquals(newRuleOperationsApiTypesItemModel.apiTypeId(), "testString");
+    assertEquals(addressInstanceModel.type(), "instance");
+    assertEquals(addressInstanceModel.value(), "testString");
 
-    NewRuleOperations newRuleOperationsModel = new NewRuleOperations.Builder()
-      .apiTypes(java.util.Arrays.asList(newRuleOperationsApiTypesItemModel))
-      .build();
-    assertEquals(newRuleOperationsModel.apiTypes(), java.util.Arrays.asList(newRuleOperationsApiTypesItemModel));
+    String json = TestUtilities.serialize(addressInstanceModel);
 
-    String json = TestUtilities.serialize(newRuleOperationsModel);
-
-    NewRuleOperations newRuleOperationsModelNew = TestUtilities.deserialize(json, NewRuleOperations.class);
-    assertTrue(newRuleOperationsModelNew instanceof NewRuleOperations);
+    AddressInstance addressInstanceModelNew = TestUtilities.deserialize(json, AddressInstance.class);
+    assertTrue(addressInstanceModelNew instanceof AddressInstance);
+    assertEquals(addressInstanceModelNew.type(), "instance");
+    assertEquals(addressInstanceModelNew.value(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)
-  public void testNewRuleOperationsError() throws Throwable {
-    new NewRuleOperations.Builder().build();
+  public void testAddressInstanceError() throws Throwable {
+    new AddressInstance.Builder().build();
   }
 
 }

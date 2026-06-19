@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2025.
+ * (C) Copyright IBM Corp. 2026.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -26,6 +26,8 @@ public class Rule extends GenericModel {
 
   /**
    * The rule enforcement mode:
+   *
+   *
    *  * `enabled` - The restrictions are enforced and reported. This is the default.
    *  * `disabled` - The restrictions are disabled. Nothing is enforced or reported.
    *  * `report` - The restrictions are evaluated and reported, but not enforced.
@@ -129,6 +131,8 @@ public class Rule extends GenericModel {
    * Gets the enforcementMode.
    *
    * The rule enforcement mode:
+   *
+   *
    *  * `enabled` - The restrictions are enforced and reported. This is the default.
    *  * `disabled` - The restrictions are disabled. Nothing is enforced or reported.
    *  * `report` - The restrictions are evaluated and reported, but not enforced.

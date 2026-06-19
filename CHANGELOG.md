@@ -1,3 +1,10 @@
+## [0.75.2](https://github.com/IBM/platform-services-java-sdk/compare/0.75.1...0.75.2) (2026-06-19)
+
+
+### Bug Fixes
+
+* **Context-Based Restrictions:** add support for instance address type ([#317](https://github.com/IBM/platform-services-java-sdk/issues/317)) ([9f7b7cc](https://github.com/IBM/platform-services-java-sdk/commit/9f7b7cce6afb6889e82217eca74f0a364b584c8f))
+
 ## [0.75.1](https://github.com/IBM/platform-services-java-sdk/compare/0.75.0...0.75.1) (2026-06-09)
 
 

@@ -57,7 +57,7 @@ import org.slf4j.LoggerFactory;
  * PLATFORM_NOTIFICATIONS_ACCOUNT_ID=&lt;id&gt;
  * PLATFORM_NOTIFICATIONS_DESTINATION_ID=&lt;account_id&gt;
  * PLATFORM_NOTIFICATIONS_IAM_ID=&lt;iam_id&gt;
- * PLATFORM_NOTIFICATIONS_SERVICE_URL=<service_url&gt;
+ * PLATFORM_NOTIFICATIONS_SERVICE_URL=&lt;service_url&gt;
  *
  * These configuration properties can be exported as environment variables, or stored
  * in a configuration file and then:

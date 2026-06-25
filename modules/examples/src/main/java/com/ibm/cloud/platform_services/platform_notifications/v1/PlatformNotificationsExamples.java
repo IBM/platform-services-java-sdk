@@ -50,10 +50,14 @@ import org.slf4j.LoggerFactory;
  * This class contains examples of how to use the Platform Notifications service.
  *
  * The following configuration properties are assumed to be defined:
- * PLATFORM_NOTIFICATIONS_URL=&lt;service base url&gt;
+ * PLATFORM_NOTIFICATIONS_IAM_PROFILE_ID=<account_id>
  * PLATFORM_NOTIFICATIONS_AUTH_TYPE=iam
- * PLATFORM_NOTIFICATIONS_APIKEY=&lt;IAM apikey&gt;
- * PLATFORM_NOTIFICATIONS_AUTH_URL=&lt;IAM token service base URL - omit this if using the production environment&gt;
+ * PLATFORM_NOTIFICATIONS_APIKEY=<apiKey>
+ * PLATFORM_NOTIFICATIONS_AUTH_URL=<IAM token service base URL - omit this if using the production environment>
+ * PLATFORM_NOTIFICATIONS_ACCOUNT_ID=<id>
+ * PLATFORM_NOTIFICATIONS_DESTINATION_ID=<account_id>
+ * PLATFORM_NOTIFICATIONS_IAM_ID=<iam_id>
+ * PLATFORM_NOTIFICATIONS_SERVICE_URL=<service_url>
  *
  * These configuration properties can be exported as environment variables, or stored
  * in a configuration file and then:

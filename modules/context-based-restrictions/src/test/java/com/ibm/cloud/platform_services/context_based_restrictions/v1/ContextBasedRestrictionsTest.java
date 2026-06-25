@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2025.
+ * (C) Copyright IBM Corp. 2026.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -20,6 +20,7 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Actio
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Address;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressIPAddress;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressIPAddressRange;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressInstance;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressServiceRef;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressSubnet;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressVPC;

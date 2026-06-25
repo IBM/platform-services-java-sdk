@@ -1,3 +1,17 @@
+## [0.75.2](https://github.com/IBM/platform-services-java-sdk/compare/0.75.1...0.75.2) (2026-06-19)
+
+
+### Bug Fixes
+
+* **Context-Based Restrictions:** add support for instance address type ([#317](https://github.com/IBM/platform-services-java-sdk/issues/317)) ([9f7b7cc](https://github.com/IBM/platform-services-java-sdk/commit/9f7b7cce6afb6889e82217eca74f0a364b584c8f))
+
+## [0.75.1](https://github.com/IBM/platform-services-java-sdk/compare/0.75.0...0.75.1) (2026-06-09)
+
+
+### Bug Fixes
+
+* **IAM Identity:** add PowerVS compute resource type support ([#305](https://github.com/IBM/platform-services-java-sdk/issues/305)) ([cfef722](https://github.com/IBM/platform-services-java-sdk/commit/cfef7223cc20fac050cd7670347c2b9e1e33432d))
+
 # [0.75.0](https://github.com/IBM/platform-services-java-sdk/compare/0.74.0...0.75.0) (2026-04-07)
 
 

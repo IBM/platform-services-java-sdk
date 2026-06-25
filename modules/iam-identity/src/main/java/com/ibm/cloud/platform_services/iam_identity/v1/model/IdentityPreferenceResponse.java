@@ -94,7 +94,7 @@ public class IdentityPreferenceResponse extends GenericModel {
   /**
    * Gets the valueListOfStrings.
    *
-   * List of value of the preference, only one value property is set, either 'value_string' or 'value_list_of_strings'
+   * List of values of the preference, only one value property is set, either 'value_string' or 'value_list_of_strings'
    * is present.
    *
    * @return the valueListOfStrings

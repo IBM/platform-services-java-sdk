@@ -172,7 +172,7 @@ public class CreateLinkOptions extends GenericModel {
   /**
    * Gets the crType.
    *
-   * The compute resource type. Valid values are VSI, IKS_SA, ROKS_SA.
+   * The compute resource type. Valid values are VSI, PVS, BMS, IKS_SA, ROKS_SA, CE.
    *
    * @return the crType
    */

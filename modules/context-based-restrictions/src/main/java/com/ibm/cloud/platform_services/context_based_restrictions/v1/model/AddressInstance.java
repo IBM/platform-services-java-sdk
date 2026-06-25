@@ -14,16 +14,16 @@
 package com.ibm.cloud.platform_services.context_based_restrictions.v1.model;
 
 /**
- * An IP address range. IPv4 and IPv6 are supported.
+ * A single Instance address.
  */
-public class AddressIPAddressRange extends Address {
+public class AddressInstance extends Address {
 
   /**
    * The type of address.
    */
   public interface Type {
-    /** ipRange. */
-    String IPRANGE = "ipRange";
+    /** instance. */
+    String INSTANCE = "instance";
   }
 
 
@@ -35,13 +35,13 @@ public class AddressIPAddressRange extends Address {
     private String value;
 
     /**
-     * Instantiates a new Builder from an existing AddressIPAddressRange instance.
+     * Instantiates a new Builder from an existing AddressInstance instance.
      *
-     * @param addressIpAddressRange the instance to initialize the Builder with
+     * @param addressInstance the instance to initialize the Builder with
      */
-    public Builder(Address addressIpAddressRange) {
-      this.type = addressIpAddressRange.type;
-      this.value = addressIpAddressRange.value;
+    public Builder(Address addressInstance) {
+      this.type = addressInstance.type;
+      this.value = addressInstance.value;
     }
 
     /**
@@ -62,19 +62,19 @@ public class AddressIPAddressRange extends Address {
     }
 
     /**
-     * Builds a AddressIPAddressRange.
+     * Builds a AddressInstance.
      *
-     * @return the new AddressIPAddressRange instance
+     * @return the new AddressInstance instance
      */
-    public AddressIPAddressRange build() {
-      return new AddressIPAddressRange(this);
+    public AddressInstance build() {
+      return new AddressInstance(this);
     }
 
     /**
      * Set the type.
      *
      * @param type the type
-     * @return the AddressIPAddressRange builder
+     * @return the AddressInstance builder
      */
     public Builder type(String type) {
       this.type = type;
@@ -85,7 +85,7 @@ public class AddressIPAddressRange extends Address {
      * Set the value.
      *
      * @param value the value
-     * @return the AddressIPAddressRange builder
+     * @return the AddressInstance builder
      */
     public Builder value(String value) {
       this.value = value;
@@ -93,9 +93,9 @@ public class AddressIPAddressRange extends Address {
     }
   }
 
-  protected AddressIPAddressRange() { }
+  protected AddressInstance() { }
 
-  protected AddressIPAddressRange(Builder builder) {
+  protected AddressInstance(Builder builder) {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.type,
       "type cannot be null");
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.value,
@@ -107,7 +107,7 @@ public class AddressIPAddressRange extends Address {
   /**
    * New builder.
    *
-   * @return a AddressIPAddressRange builder
+   * @return a AddressInstance builder
    */
   public Builder newBuilder() {
     return new Builder(this);

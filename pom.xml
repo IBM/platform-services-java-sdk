@@ -45,7 +45,7 @@
         <min-jdk-version>11</min-jdk-version>
         <min-maven-version>3.5.0</min-maven-version>
 
-        <maven-compiler-plugin-version>3.11.0</maven-compiler-plugin-version>
+        <maven-compiler-plugin-version>3.15.0</maven-compiler-plugin-version>
         <java-source-version>1.8</java-source-version>
         <java-target-version>1.8</java-target-version>
 

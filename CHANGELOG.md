@@ -1,3 +1,10 @@
+# [0.76.0](https://github.com/IBM/platform-services-java-sdk/compare/0.75.2...0.76.0) (2026-06-25)
+
+
+### Features
+
+* **Platform Notifications:** add new service to the project ([#303](https://github.com/IBM/platform-services-java-sdk/issues/303)) ([7f480ab](https://github.com/IBM/platform-services-java-sdk/commit/7f480ab9a70b990600dc3be08bdcbc8c2d7f1ec6))
+
 ## [0.75.2](https://github.com/IBM/platform-services-java-sdk/compare/0.75.1...0.75.2) (2026-06-19)
 
 

@@ -15,18 +15,18 @@ jobs:
   publish-release:
     name: publish-release
     runs-on: ubuntu-latest
- 
+
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@v7
         with:
           persist-credentials: false
 
       - name: Setup Java
-        uses: actions/setup-java@v4
+        uses: actions/setup-java@v6
         with:
           java-version: 11
-          distribution: 'adopt'
+          distribution: 'temurin'
           cache: 'maven'
           # Configure ~/.m2/settings.xml
           server-id: central

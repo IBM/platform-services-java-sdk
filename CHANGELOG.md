@@ -1,3 +1,10 @@
+## [0.76.1](https://github.com/IBM/platform-services-java-sdk/compare/0.76.0...0.76.1) (2026-10-29)
+
+
+### Bug Fixes
+
+* **deps:** update all dependencies ([#321](https://github.com/IBM/platform-services-java-sdk/issues/321)) ([702e8b7](https://github.com/IBM/platform-services-java-sdk/commit/702e8b758c2d823c4e551e2102ebdc156d79f823))
+
 # [0.76.0](https://github.com/IBM/platform-services-java-sdk/compare/0.75.2...0.76.0) (2026-06-25)
 
 

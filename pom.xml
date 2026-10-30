@@ -23,11 +23,11 @@
         <sdk-core-version>9.29.1</sdk-core-version>
 
         <testng-version>7.12.0</testng-version>
-        <okhttp3-version>5.5.0</okhttp3-version>
-        <surefire-version>3.5.6</surefire-version>
-        <jacoco-plugin-version>0.8.15</jacoco-plugin-version>
-        <maven-deploy-plugin-version>3.1.4</maven-deploy-plugin-version>
-        <central-publish-plugin-version>0.11.0</central-publish-plugin-version>
+        <okhttp3-version>5.5.1</okhttp3-version>
+        <surefire-version>3.6.1</surefire-version>
+        <jacoco-plugin-version>0.8.16</jacoco-plugin-version>
+        <maven-deploy-plugin-version>3.2.0</maven-deploy-plugin-version>
+        <central-publish-plugin-version>0.12.0</central-publish-plugin-version>
         <maven-gpg-plugin-version>3.2.8</maven-gpg-plugin-version>
         <maven-source-plugin-version>3.4.0</maven-source-plugin-version>
         <maven-shade-plugin-version>3.6.2</maven-shade-plugin-version>
@@ -35,17 +35,17 @@
         <maven-javadoc-plugin-version>3.12.0</maven-javadoc-plugin-version>
         <maven-site-plugin-version>4.0.0-M16</maven-site-plugin-version>
         <maven-checkstyle-plugin-version>3.6.0</maven-checkstyle-plugin-version>
-        <checkstyle-version>10.26.1</checkstyle-version>
+        <checkstyle-version>14.3.0</checkstyle-version>
         <maven-reports-plugin-version>3.9.0</maven-reports-plugin-version>
-        <maven-failsafe-plugin-version>3.5.6</maven-failsafe-plugin-version>
-        <maven-buildnumber-plugin-version>3.3.0</maven-buildnumber-plugin-version>
-        <slf4j-version>2.0.18</slf4j-version>
+        <maven-failsafe-plugin-version>3.6.1</maven-failsafe-plugin-version>
+        <maven-buildnumber-plugin-version>3.3.1</maven-buildnumber-plugin-version>
+        <slf4j-version>2.0.20</slf4j-version>
 
-        <maven-enforcer-version>3.6.3</maven-enforcer-version>
+        <maven-enforcer-version>3.7.0</maven-enforcer-version>
         <min-jdk-version>11</min-jdk-version>
         <min-maven-version>3.5.0</min-maven-version>
 
-        <maven-compiler-plugin-version>3.15.0</maven-compiler-plugin-version>
+        <maven-compiler-plugin-version>3.16.0</maven-compiler-plugin-version>
         <java-source-version>1.8</java-source-version>
         <java-target-version>1.8</java-target-version>
 

@@ -37,12 +37,20 @@ public class ListZonesOptionsTest {
       .transactionId("testString")
       .name("testString")
       .sort("testString")
+      .limit(Long.valueOf("1"))
+      .start("testString")
+      .view("summary")
+      .sharing("local")
       .build();
     assertEquals(listZonesOptionsModel.accountId(), "testString");
     assertEquals(listZonesOptionsModel.xCorrelationId(), "testString");
     assertEquals(listZonesOptionsModel.transactionId(), "testString");
     assertEquals(listZonesOptionsModel.name(), "testString");
     assertEquals(listZonesOptionsModel.sort(), "testString");
+    assertEquals(listZonesOptionsModel.limit(), Long.valueOf("1"));
+    assertEquals(listZonesOptionsModel.start(), "testString");
+    assertEquals(listZonesOptionsModel.view(), "summary");
+    assertEquals(listZonesOptionsModel.sharing(), "local");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

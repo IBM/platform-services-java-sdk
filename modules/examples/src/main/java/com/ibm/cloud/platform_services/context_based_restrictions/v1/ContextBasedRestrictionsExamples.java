@@ -1,5 +1,5 @@
 /*
- * (C) Copyright IBM Corp. 2022.
+ * (C) Copyright IBM Corp. 2026.
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not use this file except in compliance with
  * the License. You may obtain a copy of the License at
@@ -21,18 +21,24 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Addre
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressSubnet;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressVPC;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateRuleOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateZoneAssignmentOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.DeleteRuleOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.DeleteZoneAssignmentOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.DeleteZoneOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.EnterpriseTarget;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetAccountSettingsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetRuleOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetServicerefTargetOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetZoneAssignmentOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServiceOperationsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServicerefTargetsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListRulesOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListZoneAssignmentsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListZonesOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OperationsList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.PatchZoneAssignmentOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceRuleOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Resource;
@@ -46,6 +52,10 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Servi
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetList;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefValue;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Zone;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneAssignment;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneAssignmentBulkOutput;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneAssignmentList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneAssignmentZoneSpec;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneList;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.service.exception.ServiceResponseException;
@@ -66,6 +76,7 @@ import java.util.Map;
 // CONTEXT_BASED_RESTRICTIONS_TEST_ACCOUNT_ID=<the id of the account under which test CBR zones and rules are created>
 // CONTEXT_BASED_RESTRICTIONS_TEST_SERVICE_NAME=<the name of the service to be associated with the test CBR rules>
 // CONTEXT_BASED_RESTRICTIONS_TEST_VPC_CRN=<the CRN of the vpc instance to be associated with the test CBR rules>
+// CONTEXT_BASED_RESTRICTIONS_TEST_TARGET_ACCOUNT_ID=<the id of the target account for zone assignments>
 //
 // These configuration properties can be exported as environment variables, or stored
 // in a configuration file and then:
@@ -78,7 +89,7 @@ public class ContextBasedRestrictionsExamples {
     }
 
     static {
-      System.setProperty("IBM_CREDENTIALS_FILE", "../../context_based_restrictions_v1.env");
+        System.setProperty("IBM_CREDENTIALS_FILE", "../../context_based_restrictions_v1.env");
     }
 
     @SuppressWarnings("checkstyle:methodlength")
@@ -91,63 +102,70 @@ public class ContextBasedRestrictionsExamples {
         String zoneRev = null;
         String ruleID = null;
         String ruleRev = null;
+        String targetAccountID = null;
+        String zoneAssignmentID = null;
+        String zoneAssignmentRev = null;
         // Load up our test-specific config properties.
-        Map<String, String> config = CredentialUtils.getServiceProperties(ContextBasedRestrictions.DEFAULT_SERVICE_NAME);
+        Map<String, String> config = CredentialUtils
+                .getServiceProperties(ContextBasedRestrictions.DEFAULT_SERVICE_NAME);
 
         accountID = config.get("TEST_ACCOUNT_ID");
         serviceName = config.get("TEST_SERVICE_NAME");
         vpcCRN = config.get("TEST_VPC_CRN");
+        targetAccountID = config.get("TEST_TARGET_ACCOUNT_ID");
 
         try {
             System.out.println("createZone() result:");
             // begin-create_zone
             AddressIPAddress ipAddressModel = new AddressIPAddress.Builder()
-                .type("ipAddress")
-                .value("169.23.56.234")
-                .build();
+                    .type("ipAddress")
+                    .value("169.23.56.234")
+                    .build();
             AddressIPAddress ipAddressV6Model = new AddressIPAddress.Builder()
-                .type("ipAddress")
-                .value("3ffe:1900:fe21:4545::")
-                .build();
+                    .type("ipAddress")
+                    .value("3ffe:1900:fe21:4545::")
+                    .build();
             AddressIPAddressRange ipRangeAddressModel = new AddressIPAddressRange.Builder()
-                .type("ipRange")
-                .value("169.23.22.0-169.23.22.255")
-                .build();
+                    .type("ipRange")
+                    .value("169.23.22.0-169.23.22.255")
+                    .build();
             AddressIPAddressRange ipRangeAddressV6Model = new AddressIPAddressRange.Builder()
-                .type("ipRange")
-                .value("3ffe:1900:fe21:4545::-3ffe:1900:fe21:6767::")
-                .build();
+                    .type("ipRange")
+                    .value("3ffe:1900:fe21:4545::-3ffe:1900:fe21:6767::")
+                    .build();
             AddressSubnet subnetAddressModel = new AddressSubnet.Builder()
-                .type("subnet")
-                .value("192.0.2.0/24")
-                .build();
+                    .type("subnet")
+                    .value("192.0.2.0/24")
+                    .build();
             AddressVPC vpcAddressModel = new AddressVPC.Builder()
-                .type("vpc")
-                .value(vpcCRN)
-                .build();
+                    .type("vpc")
+                    .value(vpcCRN)
+                    .build();
             AddressInstance instanceAddressModel = new AddressInstance.Builder()
-                .type("instance")
-                .value(vpcCRN)
-                .build();
+                    .type("instance")
+                    .value(vpcCRN)
+                    .build();
             ServiceRefValue serviceRefValueModel = new ServiceRefValue.Builder()
-                .accountId(accountID)
-                .serviceName("cloud-object-storage")
-                .build();
+                    .accountId(accountID)
+                    .serviceName("cloud-object-storage")
+                    .build();
             AddressServiceRef serviceRefAddressModel = new AddressServiceRef.Builder()
-                .type("serviceRef")
-                .ref(serviceRefValueModel)
-                .build();
+                    .type("serviceRef")
+                    .ref(serviceRefValueModel)
+                    .build();
             AddressIPAddress excludedIPAddressModel = new AddressIPAddress.Builder()
-                .type("ipAddress")
-                .value("169.23.22.127")
-                .build();
+                    .type("ipAddress")
+                    .value("169.23.22.127")
+                    .build();
             CreateZoneOptions createZoneOptions = new CreateZoneOptions.Builder()
-                .name("an example of zone")
-                .accountId(accountID)
-                .description("this is an example of zone")
-                .addresses(java.util.Arrays.asList(ipAddressModel, ipAddressV6Model, ipRangeAddressModel, ipRangeAddressV6Model, subnetAddressModel, vpcAddressModel, instanceAddressModel, serviceRefAddressModel))
-                .excluded(java.util.Arrays.asList(excludedIPAddressModel))
-                .build();
+                    .name("an example of zone")
+                    .accountId(accountID)
+                    .description("this is an example of zone")
+                    .addresses(java.util.Arrays.asList(ipAddressModel, ipAddressV6Model, ipRangeAddressModel,
+                            ipRangeAddressV6Model, subnetAddressModel, vpcAddressModel, instanceAddressModel,
+                            serviceRefAddressModel))
+                    .excluded(java.util.Arrays.asList(excludedIPAddressModel))
+                    .build();
 
             Response<Zone> response = contextBasedRestrictionsService.createZone(createZoneOptions).execute();
             Zone zone = response.getResult();
@@ -158,15 +176,15 @@ public class ContextBasedRestrictionsExamples {
             zoneRev = response.getHeaders().values("Etag").get(0);
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s%nError details: %s",
-                e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
             System.out.println("listZones() result:");
             // begin-list_zones
             ListZonesOptions listZonesOptions = new ListZonesOptions.Builder()
-                .accountId(accountID)
-                .build();
+                    .accountId(accountID)
+                    .build();
 
             Response<ZoneList> response = contextBasedRestrictionsService.listZones(listZonesOptions).execute();
             ZoneList zoneList = response.getResult();
@@ -175,15 +193,15 @@ public class ContextBasedRestrictionsExamples {
             // end-list_zones
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s%nError details: %s",
-                e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
             System.out.println("getZone() result:");
             // begin-get_zone
             GetZoneOptions getZoneOptions = new GetZoneOptions.Builder()
-                .zoneId(zoneID)
-                .build();
+                    .zoneId(zoneID)
+                    .build();
 
             Response<Zone> response = contextBasedRestrictionsService.getZone(getZoneOptions).execute();
             Zone zone = response.getResult();
@@ -192,24 +210,24 @@ public class ContextBasedRestrictionsExamples {
             // end-get_zone
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s%nError details: %s",
-                e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
             System.out.println("replaceZone() result:");
             // begin-replace_zone
             AddressIPAddress addressModel = new AddressIPAddress.Builder()
-                .type("ipAddress")
-                .value("169.23.56.234")
-                .build();
+                    .type("ipAddress")
+                    .value("169.23.56.234")
+                    .build();
             ReplaceZoneOptions replaceZoneOptions = new ReplaceZoneOptions.Builder()
-                .zoneId(zoneID)
-                .ifMatch(zoneRev)
-                .name("an example of zone")
-                .accountId(accountID)
-                .description("this is an example of updated zone")
-                .addresses(java.util.Arrays.asList(addressModel))
-                .build();
+                    .zoneId(zoneID)
+                    .ifMatch(zoneRev)
+                    .name("an example of zone")
+                    .accountId(accountID)
+                    .description("this is an example of updated zone")
+                    .addresses(java.util.Arrays.asList(addressModel))
+                    .build();
 
             Response<Zone> response = contextBasedRestrictionsService.replaceZone(replaceZoneOptions).execute();
             Zone zone = response.getResult();
@@ -218,78 +236,80 @@ public class ContextBasedRestrictionsExamples {
             // end-replace_zone
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s%nError details: %s",
-                e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
             System.out.println("listAvailableServicerefTargets() result:");
             // begin-list_available_serviceref_targets
             ListAvailableServicerefTargetsOptions listAvailableServicerefTargetsOptions = new ListAvailableServicerefTargetsOptions.Builder()
-                .build();
+                    .build();
 
-            Response<ServiceRefTargetList> response = contextBasedRestrictionsService.listAvailableServicerefTargets(listAvailableServicerefTargetsOptions).execute();
+            Response<ServiceRefTargetList> response = contextBasedRestrictionsService
+                    .listAvailableServicerefTargets(listAvailableServicerefTargetsOptions).execute();
             ServiceRefTargetList serviceRefTargetList = response.getResult();
 
             System.out.println(serviceRefTargetList);
             // end-list_available_serviceref_targets
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s%nError details: %s",
-                e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
-          System.out.println("getServicerefTarget() result:");
-          String tempServiceName = serviceName;
-          serviceName = "containers-kubernetes";
-          // begin-get_serviceref_target
-          GetServicerefTargetOptions getServicerefTargetOptions = new GetServicerefTargetOptions.Builder()
-            .serviceName(serviceName)
-            .build();
+            System.out.println("getServicerefTarget() result:");
+            String tempServiceName = serviceName;
+            serviceName = "containers-kubernetes";
+            // begin-get_serviceref_target
+            GetServicerefTargetOptions getServicerefTargetOptions = new GetServicerefTargetOptions.Builder()
+                    .serviceName(serviceName)
+                    .build();
 
-          Response<ServiceRefTarget> response = contextBasedRestrictionsService.getServicerefTarget(getServicerefTargetOptions).execute();
-          ServiceRefTarget serviceRefTarget = response.getResult();
+            Response<ServiceRefTarget> response = contextBasedRestrictionsService
+                    .getServicerefTarget(getServicerefTargetOptions).execute();
+            ServiceRefTarget serviceRefTarget = response.getResult();
 
-          System.out.println(serviceRefTarget);
-          // end-get_serviceref_target
-          serviceName = tempServiceName;
+            System.out.println(serviceRefTarget);
+            // end-get_serviceref_target
+            serviceName = tempServiceName;
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s%nError details: %s",
-              e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
             System.out.println("createRule() result:");
             // begin-create_rule
             RuleContextAttribute ruleContextAttributeModel = new RuleContextAttribute.Builder()
-                .name("networkZoneId")
-                .value(zoneID)
-                .build();
+                    .name("networkZoneId")
+                    .value(zoneID)
+                    .build();
             RuleContext ruleContextModel = new RuleContext.Builder()
-                .attributes(java.util.Arrays.asList(ruleContextAttributeModel))
-                .build();
+                    .attributes(java.util.Arrays.asList(ruleContextAttributeModel))
+                    .build();
             ResourceAttribute resourceAttributeModelAccountID = new ResourceAttribute.Builder()
-                .name("accountId")
-                .value(accountID)
-                .build();
+                    .name("accountId")
+                    .value(accountID)
+                    .build();
             ResourceAttribute resourceAttributeModelServiceName = new ResourceAttribute.Builder()
-                .name("serviceName")
-                .value(serviceName)
-                .build();
+                    .name("serviceName")
+                    .value(serviceName)
+                    .build();
             ResourceTagAttribute resourceTagAttributeModel = new ResourceTagAttribute.Builder()
-                .name("tagName")
-                .value("tagValue")
-                .build();
+                    .name("tagName")
+                    .value("tagValue")
+                    .build();
             Resource resourceModel = new Resource.Builder()
-                .addAttributes(resourceAttributeModelAccountID)
-                .addAttributes(resourceAttributeModelServiceName)
-                .tags(java.util.Arrays.asList(resourceTagAttributeModel))
-                .build();
+                    .addAttributes(resourceAttributeModelAccountID)
+                    .addAttributes(resourceAttributeModelServiceName)
+                    .tags(java.util.Arrays.asList(resourceTagAttributeModel))
+                    .build();
             CreateRuleOptions createRuleOptions = new CreateRuleOptions.Builder()
-                .description("this is an example of rule")
-                .addContexts(ruleContextModel)
-                .addResources(resourceModel)
-                .enforcementMode("enabled")
-                .build();
+                    .description("this is an example of rule")
+                    .addContexts(ruleContextModel)
+                    .addResources(resourceModel)
+                    .enforcementMode("enabled")
+                    .build();
 
             Response<Rule> response = contextBasedRestrictionsService.createRule(createRuleOptions).execute();
             Rule rule = response.getResult();
@@ -300,15 +320,15 @@ public class ContextBasedRestrictionsExamples {
             // end-create_rule
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s%nError details: %s",
-                e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
             System.out.println("listRules() result:");
             // begin-list_rules
             ListRulesOptions listRulesOptions = new ListRulesOptions.Builder()
-                .accountId(accountID)
-                .build();
+                    .accountId(accountID)
+                    .build();
 
             Response<RuleList> response = contextBasedRestrictionsService.listRules(listRulesOptions).execute();
             RuleList ruleList = response.getResult();
@@ -317,7 +337,7 @@ public class ContextBasedRestrictionsExamples {
             // end-list_rules
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s%nError details: %s",
-                e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
@@ -334,44 +354,44 @@ public class ContextBasedRestrictionsExamples {
             // end-get_rule
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s%nError details: %s",
-                e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
             System.out.println("replaceRule() result:");
             // begin-replace_rule
             RuleContextAttribute ruleContextAttributeModel = new RuleContextAttribute.Builder()
-                .name("networkZoneId")
-                .value(zoneID)
-                .build();
+                    .name("networkZoneId")
+                    .value(zoneID)
+                    .build();
             RuleContext ruleContextModel = new RuleContext.Builder()
-                .attributes(java.util.Arrays.asList(ruleContextAttributeModel))
-                .build();
+                    .attributes(java.util.Arrays.asList(ruleContextAttributeModel))
+                    .build();
             ResourceAttribute resourceAttributeModelAccountID = new ResourceAttribute.Builder()
-                .name("accountId")
-                .value(accountID)
-                .build();
+                    .name("accountId")
+                    .value(accountID)
+                    .build();
             ResourceAttribute resourceAttributeModelServiceName = new ResourceAttribute.Builder()
-                .name("serviceName")
-                .value(serviceName)
-                .build();
+                    .name("serviceName")
+                    .value(serviceName)
+                    .build();
             ResourceTagAttribute resourceTagAttributeModel = new ResourceTagAttribute.Builder()
-                .name("tagName")
-                .value("updatedTagValue")
-                .build();
+                    .name("tagName")
+                    .value("updatedTagValue")
+                    .build();
             Resource resourceModel = new Resource.Builder()
-                .addAttributes(resourceAttributeModelAccountID)
-                .addAttributes(resourceAttributeModelServiceName)
-                .addTags(resourceTagAttributeModel)
-                .build();
+                    .addAttributes(resourceAttributeModelAccountID)
+                    .addAttributes(resourceAttributeModelServiceName)
+                    .addTags(resourceTagAttributeModel)
+                    .build();
             ReplaceRuleOptions replaceRuleOptions = new ReplaceRuleOptions.Builder()
-                .ruleId(ruleID)
-                .ifMatch(ruleRev)
-                .description("this is an example of updated rule")
-                .addContexts(ruleContextModel)
-                .addResources(resourceModel)
-                .enforcementMode("disabled")
-                .build();
+                    .ruleId(ruleID)
+                    .ifMatch(ruleRev)
+                    .description("this is an example of updated rule")
+                    .addContexts(ruleContextModel)
+                    .addResources(resourceModel)
+                    .enforcementMode("disabled")
+                    .build();
 
             Response<Rule> response = contextBasedRestrictionsService.replaceRule(replaceRuleOptions).execute();
             Rule rule = response.getResult();
@@ -380,69 +400,222 @@ public class ContextBasedRestrictionsExamples {
             // end-replace_rule
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s%nError details: %s",
-                e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
             System.out.println("getAccountSettings() result:");
             // begin-get_account_settings
             GetAccountSettingsOptions getAccountSettingsOptions = new GetAccountSettingsOptions.Builder()
-                .accountId(accountID)
-                .build();
+                    .accountId(accountID)
+                    .build();
 
-            Response<AccountSettings> response = contextBasedRestrictionsService.getAccountSettings(getAccountSettingsOptions).execute();
+            Response<AccountSettings> response = contextBasedRestrictionsService
+                    .getAccountSettings(getAccountSettingsOptions)
+                    .execute();
             AccountSettings accountSettings = response.getResult();
 
             System.out.println(accountSettings);
             // end-get_account_settings
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s%nError details: %s",
-                e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
             System.out.println("listAvailableServiceOperations() result:");
             // begin-list_available_service_operations
             ListAvailableServiceOperationsOptions listAvailableServiceOperationsOptions = new ListAvailableServiceOperationsOptions.Builder()
-                .serviceName("containers-kubernetes")
-                .build();
+                    .serviceName("containers-kubernetes")
+                    .build();
 
-            Response<OperationsList> response = contextBasedRestrictionsService.listAvailableServiceOperations(listAvailableServiceOperationsOptions).execute();
+            Response<OperationsList> response = contextBasedRestrictionsService
+                    .listAvailableServiceOperations(listAvailableServiceOperationsOptions).execute();
             OperationsList operationsList = response.getResult();
 
             System.out.println(operationsList);
             // end-list_available_service_operations
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s%nError details: %s",
-            e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("createZoneAssignment() result:");
+            // begin-create_zone_assignment
+            EnterpriseTarget enterpriseTargetModel = new EnterpriseTarget.Builder()
+                    .type("Account")
+                    .id(targetAccountID)
+                    .build();
+            ZoneAssignmentZoneSpec zoneAssignmentZoneSpecModel = new ZoneAssignmentZoneSpec.Builder()
+                    .id(zoneID)
+                    .build();
+            CreateZoneAssignmentOptions createZoneAssignmentOptions = new CreateZoneAssignmentOptions.Builder()
+                    .accountId(accountID)
+                    .target(enterpriseTargetModel)
+                    .zones(java.util.Arrays.asList(zoneAssignmentZoneSpecModel))
+                    .build();
+
+            Response<ZoneAssignmentBulkOutput> response = contextBasedRestrictionsService
+                    .createZoneAssignment(createZoneAssignmentOptions).execute();
+            ZoneAssignmentBulkOutput zoneAssignmentBulkOutput = response.getResult();
+
+            System.out.println(zoneAssignmentBulkOutput);
+            // end-create_zone_assignment
+            zoneAssignmentID = zoneAssignmentBulkOutput.getAssignments().get(0).getId();
+            zoneAssignmentRev = response.getHeaders().values("Etag").get(0);
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("listZoneAssignments() result:");
+            // begin-list_zone_assignments
+            ListZoneAssignmentsOptions listZoneAssignmentsOptions = new ListZoneAssignmentsOptions.Builder()
+                    .accountId(accountID)
+                    .zoneId(zoneID)
+                    .build();
+
+            Response<ZoneAssignmentList> response = contextBasedRestrictionsService
+                    .listZoneAssignments(listZoneAssignmentsOptions).execute();
+            ZoneAssignmentList zoneAssignmentList = response.getResult();
+
+            System.out.println(zoneAssignmentList);
+            // end-list_zone_assignments
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("getZoneAssignment() result:");
+            // begin-get_zone_assignment
+            GetZoneAssignmentOptions getZoneAssignmentOptions = new GetZoneAssignmentOptions.Builder()
+                    .zoneAssignmentId(zoneAssignmentID)
+                    .build();
+
+            Response<ZoneAssignment> response = contextBasedRestrictionsService
+                    .getZoneAssignment(getZoneAssignmentOptions)
+                    .execute();
+            ZoneAssignment zoneAssignment = response.getResult();
+
+            System.out.println(zoneAssignment);
+            // end-get_zone_assignment
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        try {
+            System.out.println("patchZoneAssignment() result:");
+            // begin-patch_zone_assignment
+            PatchZoneAssignmentOptions patchZoneAssignmentOptions = new PatchZoneAssignmentOptions.Builder()
+                    .zoneAssignmentId(zoneAssignmentID)
+                    .ifMatch(zoneAssignmentRev)
+                    .force(true)
+                    .build();
+
+            Response<ZoneAssignment> response = contextBasedRestrictionsService
+                    .patchZoneAssignment(patchZoneAssignmentOptions).execute();
+            ZoneAssignment zoneAssignment = response.getResult();
+
+            System.out.println(zoneAssignment);
+            // end-patch_zone_assignment
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
 
         try {
             // begin-delete_rule
             DeleteRuleOptions deleteRuleOptions = new DeleteRuleOptions.Builder()
-                .ruleId(ruleID)
-                .build();
+                    .ruleId(ruleID)
+                    .build();
 
             Response<Void> response = contextBasedRestrictionsService.deleteRule(deleteRuleOptions).execute();
             // end-delete_rule
             System.out.printf("deleteRule() response status code: %d%n", response.getStatusCode());
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s%nError details: %s",
-                e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
         }
+
+        try {
+            // begin-delete_zone_assignment
+            DeleteZoneAssignmentOptions deleteZoneAssignmentOptions = new DeleteZoneAssignmentOptions.Builder()
+                    .zoneAssignmentId(zoneAssignmentID)
+                    .build();
+
+            Response<Void> response = contextBasedRestrictionsService.deleteZoneAssignment(deleteZoneAssignmentOptions)
+                    .execute();
+            // end-delete_zone_assignment
+            System.out.printf("deleteZoneAssignment() response status code: %d%n", response.getStatusCode());
+        } catch (ServiceResponseException e) {
+            logger.error(String.format("Service returned status code %s: %s%nError details: %s",
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+
+        waitForZoneAssignmentToNotExist(contextBasedRestrictionsService, zoneAssignmentID);
 
         try {
             // begin-delete_zone
             DeleteZoneOptions deleteZoneOptions = new DeleteZoneOptions.Builder()
-                .zoneId(zoneID)
-                .build();
+                    .zoneId(zoneID)
+                    .build();
 
             Response<Void> response = contextBasedRestrictionsService.deleteZone(deleteZoneOptions).execute();
             // end-delete_zone
             System.out.printf("deleteZone() response status code: %d%n", response.getStatusCode());
         } catch (ServiceResponseException e) {
             logger.error(String.format("Service returned status code %s: %s%nError details: %s",
-                e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+                    e.getStatusCode(), e.getMessage(), e.getDebuggingInfo()), e);
+        }
+    }
+
+    // The zone assignment delete is asynchronous, so wait until the assignment can
+    // no longer be found.
+    private static void waitForZoneAssignmentToNotExist(ContextBasedRestrictions service, String assignmentID) {
+        System.out.print("Waiting for the zone assignment to be deleted.");
+        System.out.flush();
+
+        final long timeoutSeconds = 3 * 60; // The delete usually takes around 1 minute.
+        final long start = System.currentTimeMillis();
+        final long timeoutTime = start + timeoutSeconds * 1000;
+
+        while (true) {
+            boolean exists = zoneAssignmentExists(service, assignmentID);
+            if (!exists) {
+                System.out.println();
+                break;
+            } else if (System.currentTimeMillis() > timeoutTime) {
+                throw new RuntimeException(String.format("Zone assignment %s still exists after %d seconds",
+                        assignmentID, timeoutSeconds));
+            } else {
+                System.out.print(".");
+                System.out.flush();
+                try {
+                    Thread.sleep(2000);
+                } catch (InterruptedException ie) {
+                    Thread.currentThread().interrupt();
+                    throw new RuntimeException("Interrupted while waiting to retry", ie);
+                }
+            }
+        }
+    }
+
+    private static boolean zoneAssignmentExists(ContextBasedRestrictions service, String assignmentID) {
+        try {
+            GetZoneAssignmentOptions getZoneAssignmentOptions = new GetZoneAssignmentOptions.Builder()
+                    .zoneAssignmentId(assignmentID)
+                    .build();
+            service.getZoneAssignment(getZoneAssignmentOptions).execute();
+            return true;
+        } catch (ServiceResponseException e) {
+            if (e.getStatusCode() == 404) {
+                return false;
+            }
+            throw e;
         }
     }
 }

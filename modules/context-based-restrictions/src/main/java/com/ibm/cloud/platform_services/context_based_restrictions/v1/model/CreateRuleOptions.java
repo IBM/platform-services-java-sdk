@@ -25,8 +25,6 @@ public class CreateRuleOptions extends GenericModel {
 
   /**
    * The rule enforcement mode:
-   *
-   *
    *  * `enabled` - The restrictions are enforced and reported. This is the default.
    *  * `disabled` - The restrictions are disabled. Nothing is enforced or reported.
    *  * `report` - The restrictions are evaluated and reported, but not enforced.
@@ -273,8 +271,6 @@ public class CreateRuleOptions extends GenericModel {
    * Gets the enforcementMode.
    *
    * The rule enforcement mode:
-   *
-   *
    *  * `enabled` - The restrictions are enforced and reported. This is the default.
    *  * `disabled` - The restrictions are disabled. Nothing is enforced or reported.
    *  * `report` - The restrictions are evaluated and reported, but not enforced.

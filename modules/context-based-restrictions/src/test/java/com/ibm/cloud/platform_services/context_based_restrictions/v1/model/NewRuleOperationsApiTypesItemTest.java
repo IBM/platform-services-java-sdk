@@ -33,14 +33,20 @@ public class NewRuleOperationsApiTypesItemTest {
   public void testNewRuleOperationsApiTypesItem() throws Throwable {
     NewRuleOperationsApiTypesItem newRuleOperationsApiTypesItemModel = new NewRuleOperationsApiTypesItem.Builder()
       .apiTypeId("testString")
+      .displayName("testString")
+      .description("testString")
       .build();
     assertEquals(newRuleOperationsApiTypesItemModel.apiTypeId(), "testString");
+    assertEquals(newRuleOperationsApiTypesItemModel.displayName(), "testString");
+    assertEquals(newRuleOperationsApiTypesItemModel.description(), "testString");
 
     String json = TestUtilities.serialize(newRuleOperationsApiTypesItemModel);
 
     NewRuleOperationsApiTypesItem newRuleOperationsApiTypesItemModelNew = TestUtilities.deserialize(json, NewRuleOperationsApiTypesItem.class);
     assertTrue(newRuleOperationsApiTypesItemModelNew instanceof NewRuleOperationsApiTypesItem);
     assertEquals(newRuleOperationsApiTypesItemModelNew.apiTypeId(), "testString");
+    assertEquals(newRuleOperationsApiTypesItemModelNew.displayName(), "testString");
+    assertEquals(newRuleOperationsApiTypesItemModelNew.description(), "testString");
   }
 
   @Test(expectedExceptions = IllegalArgumentException.class)

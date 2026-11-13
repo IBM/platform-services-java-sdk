@@ -12,7 +12,7 @@
  */
 
 /*
- * IBM OpenAPI SDK Code Generator Version: 3.114.4-9b56d441-20260612-210048
+ * IBM OpenAPI SDK Code Generator Version: 3.117.2-f568b7d6-20261016-181021
  */
 
 package com.ibm.cloud.platform_services.context_based_restrictions.v1;
@@ -21,18 +21,23 @@ import com.google.gson.JsonObject;
 import com.ibm.cloud.platform_services.common.SdkCommon;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AccountSettings;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateRuleOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateZoneAssignmentOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.DeleteRuleOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.DeleteZoneAssignmentOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.DeleteZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetAccountSettingsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetRuleOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetServicerefTargetOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetZoneAssignmentOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServiceOperationsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServicerefTargetsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListRulesOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListZoneAssignmentsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListZonesOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OperationsList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.PatchZoneAssignmentOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceRuleOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Rule;
@@ -40,6 +45,9 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.RuleL
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTarget;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetList;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Zone;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneAssignment;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneAssignmentBulkOutput;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneAssignmentList;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneList;
 import com.ibm.cloud.sdk.core.http.RequestBuilder;
 import com.ibm.cloud.sdk.core.http.ResponseConverter;
@@ -199,6 +207,18 @@ public class ContextBasedRestrictions extends BaseService {
     }
     if (listZonesOptions.sort() != null) {
       builder.query("sort", String.valueOf(listZonesOptions.sort()));
+    }
+    if (listZonesOptions.limit() != null) {
+      builder.query("limit", String.valueOf(listZonesOptions.limit()));
+    }
+    if (listZonesOptions.start() != null) {
+      builder.query("start", String.valueOf(listZonesOptions.start()));
+    }
+    if (listZonesOptions.view() != null) {
+      builder.query("view", String.valueOf(listZonesOptions.view()));
+    }
+    if (listZonesOptions.sharing() != null) {
+      builder.query("sharing", String.valueOf(listZonesOptions.sharing()));
     }
     ResponseConverter<ZoneList> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ZoneList>() { }.getType());
@@ -639,6 +659,214 @@ public class ContextBasedRestrictions extends BaseService {
     }
     ResponseConverter<AccountSettings> responseConverter =
       ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<AccountSettings>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Create a zone assignment.
+   *
+   * This operation creates a zone assignment for the specified account. Processing is asynchronous; a successful
+   * response indicates the assignment has been accepted and queued for processing.
+   *
+   * @param createZoneAssignmentOptions the {@link CreateZoneAssignmentOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ZoneAssignmentBulkOutput}
+   */
+  public ServiceCall<ZoneAssignmentBulkOutput> createZoneAssignment(CreateZoneAssignmentOptions createZoneAssignmentOptions) {
+    boolean skipBody = false;
+    if (createZoneAssignmentOptions == null) {
+      createZoneAssignmentOptions = new CreateZoneAssignmentOptions.Builder().build();
+      skipBody = true;
+    }
+    RequestBuilder builder = RequestBuilder.post(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/zone_assignments"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("context_based_restrictions", "v1", "createZoneAssignment");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (createZoneAssignmentOptions.xCorrelationId() != null) {
+      builder.header("X-Correlation-Id", createZoneAssignmentOptions.xCorrelationId());
+    }
+    if (createZoneAssignmentOptions.transactionId() != null) {
+      builder.header("Transaction-Id", createZoneAssignmentOptions.transactionId());
+    }
+    if (!skipBody) {
+      final JsonObject contentJson = new JsonObject();
+      if (createZoneAssignmentOptions.accountId() != null) {
+        contentJson.addProperty("account_id", createZoneAssignmentOptions.accountId());
+      }
+      if (createZoneAssignmentOptions.target() != null) {
+        contentJson.add("target", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createZoneAssignmentOptions.target()));
+      }
+      if (createZoneAssignmentOptions.zones() != null) {
+        contentJson.add("zones", com.ibm.cloud.sdk.core.util.GsonSingleton.getGson().toJsonTree(createZoneAssignmentOptions.zones()));
+      }
+      builder.bodyJson(contentJson);
+    }
+    ResponseConverter<ZoneAssignmentBulkOutput> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ZoneAssignmentBulkOutput>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Create a zone assignment.
+   *
+   * This operation creates a zone assignment for the specified account. Processing is asynchronous; a successful
+   * response indicates the assignment has been accepted and queued for processing.
+   *
+   * @return a {@link ServiceCall} with a result of type {@link ZoneAssignmentBulkOutput}
+   */
+  public ServiceCall<ZoneAssignmentBulkOutput> createZoneAssignment() {
+    return createZoneAssignment(null);
+  }
+
+  /**
+   * List zone assignments.
+   *
+   * This operation lists zone assignments in the specified account.
+   *
+   * @param listZoneAssignmentsOptions the {@link ListZoneAssignmentsOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ZoneAssignmentList}
+   */
+  public ServiceCall<ZoneAssignmentList> listZoneAssignments(ListZoneAssignmentsOptions listZoneAssignmentsOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(listZoneAssignmentsOptions,
+      "listZoneAssignmentsOptions cannot be null");
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/zone_assignments"));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("context_based_restrictions", "v1", "listZoneAssignments");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (listZoneAssignmentsOptions.xCorrelationId() != null) {
+      builder.header("X-Correlation-Id", listZoneAssignmentsOptions.xCorrelationId());
+    }
+    if (listZoneAssignmentsOptions.transactionId() != null) {
+      builder.header("Transaction-Id", listZoneAssignmentsOptions.transactionId());
+    }
+    builder.query("account_id", String.valueOf(listZoneAssignmentsOptions.accountId()));
+    if (listZoneAssignmentsOptions.zoneId() != null) {
+      builder.query("zone_id", String.valueOf(listZoneAssignmentsOptions.zoneId()));
+    }
+    if (listZoneAssignmentsOptions.targetType() != null) {
+      builder.query("target_type", String.valueOf(listZoneAssignmentsOptions.targetType()));
+    }
+    if (listZoneAssignmentsOptions.targetId() != null) {
+      builder.query("target_id", String.valueOf(listZoneAssignmentsOptions.targetId()));
+    }
+    if (listZoneAssignmentsOptions.status() != null) {
+      builder.query("status", String.valueOf(listZoneAssignmentsOptions.status()));
+    }
+    if (listZoneAssignmentsOptions.sort() != null) {
+      builder.query("sort", String.valueOf(listZoneAssignmentsOptions.sort()));
+    }
+    ResponseConverter<ZoneAssignmentList> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ZoneAssignmentList>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Get a zone assignment.
+   *
+   * This operation retrieves the zone assignment identified by the specified zone assignment ID.
+   *
+   * @param getZoneAssignmentOptions the {@link GetZoneAssignmentOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ZoneAssignment}
+   */
+  public ServiceCall<ZoneAssignment> getZoneAssignment(GetZoneAssignmentOptions getZoneAssignmentOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(getZoneAssignmentOptions,
+      "getZoneAssignmentOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("zone_assignment_id", getZoneAssignmentOptions.zoneAssignmentId());
+    RequestBuilder builder = RequestBuilder.get(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/zone_assignments/{zone_assignment_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("context_based_restrictions", "v1", "getZoneAssignment");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    if (getZoneAssignmentOptions.xCorrelationId() != null) {
+      builder.header("X-Correlation-Id", getZoneAssignmentOptions.xCorrelationId());
+    }
+    if (getZoneAssignmentOptions.transactionId() != null) {
+      builder.header("Transaction-Id", getZoneAssignmentOptions.transactionId());
+    }
+    ResponseConverter<ZoneAssignment> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ZoneAssignment>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Update a zone assignment.
+   *
+   * This operation updates the zone assignment identified by the specified zone assignment ID. The only supported
+   * update is retrying a failed assignment by setting the status to `accepted`. Processing is asynchronous; a
+   * successful response indicates the assignment has been re-queued for processing. When modifications are made to an
+   * enterprise hierarchy, existing assignments are reprocessed to reflect account additions and removals within the
+   * scope of the assignment. This processing may trigger an unshare operation in target accounts that are no longer
+   * covered by any assignment. If rules in those accounts reference the shared zone, the unshare will fail for that
+   * account — causing the overall assignment update to fail — unless `force` is set to `true`. Failures in one target
+   * account do not prevent the unshare from proceeding in other target accounts.
+   *
+   * @param patchZoneAssignmentOptions the {@link PatchZoneAssignmentOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a result of type {@link ZoneAssignment}
+   */
+  public ServiceCall<ZoneAssignment> patchZoneAssignment(PatchZoneAssignmentOptions patchZoneAssignmentOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(patchZoneAssignmentOptions,
+      "patchZoneAssignmentOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("zone_assignment_id", patchZoneAssignmentOptions.zoneAssignmentId());
+    RequestBuilder builder = RequestBuilder.patch(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/zone_assignments/{zone_assignment_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("context_based_restrictions", "v1", "patchZoneAssignment");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    builder.header("Accept", "application/json");
+    builder.header("If-Match", patchZoneAssignmentOptions.ifMatch());
+    if (patchZoneAssignmentOptions.xCorrelationId() != null) {
+      builder.header("X-Correlation-Id", patchZoneAssignmentOptions.xCorrelationId());
+    }
+    if (patchZoneAssignmentOptions.transactionId() != null) {
+      builder.header("Transaction-Id", patchZoneAssignmentOptions.transactionId());
+    }
+    if (patchZoneAssignmentOptions.force() != null) {
+      builder.query("force", String.valueOf(patchZoneAssignmentOptions.force()));
+    }
+    ResponseConverter<ZoneAssignment> responseConverter =
+      ResponseConverterUtils.getValue(new com.google.gson.reflect.TypeToken<ZoneAssignment>() { }.getType());
+    return createServiceCall(builder.build(), responseConverter);
+  }
+
+  /**
+   * Delete a zone assignment.
+   *
+   * This operation deletes the zone assignment identified by the specified zone assignment ID. Processing is
+   * asynchronous; a successful response indicates the deletion has been accepted and queued for processing. Depending
+   * on the remaining zone assignments for the shared zone, deleting an assignment may trigger an unshare operation in
+   * target accounts that are no longer covered by any assignment. If rules in those accounts reference the shared zone,
+   * the unshare will fail for that account — causing the overall assignment deletion to fail — unless `force` is set to
+   * `true`. Failures in one target account do not prevent the unshare from proceeding in other target accounts.
+   *
+   * @param deleteZoneAssignmentOptions the {@link DeleteZoneAssignmentOptions} containing the options for the call
+   * @return a {@link ServiceCall} with a void result
+   */
+  public ServiceCall<Void> deleteZoneAssignment(DeleteZoneAssignmentOptions deleteZoneAssignmentOptions) {
+    com.ibm.cloud.sdk.core.util.Validator.notNull(deleteZoneAssignmentOptions,
+      "deleteZoneAssignmentOptions cannot be null");
+    Map<String, String> pathParamsMap = new HashMap<String, String>();
+    pathParamsMap.put("zone_assignment_id", deleteZoneAssignmentOptions.zoneAssignmentId());
+    RequestBuilder builder = RequestBuilder.delete(RequestBuilder.resolveRequestUrl(getServiceUrl(), "/v1/zone_assignments/{zone_assignment_id}", pathParamsMap));
+    Map<String, String> sdkHeaders = SdkCommon.getSdkHeaders("context_based_restrictions", "v1", "deleteZoneAssignment");
+    for (Entry<String, String> header : sdkHeaders.entrySet()) {
+      builder.header(header.getKey(), header.getValue());
+    }
+    if (deleteZoneAssignmentOptions.xCorrelationId() != null) {
+      builder.header("X-Correlation-Id", deleteZoneAssignmentOptions.xCorrelationId());
+    }
+    if (deleteZoneAssignmentOptions.transactionId() != null) {
+      builder.header("Transaction-Id", deleteZoneAssignmentOptions.transactionId());
+    }
+    if (deleteZoneAssignmentOptions.force() != null) {
+      builder.query("force", String.valueOf(deleteZoneAssignmentOptions.force()));
+    }
+    ResponseConverter<Void> responseConverter = ResponseConverterUtils.getVoid();
     return createServiceCall(builder.build(), responseConverter);
   }
 

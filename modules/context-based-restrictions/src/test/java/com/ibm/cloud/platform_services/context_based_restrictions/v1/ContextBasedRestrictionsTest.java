@@ -25,20 +25,31 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Addre
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressSubnet;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.AddressVPC;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateRuleOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateZoneAssignmentOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.CreateZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.DeleteRuleOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.DeleteZoneAssignmentOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.DeleteZoneOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.EnterpriseResource;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.EnterpriseResourceID;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.EnterpriseTarget;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Error;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ErrorContainer;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ErrorTarget;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetAccountSettingsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetRuleOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetServicerefTargetOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetZoneAssignmentOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.GetZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServiceOperationsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListAvailableServicerefTargetsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListRulesOptions;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListZoneAssignmentsOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ListZonesOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.NewRuleOperations;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.NewRuleOperationsApiTypesItem;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.OperationsList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.PatchZoneAssignmentOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceRuleOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ReplaceZoneOptions;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Resource;
@@ -53,8 +64,21 @@ import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Servi
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefTargetLocationsItem;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ServiceRefValue;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.Zone;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneAssignment;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneAssignmentBulkOutput;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneAssignmentList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneAssignmentResource;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneAssignmentSummary;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneAssignmentSummaryTarget;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneAssignmentSummaryZone;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneAssignmentTarget;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneAssignmentZone;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneAssignmentZoneSpec;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneList;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneListFirst;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneListNext;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZoneSummary;
+import com.ibm.cloud.platform_services.context_based_restrictions.v1.model.ZonesPager;
 import com.ibm.cloud.platform_services.context_based_restrictions.v1.utils.TestUtilities;
 import com.ibm.cloud.sdk.core.http.Response;
 import com.ibm.cloud.sdk.core.security.Authenticator;
@@ -63,6 +87,7 @@ import com.ibm.cloud.sdk.core.service.model.FileWithMetadata;
 import com.ibm.cloud.sdk.core.util.DateUtils;
 import java.io.IOException;
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -152,7 +177,7 @@ public class ContextBasedRestrictionsTest {
   @Test
   public void testListZonesWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"count\": 5, \"zones\": [{\"id\": \"id\", \"crn\": \"crn\", \"name\": \"name\", \"description\": \"description\", \"addresses_preview\": [{\"type\": \"ipAddress\", \"value\": \"value\"}], \"address_count\": 12, \"excluded_count\": 13, \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
+    String mockResponseBody = "{\"count\": 5, \"zones\": [{\"id\": \"id\", \"crn\": \"crn\", \"name\": \"name\", \"description\": \"description\", \"addresses_preview\": [{\"type\": \"ipAddress\", \"value\": \"value\"}], \"address_count\": 12, \"excluded_count\": 13, \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}], \"limit\": 5, \"first\": {\"href\": \"href\"}, \"next\": {\"href\": \"href\"}}";
     String listZonesPath = "/v1/zones";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -166,6 +191,10 @@ public class ContextBasedRestrictionsTest {
       .transactionId("testString")
       .name("testString")
       .sort("testString")
+      .limit(Long.valueOf("10"))
+      .start("testString")
+      .view("summary")
+      .sharing("local")
       .build();
 
     // Invoke listZones() with a valid options model and verify the result
@@ -187,6 +216,10 @@ public class ContextBasedRestrictionsTest {
     assertEquals(query.get("account_id"), "testString");
     assertEquals(query.get("name"), "testString");
     assertEquals(query.get("sort"), "testString");
+    assertEquals(Long.valueOf(query.get("limit")), Long.valueOf("10"));
+    assertEquals(query.get("start"), "testString");
+    assertEquals(query.get("view"), "summary");
+    assertEquals(query.get("sharing"), "local");
   }
 
   // Test the listZones operation with and without retries enabled
@@ -206,6 +239,82 @@ public class ContextBasedRestrictionsTest {
     contextBasedRestrictionsService.listZones(null).execute();
   }
 
+  // Test the listZones operation using the ZonesPager.getNext() method
+  @Test
+  public void testListZonesWithPagerGetNext() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"href\":\"https://myhost.com/somePath?start=1\"},\"total_count\":2,\"limit\":1,\"zones\":[{\"id\":\"id\",\"crn\":\"crn\",\"name\":\"name\",\"description\":\"description\",\"addresses_preview\":[{\"type\":\"ipAddress\",\"value\":\"value\"}],\"address_count\":12,\"excluded_count\":13,\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}]}";
+    String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"zones\":[{\"id\":\"id\",\"crn\":\"crn\",\"name\":\"name\",\"description\":\"description\",\"addresses_preview\":[{\"type\":\"ipAddress\",\"value\":\"value\"}],\"address_count\":12,\"excluded_count\":13,\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}]}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListZonesOptions listZonesOptions = new ListZonesOptions.Builder()
+      .accountId("testString")
+      .xCorrelationId("testString")
+      .transactionId("testString")
+      .name("testString")
+      .sort("testString")
+      .limit(Long.valueOf("10"))
+      .view("summary")
+      .sharing("local")
+      .build();
+
+    List<ZoneSummary> allResults = new ArrayList<>();
+    ZonesPager pager = new ZonesPager(contextBasedRestrictionsService, listZonesOptions);
+    while (pager.hasNext()) {
+      List<ZoneSummary> nextPage = pager.getNext();
+      assertNotNull(nextPage);
+      allResults.addAll(nextPage);
+    }
+    assertEquals(allResults.size(), 2);
+  }
+  
+  // Test the listZones operation using the ZonesPager.getAll() method
+  @Test
+  public void testListZonesWithPagerGetAll() throws Throwable {
+    // Set up the two-page mock response.
+    String mockResponsePage1 = "{\"next\":{\"href\":\"https://myhost.com/somePath?start=1\"},\"total_count\":2,\"limit\":1,\"zones\":[{\"id\":\"id\",\"crn\":\"crn\",\"name\":\"name\",\"description\":\"description\",\"addresses_preview\":[{\"type\":\"ipAddress\",\"value\":\"value\"}],\"address_count\":12,\"excluded_count\":13,\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}]}";
+    String mockResponsePage2 = "{\"total_count\":2,\"limit\":1,\"zones\":[{\"id\":\"id\",\"crn\":\"crn\",\"name\":\"name\",\"description\":\"description\",\"addresses_preview\":[{\"type\":\"ipAddress\",\"value\":\"value\"}],\"address_count\":12,\"excluded_count\":13,\"href\":\"href\",\"created_at\":\"2019-01-01T12:00:00.000Z\",\"created_by_id\":\"createdById\",\"last_modified_at\":\"2019-01-01T12:00:00.000Z\",\"last_modified_by_id\":\"lastModifiedById\"}]}";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage1));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponsePage2));
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(400)
+      .setBody("{\"message\": \"No more results available!\"}"));
+
+    ListZonesOptions listZonesOptions = new ListZonesOptions.Builder()
+      .accountId("testString")
+      .xCorrelationId("testString")
+      .transactionId("testString")
+      .name("testString")
+      .sort("testString")
+      .limit(Long.valueOf("10"))
+      .view("summary")
+      .sharing("local")
+      .build();
+
+    ZonesPager pager = new ZonesPager(contextBasedRestrictionsService, listZonesOptions);
+    List<ZoneSummary> allResults = pager.getAll();
+    assertNotNull(allResults);
+    assertEquals(allResults.size(), 2);
+  }
+  
   // Test the getZone operation with a valid options model parameter
   @Test
   public void testGetZoneWOptions() throws Throwable {
@@ -482,7 +591,7 @@ public class ContextBasedRestrictionsTest {
   @Test
   public void testCreateRuleWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"description\": \"description\", \"contexts\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"operations\": {\"api_types\": [{\"api_type_id\": \"apiTypeId\"}]}, \"enforcement_mode\": \"enabled\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"description\": \"description\", \"contexts\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"operations\": {\"api_types\": [{\"api_type_id\": \"apiTypeId\", \"display_name\": \"displayName\", \"description\": \"description\"}]}, \"enforcement_mode\": \"enabled\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String createRulePath = "/v1/rules";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -523,6 +632,8 @@ public class ContextBasedRestrictionsTest {
     // Construct an instance of the NewRuleOperationsApiTypesItem model
     NewRuleOperationsApiTypesItem newRuleOperationsApiTypesItemModel = new NewRuleOperationsApiTypesItem.Builder()
       .apiTypeId("testString")
+      .displayName("testString")
+      .description("testString")
       .build();
 
     // Construct an instance of the NewRuleOperations model
@@ -573,7 +684,7 @@ public class ContextBasedRestrictionsTest {
   @Test
   public void testListRulesWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"count\": 5, \"rules\": [{\"id\": \"id\", \"crn\": \"crn\", \"description\": \"description\", \"contexts\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"operations\": {\"api_types\": [{\"api_type_id\": \"apiTypeId\"}]}, \"enforcement_mode\": \"enabled\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
+    String mockResponseBody = "{\"count\": 5, \"rules\": [{\"id\": \"id\", \"crn\": \"crn\", \"description\": \"description\", \"contexts\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"operations\": {\"api_types\": [{\"api_type_id\": \"apiTypeId\", \"display_name\": \"displayName\", \"description\": \"description\"}]}, \"enforcement_mode\": \"enabled\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
     String listRulesPath = "/v1/rules";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -647,7 +758,7 @@ public class ContextBasedRestrictionsTest {
   @Test
   public void testGetRuleWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"description\": \"description\", \"contexts\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"operations\": {\"api_types\": [{\"api_type_id\": \"apiTypeId\"}]}, \"enforcement_mode\": \"enabled\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"description\": \"description\", \"contexts\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"operations\": {\"api_types\": [{\"api_type_id\": \"apiTypeId\", \"display_name\": \"displayName\", \"description\": \"description\"}]}, \"enforcement_mode\": \"enabled\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String getRulePath = "/v1/rules/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -700,7 +811,7 @@ public class ContextBasedRestrictionsTest {
   @Test
   public void testReplaceRuleWOptions() throws Throwable {
     // Register a mock response
-    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"description\": \"description\", \"contexts\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"operations\": {\"api_types\": [{\"api_type_id\": \"apiTypeId\"}]}, \"enforcement_mode\": \"enabled\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"description\": \"description\", \"contexts\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\"}]}], \"resources\": [{\"attributes\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}], \"tags\": [{\"name\": \"name\", \"value\": \"value\", \"operator\": \"operator\"}]}], \"operations\": {\"api_types\": [{\"api_type_id\": \"apiTypeId\", \"display_name\": \"displayName\", \"description\": \"description\"}]}, \"enforcement_mode\": \"enabled\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
     String replaceRulePath = "/v1/rules/testString";
     server.enqueue(new MockResponse()
       .setHeader("Content-type", "application/json")
@@ -741,6 +852,8 @@ public class ContextBasedRestrictionsTest {
     // Construct an instance of the NewRuleOperationsApiTypesItem model
     NewRuleOperationsApiTypesItem newRuleOperationsApiTypesItemModel = new NewRuleOperationsApiTypesItem.Builder()
       .apiTypeId("testString")
+      .displayName("testString")
+      .description("testString")
       .build();
 
     // Construct an instance of the NewRuleOperations model
@@ -901,6 +1014,294 @@ public class ContextBasedRestrictionsTest {
   public void testGetAccountSettingsNoOptions() throws Throwable {
     server.enqueue(new MockResponse());
     contextBasedRestrictionsService.getAccountSettings(null).execute();
+  }
+
+  // Test the createZoneAssignment operation with a valid options model parameter
+  @Test
+  public void testCreateZoneAssignmentWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"assignments\": [{\"id\": \"id\", \"crn\": \"crn\", \"account_id\": \"accountId\", \"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"zone\": {\"id\": \"id\"}, \"status\": \"accepted\", \"resources\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"zone\": {\"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"errors\": [{\"code\": \"code\", \"message\": \"message\", \"more_info\": \"moreInfo\", \"target\": {\"type\": \"field\", \"name\": \"name\", \"value\": \"value\"}, \"cause\": \"cause\"}], \"trace\": \"trace\", \"status_code\": 10}}}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
+    String createZoneAssignmentPath = "/v1/zone_assignments";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(201)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the EnterpriseTarget model
+    EnterpriseTarget enterpriseTargetModel = new EnterpriseTarget.Builder()
+      .type("Account")
+      .id("9ab34cd56ef78ab90cd12ef34ab56cde")
+      .build();
+
+    // Construct an instance of the ZoneAssignmentZoneSpec model
+    ZoneAssignmentZoneSpec zoneAssignmentZoneSpecModel = new ZoneAssignmentZoneSpec.Builder()
+      .id("65810ac762004f22ac19f8f8edf70a34")
+      .build();
+
+    // Construct an instance of the CreateZoneAssignmentOptions model
+    CreateZoneAssignmentOptions createZoneAssignmentOptionsModel = new CreateZoneAssignmentOptions.Builder()
+      .accountId("12ab34cd56ef78ab90cd12ef34ab56cd")
+      .target(enterpriseTargetModel)
+      .zones(java.util.Arrays.asList(zoneAssignmentZoneSpecModel))
+      .xCorrelationId("testString")
+      .transactionId("testString")
+      .build();
+
+    // Invoke createZoneAssignment() with a valid options model and verify the result
+    Response<ZoneAssignmentBulkOutput> response = contextBasedRestrictionsService.createZoneAssignment(createZoneAssignmentOptionsModel).execute();
+    assertNotNull(response);
+    ZoneAssignmentBulkOutput responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "POST");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, createZoneAssignmentPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the createZoneAssignment operation with and without retries enabled
+  @Test
+  public void testCreateZoneAssignmentWRetries() throws Throwable {
+    contextBasedRestrictionsService.enableRetries(4, 30);
+    testCreateZoneAssignmentWOptions();
+
+    contextBasedRestrictionsService.disableRetries();
+    testCreateZoneAssignmentWOptions();
+  }
+
+  // Test the listZoneAssignments operation with a valid options model parameter
+  @Test
+  public void testListZoneAssignmentsWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"count\": 5, \"assignments\": [{\"id\": \"id\", \"crn\": \"crn\", \"account_id\": \"accountId\", \"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"zone\": {\"id\": \"id\"}, \"status\": \"accepted\", \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}]}";
+    String listZoneAssignmentsPath = "/v1/zone_assignments";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the ListZoneAssignmentsOptions model
+    ListZoneAssignmentsOptions listZoneAssignmentsOptionsModel = new ListZoneAssignmentsOptions.Builder()
+      .accountId("testString")
+      .xCorrelationId("testString")
+      .transactionId("testString")
+      .zoneId("testString")
+      .targetType("Account")
+      .targetId("testString")
+      .status("accepted")
+      .sort("testString")
+      .build();
+
+    // Invoke listZoneAssignments() with a valid options model and verify the result
+    Response<ZoneAssignmentList> response = contextBasedRestrictionsService.listZoneAssignments(listZoneAssignmentsOptionsModel).execute();
+    assertNotNull(response);
+    ZoneAssignmentList responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, listZoneAssignmentsPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(query.get("account_id"), "testString");
+    assertEquals(query.get("zone_id"), "testString");
+    assertEquals(query.get("target_type"), "Account");
+    assertEquals(query.get("target_id"), "testString");
+    assertEquals(query.get("status"), "accepted");
+    assertEquals(query.get("sort"), "testString");
+  }
+
+  // Test the listZoneAssignments operation with and without retries enabled
+  @Test
+  public void testListZoneAssignmentsWRetries() throws Throwable {
+    contextBasedRestrictionsService.enableRetries(4, 30);
+    testListZoneAssignmentsWOptions();
+
+    contextBasedRestrictionsService.disableRetries();
+    testListZoneAssignmentsWOptions();
+  }
+
+  // Test the listZoneAssignments operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testListZoneAssignmentsNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    contextBasedRestrictionsService.listZoneAssignments(null).execute();
+  }
+
+  // Test the getZoneAssignment operation with a valid options model parameter
+  @Test
+  public void testGetZoneAssignmentWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"account_id\": \"accountId\", \"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"zone\": {\"id\": \"id\"}, \"status\": \"accepted\", \"resources\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"zone\": {\"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"errors\": [{\"code\": \"code\", \"message\": \"message\", \"more_info\": \"moreInfo\", \"target\": {\"type\": \"field\", \"name\": \"name\", \"value\": \"value\"}, \"cause\": \"cause\"}], \"trace\": \"trace\", \"status_code\": 10}}}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String getZoneAssignmentPath = "/v1/zone_assignments/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the GetZoneAssignmentOptions model
+    GetZoneAssignmentOptions getZoneAssignmentOptionsModel = new GetZoneAssignmentOptions.Builder()
+      .zoneAssignmentId("testString")
+      .xCorrelationId("testString")
+      .transactionId("testString")
+      .build();
+
+    // Invoke getZoneAssignment() with a valid options model and verify the result
+    Response<ZoneAssignment> response = contextBasedRestrictionsService.getZoneAssignment(getZoneAssignmentOptionsModel).execute();
+    assertNotNull(response);
+    ZoneAssignment responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "GET");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, getZoneAssignmentPath);
+    // Verify that there is no query string
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNull(query);
+  }
+
+  // Test the getZoneAssignment operation with and without retries enabled
+  @Test
+  public void testGetZoneAssignmentWRetries() throws Throwable {
+    contextBasedRestrictionsService.enableRetries(4, 30);
+    testGetZoneAssignmentWOptions();
+
+    contextBasedRestrictionsService.disableRetries();
+    testGetZoneAssignmentWOptions();
+  }
+
+  // Test the getZoneAssignment operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testGetZoneAssignmentNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    contextBasedRestrictionsService.getZoneAssignment(null).execute();
+  }
+
+  // Test the patchZoneAssignment operation with a valid options model parameter
+  @Test
+  public void testPatchZoneAssignmentWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "{\"id\": \"id\", \"crn\": \"crn\", \"account_id\": \"accountId\", \"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"zone\": {\"id\": \"id\"}, \"status\": \"accepted\", \"resources\": [{\"target\": {\"type\": \"Account\", \"id\": \"id\"}, \"zone\": {\"resource_created\": {\"id\": \"id\"}, \"error_message\": {\"errors\": [{\"code\": \"code\", \"message\": \"message\", \"more_info\": \"moreInfo\", \"target\": {\"type\": \"field\", \"name\": \"name\", \"value\": \"value\"}, \"cause\": \"cause\"}], \"trace\": \"trace\", \"status_code\": 10}}}], \"href\": \"href\", \"created_at\": \"2019-01-01T12:00:00.000Z\", \"created_by_id\": \"createdById\", \"last_modified_at\": \"2019-01-01T12:00:00.000Z\", \"last_modified_by_id\": \"lastModifiedById\"}";
+    String patchZoneAssignmentPath = "/v1/zone_assignments/testString";
+    server.enqueue(new MockResponse()
+      .setHeader("Content-type", "application/json")
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the PatchZoneAssignmentOptions model
+    PatchZoneAssignmentOptions patchZoneAssignmentOptionsModel = new PatchZoneAssignmentOptions.Builder()
+      .zoneAssignmentId("testString")
+      .ifMatch("testString")
+      .xCorrelationId("testString")
+      .transactionId("testString")
+      .force(false)
+      .build();
+
+    // Invoke patchZoneAssignment() with a valid options model and verify the result
+    Response<ZoneAssignment> response = contextBasedRestrictionsService.patchZoneAssignment(patchZoneAssignmentOptionsModel).execute();
+    assertNotNull(response);
+    ZoneAssignment responseObj = response.getResult();
+    assertNotNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "PATCH");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, patchZoneAssignmentPath);
+    // Verify header parameters
+    assertEquals(request.getHeader("If-Match"), "testString");
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(Boolean.valueOf(query.get("force")), Boolean.valueOf(false));
+  }
+
+  // Test the patchZoneAssignment operation with and without retries enabled
+  @Test
+  public void testPatchZoneAssignmentWRetries() throws Throwable {
+    contextBasedRestrictionsService.enableRetries(4, 30);
+    testPatchZoneAssignmentWOptions();
+
+    contextBasedRestrictionsService.disableRetries();
+    testPatchZoneAssignmentWOptions();
+  }
+
+  // Test the patchZoneAssignment operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testPatchZoneAssignmentNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    contextBasedRestrictionsService.patchZoneAssignment(null).execute();
+  }
+
+  // Test the deleteZoneAssignment operation with a valid options model parameter
+  @Test
+  public void testDeleteZoneAssignmentWOptions() throws Throwable {
+    // Register a mock response
+    String mockResponseBody = "";
+    String deleteZoneAssignmentPath = "/v1/zone_assignments/testString";
+    server.enqueue(new MockResponse()
+      .setResponseCode(200)
+      .setBody(mockResponseBody));
+
+    // Construct an instance of the DeleteZoneAssignmentOptions model
+    DeleteZoneAssignmentOptions deleteZoneAssignmentOptionsModel = new DeleteZoneAssignmentOptions.Builder()
+      .zoneAssignmentId("testString")
+      .xCorrelationId("testString")
+      .transactionId("testString")
+      .force(false)
+      .build();
+
+    // Invoke deleteZoneAssignment() with a valid options model and verify the result
+    Response<Void> response = contextBasedRestrictionsService.deleteZoneAssignment(deleteZoneAssignmentOptionsModel).execute();
+    assertNotNull(response);
+    Void responseObj = response.getResult();
+    assertNull(responseObj);
+
+    // Verify the contents of the request sent to the mock server
+    RecordedRequest request = server.takeRequest();
+    assertNotNull(request);
+    assertEquals(request.getMethod(), "DELETE");
+    // Verify request path
+    String parsedPath = TestUtilities.parseReqPath(request);
+    assertEquals(parsedPath, deleteZoneAssignmentPath);
+    // Verify query params
+    Map<String, String> query = TestUtilities.parseQueryString(request);
+    assertNotNull(query);
+    assertEquals(Boolean.valueOf(query.get("force")), Boolean.valueOf(false));
+  }
+
+  // Test the deleteZoneAssignment operation with and without retries enabled
+  @Test
+  public void testDeleteZoneAssignmentWRetries() throws Throwable {
+    contextBasedRestrictionsService.enableRetries(4, 30);
+    testDeleteZoneAssignmentWOptions();
+
+    contextBasedRestrictionsService.disableRetries();
+    testDeleteZoneAssignmentWOptions();
+  }
+
+  // Test the deleteZoneAssignment operation with a null options model (negative test)
+  @Test(expectedExceptions = IllegalArgumentException.class)
+  public void testDeleteZoneAssignmentNoOptions() throws Throwable {
+    server.enqueue(new MockResponse());
+    contextBasedRestrictionsService.deleteZoneAssignment(null).execute();
   }
 
   // Test the listAvailableServiceOperations operation with a valid options model parameter

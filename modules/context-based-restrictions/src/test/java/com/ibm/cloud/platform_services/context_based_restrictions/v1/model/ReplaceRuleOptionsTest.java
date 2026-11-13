@@ -77,8 +77,12 @@ public class ReplaceRuleOptionsTest {
 
     NewRuleOperationsApiTypesItem newRuleOperationsApiTypesItemModel = new NewRuleOperationsApiTypesItem.Builder()
       .apiTypeId("testString")
+      .displayName("testString")
+      .description("testString")
       .build();
     assertEquals(newRuleOperationsApiTypesItemModel.apiTypeId(), "testString");
+    assertEquals(newRuleOperationsApiTypesItemModel.displayName(), "testString");
+    assertEquals(newRuleOperationsApiTypesItemModel.description(), "testString");
 
     NewRuleOperations newRuleOperationsModel = new NewRuleOperations.Builder()
       .apiTypes(java.util.Arrays.asList(newRuleOperationsApiTypesItemModel))

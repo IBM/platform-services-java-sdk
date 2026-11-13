@@ -23,12 +23,17 @@ public class NewRuleOperationsApiTypesItem extends GenericModel {
 
   @SerializedName("api_type_id")
   protected String apiTypeId;
+  @SerializedName("display_name")
+  protected String displayName;
+  protected String description;
 
   /**
    * Builder.
    */
   public static class Builder {
     private String apiTypeId;
+    private String displayName;
+    private String description;
 
     /**
      * Instantiates a new Builder from an existing NewRuleOperationsApiTypesItem instance.
@@ -37,6 +42,8 @@ public class NewRuleOperationsApiTypesItem extends GenericModel {
      */
     private Builder(NewRuleOperationsApiTypesItem newRuleOperationsApiTypesItem) {
       this.apiTypeId = newRuleOperationsApiTypesItem.apiTypeId;
+      this.displayName = newRuleOperationsApiTypesItem.displayName;
+      this.description = newRuleOperationsApiTypesItem.description;
     }
 
     /**
@@ -73,6 +80,28 @@ public class NewRuleOperationsApiTypesItem extends GenericModel {
       this.apiTypeId = apiTypeId;
       return this;
     }
+
+    /**
+     * Set the displayName.
+     *
+     * @param displayName the displayName
+     * @return the NewRuleOperationsApiTypesItem builder
+     */
+    public Builder displayName(String displayName) {
+      this.displayName = displayName;
+      return this;
+    }
+
+    /**
+     * Set the description.
+     *
+     * @param description the description
+     * @return the NewRuleOperationsApiTypesItem builder
+     */
+    public Builder description(String description) {
+      this.description = description;
+      return this;
+    }
   }
 
   protected NewRuleOperationsApiTypesItem() { }
@@ -81,6 +110,8 @@ public class NewRuleOperationsApiTypesItem extends GenericModel {
     com.ibm.cloud.sdk.core.util.Validator.notNull(builder.apiTypeId,
       "apiTypeId cannot be null");
     apiTypeId = builder.apiTypeId;
+    displayName = builder.displayName;
+    description = builder.description;
   }
 
   /**
@@ -99,6 +130,24 @@ public class NewRuleOperationsApiTypesItem extends GenericModel {
    */
   public String apiTypeId() {
     return apiTypeId;
+  }
+
+  /**
+   * Gets the displayName.
+   *
+   * @return the displayName
+   */
+  public String displayName() {
+    return displayName;
+  }
+
+  /**
+   * Gets the description.
+   *
+   * @return the description
+   */
+  public String description() {
+    return description;
   }
 }
 

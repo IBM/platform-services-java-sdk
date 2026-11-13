@@ -11,7 +11,7 @@
  * specific language governing permissions and limitations under the License.
  */
 
-package com.ibm.cloud.platform_services.ccount_management.v4.model;
+package com.ibm.cloud.platform_services.account_management.v4.model;
 
 import com.ibm.cloud.platform_services.account_management.v4.model.GetAccountOptions;
 import com.ibm.cloud.platform_services.account_management.v4.utils.TestUtilities;

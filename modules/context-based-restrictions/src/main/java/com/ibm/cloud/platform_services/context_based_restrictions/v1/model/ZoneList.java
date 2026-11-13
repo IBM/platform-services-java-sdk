@@ -24,6 +24,9 @@ public class ZoneList extends GenericModel {
 
   protected Long count;
   protected List<ZoneSummary> zones;
+  protected Long limit;
+  protected ZoneListFirst first;
+  protected ZoneListNext next;
 
   protected ZoneList() { }
 
@@ -47,6 +50,39 @@ public class ZoneList extends GenericModel {
    */
   public List<ZoneSummary> getZones() {
     return zones;
+  }
+
+  /**
+   * Gets the limit.
+   *
+   * The maximum number of zones returned in the response.
+   *
+   * @return the limit
+   */
+  public Long getLimit() {
+    return limit;
+  }
+
+  /**
+   * Gets the first.
+   *
+   * A link to the first page of results. Present when pagination is used (limit parameter is specified).
+   *
+   * @return the first
+   */
+  public ZoneListFirst getFirst() {
+    return first;
+  }
+
+  /**
+   * Gets the next.
+   *
+   * A link to the next page of results. Present when there are more results available.
+   *
+   * @return the next
+   */
+  public ZoneListNext getNext() {
+    return next;
   }
 }
 

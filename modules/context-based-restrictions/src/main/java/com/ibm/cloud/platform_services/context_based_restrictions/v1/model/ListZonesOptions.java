@@ -20,11 +20,46 @@ import com.ibm.cloud.sdk.core.service.model.GenericModel;
  */
 public class ListZonesOptions extends GenericModel {
 
+  /**
+   * The zone listing view:
+   *   * `summary` - Returns summary zone definitions with address previews. This is the default.
+   *   * `full` - Returns full zone definitions with all addresses. Requires the `limit` query parameter.
+   */
+  public interface View {
+    /** summary. */
+    String SUMMARY = "summary";
+    /** full. */
+    String FULL = "full";
+  }
+
+  /**
+   * Filter zones by their sharing status relative to the requesting account. If omitted, all zones accessible to the
+   * account are returned (both local and received).
+   *   * `local` - Returns only zones owned by this account
+   *   * `local_shared` - Returns only zones owned by this account that are shared with at least one other account
+   *   * `local_not_shared` - Returns only zones owned by this account that are not shared with any other account
+   *   * `received` - Returns only zones that another account has shared with this account.
+   */
+  public interface Sharing {
+    /** local. */
+    String LOCAL = "local";
+    /** local_shared. */
+    String LOCAL_SHARED = "local_shared";
+    /** local_not_shared. */
+    String LOCAL_NOT_SHARED = "local_not_shared";
+    /** received. */
+    String RECEIVED = "received";
+  }
+
   protected String accountId;
   protected String xCorrelationId;
   protected String transactionId;
   protected String name;
   protected String sort;
+  protected Long limit;
+  protected String start;
+  protected String view;
+  protected String sharing;
 
   /**
    * Builder.
@@ -35,6 +70,10 @@ public class ListZonesOptions extends GenericModel {
     private String transactionId;
     private String name;
     private String sort;
+    private Long limit;
+    private String start;
+    private String view;
+    private String sharing;
 
     /**
      * Instantiates a new Builder from an existing ListZonesOptions instance.
@@ -47,6 +86,10 @@ public class ListZonesOptions extends GenericModel {
       this.transactionId = listZonesOptions.transactionId;
       this.name = listZonesOptions.name;
       this.sort = listZonesOptions.sort;
+      this.limit = listZonesOptions.limit;
+      this.start = listZonesOptions.start;
+      this.view = listZonesOptions.view;
+      this.sharing = listZonesOptions.sharing;
     }
 
     /**
@@ -129,6 +172,50 @@ public class ListZonesOptions extends GenericModel {
       this.sort = sort;
       return this;
     }
+
+    /**
+     * Set the limit.
+     *
+     * @param limit the limit
+     * @return the ListZonesOptions builder
+     */
+    public Builder limit(long limit) {
+      this.limit = limit;
+      return this;
+    }
+
+    /**
+     * Set the start.
+     *
+     * @param start the start
+     * @return the ListZonesOptions builder
+     */
+    public Builder start(String start) {
+      this.start = start;
+      return this;
+    }
+
+    /**
+     * Set the view.
+     *
+     * @param view the view
+     * @return the ListZonesOptions builder
+     */
+    public Builder view(String view) {
+      this.view = view;
+      return this;
+    }
+
+    /**
+     * Set the sharing.
+     *
+     * @param sharing the sharing
+     * @return the ListZonesOptions builder
+     */
+    public Builder sharing(String sharing) {
+      this.sharing = sharing;
+      return this;
+    }
   }
 
   protected ListZonesOptions() { }
@@ -141,6 +228,10 @@ public class ListZonesOptions extends GenericModel {
     transactionId = builder.transactionId;
     name = builder.name;
     sort = builder.sort;
+    limit = builder.limit;
+    start = builder.start;
+    view = builder.view;
+    sharing = builder.sharing;
   }
 
   /**
@@ -212,6 +303,59 @@ public class ListZonesOptions extends GenericModel {
    */
   public String sort() {
     return sort;
+  }
+
+  /**
+   * Gets the limit.
+   *
+   * The number of resources to return. To learn more, see
+   * [Pagination](https://cloud.ibm.com/docs/api-handbook?topic=api-handbook-pagination).
+   *
+   * @return the limit
+   */
+  public Long limit() {
+    return limit;
+  }
+
+  /**
+   * Gets the start.
+   *
+   * The page token query parameter which determine which zone to start the page on or after. To learn more, see
+   * [Pagination](https://cloud.ibm.com/docs/api-handbook?topic=api-handbook-pagination).
+   *
+   * @return the start
+   */
+  public String start() {
+    return start;
+  }
+
+  /**
+   * Gets the view.
+   *
+   * The zone listing view:
+   *   * `summary` - Returns summary zone definitions with address previews. This is the default.
+   *   * `full` - Returns full zone definitions with all addresses. Requires the `limit` query parameter.
+   *
+   * @return the view
+   */
+  public String view() {
+    return view;
+  }
+
+  /**
+   * Gets the sharing.
+   *
+   * Filter zones by their sharing status relative to the requesting account. If omitted, all zones accessible to the
+   * account are returned (both local and received).
+   *   * `local` - Returns only zones owned by this account
+   *   * `local_shared` - Returns only zones owned by this account that are shared with at least one other account
+   *   * `local_not_shared` - Returns only zones owned by this account that are not shared with any other account
+   *   * `received` - Returns only zones that another account has shared with this account.
+   *
+   * @return the sharing
+   */
+  public String sharing() {
+    return sharing;
   }
 }
 
